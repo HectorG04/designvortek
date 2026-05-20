@@ -134,7 +134,7 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
                     <CalendarDays size={12} strokeWidth={1.8} /> {fmtDate(order.created_at)}
                   </span>
                   <Link
-                    href={`/admin/customers?email=${encodeURIComponent(order.customer_email)}`}
+                    href={`/admin/customers/${encodeURIComponent(order.customer_email)}`}
                     className="inline-flex items-center gap-1.5 text-burgundy-700 hover:text-burgundy-500 transition-colors"
                   >
                     View customer →
