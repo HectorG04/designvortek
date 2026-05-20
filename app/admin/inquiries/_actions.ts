@@ -10,18 +10,18 @@ function parseId(formData: FormData): number | null {
   return id
 }
 
+function revalidateAll() {
+  revalidatePath('/admin/inquiries')
+  revalidatePath('/admin')
+}
+
 export async function markAsRead(formData: FormData): Promise<void> {
   const id = parseId(formData)
   if (id === null) return
 
   const admin = createAdminClient()
-  await admin
-    .from('inquiries')
-    .update({ is_read: true })
-    .eq('id', id)
-
-  revalidatePath('/admin/inquiries')
-  revalidatePath('/admin')
+  await admin.from('inquiries').update({ is_read: true }).eq('id', id)
+  revalidateAll()
 }
 
 export async function markAsUnread(formData: FormData): Promise<void> {
@@ -29,13 +29,8 @@ export async function markAsUnread(formData: FormData): Promise<void> {
   if (id === null) return
 
   const admin = createAdminClient()
-  await admin
-    .from('inquiries')
-    .update({ is_read: false })
-    .eq('id', id)
-
-  revalidatePath('/admin/inquiries')
-  revalidatePath('/admin')
+  await admin.from('inquiries').update({ is_read: false }).eq('id', id)
+  revalidateAll()
 }
 
 export async function archive(formData: FormData): Promise<void> {
@@ -47,8 +42,7 @@ export async function archive(formData: FormData): Promise<void> {
     .from('inquiries')
     .update({ is_archived: true, is_read: true })
     .eq('id', id)
-
-  revalidatePath('/admin/inquiries')
+  revalidateAll()
 }
 
 export async function unarchive(formData: FormData): Promise<void> {
@@ -56,10 +50,6 @@ export async function unarchive(formData: FormData): Promise<void> {
   if (id === null) return
 
   const admin = createAdminClient()
-  await admin
-    .from('inquiries')
-    .update({ is_archived: false })
-    .eq('id', id)
-
-  revalidatePath('/admin/inquiries')
+  await admin.from('inquiries').update({ is_archived: false }).eq('id', id)
+  revalidateAll()
 }

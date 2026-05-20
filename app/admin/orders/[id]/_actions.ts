@@ -4,8 +4,14 @@ import { revalidatePath } from 'next/cache'
 import { createAdminClient } from '@/lib/supabase/server'
 
 const VALID_STATUSES = [
-  'pending', 'reviewing', 'quoted', 'accepted',
-  'in_progress', 'delivered', 'closed', 'cancelled',
+  'pending',
+  'reviewing',
+  'quoted',
+  'accepted',
+  'in_progress',
+  'delivered',
+  'closed',
+  'cancelled',
 ] as const
 
 type OrderStatus = (typeof VALID_STATUSES)[number]
@@ -14,6 +20,10 @@ function isValidStatus(value: string): value is OrderStatus {
   return (VALID_STATUSES as readonly string[]).includes(value)
 }
 
+/**
+ * Update an order's status (no email/notifications wired yet).
+ * Used by the right-rail status changer on the order detail page.
+ */
 export async function updateOrderStatus(formData: FormData): Promise<void> {
   const id = Number(formData.get('id'))
   const status = String(formData.get('status') ?? '')
@@ -31,6 +41,9 @@ export async function updateOrderStatus(formData: FormData): Promise<void> {
   revalidatePath(`/admin/orders/${id}`)
 }
 
+/**
+ * Save admin-only internal notes (markdown supported).
+ */
 export async function updateOrderNotes(formData: FormData): Promise<void> {
   const id = Number(formData.get('id'))
   const notes = String(formData.get('internal_notes') ?? '')
@@ -40,12 +53,19 @@ export async function updateOrderNotes(formData: FormData): Promise<void> {
   const admin = createAdminClient()
   await admin
     .from('commission_orders')
-    .update({ internal_notes: notes, updated_at: new Date().toISOString() })
+    .update({
+      internal_notes: notes,
+      updated_at: new Date().toISOString(),
+    })
     .eq('id', id)
 
+  revalidatePath('/admin/orders')
   revalidatePath(`/admin/orders/${id}`)
 }
 
+/**
+ * Set a quoted price and move the order into the `quoted` state.
+ */
 export async function sendQuote(formData: FormData): Promise<void> {
   const id = Number(formData.get('id'))
   const price = Number(formData.get('quoted_price'))

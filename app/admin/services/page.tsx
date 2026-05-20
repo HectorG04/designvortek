@@ -171,7 +171,7 @@ export default async function ServicesAdminPage() {
 
   const activeCount = items.filter((s) => s.is_active).length
   const inactiveCount = items.length - activeCount
-  const subtitle = `${items.length} services · ${activeCount} active · ${inactiveCount} inactive`
+  const subtitle = `${items.length} service${items.length === 1 ? '' : 's'} · ${activeCount} active · ${inactiveCount} inactive`
 
   return (
     <AdminShell
@@ -181,9 +181,9 @@ export default async function ServicesAdminPage() {
       actions={
         <Link
           href="/admin/services/new/edit"
-          className="hidden sm:inline-flex items-center gap-1.5 bg-burgundy-700 text-cream-50 hover:bg-burgundy-500 transition-colors px-4 py-2 rounded-md text-xs font-semibold uppercase tracking-wider"
+          className="hidden sm:inline-flex items-center gap-1.5 bg-gold-500 text-ink-900 hover:bg-gold-300 hover:shadow-[0_8px_24px_rgba(201,160,74,0.32)] transition-all px-4 py-2 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em]"
         >
-          <Plus size={14} strokeWidth={1.8} />
+          <Plus size={14} strokeWidth={2} />
           Add service
         </Link>
       }
@@ -211,7 +211,7 @@ export default async function ServicesAdminPage() {
           return (
             <article
               key={service.id}
-              className="relative bg-parchment-100 border border-border-light rounded-xl p-5 flex flex-col gap-4 hover:border-gold-300 transition-colors"
+              className="relative bg-parchment-100 border border-border-light rounded-xl p-5 flex flex-col gap-4 hover:border-border-medium transition-colors"
             >
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-lg bg-burgundy-100/60 border border-gold-300/40 flex items-center justify-center flex-shrink-0 text-burgundy-700">
@@ -228,8 +228,8 @@ export default async function ServicesAdminPage() {
                   </div>
                   {service.subtitle && (
                     <p
-                      className="text-base text-burgundy-700 mt-0.5"
-                      style={{ fontFamily: 'var(--font-accent)' }}
+                      className="text-base text-burgundy-700 mt-0.5 font-accent"
+                      style={{ fontSize: '1.125rem', lineHeight: 1.2 }}
                     >
                       {service.subtitle}
                     </p>
@@ -250,24 +250,24 @@ export default async function ServicesAdminPage() {
                 </span>
               </div>
 
-              <div className="mt-auto flex items-center justify-between pt-2 border-t border-border-light">
+              <div className="mt-auto flex items-center justify-between pt-3 border-t border-dashed border-border-light">
                 {dbId !== null ? (
                   <form action={toggleActive.bind(null, dbId, !service.is_active)}>
                     <button
                       type="submit"
-                      className="flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-ink-700 hover:text-ink-900"
+                      className="flex items-center gap-2.5 text-[0.8125rem] font-medium text-ink-700 hover:text-ink-900"
                       aria-label={service.is_active ? 'Disable service' : 'Activate service'}
                     >
                       <span
                         className={[
-                          'relative inline-block w-9 h-5 rounded-full transition-colors',
-                          service.is_active ? 'bg-forest-500' : 'bg-parchment-300',
+                          'relative inline-block w-10 h-[22px] rounded-full transition-colors',
+                          service.is_active ? 'bg-burgundy-700' : 'bg-parchment-300',
                         ].join(' ')}
                       >
                         <span
                           className={[
-                            'absolute top-0.5 w-4 h-4 bg-cream-50 rounded-full shadow-sm transition-all',
-                            service.is_active ? 'left-[18px]' : 'left-0.5',
+                            'absolute top-0.5 w-[18px] h-[18px] bg-cream-50 rounded-full shadow-sm transition-all',
+                            service.is_active ? 'left-[20px]' : 'left-0.5',
                           ].join(' ')}
                         />
                       </span>
@@ -282,7 +282,7 @@ export default async function ServicesAdminPage() {
                 )}
                 <Link
                   href={editHref}
-                  className="inline-flex items-center gap-1.5 text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-burgundy-700 hover:text-burgundy-500"
+                  className="inline-flex items-center gap-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-burgundy-700 hover:text-burgundy-500"
                 >
                   <Pencil size={12} strokeWidth={2} />
                   Edit

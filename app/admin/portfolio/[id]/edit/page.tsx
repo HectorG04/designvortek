@@ -41,11 +41,17 @@ export default async function EditPortfolioPiecePage({
     tags: piece.tags ?? [],
     commissioned_by: piece.commissioned_by ?? '',
     tools_used: piece.tools_used ?? '',
-    hours_spent: piece.hours_spent !== null && piece.hours_spent !== undefined ? String(piece.hours_spent) : '',
+    hours_spent:
+      piece.hours_spent !== null && piece.hours_spent !== undefined
+        ? String(piece.hours_spent)
+        : '',
     style: piece.style ?? '',
     is_featured: !!piece.is_featured,
     is_published: !!piece.is_published,
-    sort_order: piece.sort_order !== null && piece.sort_order !== undefined ? String(piece.sort_order) : '0',
+    sort_order:
+      piece.sort_order !== null && piece.sort_order !== undefined
+        ? String(piece.sort_order)
+        : '0',
     seo_title: piece.seo_title ?? '',
     seo_description: piece.seo_description ?? '',
   }
@@ -58,11 +64,13 @@ export default async function EditPortfolioPiecePage({
     minute: '2-digit',
   })
 
+  const status = piece.is_published ? 'Published' : 'Draft'
+
   return (
     <AdminShell
       user={{ email, initials }}
       title="Edit portfolio piece"
-      subtitle={`Last updated ${lastEdited}`}
+      subtitle={`${piece.title || 'Untitled'} · last saved ${lastEdited} · ${status}`}
       showSearch={false}
     >
       <PortfolioForm mode="edit" initial={initial} />

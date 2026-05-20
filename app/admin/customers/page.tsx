@@ -17,7 +17,9 @@ interface CustomerAggregate {
 
 export default async function CustomersPage() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   const email = user?.email ?? 'admin@designvortek.com'
   const initials = email.slice(0, 2).toUpperCase()
 
@@ -29,7 +31,7 @@ export default async function CustomersPage() {
 
   const orders = ordersData ?? []
 
-  // Aggregate by email (lowercased to dedupe)
+  // Aggregate orders by lowercased email
   const map = new Map<string, CustomerAggregate>()
   for (const o of orders) {
     const key = (o.customer_email ?? '').trim().toLowerCase()
@@ -58,15 +60,15 @@ export default async function CustomersPage() {
     }
   }
 
-  // Sort by most recent activity
   const customers = Array.from(map.values()).sort(
-    (a, b) => new Date(b.lastOrderAt).getTime() - new Date(a.lastOrderAt).getTime()
+    (a, b) =>
+      new Date(b.lastOrderAt).getTime() - new Date(a.lastOrderAt).getTime(),
   )
 
   const total = customers.length
   const startOfMonth = new Date(new Date().setDate(1)).setHours(0, 0, 0, 0)
   const newThisMonth = customers.filter(
-    (c) => new Date(c.firstOrderAt).getTime() >= startOfMonth
+    (c) => new Date(c.firstOrderAt).getTime() >= startOfMonth,
   ).length
 
   const subtitle =
@@ -76,9 +78,13 @@ export default async function CustomersPage() {
 
   return (
     <AdminShell user={{ email, initials }} title="Customers" subtitle={subtitle}>
-      {/* Search bar */}
+      {/* Search bar (visual only) */}
       <div className="relative max-w-md mb-5">
-        <Search size={16} strokeWidth={1.8} className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-400" />
+        <Search
+          size={16}
+          strokeWidth={1.8}
+          className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-400 pointer-events-none"
+        />
         <input
           type="search"
           placeholder="Search by name or email…"
@@ -89,10 +95,18 @@ export default async function CustomersPage() {
       {/* Customers panel */}
       <section className="bg-parchment-100 border border-border-light rounded-xl overflow-hidden">
         {customers.length === 0 ? (
-          <div className="px-5 py-16 text-center text-ink-500">
-            <Users size={28} strokeWidth={1.5} className="mx-auto mb-3 text-ink-400" />
-            <p className="font-display text-xl text-ink-900">No customers yet</p>
-            <p className="mt-1 text-sm">As commissions come in, customers will be aggregated here.</p>
+          <div className="px-5 py-16 text-center">
+            <Users
+              size={28}
+              strokeWidth={1.5}
+              className="mx-auto mb-3 text-ink-400"
+            />
+            <p className="font-display text-xl text-ink-900">
+              No customers yet
+            </p>
+            <p className="mt-1 text-sm text-ink-500">
+              As commissions come in, customers will be aggregated here.
+            </p>
           </div>
         ) : (
           <div className="overflow-x-auto">
@@ -102,7 +116,7 @@ export default async function CustomersPage() {
                   <Th>Customer</Th>
                   <Th>Orders</Th>
                   <Th>Total spent</Th>
-                  <Th>Last activity</Th>
+                  <Th>Last order</Th>
                   <Th className="w-12 text-right" />
                 </tr>
               </thead>
@@ -120,8 +134,11 @@ export default async function CustomersPage() {
                           className="flex items-center gap-3 group"
                         >
                           <div
-                            className="w-9 h-9 rounded-full flex items-center justify-center text-cream-50 font-display text-sm font-semibold flex-shrink-0"
-                            style={{ background: 'linear-gradient(135deg, var(--color-burgundy-700), var(--color-gold-700))' }}
+                            className="w-9 h-9 rounded-full flex items-center justify-center text-cream-50 font-display text-[0.8125rem] font-semibold flex-shrink-0"
+                            style={{
+                              background:
+                                'linear-gradient(135deg, var(--color-burgundy-700), var(--color-gold-700))',
+                            }}
                           >
                             {initialsOf(c.name, c.email)}
                           </div>
@@ -129,22 +146,33 @@ export default async function CustomersPage() {
                             <div className="font-display text-base font-semibold text-ink-900 group-hover:text-burgundy-700 transition-colors truncate">
                               {c.name}
                             </div>
-                            <div className="text-xs text-ink-500 mt-0.5 truncate max-w-[260px]">{c.email}</div>
+                            <div className="text-xs text-ink-500 mt-0.5 truncate max-w-[260px]">
+                              {c.email}
+                            </div>
                           </div>
                         </Link>
                       </td>
-                      <td className="px-5 py-4 text-[0.8125rem] font-mono text-ink-700">{c.orderCount}</td>
                       <td className="px-5 py-4 text-[0.8125rem] font-mono text-ink-700">
-                        {c.totalSpent > 0 ? fmtMoney(c.totalSpent) : <span className="text-ink-400">—</span>}
+                        {c.orderCount}
                       </td>
-                      <td className="px-5 py-4 text-[0.8125rem] font-mono text-ink-500">{fmtAgo(c.lastOrderAt)}</td>
+                      <td className="px-5 py-4 text-[0.8125rem] font-mono text-ink-700">
+                        {c.totalSpent > 0 ? (
+                          fmtMoney(c.totalSpent)
+                        ) : (
+                          <span className="text-ink-400">—</span>
+                        )}
+                      </td>
+                      <td className="px-5 py-4 text-[0.8125rem] font-mono text-ink-500">
+                        {fmtAgo(c.lastOrderAt)}
+                      </td>
                       <td className="px-5 py-4 text-right">
                         <Link
                           href={`/admin/customers/${id}`}
-                          className="inline-flex w-8 h-8 items-center justify-center rounded-md text-ink-500 hover:bg-parchment-200 hover:text-burgundy-700 transition-colors"
                           aria-label={`Open ${c.name}`}
+                          className="inline-flex items-center gap-1 text-[0.7rem] font-semibold uppercase tracking-[0.1em] text-burgundy-700 hover:text-burgundy-500 transition-colors"
                         >
-                          <ChevronRight size={16} strokeWidth={2} />
+                          View
+                          <ChevronRight size={12} strokeWidth={2} />
                         </Link>
                       </td>
                     </tr>
@@ -159,10 +187,19 @@ export default async function CustomersPage() {
   )
 }
 
-function Th({ children, className }: { children?: React.ReactNode; className?: string }) {
+function Th({
+  children,
+  className,
+}: {
+  children?: React.ReactNode
+  className?: string
+}) {
   return (
     <th
-      className={`px-5 py-3 text-left text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500 ${className ?? ''}`}
+      className={
+        'px-5 py-3 text-left text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500 ' +
+        (className ?? '')
+      }
     >
       {children}
     </th>
@@ -170,7 +207,7 @@ function Th({ children, className }: { children?: React.ReactNode; className?: s
 }
 
 function initialsOf(name: string, email: string) {
-  const source = (name && name !== '—') ? name : email
+  const source = name && name !== '—' ? name : email
   const parts = source.trim().split(/[\s@.]+/).filter(Boolean)
   if (parts.length === 0) return '??'
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()

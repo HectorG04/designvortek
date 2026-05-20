@@ -70,11 +70,13 @@ export default async function EditBlogPostPage({
     minute: '2-digit',
   })
 
+  const status = post.is_published ? 'Published' : 'Draft'
+
   return (
     <AdminShell
       user={{ email, initials }}
       title="Edit post"
-      subtitle={`Last updated ${lastEdited}`}
+      subtitle={`Auto-saved ${lastEdited} · ${status}`}
       showSearch={false}
     >
       <BlogForm mode="edit" initial={initial} />

@@ -2,7 +2,14 @@
 
 import { useState, useTransition } from 'react'
 import Link from 'next/link'
-import { Trash2, Save, ExternalLink, ChevronRight, X } from 'lucide-react'
+import {
+  Trash2,
+  Save,
+  ExternalLink,
+  ChevronRight,
+  X,
+  ChevronLeft,
+} from 'lucide-react'
 import {
   createPortfolioPiece,
   updatePortfolioPiece,
@@ -38,6 +45,13 @@ const CATEGORIES = [
   'Portraits',
   'Anime',
   'Custom',
+]
+
+const STYLES = [
+  'Painterly · warm',
+  'Anime · cell-shaded',
+  'Lineart',
+  'Semi-realistic',
 ]
 
 function slugify(value: string): string {
@@ -115,7 +129,6 @@ export default function PortfolioForm({
     startTransition(async () => {
       const action = mode === 'create' ? createPortfolioPiece : updatePortfolioPiece
       const res = await action(fd)
-      // redirect throws — only get here if there was a validation error
       if (res && 'ok' in res && !res.ok) {
         setError(res.error ?? 'Something went wrong')
       }
@@ -139,7 +152,10 @@ export default function PortfolioForm({
     <div>
       {/* Breadcrumb */}
       <nav className="flex items-center gap-1.5 text-[0.75rem] text-ink-500 mb-6">
-        <Link href="/admin/portfolio" className="hover:text-burgundy-700">Portfolio</Link>
+        <Link href="/admin/portfolio" className="inline-flex items-center gap-1 hover:text-burgundy-700">
+          <ChevronLeft size={12} strokeWidth={1.8} />
+          Portfolio
+        </Link>
         <ChevronRight size={12} strokeWidth={1.8} />
         <span className="text-ink-900">{mode === 'create' ? 'New piece' : values.title || 'Untitled'}</span>
       </nav>
@@ -150,26 +166,27 @@ export default function PortfolioForm({
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-5 items-start">
         {/* LEFT 60% */}
-        <div className="flex flex-col gap-5">
-          <section className="bg-parchment-100 border border-border-light rounded-xl p-6">
+        <div className="flex flex-col gap-4">
+          <section className="bg-parchment-100 border border-border-light rounded-xl p-6 lg:p-[26px]">
             <Field label="Title">
               <input
                 type="text"
                 value={values.title}
                 onChange={(e) => handleTitle(e.target.value)}
                 placeholder="A short, evocative title"
-                className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-lg font-display text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md px-4 py-3.5 text-3xl font-display font-semibold text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 focus:shadow-[0_0_0_3px_var(--color-burgundy-100)] transition-all tracking-tight"
               />
             </Field>
 
             <Field
               label="Slug"
-              hint={
-                <>
-                  designvortek.com/portfolio/<strong className="text-burgundy-700 font-mono">{values.slug || '—'}</strong>
-                </>
+              labelExtra={
+                <span className="text-ink-500 font-normal normal-case tracking-normal text-xs">
+                  designvortek.com/portfolio/
+                  <strong className="text-burgundy-700 font-mono">{values.slug || '—'}</strong>
+                </span>
               }
             >
               <input
@@ -180,7 +197,7 @@ export default function PortfolioForm({
                   update('slug', slugify(e.target.value))
                 }}
                 placeholder="auto-from-title"
-                className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-sm font-mono text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                className={inputClass + ' font-mono text-sm'}
               />
             </Field>
 
@@ -189,7 +206,7 @@ export default function PortfolioForm({
                 <select
                   value={values.category}
                   onChange={(e) => update('category', e.target.value)}
-                  className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-sm text-ink-900 focus:outline-none focus:border-burgundy-500 transition-colors"
+                  className={inputClass}
                 >
                   {CATEGORIES.map((c) => (
                     <option key={c} value={c}>{c}</option>
@@ -199,35 +216,39 @@ export default function PortfolioForm({
               <Field label="Style">
                 <input
                   type="text"
+                  list="portfolio-styles"
                   value={values.style}
                   onChange={(e) => update('style', e.target.value)}
                   placeholder="e.g. Painterly · warm"
-                  className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                  className={inputClass}
                 />
+                <datalist id="portfolio-styles">
+                  {STYLES.map((s) => <option key={s} value={s} />)}
+                </datalist>
               </Field>
             </div>
 
-            <Field label="Description" hint="Tell the story behind the piece — what made it special.">
+            <Field label="Description" hint="Tell the story behind the piece — what made it special. Markdown supported.">
               <textarea
                 value={values.description}
                 onChange={(e) => update('description', e.target.value)}
-                rows={5}
-                className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors leading-relaxed"
+                rows={6}
+                className={inputClass + ' min-h-[140px] leading-relaxed resize-y'}
               />
             </Field>
 
-            <Field label="Tags">
-              <div className="flex flex-wrap items-center gap-2 bg-parchment-50 border border-border-light rounded-md p-2 focus-within:border-burgundy-500 transition-colors">
+            <Field label="Tags" className="mb-0">
+              <div className="flex flex-wrap items-center gap-1.5 bg-parchment-50 border-[1.5px] border-border-light rounded-md px-2.5 py-2 min-h-[44px] focus-within:border-burgundy-500 focus-within:shadow-[0_0_0_3px_var(--color-burgundy-100)] transition-all">
                 {values.tags.map((tag) => (
                   <span
                     key={tag}
-                    className="inline-flex items-center gap-1 px-2.5 py-1 bg-parchment-200 text-ink-700 text-[0.75rem] rounded-full"
+                    className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-parchment-200 text-ink-700 text-[0.8125rem] rounded-full"
                   >
                     {tag}
                     <button
                       type="button"
                       onClick={() => removeTag(tag)}
-                      className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full hover:bg-burgundy-700 hover:text-cream-50 transition-colors"
+                      className="inline-flex items-center justify-center text-ink-500 hover:text-burgundy-700"
                       aria-label={`Remove ${tag}`}
                     >
                       <X size={10} strokeWidth={2.4} />
@@ -246,27 +267,27 @@ export default function PortfolioForm({
                   }}
                   onBlur={handleAddTag}
                   placeholder="Add tag…"
-                  className="flex-1 min-w-[120px] bg-transparent text-sm text-ink-900 placeholder:text-ink-400 outline-none px-1"
+                  className="flex-1 min-w-[120px] bg-transparent text-sm text-ink-900 placeholder:text-ink-400 outline-none px-1 py-1"
                 />
               </div>
             </Field>
           </section>
 
-          <section className="bg-parchment-100 border border-border-light rounded-xl p-6">
-            <h2 className="font-display text-base font-semibold text-ink-900 mb-4">Images</h2>
+          <section className="bg-parchment-100 border border-border-light rounded-xl p-6 lg:p-[26px]">
+            <h2 className="font-display text-lg font-semibold text-ink-900 mb-4">Images</h2>
 
-            <Field label="Cover image URL" hint="Paste a public image URL — actual upload coming soon.">
+            <Field label="Cover image URL" hint="Paste a public image URL — upload coming soon.">
               <input
                 type="url"
                 value={values.image_url}
                 onChange={(e) => update('image_url', e.target.value)}
                 placeholder="https://…"
-                className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-sm font-mono text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                className={inputClass + ' font-mono text-sm'}
               />
             </Field>
 
             {values.image_url && (
-              <div className="mb-5">
+              <div className="mb-4">
                 <div className="aspect-[4/3] max-w-xs rounded-md overflow-hidden border border-border-light bg-parchment-200">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img src={values.image_url} alt="Cover preview" className="w-full h-full object-cover" />
@@ -280,11 +301,11 @@ export default function PortfolioForm({
                 value={values.thumbnail_url}
                 onChange={(e) => update('thumbnail_url', e.target.value)}
                 placeholder="https://…"
-                className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-sm font-mono text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                className={inputClass + ' font-mono text-sm'}
               />
             </Field>
 
-            <Field label="Additional images" hint="One URL per line.">
+            <Field label="Additional images" hint="One URL per line." className="mb-0">
               <textarea
                 value={values.additional_images.join('\n')}
                 onChange={(e) =>
@@ -295,24 +316,24 @@ export default function PortfolioForm({
                 }
                 rows={4}
                 placeholder={'https://example.com/img-1.jpg\nhttps://example.com/img-2.jpg'}
-                className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-sm font-mono text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                className={inputClass + ' font-mono text-sm min-h-[110px] resize-y'}
               />
             </Field>
           </section>
 
-          <section className="bg-parchment-100 border border-border-light rounded-xl p-6">
-            <h2 className="font-display text-base font-semibold text-ink-900 mb-4">Project details</h2>
+          <section className="bg-parchment-100 border border-border-light rounded-xl p-6 lg:p-[26px]">
+            <h2 className="font-display text-lg font-semibold text-ink-900 mb-4">Project details</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <Field label="Commissioned by">
+              <Field label="Commissioned by" className="mb-0">
                 <input
                   type="text"
                   value={values.commissioned_by}
                   onChange={(e) => update('commissioned_by', e.target.value)}
                   placeholder="Client name"
-                  className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                  className={inputClass}
                 />
               </Field>
-              <Field label="Hours spent">
+              <Field label="Hours spent" className="mb-0">
                 <input
                   type="number"
                   min={0}
@@ -320,55 +341,59 @@ export default function PortfolioForm({
                   value={values.hours_spent}
                   onChange={(e) => update('hours_spent', e.target.value)}
                   placeholder="e.g. 14"
-                  className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                  className={inputClass + ' font-mono'}
                 />
               </Field>
-              <Field label="Tools used">
+              <Field label="Tools used" className="mb-0 mt-4">
                 <input
                   type="text"
                   value={values.tools_used}
                   onChange={(e) => update('tools_used', e.target.value)}
                   placeholder="Procreate · Photoshop"
-                  className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                  className={inputClass}
                 />
               </Field>
-              <Field label="Sort order">
+              <Field label="Sort order" className="mb-0 mt-4">
                 <input
                   type="number"
                   value={values.sort_order}
                   onChange={(e) => update('sort_order', e.target.value)}
                   placeholder="0"
-                  className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                  className={inputClass + ' font-mono'}
                 />
               </Field>
             </div>
           </section>
 
-          <details className="bg-parchment-100 border border-border-light rounded-xl">
-            <summary className="cursor-pointer flex items-center justify-between px-6 py-4 list-none">
+          <details className="group bg-parchment-100 border border-border-light rounded-xl">
+            <summary className="cursor-pointer flex items-center justify-between px-6 lg:px-[26px] py-5 list-none">
               <div>
-                <div className="font-display text-base font-semibold text-ink-900">SEO &amp; metadata</div>
-                <div className="text-[0.75rem] text-ink-500 mt-0.5">Title and description for search engines</div>
+                <div className="font-display text-lg font-semibold text-ink-900">SEO &amp; metadata</div>
+                <div className="text-[0.75rem] text-ink-500 mt-1">Title and description for search engines</div>
               </div>
-              <ChevronRight size={16} strokeWidth={1.8} className="text-ink-500 transition-transform group-open:rotate-90" />
+              <ChevronRight
+                size={18}
+                strokeWidth={1.8}
+                className="text-ink-500 transition-transform group-open:rotate-90"
+              />
             </summary>
-            <div className="px-6 pb-6">
+            <div className="px-6 lg:px-[26px] pb-6">
               <Field label="Meta title">
                 <input
                   type="text"
                   value={values.seo_title}
                   onChange={(e) => update('seo_title', e.target.value)}
                   placeholder="Defaults to piece title"
-                  className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                  className={inputClass}
                 />
               </Field>
-              <Field label="Meta description">
+              <Field label="Meta description" className="mb-0">
                 <textarea
                   value={values.seo_description}
                   onChange={(e) => update('seo_description', e.target.value)}
                   rows={3}
                   placeholder="One or two sentences for search results."
-                  className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                  className={inputClass + ' min-h-[80px] resize-y'}
                 />
               </Field>
             </div>
@@ -376,26 +401,25 @@ export default function PortfolioForm({
         </div>
 
         {/* RIGHT 40% sidebar */}
-        <div className="flex flex-col gap-5 lg:sticky lg:top-24 lg:self-start">
-          <section className="bg-parchment-100 border border-border-light rounded-xl p-5">
-            <div className="text-[0.625rem] font-bold uppercase tracking-[0.18em] text-ink-500 mb-3">Publish</div>
+        <div className="flex flex-col gap-4 lg:sticky lg:top-24 lg:self-start">
+          <section className="bg-parchment-100 border border-border-light rounded-xl p-6 lg:px-[26px] lg:py-6">
+            <div className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500 mb-2">Publish</div>
 
-            <div className="flex items-center justify-between py-2 border-b border-border-light">
-              <span className="text-sm text-ink-700">Status</span>
-              <ToggleButton
-                value={values.is_published}
-                onChange={(v) => update('is_published', v)}
-                onLabel="Published"
-                offLabel="Draft"
-              />
-            </div>
-
-            <div className="flex items-center justify-between py-2 border-b border-border-light">
-              <span className="text-sm text-ink-700">Featured</span>
-              <ToggleButton
-                value={values.is_featured}
-                onChange={(v) => update('is_featured', v)}
-              />
+            <div className="flex flex-col gap-1">
+              <PublishRow label="Status">
+                <ToggleSwitch
+                  value={values.is_published}
+                  onChange={(v) => update('is_published', v)}
+                  onLabel="Published"
+                  offLabel="Draft"
+                />
+              </PublishRow>
+              <PublishRow label="Featured">
+                <ToggleSwitch
+                  value={values.is_featured}
+                  onChange={(v) => update('is_featured', v)}
+                />
+              </PublishRow>
             </div>
 
             <div className="flex flex-col gap-2 mt-4">
@@ -403,7 +427,7 @@ export default function PortfolioForm({
                 type="button"
                 onClick={() => submit(true)}
                 disabled={isPending}
-                className="inline-flex items-center justify-center gap-1.5 bg-burgundy-700 text-cream-50 px-4 py-2.5 rounded-md text-xs font-semibold uppercase tracking-wider hover:bg-burgundy-500 transition-colors disabled:opacity-60"
+                className="inline-flex items-center justify-center gap-2 bg-burgundy-700 text-cream-50 px-7 py-3 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em] hover:bg-burgundy-500 hover:shadow-md hover:-translate-y-px active:bg-burgundy-900 transition-all disabled:bg-ink-300 disabled:text-ink-400 disabled:shadow-none disabled:translate-y-0 disabled:cursor-not-allowed"
               >
                 <Save size={14} strokeWidth={1.8} />
                 {isPending ? 'Saving…' : (mode === 'create' ? 'Publish piece' : 'Save changes')}
@@ -412,7 +436,7 @@ export default function PortfolioForm({
                 type="button"
                 onClick={() => submit(false)}
                 disabled={isPending}
-                className="inline-flex items-center justify-center gap-1.5 bg-transparent border border-border-medium text-ink-700 px-4 py-2.5 rounded-md text-xs font-semibold uppercase tracking-wider hover:bg-parchment-200 transition-colors disabled:opacity-60"
+                className="inline-flex items-center justify-center gap-2 bg-transparent border-[1.5px] border-burgundy-700 text-burgundy-700 px-7 py-3 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em] hover:bg-burgundy-700 hover:text-cream-50 transition-all disabled:opacity-60"
               >
                 Save as draft
               </button>
@@ -421,7 +445,7 @@ export default function PortfolioForm({
                   href={`/portfolio/${values.slug}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-1.5 text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-burgundy-700 hover:text-burgundy-500 mt-1"
+                  className="inline-flex items-center justify-center gap-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-burgundy-700 hover:text-burgundy-500 mt-1"
                 >
                   <ExternalLink size={12} strokeWidth={1.8} />
                   View on site
@@ -431,14 +455,14 @@ export default function PortfolioForm({
           </section>
 
           {mode === 'edit' && (
-            <section className="bg-parchment-100 border border-burgundy-700/20 rounded-xl p-5">
-              <div className="text-[0.625rem] font-bold uppercase tracking-[0.18em] text-burgundy-700 mb-2">Danger zone</div>
+            <section className="bg-parchment-100 border border-burgundy-700/20 rounded-xl p-6 lg:px-[26px] lg:py-5">
+              <div className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-burgundy-700 mb-2">Danger zone</div>
               <p className="text-[0.75rem] text-ink-500 mb-3">Once deleted, this piece cannot be recovered.</p>
               <button
                 type="button"
                 onClick={handleDelete}
                 disabled={isPending}
-                className="inline-flex items-center gap-1.5 text-burgundy-700 hover:text-burgundy-900 hover:bg-burgundy-100 px-3 py-2 rounded-md text-xs font-semibold uppercase tracking-wider transition-colors disabled:opacity-60"
+                className="inline-flex items-center gap-2 text-burgundy-700 hover:bg-burgundy-100 px-3 py-2 rounded-md text-[0.6875rem] font-semibold uppercase tracking-[0.12em] transition-colors disabled:opacity-60 w-full justify-start"
               >
                 <Trash2 size={14} strokeWidth={1.8} />
                 Delete this piece
@@ -451,27 +475,50 @@ export default function PortfolioForm({
   )
 }
 
+const inputClass =
+  'w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md px-3.5 py-2.5 text-[0.9375rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 focus:shadow-[0_0_0_3px_var(--color-burgundy-100)] transition-all'
+
 function Field({
   label,
+  labelExtra,
   hint,
   children,
+  className,
 }: {
   label: string
+  labelExtra?: React.ReactNode
   hint?: React.ReactNode
   children: React.ReactNode
+  className?: string
 }) {
   return (
-    <div className="mb-5 last:mb-0">
-      <label className="block text-[0.6875rem] font-bold uppercase tracking-[0.12em] text-ink-700 mb-1.5">
-        {label}
+    <div className={'flex flex-col gap-1.5 mb-4 ' + (className ?? '')}>
+      <label className="flex items-center gap-2 text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-700">
+        <span>{label}</span>
+        {labelExtra}
       </label>
-      {hint && <p className="text-[0.75rem] text-ink-500 mb-2">{hint}</p>}
+      {hint && <p className="text-[0.75rem] text-ink-500 leading-snug">{hint}</p>}
       {children}
     </div>
   )
 }
 
-function ToggleButton({
+function PublishRow({
+  label,
+  children,
+}: {
+  label: string
+  children: React.ReactNode
+}) {
+  return (
+    <div className="flex items-center justify-between gap-3 py-2.5 border-b border-dashed border-border-light last:border-b-0">
+      <span className="text-[0.8125rem] text-ink-500">{label}</span>
+      {children}
+    </div>
+  )
+}
+
+function ToggleSwitch({
   value,
   onChange,
   onLabel,
@@ -488,22 +535,22 @@ function ToggleButton({
       role="switch"
       aria-checked={value}
       onClick={() => onChange(!value)}
-      className={`inline-flex items-center gap-2 px-2 py-1 rounded-full text-[0.6875rem] font-semibold transition-colors ${
-        value ? 'text-forest-700' : 'text-ink-500'
+      className={`inline-flex items-center gap-2.5 text-[0.8125rem] font-medium transition-colors ${
+        value ? 'text-ink-900' : 'text-ink-500'
       }`}
     >
+      {(onLabel || offLabel) && <span>{value ? onLabel : offLabel}</span>}
       <span
-        className={`relative inline-block w-9 h-5 rounded-full transition-colors ${
-          value ? 'bg-forest-500' : 'bg-parchment-300'
+        className={`relative inline-block w-10 h-[22px] rounded-full transition-colors ${
+          value ? 'bg-burgundy-700' : 'bg-parchment-300'
         }`}
       >
         <span
-          className={`absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-cream-50 shadow-sm transition-transform ${
-            value ? 'translate-x-4' : 'translate-x-0'
+          className={`absolute top-0.5 left-0.5 w-[18px] h-[18px] rounded-full bg-cream-50 shadow-sm transition-transform ${
+            value ? 'translate-x-[18px]' : 'translate-x-0'
           }`}
         />
       </span>
-      {(onLabel || offLabel) && <span>{value ? onLabel : offLabel}</span>}
     </button>
   )
 }

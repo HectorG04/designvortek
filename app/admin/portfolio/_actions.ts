@@ -38,7 +38,7 @@ function buildPayload(formData: FormData) {
   const imageUrl = String(formData.get('image_url') ?? '').trim()
 
   if (!titleRaw) return { error: 'Title is required' as const }
-  if (!imageUrl) return { error: 'Image URL is required' as const }
+  if (!imageUrl) return { error: 'Cover image URL is required' as const }
 
   const slug = slugRaw ? toSlug(slugRaw) : toSlug(titleRaw)
   if (!slug) return { error: 'Could not derive a valid slug' as const }
@@ -88,10 +88,7 @@ export async function createPortfolioPiece(formData: FormData) {
   }
 
   const admin = createAdminClient()
-  const { error } = await admin
-    .from('portfolio_pieces')
-    .insert(result.payload)
-
+  const { error } = await admin.from('portfolio_pieces').insert(result.payload)
   if (error) {
     return { ok: false as const, error: error.message }
   }
@@ -138,11 +135,7 @@ export async function deletePortfolioPiece(formData: FormData) {
   }
 
   const admin = createAdminClient()
-  const { error } = await admin
-    .from('portfolio_pieces')
-    .delete()
-    .eq('id', id)
-
+  const { error } = await admin.from('portfolio_pieces').delete().eq('id', id)
   if (error) {
     return { ok: false as const, error: error.message }
   }

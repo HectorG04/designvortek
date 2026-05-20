@@ -30,7 +30,6 @@ function nextStatus(current: string): SlotStatus {
 }
 
 function isoMonth(date: Date): string {
-  // first of month, YYYY-MM-DD format used for date columns
   const y = date.getFullYear()
   const m = String(date.getMonth() + 1).padStart(2, '0')
   return `${y}-${m}-01`
@@ -44,16 +43,17 @@ function monthLabel(monthIso: string): string {
 
 export default async function AvailabilityAdminPage() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   const email = user?.email ?? 'admin@designvortek.com'
   const initials = email.slice(0, 2).toUpperCase()
 
-  // Next 3 months starting from current month
+  // Three months starting at current month
   const now = new Date()
   const months: string[] = []
   for (let i = 0; i < 3; i++) {
-    const d = new Date(now.getFullYear(), now.getMonth() + i, 1)
-    months.push(isoMonth(d))
+    months.push(isoMonth(new Date(now.getFullYear(), now.getMonth() + i, 1)))
   }
 
   const admin = createAdminClient()
@@ -66,21 +66,23 @@ export default async function AvailabilityAdminPage() {
     .order('slot_number')
 
   const slots = (slotsData ?? []) as SlotRow[]
-
   const slotsByMonth = new Map<string, SlotRow[]>()
   for (const month of months) slotsByMonth.set(month, [])
   for (const slot of slots) {
-    // Normalize to YYYY-MM-01
-    const monthIso = slot.slot_month.length >= 10 ? slot.slot_month.slice(0, 7) + '-01' : slot.slot_month
-    if (slotsByMonth.has(monthIso)) {
-      slotsByMonth.get(monthIso)!.push(slot)
+    const monthIsoKey =
+      slot.slot_month.length >= 10
+        ? slot.slot_month.slice(0, 7) + '-01'
+        : slot.slot_month
+    if (slotsByMonth.has(monthIsoKey)) {
+      slotsByMonth.get(monthIsoKey)!.push(slot)
     }
   }
 
   const totalOpen = slots.filter((s) => s.status === 'open').length
   const totalSlots = slots.length
-
   const subtitle = `${totalOpen} open · ${totalSlots} slots · next 3 months`
+
+  const defaultMonth = now.toISOString().slice(0, 7)
 
   return (
     <AdminShell
@@ -102,29 +104,41 @@ export default async function AvailabilityAdminPage() {
         <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500">
           Legend
         </span>
-        <LegendDot color="bg-parchment-50 border-[1.5px] border-border-medium" label="Open" />
-        <LegendDot color="bg-burgundy-700" label="Booked" />
-        <LegendDot color="bg-gold-500" label="Reserved" />
-        <LegendDot color="bg-ink-300" label="Unavailable" />
+        <LegendDot
+          swatch="bg-parchment-50 border-[1.5px] border-border-medium"
+          label="Open"
+        />
+        <LegendDot swatch="bg-gold-500" label="Reserved" />
+        <LegendDot swatch="bg-burgundy-700" label="Booked" />
+        <LegendDot swatch="bg-ink-300" label="Unavailable" />
       </div>
 
-      {/* Month cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+      {/* Month grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {months.map((monthIso) => (
-          <MonthCard key={monthIso} monthIso={monthIso} slots={slotsByMonth.get(monthIso) ?? []} />
+          <MonthCard
+            key={monthIso}
+            monthIso={monthIso}
+            slots={slotsByMonth.get(monthIso) ?? []}
+          />
         ))}
       </div>
 
       {/* Configure new month */}
       <section
         id="configure-month"
-        className="mt-8 bg-parchment-100 border border-border-light rounded-xl p-5"
+        className="mt-8 bg-parchment-100 border border-border-light rounded-xl p-5 lg:p-6"
       >
-        <h2 className="font-display text-xl font-semibold text-ink-900 mb-1">Configure a month</h2>
+        <h2 className="font-display text-xl font-semibold text-ink-900 mb-1">
+          Configure a month
+        </h2>
         <p className="text-sm text-ink-500 mb-4">
-          Seed slots for any month. Existing slots in that month are left untouched.
+          Seed slots for any month. Existing slot numbers are kept untouched.
         </p>
-        <form action={seedMonth} className="grid grid-cols-1 md:grid-cols-[1fr_140px_auto] gap-3 items-end">
+        <form
+          action={seedMonth}
+          className="grid grid-cols-1 md:grid-cols-[1fr_140px_auto] gap-3 items-end"
+        >
           <div className="flex flex-col">
             <label
               htmlFor="month"
@@ -137,7 +151,7 @@ export default async function AvailabilityAdminPage() {
               name="month"
               type="month"
               required
-              defaultValue={now.toISOString().slice(0, 7)}
+              defaultValue={defaultMonth}
               className="w-full bg-parchment-50 border border-border-light rounded-md px-3 py-2 text-sm text-ink-900 focus:outline-none focus:border-burgundy-500"
             />
           </div>
@@ -172,28 +186,32 @@ export default async function AvailabilityAdminPage() {
   )
 }
 
-function LegendDot({ color, label }: { color: string; label: string }) {
+function LegendDot({ swatch, label }: { swatch: string; label: string }) {
   return (
     <span className="inline-flex items-center gap-2 text-[0.8125rem] text-ink-700">
-      <span className={['w-[18px] h-[18px] rounded-full inline-block', color].join(' ')} />
+      <span
+        className={['w-[18px] h-[18px] rounded-full inline-block', swatch].join(
+          ' ',
+        )}
+      />
       {label}
     </span>
   )
 }
 
+/* ---------- Server actions ---------- */
+
 async function updateSlotStatus(id: number, current: string) {
   'use server'
   const admin = createAdminClient()
-  const next = nextStatus(current)
-  await admin.from('slots').update({ status: next }).eq('id', id)
+  await admin.from('slots').update({ status: nextStatus(current) }).eq('id', id)
   revalidatePath('/admin/availability')
 }
 
-async function updateSlotNotes(monthIso: string, formData: FormData) {
+async function updateMonthNotes(monthIso: string, formData: FormData) {
   'use server'
   const notes = String(formData.get('notes') ?? '')
   const admin = createAdminClient()
-  // Notes are stored on slot_number = 1 of the month, as a per-month note convention
   const { data: first } = await admin
     .from('slots')
     .select('id')
@@ -221,9 +239,18 @@ async function seedMonth(formData: FormData) {
     .eq('slot_month', monthIso)
 
   const used = new Set((existing ?? []).map((s) => s.slot_number))
-  const toInsert: Array<{ slot_month: string; slot_number: number; status: string }> = []
+  const toInsert: Array<{
+    slot_month: string
+    slot_number: number
+    status: string
+  }> = []
   for (let n = 1; n <= count; n++) {
-    if (!used.has(n)) toInsert.push({ slot_month: monthIso, slot_number: n, status: 'open' })
+    if (!used.has(n))
+      toInsert.push({
+        slot_month: monthIso,
+        slot_number: n,
+        status: 'open',
+      })
   }
   if (toInsert.length > 0) {
     await admin.from('slots').insert(toInsert)
@@ -231,7 +258,15 @@ async function seedMonth(formData: FormData) {
   revalidatePath('/admin/availability')
 }
 
-function MonthCard({ monthIso, slots }: { monthIso: string; slots: SlotRow[] }) {
+/* ---------- Month card ---------- */
+
+function MonthCard({
+  monthIso,
+  slots,
+}: {
+  monthIso: string
+  slots: SlotRow[]
+}) {
   const sorted = [...slots].sort((a, b) => a.slot_number - b.slot_number)
   const openCount = sorted.filter((s) => s.status === 'open').length
   const total = sorted.length
@@ -239,27 +274,38 @@ function MonthCard({ monthIso, slots }: { monthIso: string; slots: SlotRow[] }) 
 
   return (
     <article className="bg-parchment-100 border border-border-light rounded-xl p-5 flex flex-col gap-4">
-      <div className="flex items-start justify-between gap-3">
-        <h3 className="font-display text-xl font-semibold text-ink-900">{monthLabel(monthIso)}</h3>
-        <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-parchment-50 border border-border-light text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-ink-700 whitespace-nowrap">
+      {/* Head */}
+      <div className="flex items-baseline justify-between gap-3">
+        <h3 className="font-display text-xl font-semibold text-ink-900 leading-none">
+          {monthLabel(monthIso)}
+        </h3>
+        <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-gold-100 text-gold-700 text-[0.6875rem] font-semibold uppercase tracking-[0.1em] whitespace-nowrap">
           {openCount} of {total || 0} open
         </span>
       </div>
 
+      {/* Slot circles */}
       {sorted.length === 0 ? (
         <div className="rounded-lg border border-dashed border-border-medium px-4 py-6 text-center text-sm text-ink-500">
-          <CalendarDays size={20} strokeWidth={1.5} className="mx-auto mb-2 text-ink-400" />
+          <CalendarDays
+            size={20}
+            strokeWidth={1.5}
+            className="mx-auto mb-2 text-ink-400"
+          />
           No slots configured for this month. Seed some below.
         </div>
       ) : (
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap gap-2">
           {sorted.map((slot) => (
-            <form key={slot.id} action={updateSlotStatus.bind(null, slot.id, slot.status)}>
+            <form
+              key={slot.id}
+              action={updateSlotStatus.bind(null, slot.id, slot.status)}
+            >
               <button
                 type="submit"
                 title={`Slot ${slot.slot_number} · ${slot.status} (click to cycle)`}
                 className={[
-                  'w-10 h-10 rounded-full inline-flex items-center justify-center text-[0.75rem] font-mono font-semibold transition-transform hover:scale-105',
+                  'w-10 h-10 rounded-full inline-flex items-center justify-center font-display text-sm font-semibold transition-transform hover:scale-105',
                   slotClasses(slot.status),
                 ].join(' ')}
               >
@@ -270,7 +316,11 @@ function MonthCard({ monthIso, slots }: { monthIso: string; slots: SlotRow[] }) 
         </div>
       )}
 
-      <form action={updateSlotNotes.bind(null, monthIso)} className="flex flex-col gap-2">
+      {/* Notes */}
+      <form
+        action={updateMonthNotes.bind(null, monthIso)}
+        className="flex flex-col gap-2 pt-3 border-t border-dashed border-border-light"
+      >
         <label className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500">
           Notes
         </label>
@@ -304,9 +354,9 @@ function slotClasses(status: string): string {
     case 'reserved':
       return 'bg-gold-500 text-ink-900 border-[1.5px] border-gold-700'
     case 'unavailable':
-      return 'bg-ink-300 text-ink-700 border-[1.5px] border-ink-400'
+      return 'bg-ink-300 text-ink-500 border-[1.5px] border-ink-300'
     case 'open':
     default:
-      return 'bg-parchment-50 text-ink-700 border-[1.5px] border-border-medium hover:border-burgundy-700'
+      return 'bg-parchment-50 text-ink-500 border-[1.5px] border-border-medium hover:border-burgundy-500'
   }
 }

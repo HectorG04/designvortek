@@ -213,7 +213,7 @@ export default async function ServiceEditorPage({
       updated_at: new Date().toISOString(),
     }
 
-    // Decide insert vs update: if values.id is set, update. Otherwise, look up by slug.
+    // Decide insert vs update: if values.id is set, update. Otherwise look up by slug.
     if (values.id) {
       await admin.from('services').update(payload).eq('id', values.id)
     } else {
@@ -231,6 +231,7 @@ export default async function ServiceEditorPage({
 
     revalidatePath('/admin/services')
     revalidatePath(`/admin/services/${payload.slug}/edit`)
+    revalidatePath('/services')
     redirect('/admin/services')
   }
 
@@ -253,7 +254,7 @@ export default async function ServiceEditorPage({
       : `Stub — saving will create /${initialValues.slug} in the database`
 
   return (
-    <AdminShell user={{ email, initials }} title={title} subtitle={subtitle}>
+    <AdminShell user={{ email, initials }} title={title} subtitle={subtitle} showSearch={false}>
       <ServiceEditorForm
         initialValues={initialValues}
         onSave={saveService}

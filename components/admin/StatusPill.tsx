@@ -10,15 +10,25 @@ type OrderStatus =
   | 'closed'
   | 'cancelled'
 
-const STATUS_STYLES: Record<OrderStatus, { label: string; classes: string }> = {
-  pending:      { label: 'Pending',      classes: 'bg-gold-100 text-gold-700 border-gold-300' },
-  reviewing:    { label: 'Reviewing',    classes: 'bg-gold-100 text-gold-700 border-gold-300' },
-  quoted:       { label: 'Quoted',       classes: 'bg-burgundy-100 text-burgundy-700 border-burgundy-100' },
-  accepted:     { label: 'Accepted',     classes: 'bg-burgundy-100 text-burgundy-700 border-burgundy-100' },
-  in_progress:  { label: 'In progress',  classes: 'bg-burgundy-700 text-cream-50 border-burgundy-700' },
-  delivered:    { label: 'Delivered',    classes: 'bg-forest-500/15 text-forest-700 border-forest-500/30' },
-  closed:       { label: 'Closed',       classes: 'bg-parchment-300 text-ink-700 border-border-medium' },
-  cancelled:    { label: 'Cancelled',    classes: 'bg-parchment-200 text-ink-500 border-border-light' },
+interface PillStyle {
+  label: string
+  /** Pill bg + text colors. */
+  pill: string
+  /** Dot color. */
+  dot: string
+  /** If set, dot animates a slow opacity pulse. */
+  pulse?: boolean
+}
+
+const STATUS_STYLES: Record<OrderStatus, PillStyle> = {
+  pending:     { label: 'Pending quote', pill: 'bg-gold-100 text-gold-700',           dot: 'bg-gold-500' },
+  reviewing:   { label: 'Reviewing',     pill: 'bg-burgundy-100 text-burgundy-700',   dot: 'bg-burgundy-500' },
+  quoted:      { label: 'Quoted',        pill: 'bg-burgundy-100 text-burgundy-700',   dot: 'bg-burgundy-500' },
+  accepted:    { label: 'Accepted',      pill: 'bg-burgundy-100 text-burgundy-700',   dot: 'bg-burgundy-500' },
+  in_progress: { label: 'In progress',   pill: 'bg-burgundy-100 text-burgundy-700',   dot: 'bg-burgundy-500', pulse: true },
+  delivered:   { label: 'Delivered',     pill: 'bg-forest-500/[0.12] text-forest-700', dot: 'bg-forest-500' },
+  closed:      { label: 'Closed',        pill: 'bg-parchment-200 text-ink-500',       dot: 'bg-ink-400' },
+  cancelled:   { label: 'Cancelled',     pill: 'bg-parchment-200 text-ink-500',       dot: 'bg-ink-400' },
 }
 
 interface StatusPillProps {
@@ -27,19 +37,29 @@ interface StatusPillProps {
 }
 
 export default function StatusPill({ status, className }: StatusPillProps) {
-  const config = STATUS_STYLES[status as OrderStatus] ?? {
-    label: status,
-    classes: 'bg-parchment-200 text-ink-700 border-border-light',
-  }
+  const config: PillStyle =
+    STATUS_STYLES[status as OrderStatus] ?? {
+      label: status,
+      pill: 'bg-parchment-200 text-ink-700',
+      dot: 'bg-ink-400',
+    }
 
   return (
     <span
       className={cn(
-        'inline-flex items-center px-2.5 py-1 rounded-full border text-[0.6875rem] font-semibold uppercase tracking-[0.1em] whitespace-nowrap',
-        config.classes,
+        'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[0.75rem] font-medium tracking-[0.02em] whitespace-nowrap',
+        config.pill,
         className,
       )}
     >
+      <span
+        className={cn(
+          'w-1.5 h-1.5 rounded-full flex-shrink-0',
+          config.dot,
+          config.pulse && 'animate-pulse',
+        )}
+        aria-hidden="true"
+      />
       {config.label}
     </span>
   )

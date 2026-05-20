@@ -1,15 +1,35 @@
 import type { Metadata } from 'next'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 import AdminShell from '@/components/admin/AdminShell'
+import Markdown from '@/components/ui/Markdown'
 import FilterChips from './_FilterChips'
 import { markAsRead, markAsUnread, archive, unarchive } from './_actions'
-import { MessageSquare, Mail, Archive, ArchiveRestore, CheckCircle2, CircleDot } from 'lucide-react'
+import {
+  MessageSquare,
+  Mail,
+  Archive,
+  ArchiveRestore,
+  CheckCircle2,
+  CircleDot,
+} from 'lucide-react'
 
 export const metadata: Metadata = { title: 'Inquiries' }
 
+interface InquiryRow {
+  id: number
+  created_at: string
+  name: string
+  email: string
+  message: string
+  is_read: boolean
+  is_archived: boolean
+}
+
 export default async function InquiriesPage() {
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   const email = user?.email ?? 'admin@designvortek.com'
   const initials = email.slice(0, 2).toUpperCase()
 
@@ -19,16 +39,16 @@ export default async function InquiriesPage() {
     .select('*')
     .order('created_at', { ascending: false })
 
-  const inquiries = inquiriesData ?? []
+  const inquiries = (inquiriesData ?? []) as InquiryRow[]
 
   const counts = {
-    all:      inquiries.length,
-    unread:   inquiries.filter((i) => !i.is_read && !i.is_archived).length,
-    read:     inquiries.filter((i) =>  i.is_read && !i.is_archived).length,
-    archived: inquiries.filter((i) =>  i.is_archived).length,
+    all: inquiries.length,
+    unread: inquiries.filter((i) => !i.is_read && !i.is_archived).length,
+    read: inquiries.filter((i) => i.is_read && !i.is_archived).length,
+    archived: inquiries.filter((i) => i.is_archived).length,
   }
 
-  // Default selected item: first non-archived (unread preferred), else most recent
+  // Default selection: first unread (non-archived), else most recent
   const activeItems = inquiries.filter((i) => !i.is_archived)
   const selected =
     activeItems.find((i) => !i.is_read) ?? activeItems[0] ?? inquiries[0] ?? null
@@ -43,81 +63,88 @@ export default async function InquiriesPage() {
       <FilterChips counts={counts} />
 
       {inquiries.length === 0 ? (
-        <section className="bg-parchment-100 border border-border-light rounded-xl px-5 py-16 text-center text-ink-500">
-          <MessageSquare size={28} strokeWidth={1.5} className="mx-auto mb-3 text-ink-400" />
+        <section className="bg-parchment-100 border border-border-light rounded-xl px-5 py-16 text-center">
+          <MessageSquare
+            size={28}
+            strokeWidth={1.5}
+            className="mx-auto mb-3 text-ink-400"
+          />
           <p className="font-display text-xl text-ink-900">No inquiries yet</p>
-          <p className="mt-1 text-sm">Messages from the contact form land here.</p>
+          <p className="mt-1 text-sm text-ink-500">
+            Messages from the public contact form land here.
+          </p>
         </section>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-4 lg:gap-6">
+        <section className="bg-parchment-100 border border-border-light rounded-xl overflow-hidden grid grid-cols-1 lg:grid-cols-[320px_1fr] min-h-[600px]">
           {/* LIST */}
-          <div className="bg-parchment-100 border border-border-light rounded-xl overflow-hidden flex flex-col max-h-[calc(100vh-220px)]">
-            <div className="overflow-y-auto divide-y divide-border-light">
-              {inquiries.map((item) => {
-                const isActive = selected?.id === item.id
-                return (
-                  <div
-                    key={item.id}
-                    className={
-                      'relative px-4 py-3 transition-colors ' +
-                      (isActive
-                        ? 'bg-parchment-50 shadow-[inset_3px_0_0_var(--color-gold-500)]'
-                        : 'hover:bg-parchment-50')
-                    }
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="flex items-center gap-2 min-w-0">
-                        {!item.is_read && !item.is_archived && (
-                          <span
-                            aria-label="Unread"
-                            className="inline-block w-2 h-2 rounded-full bg-burgundy-700 flex-shrink-0"
-                          />
-                        )}
+          <div className="border-b lg:border-b-0 lg:border-r border-border-light bg-parchment-50 overflow-y-auto max-h-[80vh]">
+            {inquiries.map((item) => {
+              const isActive = selected?.id === item.id
+              const isUnread = !item.is_read && !item.is_archived
+              return (
+                <div
+                  key={item.id}
+                  className={
+                    'relative px-4 py-3.5 border-b border-border-light cursor-pointer transition-colors ' +
+                    (isActive
+                      ? 'bg-parchment-100 pl-[13px] border-l-[3px] border-l-gold-500'
+                      : 'hover:bg-parchment-100')
+                  }
+                >
+                  <div className="flex items-baseline justify-between gap-2 mb-1">
+                    <div className="flex items-center gap-1.5 min-w-0">
+                      {isUnread && (
                         <span
-                          className={
-                            'font-display text-[0.95rem] truncate ' +
-                            (!item.is_read && !item.is_archived
-                              ? 'font-semibold text-ink-900'
-                              : 'font-medium text-ink-700')
-                          }
-                        >
-                          {item.name}
-                        </span>
-                      </div>
-                      <span className="text-[0.6875rem] text-ink-500 font-mono flex-shrink-0">
-                        {fmtAgo(item.created_at)}
+                          aria-label="Unread"
+                          className="inline-block w-1.5 h-1.5 rounded-full bg-burgundy-700 flex-shrink-0"
+                        />
+                      )}
+                      <span
+                        className={
+                          'font-display text-base truncate ' +
+                          (isUnread
+                            ? 'font-semibold text-ink-900'
+                            : 'font-medium text-ink-700')
+                        }
+                      >
+                        {item.name}
                       </span>
                     </div>
-                    <p className="text-[0.8125rem] text-ink-700 mt-1 line-clamp-1">
-                      {firstLine(item.message)}
-                    </p>
-                    <p className="text-[0.75rem] text-ink-500 mt-0.5 line-clamp-1">
-                      {item.email}
-                    </p>
+                    <span className="text-[0.75rem] text-ink-500 font-mono flex-shrink-0">
+                      {fmtAgo(item.created_at)}
+                    </span>
                   </div>
-                )
-              })}
-            </div>
+                  <p className="text-[0.8125rem] text-ink-700 line-clamp-1">
+                    {firstLine(item.message)}
+                  </p>
+                  <p className="text-[0.75rem] text-ink-500 mt-0.5 truncate">
+                    {item.email}
+                  </p>
+                </div>
+              )
+            })}
           </div>
 
           {/* VIEW */}
-          <div className="min-w-0">
+          <div className="p-6 lg:p-7 overflow-y-auto">
             {selected ? (
-              <article className="bg-parchment-100 border border-border-light rounded-xl p-5 lg:p-6 flex flex-col gap-5">
-                <header className="flex items-start justify-between gap-4">
+              <article className="flex flex-col gap-5">
+                <header className="flex items-start justify-between gap-4 pb-5 border-b border-border-light">
                   <div className="min-w-0">
-                    <h2 className="font-display text-xl lg:text-2xl font-semibold text-ink-900 tracking-tight">
+                    <h2 className="font-display text-2xl font-semibold text-ink-900 tracking-tight mb-1.5">
                       {selected.name}
                     </h2>
-                    <div className="mt-1 text-[0.8125rem] text-ink-500 truncate">
+                    <div className="text-[0.875rem] text-ink-500 truncate">
                       <a
                         href={`mailto:${selected.email}`}
-                        className="hover:text-burgundy-700 transition-colors"
+                        className="text-ink-900 font-medium hover:text-burgundy-700 transition-colors"
                       >
                         {selected.email}
                       </a>
                       <span className="mx-2 text-ink-300">·</span>
-                      <span className="font-mono">{fmtAbsolute(selected.created_at)}</span>
+                      <span className="font-mono">
+                        {fmtAbsolute(selected.created_at)}
+                      </span>
                     </div>
                   </div>
 
@@ -176,16 +203,17 @@ export default async function InquiriesPage() {
                   </div>
                 </header>
 
-                <div className="bg-parchment-50 border border-border-light rounded-lg p-5 text-[0.9375rem] leading-relaxed text-ink-700 whitespace-pre-wrap">
-                  {selected.message}
+                <div className="text-[0.9375rem] leading-relaxed text-ink-700 [&_p]:mb-3 [&_p:last-child]:mb-0">
+                  <Markdown>{selected.message}</Markdown>
                 </div>
 
-                <footer className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-border-light">
+                <footer className="flex flex-wrap items-center justify-between gap-3 pt-4 mt-2 border-t border-border-light">
                   <p className="text-[0.75rem] text-ink-500">
-                    Reply opens your default mail client. Persistence and outbound mail come later.
+                    Reply opens your default mail client. Persistence and
+                    outbound mail come later.
                   </p>
                   <a
-                    href={`mailto:${selected.email}?subject=${encodeURIComponent('Re: your inquiry to DesignVortek')}`}
+                    href={`mailto:${selected.email}?subject=${encodeURIComponent('Re: your inquiry')}`}
                     className="inline-flex items-center gap-2 bg-gold-500 text-ink-900 hover:bg-gold-300 transition-colors px-5 py-2.5 rounded-full text-[0.75rem] font-semibold uppercase tracking-[0.12em]"
                   >
                     <Mail size={14} strokeWidth={1.8} />
@@ -194,14 +222,22 @@ export default async function InquiriesPage() {
                 </footer>
               </article>
             ) : (
-              <div className="bg-parchment-100 border border-border-light rounded-xl px-5 py-16 text-center text-ink-500">
-                <MessageSquare size={28} strokeWidth={1.5} className="mx-auto mb-3 text-ink-400" />
-                <p className="font-display text-xl text-ink-900">Nothing selected</p>
-                <p className="mt-1 text-sm">Pick a message on the left to read it.</p>
+              <div className="text-center py-16 text-ink-500">
+                <MessageSquare
+                  size={28}
+                  strokeWidth={1.5}
+                  className="mx-auto mb-3 text-ink-400"
+                />
+                <p className="font-display text-xl text-ink-900">
+                  Nothing selected
+                </p>
+                <p className="mt-1 text-sm">
+                  Pick a message on the left to read it.
+                </p>
               </div>
             )}
           </div>
-        </div>
+        </section>
       )}
     </AdminShell>
   )
