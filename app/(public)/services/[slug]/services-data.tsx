@@ -17,12 +17,17 @@
    normal tree — no runtime serialization across the RSC boundary needed.
    ===================================================================== */
 
+/** A tier feature — either a plain string (included) or an object with a
+ *  `muted` flag (rendered struck-through to show the tier doesn't include
+ *  it). Matches `.sd-tier-list li.muted` from pages.css line 1030. */
+export type TierFeature = string | { text: string; muted?: boolean }
+
 export type Tier = {
   name: string
   best: string
   price: string
   priceNote: string
-  features: string[]
+  features: TierFeature[]
   featured?: boolean
 }
 
@@ -30,6 +35,19 @@ export type Example = {
   title: string
   meta: string
   gradient: string
+}
+
+/** Optional "Pick your style" cards — matches `.sd-styles` section from
+ *  Service Detail.html. Only `character-art` populates this in the
+ *  current design source; other services skip the section. */
+export type StyleOption = {
+  name: string
+  note: string
+  /** Which `ds-ph-*` gradient placeholder to use as the card image. */
+  ph: 'character' | 'anime'
+  /** Optional CSS filter (e.g. `saturate(0.4) brightness(1.05)`) — matches
+   *  the inline `style="filter:..."` overrides in design HTML. */
+  filter?: string
 }
 
 export type ServiceData = {
@@ -45,8 +63,13 @@ export type ServiceData = {
   resolution: string
   delivered: string
   heroGradient: string
+  /** Optional named featured example shown in the hero badge ("Featured ·
+   *  Lyra Vexweaver"). Falls back to the service title when omitted. */
+  featuredExample?: string
   included: { name: string; body: string }[]
   tiers: [Tier, Tier, Tier]
+  /** Optional 4-card style picker — design only shows it on Character Art. */
+  styles?: StyleOption[]
   examples: Example[]
   /** FAQ answers stored as MARKDOWN strings — most contain **$ amounts** or
    *  inline links. Rendered via the <Markdown> wrapper. */
@@ -73,6 +96,7 @@ export const SERVICES = {
     resolution: '4K',
     delivered: '142',
     heroGradient: 'from-violet-950 via-purple-800 to-indigo-700',
+    featuredExample: 'Lyra Vexweaver',
     included: [
       { name: '2 rounds of revisions',  body: 'Sketch revisions are free. Two paint-stage revisions baked in — we usually nail it well within that.' },
       { name: '4K final delivery',       body: '4096 × 5120 pixel PNG & JPG, suitable for print up to 16×20 inches at 300dpi.' },
@@ -81,19 +105,49 @@ export const SERVICES = {
       { name: 'Personal use rights',     body: 'Use it anywhere personal — character sheet, social, prints, frame it on the wall.' },
       { name: 'Fixed pricing',           body: 'Quote up front, no surprises. The price you approve is the price you pay.' },
     ],
+    /* Tier features as 6-item lists with `.muted` strikethrough rows for
+     * what THIS tier doesn't include — matches Service Detail.html lines
+     * 187-193 (Standard), 206-212 (Deluxe), 223-230 (Premium). */
     tiers: [
-      { name: 'Standard', best: 'your first commission', price: '$180', priceNote: 'bust shot · 4K final',
-        features: ['Head & shoulders', '1 revision included', 'Solid background', '4K PNG & JPG'] },
-      { name: 'Deluxe', best: 'the sweet spot', price: '$320', priceNote: 'half-body · 4K + transparent',
-        features: ['Waist-up portrait', '2 revisions included', 'Detailed background', '4K PNG & JPG', 'Transparent BG export'], featured: true },
-      { name: 'Premium', best: 'the heirloom piece', price: '$520', priceNote: 'full body · all the works',
-        features: ['Full body, head to toe', '3 revisions included', 'Cinematic scene', '6K final resolution', 'Layered PSD source'] },
+      { name: 'Standard', best: 'your first commission', price: '$180', priceNote: 'flat · 4K final',
+        features: [
+          'Bust shot (head & shoulders)',
+          '1 revision included',
+          'Solid background',
+          '4K PNG & JPG',
+          { text: 'Full background scene', muted: true },
+          { text: 'Layered PSD',           muted: true },
+        ] },
+      { name: 'Deluxe', best: 'the sweet spot', price: '$320', priceNote: 'flat · 4K + transparent',
+        features: [
+          'Half-body (waist up)',
+          '2 revisions included',
+          'Detailed background',
+          '4K PNG & JPG',
+          'Transparent BG export',
+          { text: 'Layered PSD', muted: true },
+        ], featured: true },
+      { name: 'Premium', best: 'the heirloom piece', price: '$520', priceNote: 'flat · all the works',
+        features: [
+          'Full body (head to toe)',
+          '3 revisions included',
+          'Cinematic scene background',
+          '6K final resolution',
+          'Transparent BG + scene',
+          'Layered PSD source files',
+        ] },
     ] as [Tier, Tier, Tier],
+    /* Pick-your-style cards — matches Service Detail.html lines 135-164. */
+    styles: [
+      { name: 'Painterly',      note: 'Warm, dramatic, our signature', ph: 'character' },
+      { name: 'Anime',          note: 'Cell-shaded, expressive',       ph: 'anime' },
+      { name: 'Lineart',        note: 'Clean, ink-and-wash feel',      ph: 'character', filter: 'saturate(0.4) brightness(1.05)' },
+      { name: 'Semi-realistic', note: 'For the truly serious PC',      ph: 'character', filter: 'hue-rotate(60deg) brightness(1.1)' },
+    ],
     examples: [
       { title: 'Lyra · Tiefling Sorceror',   meta: 'Deluxe · Mar 2026',   gradient: 'from-violet-900 via-purple-700 to-indigo-600' },
       { title: 'Aldric · half-elf paladin',  meta: 'Premium · Mar 2026',  gradient: 'from-amber-950 via-orange-800 to-yellow-700' },
       { title: 'Drowned Captain Veska',      meta: 'Deluxe · Feb 2026',   gradient: 'from-emerald-900 via-teal-700 to-cyan-600' },
-      { title: 'Maelis · drow ranger',       meta: 'Standard · Jan 2026', gradient: 'from-slate-900 via-violet-800 to-purple-700' },
     ],
     faq: [
       { q: 'What species and classes do you cover?',                a: 'Every **D&D 5e** species and class is on the table — tieflings, drow, dragonborn, kobolds, custom homebrew species, you name it. Same for Pathfinder, World of Darkness, or your own setting. Send us a description and we’ll paint it.' },
@@ -139,7 +193,6 @@ export const SERVICES = {
       { title: 'Wraith VTT Token Set',      meta: 'Party · Mar 2026',  gradient: 'from-stone-900 via-amber-900 to-yellow-700' },
       { title: 'Strahd Vassals · 8 tokens', meta: 'Bulk · Feb 2026',   gradient: 'from-burgundy-900 via-red-800 to-rose-700' },
       { title: 'Pirate Crew · 6 tokens',    meta: 'Bulk · Jan 2026',   gradient: 'from-emerald-900 via-teal-700 to-cyan-600' },
-      { title: 'Solo Goblin Token',         meta: 'Single · Jan 2026', gradient: 'from-slate-900 via-violet-800 to-purple-700' },
     ],
     faq: [
       { q: 'Will the tokens look right in Roll20 / Foundry?', a: 'Yes — we test every token at the actual table sizes (**70px and 140px** on grid) before delivery. The color, contrast, and border are all chosen to read clearly at low zoom.' },
@@ -185,7 +238,6 @@ export const SERVICES = {
       { title: 'Stormwatch Adventuring Party', meta: 'Adventurers · Mar 2026', gradient: 'from-emerald-900 via-teal-700 to-cyan-600' },
       { title: 'Wedding Party as Adventurers', meta: 'Epic · Feb 2026',        gradient: 'from-forest-700 via-emerald-600 to-amber-700' },
       { title: 'Twilight Trio',                meta: 'Trio · Feb 2026',        gradient: 'from-violet-900 via-purple-700 to-indigo-600' },
-      { title: 'Saltwind Crew (7 figures)',    meta: 'Epic · Jan 2026',        gradient: 'from-amber-950 via-orange-800 to-yellow-700' },
     ],
     faq: [
       { q: 'How many figures can you fit in one piece?',          a: 'Up to **8 figures** keeps everyone readable. Beyond that, faces start getting small for the canvas — we’ll suggest splitting into two pieces.' },
@@ -231,7 +283,6 @@ export const SERVICES = {
       { title: 'Strahd NPC Pack (8 portraits)', meta: 'Campaign · Mar 2026', gradient: 'from-burgundy-900 via-red-800 to-rose-700' },
       { title: 'Saltmarsh Townsfolk · 6 NPCs',  meta: 'Starter · Feb 2026',  gradient: 'from-emerald-900 via-teal-700 to-cyan-600' },
       { title: 'Waterdeep Nobles · 12 NPCs',    meta: 'Campaign · Jan 2026', gradient: 'from-amber-950 via-orange-800 to-yellow-700' },
-      { title: 'Underdark Cabal · 5 NPCs',      meta: 'Starter · Dec 2025',  gradient: 'from-slate-900 via-violet-800 to-purple-700' },
     ],
     faq: [
       { q: 'How long does a full NPC pack take?',           a: 'A **5-NPC starter pack** runs 3–4 weeks. A **12-NPC campaign pack** runs 5–8 weeks. We deliver on a published cadence so you can plan sessions around it.' },
@@ -277,7 +328,6 @@ export const SERVICES = {
       { title: 'Indie game cover · The Hollow', meta: 'Project · Mar 2026',  gradient: 'from-amber-700 via-burgundy-700 to-tome-900' },
       { title: 'Novel cover · Saltbound',       meta: 'Small · Feb 2026',    gradient: 'from-emerald-900 via-teal-700 to-cyan-600' },
       { title: 'Merch line · 5 designs',        meta: 'Project · Jan 2026',  gradient: 'from-amber-950 via-orange-800 to-yellow-700' },
-      { title: 'Game studio retainer',          meta: 'Retainer · ongoing',  gradient: 'from-slate-900 via-violet-800 to-purple-700' },
     ],
     faq: [
       { q: 'What kinds of custom projects do you take?',       a: '**Book covers**, indie video game key art, tabletop game illustrations, merch designs, concept art for personal projects, large-format prints — anything that needs painting and isn’t covered by our standard services.' },
