@@ -63,7 +63,12 @@ export const HERO_THUMBS: Array<{
     image: '/images/portfolio/elgin-character.webp',
     alt: 'Elgin — a hand-painted character commission in the studio’s signature painterly style.',
   },
-  { label: 'VTT Token',     gradient: 'from-amber-950 via-orange-800 to-yellow-700' },
+  {
+    label: 'D&D Character Art',
+    gradient: 'from-amber-950 via-orange-800 to-yellow-700',
+    image: '/images/portfolio/dusk-character.webp',
+    alt: 'Dusk — a hand-painted D&D character commission in the studio’s signature painterly style.',
+  },
   { label: 'Anime',         gradient: 'from-rose-950 via-pink-800 to-fuchsia-700' },
   {
     label: 'NPC',
