@@ -72,74 +72,69 @@
 }
 
 /* ============================================================
-   Global resets & base styles
+   BASE LAYER — element resets & defaults.
+   IMPORTANT: any rule that targets a plain element (h1, p, a, body, etc.)
+   MUST live inside `@layer base { }` so Tailwind utility classes
+   (e.g. `text-cream-50`) always win in the cascade.
+   Unlayered CSS overrides utilities regardless of specificity.
    ============================================================ */
-*, *::before, *::after { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #FBF6E9;
+    color: #1E1408;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  /* Headings inherit body color by default — let Tailwind utilities (text-cream-50,
+     text-ink-900, etc.) decide color per-element. We keep typography defaults only. */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  p { margin: 0; text-wrap: pretty; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; }
+
+  ::selection {
+    background-color: #C9A04A40;
+    color: #1E1408;
+  }
+
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: #F5EBD3; }
+  ::-webkit-scrollbar-thumb { background: #C8B07A; border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: #9A7232; }
+
+  *:focus-visible {
+    outline: 2px solid #C9A04A;
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
 }
 
-body {
-  background-color: #FBF6E9;
-  color: #1E1408;
-  font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: 1.65;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  overflow-x: hidden;
-}
-
-/* ============================================================
-   Typography defaults
-   ============================================================ */
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
-  color: #1E1408;
-  margin: 0;
-  text-wrap: balance;
-}
-
-p { margin: 0; text-wrap: pretty; }
-a { color: #6B1F2A; text-decoration: none; }
-a:hover { color: #8A2A35; }
-button { font-family: inherit; }
-
+/* Font-family utilities (plain classes, not element selectors — fine unlayered) */
 .font-display { font-family: var(--font-display); letter-spacing: -0.02em; }
 .font-body    { font-family: var(--font-body); }
 .font-accent  { font-family: var(--font-accent); }
-
-/* ============================================================
-   Selection
-   ============================================================ */
-::selection {
-  background-color: #C9A04A40;
-  color: #1E1408;
-}
-
-/* ============================================================
-   Scrollbar
-   ============================================================ */
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: #F5EBD3; }
-::-webkit-scrollbar-thumb { background: #C8B07A; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #9A7232; }
-
-/* ============================================================
-   Focus ring (accessibility)
-   ============================================================ */
-*:focus-visible {
-  outline: 2px solid #C9A04A;
-  outline-offset: 2px;
-  border-radius: 4px;
-}
 
 /* ============================================================
    Utility classes
