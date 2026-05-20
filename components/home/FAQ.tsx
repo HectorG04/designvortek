@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Plus, ArrowRight } from 'lucide-react'
 import Container from '@/components/ui/Container'
 import SectionLabel from '@/components/ui/SectionLabel'
+import Markdown from '@/components/ui/Markdown'
 import { HOMEPAGE_FAQ } from '@/lib/constants'
 
 export default function FAQ() {
@@ -20,7 +21,8 @@ export default function FAQ() {
       name: item.q,
       acceptedAnswer: {
         '@type': 'Answer',
-        text: item.a.join(' '),
+        // Strip basic markdown for SEO schema (Google wants plain text)
+        text: item.a.replace(/\*\*/g, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'),
       },
     })),
   }
@@ -96,10 +98,8 @@ export default function FAQ() {
                         transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
                         style={{ overflow: 'hidden' }}
                       >
-                        <div className="px-6 pb-5 text-base text-ink-700 leading-[1.7] max-w-[64ch] space-y-3 [&_a]:text-burgundy-700 [&_a]:border-b [&_a]:border-gold-500">
-                          {item.a.map((para, pi) => (
-                            <p key={pi}>{para}</p>
-                          ))}
+                        <div className="px-6 pb-5 text-base text-ink-700 leading-[1.7] max-w-[64ch]">
+                          <Markdown>{item.a}</Markdown>
                         </div>
                       </motion.div>
                     )}

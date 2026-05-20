@@ -234,45 +234,42 @@ export const CURRENT_AVAILABILITY = {
 /* =====================================================================
    FAQ (FAQPage schema)
    ===================================================================== */
+/**
+ * FAQ answers stored as MARKDOWN STRINGS so inline emphasis (**bold**, [links](/url))
+ * survives the data layer. Rendered via <Markdown> wrapper component.
+ * See memory/feedback-css-cascade-rules.md Rule 3.
+ */
 export const HOMEPAGE_FAQ = [
   {
     q: 'How much does a commission cost?',
-    a: [
-      'Commissions range from $80 for a single VTT token to $600+ for a full party portrait. Character art starts at $180; NPC packs from $300. Every quote is fixed up front — no surprises, no add-ons mid-project.',
-      'See the full pricing breakdown for every service tier.',
-    ],
+    a: `Commissions range from **$80 for a single VTT token** to **$600+ for a full party portrait**. Character art starts at $180; NPC packs from $300. Every quote is fixed up front — no surprises, no add-ons mid-project.
+
+See the full [pricing breakdown](/pricing) for every service tier.`,
   },
   {
     q: 'How long does a commission take?',
-    a: [
-      'Most character portraits ship within 7–14 days of brief approval. VTT tokens are faster (3–7 days). Party portraits and NPC packs take 2–4 weeks depending on figure count.',
-      'Rush turnaround is available for +$50 on most services — reach out before booking.',
-    ],
+    a: `Most character portraits ship within **7–14 days** of brief approval. VTT tokens are faster (3–7 days). Party portraits and NPC packs take 2–4 weeks depending on figure count.
+
+Rush turnaround is available for +$50 on most services — reach out before booking.`,
   },
   {
     q: "What's included with every commission?",
-    a: [
-      'Every commission includes: 2 rounds of revisions, the final piece at 4K resolution, both PNG and JPG exports, and a transparent-background version where it makes sense. Layered PSD files are available as a $30 add-on.',
-    ],
+    a: `Every commission includes: **2 rounds of revisions**, the final piece at 4K resolution, both PNG and JPG exports, and a transparent-background version where it makes sense. Layered PSD files are available as a $30 add-on.`,
   },
   {
     q: 'Can I use the art commercially?',
-    a: [
-      'Personal use (prints, social posts, your character sheet) is included with every commission. Commercial licensing — books, merch, streaming, paid Patreons — is available as a $150 add-on per piece, or as a bulk arrangement for larger projects.',
-    ],
+    a: `Personal use (prints, social posts, your character sheet) is included with every commission. **Commercial licensing** — books, merch, streaming, paid Patreons — is available as a $150 add-on per piece, or as a bulk arrangement for larger projects.`,
   },
   {
     q: 'Do you use AI in any part of the process?',
-    a: [
-      "No. Every piece is hand-painted from scratch by a human artist. No AI generation, no auto-fills, no traced-over outputs. That's the entire point of the studio.",
-      'If you want to see the process, we share work-in-progress sketches and color blocks for every commission.',
-    ],
+    a: `**No.** Every piece is hand-painted from scratch by a human artist. No AI generation, no auto-fills, no traced-over outputs. That's the entire point of the studio.
+
+If you want to see the process, we share work-in-progress sketches and color blocks for every commission.`,
   },
   {
     q: "What if I'm not happy with the result?",
-    a: [
-      'Two revisions are baked into every commission — we usually nail it well within that. If the piece is genuinely not what you wanted at the end, we\'ll refund the balance beyond the 25% deposit (which covers our sketch work).',
-      'In four years and 500+ commissions, this has happened twice.',
-    ],
+    a: `Two revisions are baked into every commission — we usually nail it well within that. If the piece is genuinely not what you wanted at the end, we'll refund the balance beyond the 25% deposit (which covers our sketch work).
+
+In four years and 500+ commissions, this has happened twice. Full [refund policy](/refunds).`,
   },
 ] as const
