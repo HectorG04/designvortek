@@ -1,11 +1,19 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import ServiceDetailView, { SERVICES, type ServiceSlug } from './ServiceDetailView'
+import ServiceDetailView from './ServiceDetailView'
+import { SERVICES, type ServiceSlug } from './services-data'
 
 /* =====================================================================
    SERVICE DETAIL — server entry. Handles generateStaticParams + meta,
    then delegates to the 'use client' ServiceDetailView for FAQ accordion
    + tier interactivity.
+
+   IMPORTANT: SERVICES + types are imported from the SERVER-SAFE
+   ./services-data.tsx module — NOT from ServiceDetailView (which is a
+   'use client' file). Importing data from a client module hides it
+   behind the client-bundle boundary at build time, leaving
+   generateStaticParams() returning [] and every detail route 404ing in
+   production. This split fixes that.
    ===================================================================== */
 
 export function generateStaticParams() {
