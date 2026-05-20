@@ -1,19 +1,39 @@
 import Link from 'next/link'
-import { Mail, Camera, AtSign } from 'lucide-react'
 import { FOOTER_LINKS, SITE_NAME } from '@/lib/constants'
 import Logo from './Logo'
 import NewsletterForm from './NewsletterForm'
 
+// Inline SVGs matching the design HTML exactly. (lucide-react v1.x doesn't
+// ship Instagram/Twitter brand icons, so we use the canonical glyphs here.)
+const InstagramIcon = ({ size = 16 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="3" width="18" height="18" rx="5" />
+    <circle cx="12" cy="12" r="4" />
+    <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
+  </svg>
+)
+
+const TwitterIcon = ({ size = 16 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M22 5.8a8.5 8.5 0 01-2.4.7 4.2 4.2 0 001.8-2.3 8.4 8.4 0 01-2.6 1 4.2 4.2 0 00-7.2 3.8A11.9 11.9 0 013 4.8a4.2 4.2 0 001.3 5.6 4.1 4.1 0 01-1.9-.5v.1a4.2 4.2 0 003.4 4.1 4.2 4.2 0 01-1.9.1 4.2 4.2 0 003.9 2.9A8.5 8.5 0 012 18.6 11.9 11.9 0 008.5 20.5c7.7 0 11.9-6.4 11.9-11.9v-.5A8.5 8.5 0 0022 5.8z" />
+  </svg>
+)
+
+const EmailIcon = ({ size = 16 }: { size?: number }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="5" width="18" height="14" rx="2" />
+    <path d="M3 7l9 6 9-6" />
+  </svg>
+)
+
 const SOCIAL_LINKS = [
-  { Icon: Camera, href: 'https://instagram.com',           label: 'Instagram' },
-  { Icon: AtSign, href: 'https://twitter.com',             label: 'Twitter' },
-  { Icon: Mail,   href: 'mailto:hello@designvortek.com',   label: 'Email' },
+  { Icon: InstagramIcon, href: 'https://instagram.com',         label: 'Instagram' },
+  { Icon: TwitterIcon,   href: 'https://twitter.com',           label: 'Twitter' },
+  { Icon: EmailIcon,     href: 'mailto:hello@designvortek.com', label: 'Email' },
 ]
 
-// Spec: 4 link columns — Studio, Services, Resources, "Stay in touch" (last is custom)
 const LINK_COLUMNS: Array<keyof typeof FOOTER_LINKS> = ['Studio', 'Services', 'Resources']
 
-// Spec: bottom-bar links are Privacy, Terms, Refunds (from FOOTER_LINKS.Legal minus Contact)
 const BOTTOM_LABEL_MAP: Record<string, string> = {
   'Privacy Policy':    'Privacy',
   'Terms of Service':  'Terms',
@@ -26,7 +46,7 @@ export default function SiteFooter() {
     <footer className="bg-parchment-200 border-t border-border-light pt-[72px] pb-7">
       <div className="mx-auto max-w-[1280px] px-6 md:px-12">
 
-        {/* Top grid: brand (1.6fr) + 4 cols (1fr each) on desktop. 2 cols at <900px. */}
+        {/* Top grid: brand (1.6fr) + 4 link cols (1fr each) on desktop. 2 cols at <900px. */}
         <div className="grid grid-cols-1 sm:grid-cols-2 min-[901px]:[grid-template-columns:1.6fr_repeat(4,1fr)] gap-8 min-[901px]:gap-10 mb-12">
 
           {/* Brand column */}
@@ -45,7 +65,7 @@ export default function SiteFooter() {
                   rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
                   className="w-9 h-9 rounded-full bg-parchment-50 border border-border-light text-ink-700 inline-flex items-center justify-center hover:bg-burgundy-700 hover:text-cream-50 hover:border-burgundy-700 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]"
                 >
-                  <Icon size={16} strokeWidth={1.5} />
+                  <Icon size={16} />
                 </a>
               ))}
             </div>
