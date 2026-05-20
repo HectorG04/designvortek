@@ -12,7 +12,7 @@ const fadeUp = {
 
 export default function ProcessSteps() {
   return (
-    <section className="bg-parchment-50 py-24 md:py-32">
+    <section className="bg-parchment-50 py-16 md:py-32">
       <Container>
         {/* Section head */}
         <motion.div
@@ -35,9 +35,9 @@ export default function ProcessSteps() {
 
         {/* Steps with connecting gold line */}
         <div className="relative">
-          {/* Horizontal connector line — desktop only */}
+          {/* Horizontal connector line — desktop only (>=900px) */}
           <div
-            className="hidden lg:block absolute top-7 left-[12.5%] right-[12.5%] h-px z-0"
+            className="hidden min-[900px]:block absolute top-7 left-[12.5%] right-[12.5%] h-px z-0"
             style={{
               background: 'linear-gradient(90deg, transparent, var(--color-gold-300), var(--color-gold-500), var(--color-gold-300), transparent)',
             }}
@@ -49,7 +49,7 @@ export default function ProcessSteps() {
             whileInView="visible"
             viewport={{ once: true, margin: '-100px' }}
             variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10"
+            className="grid grid-cols-1 min-[600px]:grid-cols-2 min-[900px]:grid-cols-4 gap-y-10 gap-x-6 min-[900px]:gap-8 relative z-10"
           >
             {PROCESS_STEPS.map((step) => (
               <motion.div

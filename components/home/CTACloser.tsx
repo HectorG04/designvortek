@@ -12,8 +12,8 @@ const fadeUp = {
 
 const TRUST_ITEMS = [
   'No commitment',
-  '48-hour quote',
-  '500+ commissions delivered',
+  '100% satisfaction focus',
+  'Secure payments',
 ]
 
 export default function CTACloser() {
@@ -50,7 +50,7 @@ export default function CTACloser() {
             <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
               <circle cx="16" cy="16" r="11" stroke="currentColor" strokeWidth="0.8" />
               <path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor" />
-              <circle cx="16" cy="16" r="1.6" fill="var(--color-tome-950, #0d0a06)" />
+              <circle cx="16" cy="16" r="1.6" fill="var(--color-tome-950, #1A130C)" />
             </svg>
           </motion.div>
 

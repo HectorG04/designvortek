@@ -33,7 +33,7 @@ export default function CompassDivider({
           width={size}
           height={size}
           viewBox="0 0 32 32"
-          className="flex-shrink-0 opacity-80"
+          className="flex-shrink-0"
         >
           <circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" strokeWidth="0.8" />
           <path

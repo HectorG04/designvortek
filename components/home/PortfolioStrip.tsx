@@ -71,7 +71,7 @@ export default function PortfolioStrip() {
         {/* Grid */}
         <motion.div
           layout
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4"
+          className="grid grid-cols-2 min-[901px]:grid-cols-4 gap-4"
         >
           <AnimatePresence mode="popLayout">
             {filtered.map((item, i) => (
@@ -116,7 +116,7 @@ export default function PortfolioStrip() {
         {/* CTA */}
         <div className="text-center mt-12">
           <Button href="/portfolio" variant="outline" size="md">
-            See full gallery <ArrowRight size={14} strokeWidth={1.8} />
+            View full gallery <ArrowRight size={14} strokeWidth={1.8} />
           </Button>
         </div>
       </Container>

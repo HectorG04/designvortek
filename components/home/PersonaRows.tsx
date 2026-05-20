@@ -52,26 +52,26 @@ export default function PersonaRows() {
               viewport={{ once: true, margin: '-100px' }}
               variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
               className={cn(
-                'grid grid-cols-1 gap-6 items-center lg:grid-cols-[1fr_1.1fr] lg:gap-14',
-                p.reverse && 'lg:grid-cols-[1.1fr_1fr]'
+                'grid grid-cols-1 gap-6 items-center min-[901px]:grid-cols-[1fr_1.1fr] min-[901px]:gap-14',
+                p.reverse && 'min-[901px]:grid-cols-[1.1fr_1fr]'
               )}
             >
               {/* Image */}
               <motion.div
                 variants={fadeUp}
                 className={cn(
-                  'relative rounded-2xl overflow-hidden aspect-[5/4] border border-border-light flex items-end p-5',
+                  'relative rounded-2xl overflow-hidden aspect-[4/3] max-h-[420px] border border-border-light flex items-end p-5',
                   personaBgClasses[p.bg],
-                  p.reverse && 'lg:order-2'
+                  p.reverse && 'min-[901px]:order-2'
                 )}
               >
-                <span className="inline-block bg-tome-950/65 backdrop-blur-md border border-cream-50/15 text-cream-50 text-[0.6875rem] tracking-[0.1em] uppercase font-mono px-2.5 py-1.5 rounded-sm">
+                <span className="inline-block bg-tome-950/65 backdrop-blur-md border border-cream-50/[0.15] text-cream-50 text-[0.6875rem] tracking-[0.1em] uppercase font-mono px-2.5 py-1.5 rounded-sm">
                   {p.tag}
                 </span>
               </motion.div>
 
               {/* Text */}
-              <motion.div variants={fadeUp} className={cn(p.reverse && 'lg:order-1')}>
+              <motion.div variants={fadeUp} className={cn(p.reverse && 'min-[901px]:order-1')}>
                 <div className="flex items-center gap-3 mb-3">
                   <span className="h-px w-7 bg-gold-500" aria-hidden="true" />
                   <span className="font-display text-[0.875rem] font-semibold text-gold-700 tracking-[0.15em]">{p.num}</span>

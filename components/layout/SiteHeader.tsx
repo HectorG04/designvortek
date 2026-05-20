@@ -50,15 +50,15 @@ export default function SiteHeader({ transparent = false }: SiteHeaderProps) {
             : undefined
         }
         className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-[background-color,padding,box-shadow] duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]',
+          'fixed top-0 left-0 right-0 z-50 flex items-center justify-between transition-[background-color,padding,box-shadow] duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]',
           scrolled
-            ? 'bg-parchment-50/[0.92] backdrop-blur-md py-3 min-[901px]:py-[14px]'
+            ? 'bg-parchment-50/[0.92] backdrop-blur-md py-3 px-6 min-[901px]:py-[14px] min-[901px]:px-12'
             : transparent
-              ? 'bg-transparent py-4 min-[901px]:py-5'
-              : 'bg-parchment-50/[0.92] backdrop-blur-md py-4 min-[901px]:py-5'
+              ? 'bg-transparent py-4 px-6 min-[901px]:py-5 min-[901px]:px-12'
+              : 'bg-parchment-50/[0.92] backdrop-blur-md py-4 px-6 min-[901px]:py-5 min-[901px]:px-12'
         )}
       >
-        <div className="mx-auto max-w-[1280px] px-6 min-[901px]:px-12 flex items-center justify-between">
+        <div className="contents">
 
           {/* Logo */}
           <Logo
@@ -70,7 +70,7 @@ export default function SiteHeader({ transparent = false }: SiteHeaderProps) {
           <nav
             className={cn(
               'hidden min-[901px]:flex items-center gap-9',
-              onHero ? 'text-cream-200' : 'text-ink-700'
+              onHero ? 'text-cream-50' : 'text-ink-700'
             )}
             aria-label="Primary"
           >
@@ -148,11 +148,11 @@ export default function SiteHeader({ transparent = false }: SiteHeaderProps) {
           <div className="flex items-center gap-3">
             <Button
               href="/order"
-              variant={onHero ? 'outline-cream' : 'primary'}
+              variant="gold"
               size="sm"
               className="hidden md:inline-flex"
             >
-              Start Commission
+              Start commission
             </Button>
 
             <button
@@ -209,8 +209,8 @@ export default function SiteHeader({ transparent = false }: SiteHeaderProps) {
                 transition={{ delay: 0.2 }}
                 className="pt-4 mt-2 border-t border-border-light"
               >
-                <Button href="/order" variant="primary" size="md" className="w-full justify-center">
-                  Start Commission
+                <Button href="/order" variant="gold" size="md" className="w-full justify-center">
+                  Start commission
                 </Button>
               </motion.div>
             </nav>

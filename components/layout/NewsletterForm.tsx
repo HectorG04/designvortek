@@ -28,15 +28,15 @@ export default function NewsletterForm() {
 
   if (submitted) {
     return (
-      <div className="mt-3 mb-3 max-w-sm inline-flex items-center gap-2 bg-forest-500/10 border border-forest-500/30 rounded-md px-3 py-2.5 text-sm text-forest-700">
+      <div className="mt-3 inline-flex items-center gap-2 bg-forest-500/10 border border-forest-500/30 rounded-md px-3 py-2.5 text-sm text-forest-700">
         <Check size={14} strokeWidth={2.5} />
-        <span>Thanks — you&rsquo;re on the list.</span>
+        <span>Thanks &mdash; you&rsquo;re on the list.</span>
       </div>
     )
   }
 
   return (
-    <form className="flex gap-1.5 mt-3 mb-3 max-w-sm" onSubmit={handleSubmit}>
+    <form className="flex gap-1.5 mt-3" onSubmit={handleSubmit}>
       <label htmlFor="footer-newsletter" className="sr-only">
         Email address
       </label>

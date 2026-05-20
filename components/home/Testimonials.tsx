@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Star, Quote } from 'lucide-react'
+import { Star } from 'lucide-react'
 import Container from '@/components/ui/Container'
 import SectionLabel from '@/components/ui/SectionLabel'
 import { TESTIMONIALS } from '@/lib/constants'
@@ -13,7 +13,7 @@ const fadeUp = {
 
 export default function Testimonials() {
   return (
-    <section className="bg-parchment-100 py-24 md:py-32">
+    <section className="bg-parchment-100 py-16 md:py-32">
       <Container>
         {/* Section head */}
         <motion.div
@@ -37,7 +37,7 @@ export default function Testimonials() {
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
           variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-5"
+          className="grid grid-cols-1 min-[900px]:grid-cols-3 gap-5"
         >
           {TESTIMONIALS.map((t) => (
             <motion.article
@@ -45,11 +45,22 @@ export default function Testimonials() {
               variants={fadeUp}
               whileHover={{ y: -4 }}
               transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-              className="relative border border-border-light rounded-2xl p-8 flex flex-col hover:border-border-medium hover:shadow-[0_4px_12px_rgba(30,20,8,0.08)] transition-[box-shadow,border-color] duration-[250ms]"
+              className="relative border border-border-light rounded-xl p-8 flex flex-col hover:border-border-medium hover:shadow-md transition-[box-shadow,border-color,transform] duration-[250ms]"
               style={{ background: 'linear-gradient(155deg, var(--color-parchment-100), var(--color-parchment-50))' }}
             >
-              {/* Quote glyph */}
-              <Quote size={28} className="text-gold-500 mb-3" strokeWidth={1.5} />
+              {/* Quote glyph — custom double-mark */}
+              <svg
+                viewBox="0 0 32 32"
+                width={28}
+                height={28}
+                className="text-gold-500 mb-3"
+                aria-hidden="true"
+              >
+                <path
+                  d="M6 22 Q6 14 14 10 L13 13 Q9 15 9 22 Z M18 22 Q18 14 26 10 L25 13 Q21 15 21 22 Z"
+                  fill="currentColor"
+                />
+              </svg>
 
               {/* Stars */}
               <div className="flex gap-[2px] text-gold-500" style={{ marginBottom: 14 }}>

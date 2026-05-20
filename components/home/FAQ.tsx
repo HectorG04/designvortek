@@ -41,7 +41,7 @@ export default function FAQ() {
       />
 
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-8 lg:gap-16 max-w-[1080px] mx-auto">
+        <div className="grid grid-cols-1 min-[900px]:grid-cols-[1fr_1.8fr] gap-8 min-[900px]:gap-16 max-w-[1080px] mx-auto">
 
           {/* Side column */}
           <motion.div
@@ -55,7 +55,8 @@ export default function FAQ() {
             </motion.div>
             <motion.h2
               variants={fadeUp}
-              className="font-display text-[2rem] md:text-[3rem] font-semibold text-ink-900 leading-[1.1] tracking-tight mb-4"
+              className="font-display font-semibold text-ink-900 leading-[1.1] tracking-tight mb-4"
+              style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}
             >
               Quick answers, no <em className="font-display italic font-medium text-burgundy-700">fluff</em>
             </motion.h2>
@@ -65,7 +66,7 @@ export default function FAQ() {
             <motion.div variants={fadeUp}>
               <Link
                 href="/faq"
-                className="inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.15em] font-semibold text-burgundy-700 hover:text-burgundy-500 hover:gap-3.5 transition-all"
+                className="inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.15em] font-semibold text-burgundy-700 hover:gap-3.5 transition-all duration-[150ms]"
               >
                 See full FAQ <ArrowRight size={14} strokeWidth={1.8} />
               </Link>
@@ -104,7 +105,7 @@ export default function FAQ() {
                     </span>
                     <span
                       className={cn(
-                        'flex-shrink-0 w-8 h-8 rounded-full inline-flex items-center justify-center transition-all duration-250',
+                        'flex-shrink-0 w-8 h-8 rounded-full inline-flex items-center justify-center transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]',
                         isOpen
                           ? 'bg-burgundy-700 text-cream-50 rotate-45'
                           : 'bg-parchment-50 text-burgundy-700 border border-border-medium'

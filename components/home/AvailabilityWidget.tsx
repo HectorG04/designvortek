@@ -89,9 +89,9 @@ export default function AvailabilityWidget() {
                   whileTap={{ scale: 0.97 }}
                   animate={{
                     boxShadow: [
-                      '0 0 0 0 rgba(214, 196, 178, 1)',
+                      '0 0 0 0 #F3D6D9',
                       '0 0 0 6px rgba(107, 31, 42, 0.06)',
-                      '0 0 0 0 rgba(214, 196, 178, 1)',
+                      '0 0 0 0 #F3D6D9',
                     ],
                     scale: [1, 1.04, 1],
                   }}
@@ -113,9 +113,8 @@ export default function AvailabilityWidget() {
           </div>
 
           {/* Footer */}
-          <div className="text-center text-ink-500 text-base px-3 pt-3 pb-6">
-            <span className="font-semibold text-ink-700">{booked} of {CURRENT_AVAILABILITY.total} {CURRENT_AVAILABILITY.month.split(' ')[0]} slots booked</span>
-            {' '} · {open} remaining · June waitlist now open
+          <div className="text-center text-ink-500 text-base pt-3 pb-6">
+            {booked} of {CURRENT_AVAILABILITY.total} {CURRENT_AVAILABILITY.month.split(' ')[0]} slots booked · {open} remaining · June waitlist now open
           </div>
 
           {/* Actions */}

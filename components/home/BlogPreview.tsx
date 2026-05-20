@@ -16,7 +16,7 @@ const fadeUp = {
 
 export default function BlogPreview() {
   return (
-    <section className="bg-parchment-100 py-24 md:py-32">
+    <section className="bg-parchment-100 py-16 md:py-32">
       <Container>
         {/* Section head */}
         <motion.div
@@ -43,13 +43,13 @@ export default function BlogPreview() {
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
           variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-5"
+          className="grid grid-cols-1 min-[900px]:grid-cols-3 gap-5"
         >
           {BLOG_PREVIEW.map((post) => (
             <motion.article key={post.slug} variants={fadeUp}>
               <Link
                 href={`/blog/${post.slug}`}
-                className="group block bg-parchment-50 border border-border-light rounded-2xl overflow-hidden hover:border-border-medium hover:shadow-[0_4px_12px_rgba(30,20,8,0.08)] hover:-translate-y-1 transition-[transform,box-shadow,border-color] duration-[250ms] h-full"
+                className="group block bg-parchment-50 border border-border-light rounded-xl overflow-hidden hover:border-border-medium hover:shadow-md hover:-translate-y-1 transition-[transform,box-shadow,border-color] duration-[250ms] h-full"
               >
                 {/* Featured image placeholder */}
                 <div className={cn(

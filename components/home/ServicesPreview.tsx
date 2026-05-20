@@ -47,7 +47,7 @@ export default function ServicesPreview() {
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
           variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          className="grid grid-cols-1 min-[901px]:grid-cols-3 gap-6"
         >
           {FEATURED_SERVICES.map((service) => {
             const Icon = ICONS[service.icon]
@@ -68,10 +68,10 @@ export default function ServicesPreview() {
                 <h4 className="font-display text-2xl font-semibold text-ink-900 leading-[1.2]">{service.title}</h4>
 
                 {/* Sub */}
-                <p className="font-accent text-lg text-burgundy-700 -mt-2.5">{service.sub}</p>
+                <p className="font-accent text-lg text-burgundy-700 -mt-1">{service.sub}</p>
 
                 {/* Body */}
-                <p className="text-ink-700 leading-[1.6]">{service.body}</p>
+                <p className="text-ink-700 leading-[1.6] text-base">{service.body}</p>
 
                 {/* Features */}
                 <ul className="flex flex-col gap-2 list-none p-0 m-0">
