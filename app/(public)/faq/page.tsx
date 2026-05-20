@@ -8,23 +8,29 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import PageHero from '@/components/layout/PageHero'
 import Container from '@/components/ui/Container'
 import Button from '@/components/ui/Button'
+import Markdown from '@/components/ui/Markdown'
 import { cn } from '@/lib/utils'
 
-/* ---------- FAQ data ---------- */
+/* ============================================================
+   FAQ data — answers stored as MARKDOWN STRINGS so inline
+   emphasis (**bold** + [links](/url)) survives the data layer
+   and renders through the branded Markdown component.
+   ============================================================ */
 const FAQ_CATEGORIES = [
-  { id: 'pricing', label: 'Pricing' },
-  { id: 'process', label: 'Process' },
-  { id: 'revisions', label: 'Revisions' },
-  { id: 'licensing', label: 'Licensing' },
+  { id: 'pricing',       label: 'Pricing' },
+  { id: 'process',       label: 'Process' },
+  { id: 'revisions',     label: 'Revisions' },
+  { id: 'licensing',     label: 'Licensing' },
   { id: 'cancellations', label: 'Cancellations' },
-  { id: 'tech', label: 'Tech & delivery' },
+  { id: 'tech',          label: 'Tech & delivery' },
 ] as const
 
 type CategoryId = typeof FAQ_CATEGORIES[number]['id']
 
 interface FaqItem {
   q: string
-  a: string[]
+  /** Markdown string — use `**bold**`, `*italic*`, `[text](/url)`. */
+  a: string
   category: CategoryId
 }
 
@@ -32,110 +38,108 @@ const FAQS: FaqItem[] = [
   {
     category: 'pricing',
     q: 'How much does a commission cost?',
-    a: [
-      'Commissions range from $80 for a single VTT token to $600+ for a full party portrait. Character art starts at $180; NPC packs from $300. Every quote is fixed up front — no surprises, no add-ons mid-project.',
-    ],
+    a: `Commissions range from **$80 for a single VTT token** to **$600+ for a full party portrait**. Character art starts at $180; NPC packs from $300. Every quote is fixed up front — no surprises, no add-ons mid-project.
+
+See the full [pricing breakdown](/pricing) for every service tier.`,
   },
   {
     category: 'pricing',
     q: 'Why flat-rate instead of hourly?',
-    a: [
-      'Hourly billing punishes care. You shouldn’t pay more because we polished for an extra two hours. Fixed scope, fixed price, every time.',
-    ],
+    a: `Hourly billing punishes care. You shouldn't pay more because we polished for an extra two hours. **Fixed scope, fixed price**, every time.`,
+  },
+  {
+    category: 'pricing',
+    q: 'How does payment work?',
+    a: `A **25% deposit** holds your slot (refundable until first sketch). The remaining 75% is due on delivery. All payments through Stripe.`,
   },
   {
     category: 'pricing',
     q: 'Do you offer bulk discounts?',
-    a: [
-      'Yes — NPC packs of 5+ get a per-piece discount. VTT tokens in bulk drop to $60 each at 8+. Custom retainer arrangements are available for frequent collaborators.',
-    ],
+    a: `Yes — **NPC packs of 5+** get a per-piece discount. VTT tokens in bulk drop to **$60 each at 8+**. Custom retainer arrangements are available for frequent collaborators.`,
   },
   {
     category: 'process',
     q: 'How long does a commission take?',
-    a: [
-      'Most character portraits ship within 7–14 days of brief approval. VTT tokens are faster (3–7 days). Party portraits and NPC packs take 2–4 weeks depending on figure count.',
-      'Rush turnaround is available for +$50 on most services — reach out before booking.',
-    ],
+    a: `Most character portraits ship within **7–14 days** of brief approval. VTT tokens are faster (3–7 days). Party portraits and NPC packs take 2–4 weeks depending on figure count.
+
+Rush turnaround is available for **+$50** on most services — reach out before booking.`,
   },
   {
     category: 'process',
     q: 'What happens after I submit a brief?',
-    a: [
-      'Within 48 hours we review the brief and send back a fixed quote with a timeline. You approve, pay a 25% deposit, and we begin. Sketches typically land within a week.',
-    ],
+    a: `Within **48 hours** we review the brief and send back a fixed quote with a timeline. You approve, pay a 25% deposit, and we begin. Sketches typically land within a week.`,
   },
   {
     category: 'process',
     q: 'Will I get updates during the painting?',
-    a: [
-      'Yes — sketches, color blocks, and paint progress are shared every three days. You’ll never wonder where things stand.',
-    ],
+    a: `Yes — sketches, color blocks, and paint progress are shared **every three days**. You'll never wonder where things stand.`,
+  },
+  {
+    category: 'process',
+    q: 'Can I request a rush?',
+    a: `Yes — **+$50** moves you to the front of the queue with a 3-day turnaround on Character and Token services. Reach out before booking to confirm we have rush capacity.`,
   },
   {
     category: 'revisions',
     q: 'How many revisions are included?',
-    a: [
-      'Sketch revisions are unlimited — we get the foundation right before paint. Two paint-stage revisions are baked into every commission. Extra rounds are $40 each.',
-    ],
+    a: `Sketch revisions are **unlimited** — we get the foundation right before paint. **Two paint-stage revisions** are baked into every commission. Extra rounds are $40 each.`,
   },
   {
     category: 'revisions',
     q: 'What if I’m not happy with the result?',
-    a: [
-      'In four years and 500+ commissions, this has happened twice. If the piece is genuinely off the brief, we refund the balance beyond the 25% deposit (which covers our sketch work).',
-    ],
+    a: `In four years and **500+ commissions**, this has happened twice. If the piece is genuinely off the brief, we refund the balance beyond the 25% deposit (which covers our sketch work). Read the full [refund policy](/refunds).`,
+  },
+  {
+    category: 'revisions',
+    q: 'Do you use AI in any part of the process?',
+    a: `**No.** Every piece is hand-painted from scratch by a human artist. No AI generation, no auto-fills, no traced-over outputs. That's the entire point of the studio.`,
   },
   {
     category: 'licensing',
     q: 'Can I use the art commercially?',
-    a: [
-      'Personal use (prints, social posts, your character sheet) is included with every commission. Commercial licensing — books, merch, streaming, paid Patreons — is available as a $150 add-on per piece, or as a bulk arrangement for larger projects.',
-    ],
+    a: `Personal use (prints, social posts, your character sheet) is **included** with every commission. **Commercial licensing** — books, merch, streaming, paid Patreons — is available as a **$150 add-on** per piece, or as a bulk arrangement for larger projects.`,
   },
   {
     category: 'licensing',
     q: 'Can you post my commission on your portfolio?',
-    a: [
-      'By default, yes — this is how new clients find us. You can opt out at any point before delivery. Sensitive or NSFW commissions are never posted.',
-    ],
+    a: `By default, yes — this is how new clients find us. You can **opt out at any point before delivery**. Sensitive or NSFW commissions are never posted.`,
   },
   {
     category: 'licensing',
     q: 'Who owns the original file?',
-    a: [
-      'You own the rendered piece and the rights described above. We retain the right to display it in our portfolio (unless you opt out) and the underlying brushes, references, and processes.',
-    ],
+    a: `You own the rendered piece and the rights described above. We retain the right to display it in our portfolio (unless you opt out) and the underlying brushes, references, and processes. See the full [terms of service](/terms).`,
   },
   {
     category: 'cancellations',
     q: 'What’s your refund policy?',
-    a: [
-      'Before first sketch: 100% refundable. After first sketch: deposit covers the sketch work. After paint begins: pro-rated by stage completed.',
-    ],
+    a: `Before first sketch: **100% refundable**. After first sketch: deposit covers the sketch work. After paint begins: pro-rated by stage completed. Full [refund policy](/refunds).`,
   },
   {
     category: 'cancellations',
     q: 'Can I cancel mid-project?',
-    a: [
-      'Yes — we’ll pro-rate based on stage. You keep what’s been delivered (sketches, color blocks) and we settle the balance.',
-    ],
+    a: `Yes — we'll pro-rate based on stage. You keep what's been delivered (sketches, color blocks) and we settle the balance.`,
   },
   {
     category: 'tech',
     q: 'What file formats do you deliver?',
-    a: [
-      'Every commission ships with a 4K PNG, a 4K JPG, and a print-ready 300 DPI file. VTT tokens include 512px and 1024px transparent PNGs. Layered PSDs are available as a $30 add-on.',
-    ],
+    a: `Every commission ships with a **4K PNG**, a **4K JPG**, and a **print-ready 300 DPI file**. VTT tokens include 512px and 1024px transparent PNGs. Layered PSDs are available as a $30 add-on.`,
   },
   {
     category: 'tech',
-    q: 'Do you use AI in any part of the process?',
-    a: [
-      'No. Every piece is hand-painted from scratch by a human artist. No AI generation, no auto-fills, no traced-over outputs. That’s the entire point of the studio.',
-    ],
+    q: 'What payment methods do you accept?',
+    a: `Credit/debit cards, Apple Pay, Google Pay, Link, and ACH transfers through **Stripe**. We don't accept crypto or PayPal.`,
   },
 ]
+
+/** Strip basic markdown for plain-text JSON-LD answer. */
+function stripMarkdown(md: string): string {
+  return md
+    .replace(/\*\*([^*]+)\*\*/g, '$1')          // **bold**
+    .replace(/\*([^*]+)\*/g, '$1')              // *italic*
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')    // [text](url)
+    .replace(/\n+/g, ' ')                       // newlines → space
+    .trim()
+}
 
 export default function FaqPage() {
   const [activeCategory, setActiveCategory] = useState<CategoryId | 'all'>('all')
@@ -145,18 +149,18 @@ export default function FaqPage() {
   const filtered = FAQS.filter((item) => {
     const matchesCategory = activeCategory === 'all' || item.category === activeCategory
     const q = search.trim().toLowerCase()
-    const matchesSearch = !q || item.q.toLowerCase().includes(q) || item.a.join(' ').toLowerCase().includes(q)
+    const matchesSearch = !q || item.q.toLowerCase().includes(q) || item.a.toLowerCase().includes(q)
     return matchesCategory && matchesSearch
   })
 
-  // Schema covers the full list, not the filtered view
+  // Schema uses full unfiltered list + stripped markdown plain text
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: FAQS.map((item) => ({
       '@type': 'Question',
       name: item.q,
-      acceptedAnswer: { '@type': 'Answer', text: item.a.join(' ') },
+      acceptedAnswer: { '@type': 'Answer', text: stripMarkdown(item.a) },
     })),
   }
 
@@ -172,7 +176,7 @@ export default function FaqPage() {
         <PageHero
           eyebrow="Frequently asked"
           title={<>Quick answers, no <em className="font-display italic font-medium text-burgundy-700">fluff</em></>}
-          description="Pricing, process, revisions, licensing, refunds. If you’ve thought it, someone’s asked it — and the answer’s here."
+          description="Pricing, process, revisions, licensing, refunds. If you've thought it, someone's asked it — and the answer's here."
         />
 
         {/* Search bar */}
@@ -188,7 +192,7 @@ export default function FaqPage() {
                 type="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Search the FAQ…"
+                placeholder="Search the FAQ&hellip;"
                 className="w-full bg-parchment-50 border border-border-light hover:border-border-medium focus:border-burgundy-700 focus:outline-none focus:ring-0 rounded-full pl-14 pr-6 py-4 text-base text-ink-900 placeholder:text-ink-400 transition-colors"
                 aria-label="Search FAQ"
               />
@@ -285,10 +289,9 @@ export default function FaqPage() {
                             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                             style={{ overflow: 'hidden' }}
                           >
-                            <div className="px-6 pb-5 text-ink-700 leading-[1.7] max-w-[64ch] space-y-3">
-                              {item.a.map((para, i) => (
-                                <p key={i}>{para}</p>
-                              ))}
+                            {/* Answer rendered through Markdown component — inline links and bold survive */}
+                            <div className="px-6 pb-5 text-ink-700 leading-[1.7] max-w-[64ch]">
+                              <Markdown>{item.a}</Markdown>
                             </div>
                           </motion.div>
                         )}

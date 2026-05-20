@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Eye } from 'lucide-react'
+import { ArrowRight, Clock, Eye } from 'lucide-react'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import PageHero from '@/components/layout/PageHero'
@@ -11,9 +11,12 @@ import Container from '@/components/ui/Container'
 import Button from '@/components/ui/Button'
 import { cn } from '@/lib/utils'
 
-/* NOTE: page metadata is set via root layout fallback since this file is a Client
-   Component. SEO-critical fields are handled by the page chrome and the H1
-   inside PageHero. */
+/* =====================================================================
+   PORTFOLIO INDEX — literal port of Claude Design Final/Portfolio.html.
+   Client component for filter interactivity (AnimatePresence + layout).
+   Note: metadata can't be exported from 'use client' files — SEO is
+   handled by the parent layout + the H1 inside PageHero.
+   ===================================================================== */
 
 type Category = 'All' | 'Character Art' | 'Tokens' | 'Portraits' | 'Anime' | 'Custom'
 
@@ -23,28 +26,44 @@ interface PortfolioItem {
   title: string
   category: Exclude<Category, 'All'>
   gradient: string
+  /** Aspect-ratio hint to vary the masonry visual rhythm — 4:5 / 1:1 / 3:4 / 3:2 / 4:5. */
+  aspect: 'tall' | 'square' | 'mid' | 'wide'
 }
 
-const CATEGORIES: Category[] = ['All', 'Character Art', 'Tokens', 'Portraits', 'Anime', 'Custom']
+const CATEGORIES: { key: Category; count: number }[] = [
+  { key: 'All',            count: 247 },
+  { key: 'Character Art',  count: 142 },
+  { key: 'Tokens',         count: 58 },
+  { key: 'Portraits',      count: 24 },
+  { key: 'Anime',          count: 16 },
+  { key: 'Custom',         count: 7 },
+]
 
 const PORTFOLIO_ITEMS: PortfolioItem[] = [
-  { id: 1,  slug: 'lyra-vexweaver-tiefling-sorceror', title: 'Lyra Vexweaver, Tiefling Sorceror', category: 'Character Art', gradient: 'from-violet-900 via-purple-700 to-indigo-600' },
-  { id: 2,  slug: 'eira-half-orc-paladin',            title: 'Eira the Half-Orc Paladin',         category: 'Character Art', gradient: 'from-amber-950 via-orange-800 to-yellow-700' },
-  { id: 3,  slug: 'wraith-vtt-token-set',             title: 'Wraith VTT Token Set',              category: 'Tokens',        gradient: 'from-stone-900 via-amber-900 to-yellow-700' },
-  { id: 4,  slug: 'stormwatch-adventuring-party',     title: 'Stormwatch Adventuring Party',      category: 'Portraits',     gradient: 'from-emerald-900 via-teal-700 to-cyan-600' },
-  { id: 5,  slug: 'cherry-blossom-samurai',           title: 'Cherry-Blossom Samurai',            category: 'Anime',         gradient: 'from-rose-900 via-pink-700 to-fuchsia-600' },
-  { id: 6,  slug: 'strahd-npc-pack',                  title: 'Strahd NPC Pack (8 portraits)',     category: 'Custom',        gradient: 'from-burgundy-900 via-red-800 to-rose-700' },
-  { id: 7,  slug: 'drow-ranger-direwolf',             title: 'Drow Ranger with Direwolf',         category: 'Character Art', gradient: 'from-slate-900 via-violet-800 to-purple-700' },
-  { id: 8,  slug: 'wedding-party-adventurers',        title: 'Wedding Party as Adventurers',      category: 'Portraits',     gradient: 'from-forest-700 via-emerald-600 to-amber-700' },
-  { id: 9,  slug: 'kaeru-spring-duelist',             title: 'Kaeru, Spring Duelist',             category: 'Anime',         gradient: 'from-pink-900 via-rose-700 to-amber-500' },
-  { id: 10, slug: 'aldric-half-elf-paladin',          title: 'Aldric, Half-Elf Paladin',          category: 'Character Art', gradient: 'from-amber-900 via-yellow-700 to-orange-600' },
-  { id: 11, slug: 'skyborn-druid-token',              title: 'Skyborn Druid Token',               category: 'Tokens',        gradient: 'from-emerald-800 via-teal-600 to-cyan-500' },
-  { id: 12, slug: 'mira-lantern-keeper',              title: 'Mira, Lantern Keeper',              category: 'Anime',         gradient: 'from-violet-800 via-indigo-600 to-blue-500' },
-  { id: 13, slug: 'drowned-captain-veska',            title: 'Drowned Captain Veska',             category: 'Character Art', gradient: 'from-slate-800 via-teal-700 to-emerald-600' },
-  { id: 14, slug: 'book-cover-ashes-of-caer',         title: 'Book Cover, Ashes of Caer',         category: 'Custom',        gradient: 'from-stone-900 via-burgundy-700 to-amber-700' },
-  { id: 15, slug: 'brennen-bardic-dropout',           title: 'Brennen, Bardic Dropout',           category: 'Character Art', gradient: 'from-amber-800 via-rose-700 to-pink-600' },
-  { id: 16, slug: 'forest-witch-token',               title: 'Forest Witch, NPC Pack 04',         category: 'Tokens',        gradient: 'from-emerald-900 via-forest-700 to-amber-800' },
+  { id: 1,  slug: 'lyra-vexweaver-tiefling-sorceror', title: 'Lyra Vexweaver · Tiefling Sorceror',  category: 'Character Art', gradient: 'from-violet-900 via-purple-700 to-indigo-600',  aspect: 'tall' },
+  { id: 2,  slug: 'hooded-stranger-token',            title: 'The Hooded Stranger',                  category: 'Tokens',        gradient: 'from-stone-900 via-amber-900 to-yellow-700',    aspect: 'square' },
+  { id: 3,  slug: 'kaeru-spring-duelist',             title: 'Kaeru — spring duelist',               category: 'Anime',         gradient: 'from-pink-900 via-rose-700 to-amber-500',       aspect: 'mid' },
+  { id: 4,  slug: 'howling-crows-party',              title: 'The Howling Crows · level 9',          category: 'Portraits',     gradient: 'from-emerald-900 via-teal-700 to-cyan-600',     aspect: 'wide' },
+  { id: 5,  slug: 'aldric-half-elf-paladin',          title: 'Aldric · half-elf paladin',            category: 'Character Art', gradient: 'from-amber-900 via-yellow-700 to-orange-600',   aspect: 'tall' },
+  { id: 6,  slug: 'skyborn-druid-token',              title: 'Skyborn Druid',                        category: 'Tokens',        gradient: 'from-emerald-800 via-teal-600 to-cyan-500',     aspect: 'square' },
+  { id: 7,  slug: 'mira-lantern-keeper',              title: 'Mira — lantern keeper',                category: 'Anime',         gradient: 'from-violet-800 via-indigo-600 to-blue-500',    aspect: 'tall' },
+  { id: 8,  slug: 'drowned-captain-veska',            title: 'Drowned Captain Veska',                category: 'Character Art', gradient: 'from-slate-800 via-teal-700 to-emerald-600',    aspect: 'mid' },
+  { id: 9,  slug: 'book-cover-ashes-of-caer',         title: 'Book cover — Ashes of Caer',           category: 'Custom',        gradient: 'from-stone-900 via-burgundy-700 to-amber-700',  aspect: 'wide' },
+  { id: 10, slug: 'brennen-bardic-dropout',           title: 'Brennen — bardic college dropout',     category: 'Character Art', gradient: 'from-amber-800 via-rose-700 to-pink-600',       aspect: 'tall' },
+  { id: 11, slug: 'forest-witch-token',               title: 'Forest Witch · NPC pack 04',           category: 'Tokens',        gradient: 'from-emerald-900 via-forest-700 to-amber-800',  aspect: 'square' },
+  { id: 12, slug: 'wedding-priya-james',              title: 'Wedding gift · Priya & James',         category: 'Portraits',     gradient: 'from-forest-700 via-emerald-600 to-amber-700',  aspect: 'tall' },
+  { id: 13, slug: 'eira-half-orc-paladin',            title: 'Eira the Half-Orc Paladin',            category: 'Character Art', gradient: 'from-amber-950 via-orange-800 to-yellow-700',   aspect: 'mid' },
+  { id: 14, slug: 'cherry-blossom-samurai',           title: 'Cherry-Blossom Samurai',               category: 'Anime',         gradient: 'from-rose-900 via-pink-700 to-fuchsia-600',     aspect: 'tall' },
+  { id: 15, slug: 'strahd-npc-pack',                  title: 'Strahd NPC Pack (8 portraits)',        category: 'Custom',        gradient: 'from-burgundy-900 via-red-800 to-rose-700',     aspect: 'square' },
+  { id: 16, slug: 'stormwatch-adventuring-party',     title: 'Stormwatch Adventuring Party',         category: 'Portraits',     gradient: 'from-emerald-900 via-teal-700 to-cyan-600',     aspect: 'wide' },
 ]
+
+const ASPECT_CLASS: Record<PortfolioItem['aspect'], string> = {
+  tall:   'aspect-[4/5]',
+  square: 'aspect-square',
+  mid:    'aspect-[3/4]',
+  wide:   'aspect-[3/2]',
+}
 
 export default function PortfolioPage() {
   const [active, setActive] = useState<Category>('All')
@@ -56,18 +75,29 @@ export default function PortfolioPage() {
   return (
     <>
       <SiteHeader />
-      <main>
+      <main className="bg-parchment-50">
         <PageHero
           eyebrow="Portfolio"
-          title={<>Five hundred pieces. <em className="font-display italic font-medium text-burgundy-700">One craft.</em></>}
+          title={
+            <>
+              Five hundred pieces.<br />
+              <em className="font-display italic font-medium text-burgundy-700">One craft.</em>
+            </>
+          }
           description="Every commission since 2022 — character portraits, VTT tokens, NPC packs, party portraits, and the occasional book cover."
-          stat={<><span className="font-display text-burgundy-700 font-semibold">500+ pieces</span> · updated weekly · last update May 18, 2026</>}
+          stat={
+            <>
+              <Clock size={14} strokeWidth={1.8} className="text-burgundy-700" />
+              <span>
+                <strong className="font-semibold text-ink-900">500+ pieces</strong> · updated weekly · last update May 18, 2026
+              </span>
+            </>
+          }
         />
 
-        {/* Filter + Gallery */}
-        <section className="bg-parchment-50 pb-24 md:pb-32">
+        {/* Filter chips + gallery */}
+        <section className="pb-24 md:pb-32">
           <Container>
-            {/* Filter chips */}
             <motion.div
               initial={{ opacity: 0, y: 8 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -75,24 +105,28 @@ export default function PortfolioPage() {
               transition={{ duration: 0.5 }}
               className="flex justify-center flex-wrap gap-2 mb-12"
             >
-              {CATEGORIES.map((cat) => (
+              {CATEGORIES.map(({ key, count }) => (
                 <button
-                  key={cat}
-                  onClick={() => setActive(cat)}
+                  key={key}
+                  type="button"
+                  onClick={() => setActive(key)}
                   className={cn(
-                    'px-4 py-2 rounded-full text-xs uppercase tracking-[0.12em] font-semibold transition-all',
-                    active === cat
+                    'px-4 py-2 rounded-full text-xs uppercase tracking-[0.12em] font-semibold transition-all cursor-pointer',
+                    active === key
                       ? 'bg-burgundy-700 text-cream-50 shadow-sm'
                       : 'bg-parchment-100 text-ink-700 border border-border-light hover:border-burgundy-700 hover:text-burgundy-700',
                   )}
                 >
-                  {cat}
+                  {key} · {count}
                 </button>
               ))}
             </motion.div>
 
-            {/* Grid */}
-            <motion.div layout className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {/* Masonry-ish grid: 2 col mobile, 4 col desktop, varied aspect */}
+            <motion.div
+              layout
+              className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+            >
               <AnimatePresence mode="popLayout">
                 {filtered.map((item, i) => (
                   <motion.div
@@ -101,24 +135,28 @@ export default function PortfolioPage() {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.35, delay: i * 0.03, ease: [0.22, 1, 0.36, 1] }}
+                    transition={{
+                      duration: 0.35,
+                      delay: i * 0.03,
+                      ease: [0.22, 1, 0.36, 1] as [number, number, number, number],
+                    }}
                     whileHover={{ y: -3 }}
                   >
                     <Link
                       href={`/portfolio/${item.slug}`}
                       className={cn(
-                        'group relative block rounded-xl overflow-hidden border border-border-light',
-                        'aspect-[4/5] bg-gradient-to-br',
+                        'group relative block rounded-xl overflow-hidden border border-border-light bg-gradient-to-br',
+                        ASPECT_CLASS[item.aspect],
                         item.gradient,
                         'hover:shadow-[0_12px_32px_rgba(30,20,8,0.10)] transition-shadow',
                       )}
                     >
                       {/* Soft placeholder mark */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-15">
+                      <div className="absolute inset-0 flex items-center justify-center opacity-15 pointer-events-none">
                         <div className="w-16 h-16 rounded-full bg-white/10 backdrop-blur-sm" />
                       </div>
 
-                      {/* Quick view icon */}
+                      {/* Quick view icon (top-right) */}
                       <div className="absolute top-3 right-3 w-8 h-8 rounded-full bg-tome-950/70 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                         <Eye size={14} strokeWidth={1.6} className="text-cream-50" />
                       </div>
@@ -138,12 +176,38 @@ export default function PortfolioPage() {
               </AnimatePresence>
             </motion.div>
 
-            {/* Load more */}
+            {/* Load more — visual placeholder, no real pagination */}
             <div className="text-center mt-16">
               <Button variant="outline" size="md">
                 Load 24 more <ArrowRight size={14} strokeWidth={1.8} />
               </Button>
-              <div className="text-xs text-ink-500 mt-3">Showing {filtered.length} of 247</div>
+              <div className="text-xs text-ink-500 mt-3">
+                Showing {filtered.length} of {CATEGORIES.find((c) => c.key === active)?.count ?? filtered.length}
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* CTA strip */}
+        <section className="bg-tome-950 text-cream-50 py-20 md:py-28 text-center">
+          <Container>
+            <h2
+              className="font-display font-semibold text-cream-50 leading-[1.1] tracking-tight mb-4"
+              style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)' }}
+            >
+              Seen something you{' '}
+              <em className="font-display italic font-medium text-gold-glow">love</em>?
+            </h2>
+            <p className="text-lg text-cream-200 leading-relaxed max-w-[52ch] mx-auto mb-8">
+              Every portrait above was a collaboration. Yours can be next.
+            </p>
+            <div className="inline-flex flex-wrap justify-center gap-3.5">
+              <Button href="/order" variant="gold" size="lg">
+                Start commission <ArrowRight size={14} strokeWidth={1.8} />
+              </Button>
+              <Button href="/contact" variant="outline-cream" size="lg">
+                Ask a question
+              </Button>
             </div>
           </Container>
         </section>

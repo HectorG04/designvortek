@@ -17,6 +17,13 @@ import SectionLabel from '@/components/ui/SectionLabel'
 import Button from '@/components/ui/Button'
 import CompassDivider from '@/components/decor/CompassDivider'
 
+/* =====================================================================
+   SERVICES INDEX — literal port of Services.html.
+   Static (server component). Five-card grid using the `.dv-service-card`
+   pattern from design-system.css, plus the "common to every service"
+   strip + a CTA closer.
+   ===================================================================== */
+
 export const metadata: Metadata = {
   title: 'Services · Design Vortek',
   description:
@@ -63,10 +70,10 @@ const SERVICES = [
   {
     slug: 'custom-projects',
     title: 'Custom Projects',
-    sub: 'bespoke illustration projects',
+    sub: 'whatever you’re dreaming up',
     body: 'Book covers, indie game assets, merch design, concept art. If it needs painting and we’ve got the bandwidth, we’ll quote it honestly.',
     features: ['Bespoke scoping', 'Retainer options', 'Commercial licensing'],
-    price: 'Inquiry',
+    price: 'Quote',
     icon: Compass,
   },
 ] as const
@@ -82,21 +89,21 @@ export default function ServicesPage() {
   return (
     <>
       <SiteHeader />
-      <main>
+      <main className="bg-parchment-50">
         <PageHero
-          eyebrow="Services"
+          eyebrow="What we make"
           title={
             <>
-              Five ways to <em className="font-display italic font-medium text-burgundy-700">commission</em>.
+              Five signature <em className="font-display italic font-medium text-burgundy-700">services</em>.
             </>
           }
           description="Whether it's a single character or a whole campaign's worth of NPCs, every piece gets the same craft. Pick what fits — we'll handle the rest."
         />
 
-        {/* Service cards */}
-        <section className="bg-parchment-50 py-16 md:py-24">
+        {/* Service cards — 5-card grid: 1 col mobile, 2 col sm, 3 col lg */}
+        <section className="pb-16 md:pb-24">
           <Container>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {SERVICES.map((service) => {
                 const Icon = service.icon
                 return (
@@ -104,23 +111,20 @@ export default function ServicesPage() {
                     key={service.slug}
                     className="group bg-parchment-100 border border-border-light rounded-2xl p-8 flex flex-col hover:border-border-medium hover:shadow-[0_12px_32px_rgba(30,20,8,0.10)] transition-all"
                   >
-                    {/* Icon */}
-                    <div className="w-12 h-12 rounded-xl bg-parchment-50 border border-border-light flex items-center justify-center mb-6 text-burgundy-700 group-hover:border-gold-500 transition-colors">
+                    {/* 44x44 gold icon */}
+                    <div className="w-11 h-11 rounded-xl bg-gold-100 border border-gold-300 text-gold-700 flex items-center justify-center mb-6 group-hover:border-gold-500 transition-colors">
                       <Icon size={22} strokeWidth={1.5} />
                     </div>
 
-                    {/* Title + sub */}
                     <h2 className="font-display text-2xl font-semibold text-ink-900 leading-tight">
                       {service.title}
                     </h2>
-                    <p className="font-accent text-xl text-burgundy-700 mt-1 mb-4">
+                    <p className="font-accent text-xl text-burgundy-700 italic mt-1 mb-4">
                       {service.sub}
                     </p>
 
-                    {/* Body */}
                     <p className="text-ink-700 leading-relaxed mb-5">{service.body}</p>
 
-                    {/* Features */}
                     <ul className="space-y-2 mb-6">
                       {service.features.map((f) => (
                         <li key={f} className="flex items-start gap-2 text-sm text-ink-700">
@@ -130,7 +134,6 @@ export default function ServicesPage() {
                       ))}
                     </ul>
 
-                    {/* Footer: price + link */}
                     <div className="mt-auto pt-5 border-t border-border-light flex items-center justify-between">
                       <div>
                         <div className="text-[0.7rem] uppercase tracking-[0.15em] font-semibold text-ink-500">
@@ -154,16 +157,14 @@ export default function ServicesPage() {
           </Container>
         </section>
 
-        <div className="bg-parchment-50">
-          <CompassDivider />
-        </div>
+        <CompassDivider />
 
-        {/* What's the same across all services */}
+        {/* "Common to every service" strip */}
         <section className="bg-parchment-100 py-20 md:py-28 border-y border-border-light">
           <Container>
             <div className="text-center max-w-[720px] mx-auto mb-12">
               <div className="mb-4 flex justify-center">
-                <SectionLabel>What’s always included</SectionLabel>
+                <SectionLabel>Common to every service</SectionLabel>
               </div>
               <h2 className="font-display text-4xl md:text-5xl font-semibold text-ink-900 leading-[1.1] tracking-tight">
                 Same craft, <em className="font-display italic font-medium text-burgundy-700">every service</em>
@@ -198,7 +199,7 @@ export default function ServicesPage() {
           </Container>
         </section>
 
-        {/* CTA closer */}
+        {/* CTA closer — dark tome */}
         <section className="bg-tome-950 text-cream-50 py-20 md:py-28 text-center">
           <Container>
             <h2
@@ -208,7 +209,7 @@ export default function ServicesPage() {
               Know what you <em className="font-display italic font-medium text-gold-glow">need</em>?
             </h2>
             <p className="text-lg text-cream-200 leading-relaxed max-w-[52ch] mx-auto mb-8">
-              Send a brief in three minutes — we’ll send a fixed quote within 48 hours.
+              Send a brief in three minutes — we&rsquo;ll send a fixed quote within 48 hours.
             </p>
             <div className="inline-flex flex-wrap justify-center gap-3.5">
               <Button href="/order" variant="gold" size="lg">

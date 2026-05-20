@@ -8,6 +8,7 @@ import {
   Users, Circle, Layers, Wand2,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import Markdown from '@/components/ui/Markdown'
 
 /* ============================================================
    Static data
@@ -684,11 +685,13 @@ export default function OrderForm() {
             </div>
           </div>
 
-          {/* Testimonial */}
+          {/* Testimonial — quote rendered via Markdown so the *emphasized* word
+              and any inline links survive the data layer. We override strong's
+              default ink-900 to cream-50 here because we're on a dark tome bg. */}
           <div className="bg-tome-900 text-cream-50 rounded-2xl p-6 relative overflow-hidden">
             <Sparkles size={20} strokeWidth={1.5} className="text-gold-glow mb-3" />
-            <blockquote className="font-display italic text-base leading-relaxed mb-4">
-              &ldquo;Every revision sharpened the piece. This isn&rsquo;t a transaction — it&rsquo;s a collaboration.&rdquo;
+            <blockquote className="font-display italic text-base leading-relaxed mb-4 [&_strong]:text-cream-50">
+              <Markdown>{`"Every revision *sharpened* the piece. This isn't a transaction — it's a **collaboration**."`}</Markdown>
             </blockquote>
             <div className="flex items-center gap-3">
               <span className="w-9 h-9 rounded-full bg-gold-500 text-ink-900 inline-flex items-center justify-center font-display font-semibold text-sm">

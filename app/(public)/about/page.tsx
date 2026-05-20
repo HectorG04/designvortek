@@ -6,22 +6,23 @@ import PageHero from '@/components/layout/PageHero'
 import Container from '@/components/ui/Container'
 import SectionLabel from '@/components/ui/SectionLabel'
 import Button from '@/components/ui/Button'
+import Markdown from '@/components/ui/Markdown'
 import GoldCorners from '@/components/decor/GoldCorners'
 import CompassDivider from '@/components/decor/CompassDivider'
 
 export const metadata: Metadata = {
-  title: 'About the studio — DesignVortek',
+  title: 'About the studio — Design Vortek',
   description:
-    'The studio behind DesignVortek — a single artist, four years of commissions, 500+ characters painted by hand. Meet the maker.',
+    'The studio behind Design Vortek — a single artist, four years of commissions, 500+ characters painted by hand. Meet the maker.',
   alternates: { canonical: '/about' },
 }
 
 const STATS = [
-  { num: '500+', label: 'Commissions delivered' },
-  { num: '4.9★', label: 'Across 247 reviews' },
+  { num: '500+',    label: 'Commissions delivered' },
+  { num: '4.9★',    label: 'Across 247 reviews' },
   { num: '4 years', label: 'Studio anniversary' },
-  { num: '100%', label: 'Hand-painted · no AI' },
-]
+  { num: '100%',    label: 'Hand-painted · no AI' },
+] as const
 
 const PRINCIPLES = [
   {
@@ -42,7 +43,14 @@ const PRINCIPLES = [
     title: 'Care',
     body: 'We treat each commission like it is going on the wall of a gallery, because for our clients, it is. Two paint revisions baked in. Layered files on request. Yours for keeps.',
   },
-]
+] as const
+
+/* Founder bio — markdown so inline emphasis + links survive. */
+const STORY_MD = `Design Vortek started in 2022, after a friend asked me to paint her D&D character. **She cried when she saw it. So did I.** That commission became a side hustle. The side hustle became a studio.
+
+Four years later I take five commissions a month — just enough to give each one the time and care it deserves, not so many that quality slips. I have been painting digitally for *fourteen years*, but every brushstroke on every piece still feels like the first one.
+
+I do not use AI. I do not outsource the painting. I do not trace. Every commission begins with a careful read of your brief and ends with a piece that came from a human looking carefully at *your* character — the one you have spent years inhabiting. See the [portfolio](/portfolio) or [start a brief](/order).`
 
 export default function AboutPage() {
   return (
@@ -73,22 +81,14 @@ export default function AboutPage() {
                 </div>
               </div>
 
-              {/* Text */}
+              {/* Text — markdown for the three story paragraphs with inline emphasis + links */}
               <div>
                 <SectionLabel>Our story</SectionLabel>
                 <h2 className="font-display text-3xl md:text-[2.5rem] font-semibold text-ink-900 leading-[1.15] tracking-tight mt-4 mb-6">
                   One rule: every piece, <em className="font-display italic font-medium text-burgundy-700">by hand</em>.
                 </h2>
-                <div className="space-y-5 text-ink-700 leading-[1.75]">
-                  <p>
-                    DesignVortek started in 2022, after a friend asked me to paint her D&amp;D character. She cried when she saw it. So did I. That commission became a side hustle. The side hustle became a studio.
-                  </p>
-                  <p>
-                    Four years later I take five commissions a month — just enough to give each one the time and care it deserves, not so many that quality slips. I have been painting digitally for fourteen years, but every brushstroke on every piece still feels like the first one.
-                  </p>
-                  <p>
-                    I do not use AI. I do not outsource the painting. I do not trace. Every commission begins with a careful read of your brief and ends with a piece that came from a human looking carefully at your character — the one you have spent years inhabiting.
-                  </p>
+                <div className="text-ink-700 leading-[1.75] [&_p]:mb-5 [&_p:last-child]:mb-0">
+                  <Markdown>{STORY_MD}</Markdown>
                 </div>
               </div>
             </div>
@@ -154,7 +154,7 @@ export default function AboutPage() {
           <CompassDivider />
         </Container>
 
-        {/* Behind the studio — artist card */}
+        {/* Artist quote card — dark tome with GoldCorners */}
         <section className="py-16 md:py-20">
           <Container>
             <div className="text-center max-w-2xl mx-auto mb-12">
@@ -166,12 +166,12 @@ export default function AboutPage() {
               </h2>
             </div>
 
-            <div className="max-w-4xl mx-auto bg-tome-950 rounded-2xl overflow-hidden">
+            <div className="max-w-4xl mx-auto bg-tome-950 rounded-2xl overflow-hidden relative">
               <div className="grid md:grid-cols-[1fr_1.3fr] gap-0">
                 <div className="aspect-square md:aspect-auto md:min-h-[380px] bg-gradient-to-br from-burgundy-700 via-amber-800 to-gold-700 relative">
                   <GoldCorners />
                 </div>
-                <div className="p-8 md:p-12 text-cream-50">
+                <div className="p-8 md:p-12 text-cream-50 relative">
                   <Quote size={28} strokeWidth={1.5} className="text-gold-glow mb-5" />
                   <p className="font-display italic text-2xl md:text-[1.75rem] leading-snug mb-8 text-cream-50">
                     &ldquo;Every character that comes through the studio has been alive in someone&rsquo;s head for months — sometimes years. My job is to meet them where they already exist, and put them on the page.&rdquo;

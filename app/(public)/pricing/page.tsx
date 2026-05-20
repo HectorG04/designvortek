@@ -6,7 +6,20 @@ import PageHero from '@/components/layout/PageHero'
 import Container from '@/components/ui/Container'
 import SectionLabel from '@/components/ui/SectionLabel'
 import Button from '@/components/ui/Button'
+import Markdown from '@/components/ui/Markdown'
 import { cn } from '@/lib/utils'
+
+/* =====================================================================
+   PRICING — literal port of Pricing.html.
+   Static (server component). Five per-service comparison tables with
+   horizontal scroll on mobile, 6-card add-ons grid, "8 things always
+   included" two-column block, FAQ accordion, dark tome CTA closer.
+
+   Markdown is used for:
+     • Add-on descriptions — some embed **$ amounts** in body
+     • "Always included" items — copy with **emphasis**
+     • FAQ answers — **$ amounts** + [refund policy](/refunds) links
+   ===================================================================== */
 
 export const metadata: Metadata = {
   title: 'Pricing · Design Vortek',
@@ -31,12 +44,12 @@ const SERVICES: ServiceBlock[] = [
     turnaround: '7–14 days',
     tierNames: ['Standard', 'Deluxe', 'Premium'],
     rows: [
-      { feature: 'Starting price',  standard: '$180',            deluxe: '$320',                premium: '$520' },
-      { feature: 'Framing',         standard: 'Bust shot',       deluxe: 'Half-body',           premium: 'Full body' },
-      { feature: 'Background',      standard: 'Solid color',     deluxe: 'Detailed scene',      premium: 'Cinematic scene' },
-      { feature: 'Revisions',       standard: '1 included',      deluxe: '2 included',          premium: '3 included' },
-      { feature: 'Final resolution',standard: '4K PNG + JPG',    deluxe: '4K + transparent',    premium: '6K + layered PSD' },
-      { feature: 'Best for',        standard: 'First commission',deluxe: 'The sweet spot',      premium: 'Heirloom piece' },
+      { feature: 'Starting price',   standard: '$180',             deluxe: '$320',                premium: '$520' },
+      { feature: 'Framing',          standard: 'Bust shot',        deluxe: 'Half-body',           premium: 'Full body' },
+      { feature: 'Background',       standard: 'Solid color',      deluxe: 'Detailed scene',      premium: 'Cinematic scene' },
+      { feature: 'Revisions',        standard: '1 included',       deluxe: '2 included',          premium: '3 included' },
+      { feature: 'Final resolution', standard: '4K PNG + JPG',     deluxe: '4K + transparent',    premium: '6K + layered PSD' },
+      { feature: 'Best for',         standard: 'First commission', deluxe: 'The sweet spot',      premium: 'Heirloom piece' },
     ],
   },
   {
@@ -46,12 +59,12 @@ const SERVICES: ServiceBlock[] = [
     turnaround: '3–7 days',
     tierNames: ['Single', 'Party', 'Bulk'],
     rows: [
-      { feature: 'Starting price',  standard: '$80',         deluxe: '$280',           premium: '$60 / token' },
-      { feature: 'Tokens included', standard: '1 token',     deluxe: '4 tokens',       premium: '8+ tokens' },
-      { feature: 'Resolution',      standard: '512 + 1024px',deluxe: '512 + 1024px',   premium: '512 + 1024px' },
-      { feature: 'Revisions',       standard: '1 included',  deluxe: '1 per token',    premium: '1 per token' },
-      { feature: 'Border style',    standard: 'Default',     deluxe: 'Consistent set', premium: 'Custom template' },
-      { feature: 'Best for',        standard: 'One PC token',deluxe: 'Whole party',    premium: 'DM stockpile' },
+      { feature: 'Starting price',  standard: '$80',          deluxe: '$280',           premium: '$60 / token' },
+      { feature: 'Tokens included', standard: '1 token',      deluxe: '4 tokens',       premium: '8+ tokens' },
+      { feature: 'Resolution',      standard: '512 + 1024px', deluxe: '512 + 1024px',   premium: '512 + 1024px' },
+      { feature: 'Revisions',       standard: '1 included',   deluxe: '1 per token',    premium: '1 per token' },
+      { feature: 'Border style',    standard: 'Default',      deluxe: 'Consistent set', premium: 'Custom template' },
+      { feature: 'Best for',        standard: 'One PC token', deluxe: 'Whole party',    premium: 'DM stockpile' },
     ],
   },
   {
@@ -61,12 +74,12 @@ const SERVICES: ServiceBlock[] = [
     turnaround: '14–21 days',
     tierNames: ['Trio', 'Adventurers', 'Epic'],
     rows: [
-      { feature: 'Starting price',  standard: '$400',         deluxe: '$680',                  premium: '$980' },
-      { feature: 'Figures',         standard: '3 figures',    deluxe: '4–5 figures',           premium: '6–8 figures' },
-      { feature: 'Framing',         standard: 'Half-body',    deluxe: 'Half-body',             premium: 'Full body' },
-      { feature: 'Background',      standard: 'Simple',       deluxe: 'Detailed scene',        premium: 'Cinematic' },
-      { feature: 'Revisions',       standard: '2 included',   deluxe: '2 included',            premium: '3 included' },
-      { feature: 'Deliverables',    standard: '4K PNG + JPG', deluxe: 'Print-ready files',     premium: 'Print + layered PSD' },
+      { feature: 'Starting price', standard: '$400',         deluxe: '$680',              premium: '$980' },
+      { feature: 'Figures',        standard: '3 figures',    deluxe: '4–5 figures',       premium: '6–8 figures' },
+      { feature: 'Framing',        standard: 'Half-body',    deluxe: 'Half-body',         premium: 'Full body' },
+      { feature: 'Background',     standard: 'Simple',       deluxe: 'Detailed scene',    premium: 'Cinematic' },
+      { feature: 'Revisions',      standard: '2 included',   deluxe: '2 included',        premium: '3 included' },
+      { feature: 'Deliverables',   standard: '4K PNG + JPG', deluxe: 'Print-ready files', premium: 'Print + layered PSD' },
     ],
   },
   {
@@ -76,12 +89,12 @@ const SERVICES: ServiceBlock[] = [
     turnaround: '3–6 weeks',
     tierNames: ['Starter', 'Campaign', 'Saga'],
     rows: [
-      { feature: 'Starting price',  standard: '$600',                deluxe: '$1,400',                  premium: '$2,800' },
-      { feature: 'NPCs included',   standard: '5 portraits',         deluxe: '12 portraits',            premium: '20+ portraits' },
-      { feature: 'VTT tokens',      standard: '5 included',          deluxe: '12 included',             premium: '20+ included' },
-      { feature: 'Style guide',     standard: 'Style notes',         deluxe: 'Kickoff call',            premium: 'Custom style guide' },
-      { feature: 'Revisions',       standard: '2 per piece',         deluxe: '2 per piece',             premium: '3 per piece' },
-      { feature: 'Best for',        standard: 'Short arc',           deluxe: 'Full season',             premium: 'Long-form world' },
+      { feature: 'Starting price', standard: '$600',        deluxe: '$1,400',        premium: '$2,800' },
+      { feature: 'NPCs included',  standard: '5 portraits', deluxe: '12 portraits',  premium: '20+ portraits' },
+      { feature: 'VTT tokens',     standard: '5 included',  deluxe: '12 included',   premium: '20+ included' },
+      { feature: 'Style guide',    standard: 'Style notes', deluxe: 'Kickoff call',  premium: 'Custom style guide' },
+      { feature: 'Revisions',      standard: '2 per piece', deluxe: '2 per piece',   premium: '3 per piece' },
+      { feature: 'Best for',       standard: 'Short arc',   deluxe: 'Full season',   premium: 'Long-form world' },
     ],
   },
   {
@@ -91,41 +104,51 @@ const SERVICES: ServiceBlock[] = [
     turnaround: 'By scope',
     tierNames: ['Small', 'Project', 'Retainer'],
     rows: [
-      { feature: 'Starting price',  standard: 'From $500',      deluxe: 'From $2k',            premium: 'From $4k/mo' },
-      { feature: 'Scope',           standard: 'Single piece',   deluxe: '3–10 pieces',         premium: 'Dedicated slots' },
-      { feature: 'License',         standard: 'Commercial inc.',deluxe: 'Commercial inc.',     premium: 'Commercial inc.' },
-      { feature: 'NDA',             standard: 'On request',     deluxe: 'On request',          premium: 'Standard' },
-      { feature: 'Source files',    standard: 'Layered PSD',    deluxe: 'Style guide + PSD',   premium: 'All source files' },
-      { feature: 'Best for',        standard: 'One-off piece',  deluxe: 'Multi-piece project', premium: 'Ongoing work' },
+      { feature: 'Starting price', standard: 'From $500',       deluxe: 'From $2k',            premium: 'From $4k/mo' },
+      { feature: 'Scope',          standard: 'Single piece',    deluxe: '3–10 pieces',         premium: 'Dedicated slots' },
+      { feature: 'License',        standard: 'Commercial inc.', deluxe: 'Commercial inc.',     premium: 'Commercial inc.' },
+      { feature: 'NDA',            standard: 'On request',      deluxe: 'On request',          premium: 'Standard' },
+      { feature: 'Source files',   standard: 'Layered PSD',     deluxe: 'Style guide + PSD',   premium: 'All source files' },
+      { feature: 'Best for',       standard: 'One-off piece',   deluxe: 'Multi-piece project', premium: 'Ongoing work' },
     ],
   },
 ]
 
+/* Add-on descriptions stored as MARKDOWN — supports **bold** emphasis. */
 const ADDONS = [
-  { icon: Zap,     name: 'Rush delivery',      desc: 'Move to the front of the queue. 3-day turnaround on Character & Token services.',                    price: '+$50' },
-  { icon: Layers,  name: 'Layered PSD',        desc: 'Source files with separated layers. Edit the background, change colors, build variations.',          price: '+$30' },
-  { icon: Award,   name: 'Commercial license', desc: 'For books, merch, paid streaming, Patreon. Personal use is included by default.',                    price: '+$150 / piece' },
-  { icon: RotateCcw, name: 'Extra revision',   desc: 'A 3rd round of paint revisions, if your character needs the polish.',                                price: '+$40' },
-  { icon: Circle,  name: 'Matching VTT token', desc: 'A token version of your portrait, cropped and bordered for tabletop play.',                          price: '+$40' },
-  { icon: Printer, name: 'Print delivery',     desc: 'Museum-quality giclée print, 11×14 or 16×20, shipped from our partner studio.',                      price: 'From $60' },
+  { icon: Zap,        name: 'Rush delivery',      desc: 'Move to the front of the queue. **3-day turnaround** on Character & Token services.',          price: '+$50' },
+  { icon: Layers,     name: 'Layered PSD',        desc: 'Source files with separated layers. Edit the background, change colors, build variations.',    price: '+$30' },
+  { icon: Award,      name: 'Commercial license', desc: 'For **books, merch, paid streaming, Patreon**. Personal use is included by default.',           price: '+$150 / piece' },
+  { icon: RotateCcw,  name: 'Extra revision',     desc: 'A **3rd round** of paint revisions, if your character needs the polish.',                       price: '+$40' },
+  { icon: Circle,     name: 'Matching VTT token', desc: 'A token version of your portrait, cropped and bordered for tabletop play.',                     price: '+$40' },
+  { icon: Printer,    name: 'Print delivery',     desc: 'Museum-quality giclée print, **11×14 or 16×20**, shipped from our partner studio.',             price: 'From $60' },
 ]
 
+/* "Always included" items stored as MARKDOWN — preserves **emphasis** like
+   "**2 paint-stage revisions**" or "**hand-painted** by humans". */
 const ALWAYS_INCLUDED = [
-  '2 paint-stage revisions on every commission',
-  'Sketch revisions are always free, no limit',
-  '4K final delivery (PNG + JPG)',
-  'Process updates every 3 days',
+  '**2 paint-stage revisions** on every commission',
+  'Sketch revisions are always **free**, no limit',
+  '**4K final delivery** (PNG + JPG)',
+  'Process updates **every 3 days**',
   'Personal use rights baked in',
-  'Fixed-rate quote — no hourly games',
-  'Hand-painted by humans, no AI ever',
-  '48-hour quote turnaround on every brief',
+  '**Fixed-rate quote** — no hourly games',
+  'Hand-painted by humans, **no AI ever**',
+  '**48-hour quote** turnaround on every brief',
+]
+
+/* FAQ answers as MARKDOWN — most have **$ amounts** + [refund policy] link. */
+const PRICING_FAQ = [
+  { q: 'Why flat-rate instead of hourly?', a: 'Because **you deserve to know the price before we start.** Hourly billing punishes care — the artist who polishes for an extra two hours shouldn’t cost you more. Fixed scope, fixed price, every time.' },
+  { q: 'How does payment work?',           a: '**25% deposit** to hold your slot (refundable until first sketch). The remaining **75% on delivery**. All payments through Stripe — cards, Apple Pay, Google Pay, all common methods.' },
+  { q: 'What if I need to cancel?',        a: 'Before first sketch: **100% refundable**. After first sketch: deposit covers sketch work. After paint begins: pro-rated based on stage completed. See the full [refund policy](/refunds).' },
 ]
 
 export default function PricingPage() {
   return (
     <>
       <SiteHeader />
-      <main>
+      <main className="bg-parchment-50">
         <PageHero
           eyebrow="Pricing"
           title={
@@ -136,8 +159,8 @@ export default function PricingPage() {
           description="Flat-rate quotes, fixed scopes, no hourly games. Every price below is what you'll actually pay — the quote you approve is the price we charge."
         />
 
-        {/* Per-service comparison tables */}
-        <section className="bg-parchment-50 py-12 md:py-20">
+        {/* Per-service comparison tables — 5 blocks, horizontal scroll on mobile */}
+        <section className="py-12 md:py-20">
           <Container>
             <div className="flex flex-col gap-16 md:gap-24">
               {SERVICES.map((service) => (
@@ -148,15 +171,16 @@ export default function PricingPage() {
                       <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink-900 leading-tight tracking-tight">
                         {service.name}
                       </h2>
-                      <p className="font-accent text-xl text-burgundy-700 mt-1">{service.sub}</p>
+                      <p className="font-accent text-xl text-burgundy-700 italic mt-1">{service.sub}</p>
                     </div>
                     <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-parchment-100 border border-border-light text-ink-700 text-sm">
                       <Clock size={14} strokeWidth={1.5} />
-                      Turnaround <strong className="font-display text-base text-ink-900">{service.turnaround}</strong>
+                      Turnaround{' '}
+                      <strong className="font-display text-base text-ink-900 font-semibold">{service.turnaround}</strong>
                     </div>
                   </div>
 
-                  {/* Horizontal scroll container on mobile */}
+                  {/* Horizontal-scroll table */}
                   <div className="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0">
                     <table className="w-full min-w-[640px] bg-parchment-100 border border-border-light rounded-2xl overflow-hidden">
                       <thead>
@@ -194,13 +218,28 @@ export default function PricingPage() {
                             <td className="px-5 py-4 text-sm font-semibold text-ink-700 align-top">
                               {row.feature}
                             </td>
-                            <td className={cn('px-5 py-4 text-sm text-ink-700 align-top', row.feature === 'Starting price' && 'font-display text-xl text-burgundy-700 font-semibold')}>
+                            <td
+                              className={cn(
+                                'px-5 py-4 text-sm text-ink-700 align-top',
+                                row.feature === 'Starting price' && 'font-display text-xl text-burgundy-700 font-semibold',
+                              )}
+                            >
                               {row.standard}
                             </td>
-                            <td className={cn('px-5 py-4 text-sm text-ink-700 align-top bg-gold-100/30', row.feature === 'Starting price' && 'font-display text-xl text-burgundy-700 font-semibold')}>
+                            <td
+                              className={cn(
+                                'px-5 py-4 text-sm text-ink-700 align-top bg-gold-100/30',
+                                row.feature === 'Starting price' && 'font-display text-xl text-burgundy-700 font-semibold',
+                              )}
+                            >
                               {row.deluxe}
                             </td>
-                            <td className={cn('px-5 py-4 text-sm text-ink-700 align-top', row.feature === 'Starting price' && 'font-display text-xl text-burgundy-700 font-semibold')}>
+                            <td
+                              className={cn(
+                                'px-5 py-4 text-sm text-ink-700 align-top',
+                                row.feature === 'Starting price' && 'font-display text-xl text-burgundy-700 font-semibold',
+                              )}
+                            >
                               {row.premium}
                             </td>
                           </tr>
@@ -224,7 +263,7 @@ export default function PricingPage() {
           </Container>
         </section>
 
-        {/* Add-ons */}
+        {/* Add-ons — 6 cards (Markdown descriptions for **$ amounts**) */}
         <section className="bg-parchment-100 border-y border-border-light py-20 md:py-28">
           <Container>
             <div className="text-center max-w-[720px] mx-auto mb-12">
@@ -254,7 +293,9 @@ export default function PricingPage() {
                       <h3 className="font-display text-lg font-semibold text-ink-900 leading-tight mb-1">
                         {addon.name}
                       </h3>
-                      <p className="text-sm text-ink-500 leading-relaxed mb-3">{addon.desc}</p>
+                      <div className="text-sm text-ink-500 leading-relaxed mb-3 [&_p]:mb-0 [&_strong]:text-ink-700">
+                        <Markdown>{addon.desc}</Markdown>
+                      </div>
                       <div className="font-display text-lg font-semibold text-burgundy-700">
                         {addon.price}
                       </div>
@@ -266,8 +307,8 @@ export default function PricingPage() {
           </Container>
         </section>
 
-        {/* What's always included */}
-        <section className="bg-parchment-50 py-20 md:py-28">
+        {/* "8 things always included" two-column block (Markdown items) */}
+        <section className="py-20 md:py-28">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-16 max-w-[1080px] mx-auto items-start">
               <div>
@@ -291,7 +332,9 @@ export default function PricingPage() {
                     <span className="flex-shrink-0 w-7 h-7 rounded-full bg-forest-700 text-cream-50 inline-flex items-center justify-center mt-px">
                       <Check size={14} strokeWidth={2.4} />
                     </span>
-                    <span className="text-ink-700 text-sm leading-relaxed">{item}</span>
+                    <div className="text-ink-700 text-sm leading-relaxed [&_p]:mb-0">
+                      <Markdown>{item}</Markdown>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -299,7 +342,59 @@ export default function PricingPage() {
           </Container>
         </section>
 
-        {/* CTA closer */}
+        {/* Pricing FAQ */}
+        <section className="bg-parchment-100 border-y border-border-light py-20 md:py-28">
+          <Container>
+            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-12 lg:gap-16 max-w-[1080px] mx-auto">
+              <div>
+                <div className="mb-3">
+                  <SectionLabel>Pricing questions</SectionLabel>
+                </div>
+                <h2 className="font-display text-4xl md:text-5xl font-semibold text-ink-900 leading-[1.1] tracking-tight mb-4">
+                  The fine <em className="font-display italic font-medium text-burgundy-700">print</em>
+                </h2>
+                <p className="text-ink-500 leading-relaxed">
+                  Common questions about payment, refunds, and what’s covered.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                {PRICING_FAQ.map((item, idx) => (
+                  <details
+                    key={idx}
+                    className="group bg-parchment-50 border border-border-light rounded-xl open:border-border-medium open:shadow-sm transition-colors"
+                    open={idx === 0}
+                  >
+                    <summary className="px-6 py-5 flex items-center justify-between gap-4 cursor-pointer list-none">
+                      <span className="font-display text-lg md:text-xl font-semibold text-ink-900 leading-snug">
+                        {item.q}
+                      </span>
+                      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-parchment-50 text-burgundy-700 border border-border-medium inline-flex items-center justify-center group-open:bg-burgundy-700 group-open:text-cream-50 group-open:border-transparent group-open:rotate-45 transition-all">
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.2"
+                          strokeLinecap="round"
+                          aria-hidden="true"
+                        >
+                          <path d="M12 5v14M5 12h14" />
+                        </svg>
+                      </span>
+                    </summary>
+                    <div className="px-6 pb-5 text-ink-700 leading-[1.7] max-w-[64ch] [&_p]:mb-0">
+                      <Markdown>{item.a}</Markdown>
+                    </div>
+                  </details>
+                ))}
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* CTA closer — dark tome */}
         <section className="bg-tome-950 text-cream-50 py-20 md:py-28 text-center">
           <Container>
             <h2

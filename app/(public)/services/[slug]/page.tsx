@@ -2,6 +2,12 @@ import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import ServiceDetailView, { SERVICES, type ServiceSlug } from './ServiceDetailView'
 
+/* =====================================================================
+   SERVICE DETAIL — server entry. Handles generateStaticParams + meta,
+   then delegates to the 'use client' ServiceDetailView for FAQ accordion
+   + tier interactivity.
+   ===================================================================== */
+
 export function generateStaticParams() {
   return (Object.keys(SERVICES) as ServiceSlug[]).map((slug) => ({ slug }))
 }
@@ -13,14 +19,13 @@ export async function generateMetadata(
   const data = SERVICES[slug as ServiceSlug]
 
   if (!data) {
-    return {
-      title: 'Service not found · Design Vortek',
-    }
+    return { title: 'Service not found · Design Vortek' }
   }
 
   return {
     title: `${data.title} · Design Vortek`,
     description: data.metaDescription,
+    alternates: { canonical: `/services/${data.slug}` },
   }
 }
 

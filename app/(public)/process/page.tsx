@@ -6,7 +6,18 @@ import PageHero from '@/components/layout/PageHero'
 import Container from '@/components/ui/Container'
 import SectionLabel from '@/components/ui/SectionLabel'
 import Button from '@/components/ui/Button'
+import Markdown from '@/components/ui/Markdown'
 import CompassDivider from '@/components/decor/CompassDivider'
+
+/* =====================================================================
+   PROCESS — literal port of Process.html.
+   Static (server component). Extended 4-step walkthrough with
+   large Cormorant numerals, day-by-day timeline with dashed gold line,
+   FAQ accordion, dark tome CTA closer.
+
+   Markdown is used in step body copy and FAQ answers — both contain
+   **$ amounts**, **bold timings**, and inline [links] per canonical.
+   ===================================================================== */
 
 export const metadata: Metadata = {
   title: 'Process · Design Vortek',
@@ -19,8 +30,9 @@ const STEPS = [
     num: '01',
     title: 'Discuss',
     icon: MessageSquare,
-    body: 'Send us a brief through the commission form — or just an email. Tell us about the character, the campaign, the references that capture the vibe.',
-    body2: 'We read carefully, ask the right follow-up questions, and only then start sketching ideas. Usually 24–48 hours to get back to you with thoughts.',
+    /** Body paragraphs as MARKDOWN — preserves [link](/order) + **bold**. */
+    body: 'Send us a brief through the [commission form](/order) — or just an email. Tell us about the character, the campaign, the references that capture the vibe. We read carefully, ask the right follow-up questions, and only then start sketching ideas.',
+    body2: '**Usually 24–48 hours** to get back to you with thoughts.',
     deliverables: [
       'A read of your brief by a real human',
       'Follow-up questions that sharpen scope',
@@ -31,8 +43,8 @@ const STEPS = [
     num: '02',
     title: 'Quote',
     icon: Receipt,
-    body: 'Within 48 hours of your brief, you get a fixed quote — not an estimate. Scope, timeline, total. A 25% deposit holds your slot (fully refundable until first sketch).',
-    body2: 'The remaining 75% lands on delivery. No hourly games. No surprises. The price you approve is the price you pay.',
+    body: 'Within 48 hours of your brief, you get a **fixed quote** — not an estimate. Scope, timeline, total. A **25% deposit** holds your slot (fully refundable until first sketch). The remaining 75% lands on delivery.',
+    body2: 'No hourly games. No surprises. The price you approve is the price you pay.',
     deliverables: [
       'A fixed-rate quote within 48 hours',
       'A clear timeline with milestones',
@@ -43,8 +55,8 @@ const STEPS = [
     num: '03',
     title: 'Create',
     icon: Brush,
-    body: 'Sketch first — we get the pose, composition, and likeness right before any paint touches the canvas. Sketch revisions are unlimited. From there: color blocks, then final paint.',
-    body2: 'Two paint-stage revisions baked into every commission. Updates every 3 days. You see the work as it grows.',
+    body: 'Sketch first — we get the pose, composition, and likeness right before any paint touches the canvas. **Sketch revisions are unlimited.** From there: color blocks, then final paint. **Two paint-stage revisions** baked into every commission.',
+    body2: 'Updates every 3 days. You see the work as it grows.',
     deliverables: [
       'Initial sketch within 5 working days',
       'Color blocks for approval',
@@ -56,8 +68,8 @@ const STEPS = [
     num: '04',
     title: 'Deliver',
     icon: PackageCheck,
-    body: 'Final files at 4K resolution — PNG, JPG, and a transparent-background version. Layered PSD optional. Yours to print, frame, share, treasure.',
-    body2: 'We follow up two weeks later to make sure you love it. Most clients hang it on a wall. Some have it tattooed.',
+    body: 'Final files at **4K resolution** — PNG, JPG, and a transparent-background version. Layered PSD optional. Yours to print, frame, share, treasure. We follow up two weeks later to make sure you love it.',
+    body2: 'Most clients hang it on a wall. Some have it tattooed.',
     deliverables: [
       '4K PNG + JPG exports',
       'Transparent-background version',
@@ -75,19 +87,21 @@ const TIMELINE = [
   { range: 'Day 11–14', title: 'Final delivery',   note: '4K exports, transparent PNG, every file you need. Final payment runs.' },
 ]
 
+/* FAQ answers stored as MARKDOWN strings — most reference **$ amounts**
+   or include [refund policy](/refunds) links. Rendered via <Markdown>. */
 const PROCESS_FAQ = [
-  { q: 'How soon can you start?',          a: 'Usually within 1–2 weeks of deposit. Current availability and our queue determine the exact start date — every slot is published on the Availability page.' },
-  { q: 'What if I need it faster?',        a: 'Rush turnaround is available for +$50 on character art and tokens, bringing turnaround down to 3 days. Reach out before booking and we’ll confirm capacity.' },
-  { q: 'What happens during revisions?',   a: 'You send written notes (or annotated screenshots). We make the changes and ship a new version within 2–3 days. Sketch revisions are unlimited and free; paint-stage revisions are capped at 2 per commission.' },
-  { q: 'Can I see the work in progress?',  a: 'Yes — process updates land in your inbox every 3 days during paint. Sketches, color blocks, and rendering shots. You always know where the piece stands.' },
-  { q: 'What if I’m not happy with the final?', a: 'Two paint-stage revisions are baked in — we usually nail it well within that. If the piece is genuinely not what you wanted at the end, we refund the balance beyond the 25% deposit (which covers sketch work).' },
+  { q: 'How soon can you start?',                a: 'Usually within **1–2 weeks** of deposit. Current availability and our queue determine the exact start date — every slot is published on the [Availability page](/availability).' },
+  { q: 'What if I need it faster?',              a: 'Rush turnaround is available for **+$50** on character art and tokens, bringing turnaround down to **3 days**. Reach out before booking and we’ll confirm capacity.' },
+  { q: 'What happens during revisions?',         a: 'You send written notes (or annotated screenshots). We make the changes and ship a new version within 2–3 days. Sketch revisions are **unlimited and free**; paint-stage revisions are capped at **2 per commission**.' },
+  { q: 'Can I see the work in progress?',        a: 'Yes — process updates land in your inbox every **3 days** during paint. Sketches, color blocks, and rendering shots. You always know where the piece stands.' },
+  { q: 'What if I’m not happy with the final?',  a: 'Two paint-stage revisions are baked in — we usually nail it well within that. If the piece is genuinely not what you wanted at the end, we refund the balance beyond the **25% deposit** (which covers sketch work). See the full [refund policy](/refunds).' },
 ]
 
 export default function ProcessPage() {
   return (
     <>
       <SiteHeader />
-      <main>
+      <main className="bg-parchment-50">
         <PageHero
           eyebrow="How it works"
           title={
@@ -99,7 +113,7 @@ export default function ProcessPage() {
         />
 
         {/* Four step rows */}
-        <section className="bg-parchment-50 py-12 md:py-20">
+        <section className="py-12 md:py-20">
           <Container narrow>
             <div className="flex flex-col gap-16 md:gap-20">
               {STEPS.map((step) => {
@@ -109,7 +123,7 @@ export default function ProcessPage() {
                     key={step.num}
                     className="grid grid-cols-1 md:grid-cols-[auto_1fr] gap-8 md:gap-10 items-start"
                   >
-                    {/* Large numbered circle + icon */}
+                    {/* Large Cormorant numeral + icon stack */}
                     <div className="flex md:flex-col items-center md:items-start gap-4">
                       <div
                         className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-parchment-50 border-[1.5px] border-gold-500 text-gold-700 flex items-center justify-center font-display font-semibold leading-none flex-shrink-0"
@@ -126,12 +140,14 @@ export default function ProcessPage() {
                       <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink-900 leading-tight tracking-tight mb-3">
                         {step.title}
                       </h2>
-                      <p className="text-lg text-ink-700 leading-[1.7] mb-3 max-w-[60ch]">
-                        {step.body}
-                      </p>
-                      <p className="text-ink-500 leading-relaxed mb-6 max-w-[60ch]">
-                        {step.body2}
-                      </p>
+
+                      {/* Body paragraphs via Markdown — supports **bold**, [links] */}
+                      <div className="text-lg text-ink-700 leading-[1.7] mb-3 max-w-[60ch] [&_p]:mb-0">
+                        <Markdown>{step.body}</Markdown>
+                      </div>
+                      <div className="text-ink-500 leading-relaxed mb-6 max-w-[60ch] [&_p]:mb-0 [&_strong]:text-ink-700">
+                        <Markdown>{step.body2}</Markdown>
+                      </div>
 
                       <div className="bg-parchment-100 border border-border-light rounded-xl p-5 max-w-[60ch]">
                         <div className="text-[0.7rem] uppercase tracking-[0.15em] font-semibold text-burgundy-700 mb-3">
@@ -154,11 +170,9 @@ export default function ProcessPage() {
           </Container>
         </section>
 
-        <div className="bg-parchment-50">
-          <CompassDivider />
-        </div>
+        <CompassDivider />
 
-        {/* Day-by-day timeline */}
+        {/* Day-by-day timeline with dashed gold connector */}
         <section className="bg-parchment-100 border-y border-border-light py-20 md:py-28">
           <Container>
             <div className="text-center max-w-[720px] mx-auto mb-12">
@@ -205,8 +219,8 @@ export default function ProcessPage() {
           </Container>
         </section>
 
-        {/* Common questions */}
-        <section className="bg-parchment-50 py-20 md:py-28">
+        {/* Common questions — FAQ accordion (native <details>), Markdown answers */}
+        <section className="py-20 md:py-28">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-12 lg:gap-16 max-w-[1080px] mx-auto">
               <div>
@@ -226,18 +240,30 @@ export default function ProcessPage() {
                   <details
                     key={idx}
                     className="group bg-parchment-100 border border-border-light rounded-xl open:border-border-medium open:bg-parchment-50 open:shadow-sm transition-colors"
+                    open={idx === 0}
                   >
                     <summary className="px-6 py-5 flex items-center justify-between gap-4 cursor-pointer list-none">
                       <span className="font-display text-lg md:text-xl font-semibold text-ink-900 leading-snug">
                         {item.q}
                       </span>
                       <span className="flex-shrink-0 w-8 h-8 rounded-full bg-parchment-50 text-burgundy-700 border border-border-medium inline-flex items-center justify-center group-open:bg-burgundy-700 group-open:text-cream-50 group-open:border-transparent group-open:rotate-45 transition-all">
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+                        <svg
+                          width="14"
+                          height="14"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.2"
+                          strokeLinecap="round"
+                          aria-hidden="true"
+                        >
                           <path d="M12 5v14M5 12h14" />
                         </svg>
                       </span>
                     </summary>
-                    <p className="px-6 pb-5 text-ink-700 leading-[1.7] max-w-[64ch]">{item.a}</p>
+                    <div className="px-6 pb-5 text-ink-700 leading-[1.7] max-w-[64ch] [&_p]:mb-0">
+                      <Markdown>{item.a}</Markdown>
+                    </div>
                   </details>
                 ))}
               </div>
@@ -245,7 +271,7 @@ export default function ProcessPage() {
           </Container>
         </section>
 
-        {/* CTA closer */}
+        {/* CTA closer — dark tome */}
         <section className="bg-tome-950 text-cream-50 py-20 md:py-28 text-center">
           <Container>
             <h2

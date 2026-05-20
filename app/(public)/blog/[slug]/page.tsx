@@ -6,10 +6,17 @@ import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import Container from '@/components/ui/Container'
 import Button from '@/components/ui/Button'
+import Markdown from '@/components/ui/Markdown'
 import { SITE_URL } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
-/* ---------- Sample posts (hardcoded for now) ---------- */
+/* ============================================================
+   Blog post type — body is a single MARKDOWN STRING that the
+   `<Markdown>` renderer handles end-to-end (headings, lists,
+   blockquotes, inline emphasis, internal + external links).
+   This is the biggest place where the markdown-content rule
+   applies; storing body as a block array loses inline links.
+   ============================================================ */
 type Post = {
   slug: string
   title: string
@@ -20,14 +27,8 @@ type Post = {
   excerpt: string
   gradient: string
   author: { name: string; initials: string; bio: string }
-  body: Array<
-    | { type: 'p'; text: string }
-    | { type: 'h2'; text: string }
-    | { type: 'h3'; text: string }
-    | { type: 'ul'; items: string[] }
-    | { type: 'quote'; text: string; cite?: string }
-    | { type: 'figure'; gradient: string; caption: string }
-  >
+  featureGradient?: string
+  body: string
 }
 
 const POSTS: Post[] = [
@@ -41,34 +42,51 @@ const POSTS: Post[] = [
     excerpt: 'The difference between "tiefling sorcerer" and a brief I can paint from. A working checklist with examples.',
     gradient: 'from-violet-900 via-burgundy-700 to-amber-800',
     author: {
-      name: 'Theo · DesignVortek founder',
+      name: 'Theo · Design Vortek founder',
       initials: 'T',
-      bio: 'Fourteen years painting characters, four years running this studio. Writes here about commissioning art, the painting process, and the occasional studio update.',
+      bio: "Fourteen years painting characters, four years running this studio. Writes here about commissioning art, the painting process, and the occasional studio update.",
     },
-    body: [
-      { type: 'p', text: "Every commission begins with a brief. Some briefs read like a screenplay — vivid, specific, layered with the kind of detail that gives a painter somewhere to stand. Others read like a Google form filled out in a hurry. Both are valid, but the first kind almost always ends up with better art." },
-      { type: 'p', text: "This isn't because the second kind is bad. It's because the artist ends up filling in the gaps from their own imagination — and your character lives in your imagination, not theirs. The closer your brief gets to the picture in your head, the closer the final piece will land." },
-      { type: 'h2', text: 'Start with the one-line pitch' },
-      { type: 'p', text: 'Before anything else, write one sentence that captures the character. Not their backstory, not their stats — the essential vibe. "A tired paladin who has stopped praying." "A bard who became a librarian." "A drow ranger who hates the surface but lives there anyway."' },
-      { type: 'p', text: 'That one sentence is the lens. Everything that follows should reinforce it.' },
-      { type: 'h2', text: 'The five details that matter most' },
-      { type: 'p', text: "After the pitch, lock down these five specifics. If you can answer all of them, you have a great brief. If you can't answer three, ask the artist what to add." },
-      { type: 'ul', items: [
-        'Species, build, age range. "Half-elf, tall and lean, late thirties" beats "fantasy person."',
-        'Skin, hair, and eye specifics. Hex codes are welcome — "soft purple skin with darker freckles" is plenty.',
-        'Outfit and key items. One distinctive piece is enough — not a full inventory.',
-        'Mood and lighting. "Melancholy but powerful, warm dramatic lighting" gives the artist a tonal palette.',
-        'Pose or moment. Standing, in motion, mid-spell, holding something? Pick one.',
-      ] },
-      { type: 'quote', text: "A great brief isn't long. It's specific in the right places and silent on the rest.", cite: 'from the studio' },
-      { type: 'h2', text: 'References are gold. Mood boards are diamonds.' },
-      { type: 'p', text: 'If you only do one extra thing, send 3 to 5 reference images. Not "draw this exactly" — references for vibe, lighting, color palette, similar species or outfit, even movie stills that capture the energy you want.' },
-      { type: 'figure', gradient: 'from-violet-950 via-purple-800 to-indigo-700', caption: 'Lyra Vexweaver — the painting that came from a brief like this one.' },
-      { type: 'h2', text: 'What to leave out' },
-      { type: 'p', text: "Backstory longer than three paragraphs. The character's full stat block. Lists of every adventure they have ever been on. All beautiful for your campaign. None of it makes the painting better." },
-      { type: 'h3', text: 'Closing the loop' },
-      { type: 'p', text: 'The best briefs treat the commission as a collaboration. You bring the character. The artist brings the craft. The brief is the bridge. Get it right and the piece will feel like both of you painted it — which, in a way, you did.' },
-    ],
+    body: `Every commission begins with a brief. Some briefs read like a screenplay — vivid, specific, layered with the kind of detail that gives a painter somewhere to stand. Others read like a Google form filled out in a hurry. **Both are valid**, but the first kind almost always ends up with better art.
+
+This isn't because the second kind is bad. It's because the artist ends up filling in the gaps from their own imagination — and your character lives in *your* imagination, not theirs. The closer your brief gets to the picture in your head, the closer the final piece will land.
+
+So here's what fourteen years of taking briefs has taught me: the questions to answer, the parts to skip, and the words that always make the artist's job easier.
+
+## Start with the one-line pitch
+
+Before anything else, write one sentence that captures the character. Not their backstory, not their stats — the *essential vibe*. "A tired paladin who has stopped praying." "A bard who became a librarian." "A drow ranger who hates the surface but lives there anyway."
+
+That one sentence is the lens. Everything that follows should reinforce it.
+
+## The five details that matter most
+
+After the pitch, lock down these five specifics. If you can answer all of them, you have a great brief. If you can't answer three, ask the artist what to add.
+
+- **Species, build, age range.** "Half-elf, tall and lean, late thirties" beats "fantasy person."
+- **Skin, hair, and eye specifics.** Hex codes are welcome. "Soft purple skin with darker freckles" is plenty.
+- **Outfit and key items.** One distinctive piece is enough — "tattered violet robe with silver constellations stitched in" — not a full inventory.
+- **Mood and lighting.** "Melancholy but powerful, warm dramatic lighting" gives the artist a tonal palette.
+- **Pose or moment.** Standing, in motion, mid-spell, holding something? Pick one. Vagueness here is what makes characters feel generic.
+
+> A great brief isn't long. It's specific in the right places and silent on the rest.
+
+## References are gold. Mood boards are diamonds.
+
+If you only do one extra thing, **send 3 to 5 reference images**. Not "draw this exactly" — references for vibe, lighting, color palette, similar species or outfit, even movie stills that capture the energy you want.
+
+A Pinterest board with fifteen carefully-chosen images is more useful than a 2,000-word description. It lets the artist *see* what you see.
+
+## What to leave out
+
+Backstory longer than three paragraphs. The character's full stat block. Lists of every adventure they have ever been on. Every accessory they have ever owned.
+
+All beautiful for your campaign. None of it makes the painting better.
+
+## Closing the loop
+
+The best briefs treat the commission as a collaboration. You bring the character. The artist brings the craft. The brief is the bridge. Get it right and the piece will feel like both of you painted it — which, in a way, you did.
+
+If you've got a character waiting, [start a brief](/order). Or read more about [how character art commissions work](/services/character-art). Either way: the sooner you write that one-line pitch, the sooner your character ends up on the wall.`,
   },
   {
     slug: 'three-weeks-with-lyra',
@@ -80,25 +98,35 @@ const POSTS: Post[] = [
     excerpt: 'Sketches, color blocks, and the revision where everything clicked. A full process walkthrough.',
     gradient: 'from-amber-900 via-orange-700 to-rose-700',
     author: {
-      name: 'Theo · DesignVortek founder',
+      name: 'Theo · Design Vortek founder',
       initials: 'T',
-      bio: 'Fourteen years painting characters, four years running this studio. Writes here about commissioning art, the painting process, and the occasional studio update.',
+      bio: "Fourteen years painting characters, four years running this studio. Writes here about commissioning art, the painting process, and the occasional studio update.",
     },
-    body: [
-      { type: 'p', text: "Lyra Vexweaver arrived in my inbox on a Tuesday in February, in a brief Aria had clearly spent her lunch hour writing. By the time I closed my laptop three weeks later, the painting was done. Here is what happened in between." },
-      { type: 'h2', text: 'Week one — sketches' },
-      { type: 'p', text: 'I always start with three thumbnail sketches at low resolution. Different poses, different framings. The point is not to be precious; the point is to find the version that snaps into focus for both of us.' },
-      { type: 'p', text: 'Aria picked the second thumbnail — Lyra mid-step, glass orb cupped in one hand, looking somewhere off-frame. We refined it over two passes.' },
-      { type: 'h2', text: 'Week two — color block' },
-      { type: 'p', text: 'Color blocks are where the painting starts to feel inevitable. Big shapes of color, no detail, just temperature and value. This stage often surprises clients — it looks like a watercolor study, not a finished portrait. But it locks the mood.' },
-      { type: 'quote', text: 'The color block is the bones. If the bones are wrong, no amount of polish will save it.', cite: 'studio motto' },
-      { type: 'h2', text: 'Week three — paint and polish' },
-      { type: 'p', text: 'Paint is the longest stage but also the most predictable. Layers of detail, working from large to small, eyes always last. I sent Aria three progress shots across five days.' },
-      { type: 'h3', text: 'The revision that mattered' },
-      { type: 'p', text: 'On the second-to-last day, Aria asked if Lyra could be looking slightly higher — not at the orb, but past it. Five minutes of paint. Different painting.' },
-      { type: 'figure', gradient: 'from-amber-950 via-rose-800 to-burgundy-700', caption: 'The final piece, delivered on day 21.' },
-      { type: 'p', text: "That is the value of two paint revisions baked into every commission. Most clients use only one. But when the second one matters, it really matters." },
-    ],
+    body: `Lyra Vexweaver arrived in my inbox on a Tuesday in February, in a brief Aria had clearly spent her lunch hour writing. By the time I closed my laptop **three weeks later**, the painting was done. Here is what happened in between.
+
+## Week one — sketches
+
+I always start with **three thumbnail sketches** at low resolution. Different poses, different framings. The point is not to be precious; the point is to find the version that snaps into focus for both of us.
+
+Aria picked the second thumbnail — Lyra mid-step, glass orb cupped in one hand, looking somewhere off-frame. We refined it over two passes.
+
+## Week two — color block
+
+Color blocks are where the painting starts to feel inevitable. Big shapes of color, no detail, just temperature and value. This stage often surprises clients — it looks like a watercolor study, not a finished portrait. But it locks the mood.
+
+> The color block is the bones. If the bones are wrong, no amount of polish will save it.
+
+## Week three — paint and polish
+
+Paint is the longest stage but also the most predictable. Layers of detail, working from large to small, eyes always last. I sent Aria three progress shots across five days.
+
+### The revision that mattered
+
+On the second-to-last day, Aria asked if Lyra could be looking *slightly* higher — not at the orb, but past it. Five minutes of paint. Different painting.
+
+That is the value of **two paint revisions** baked into every commission. Most clients use only one. But when the second one matters, it really matters.
+
+Want to see how it works for your character? [Start a brief](/order) or browse the [portfolio](/portfolio) for more before-and-afters.`,
   },
   {
     slug: 'vtt-token-deserves-more',
@@ -110,23 +138,25 @@ const POSTS: Post[] = [
     excerpt: 'A defense of the round portrait at 512px. Plus three tokens that earned their pixel budget.',
     gradient: 'from-emerald-900 via-teal-700 to-burgundy-700',
     author: {
-      name: 'Theo · DesignVortek founder',
+      name: 'Theo · Design Vortek founder',
       initials: 'T',
-      bio: 'Fourteen years painting characters, four years running this studio. Writes here about commissioning art, the painting process, and the occasional studio update.',
+      bio: "Fourteen years painting characters, four years running this studio. Writes here about commissioning art, the painting process, and the occasional studio update.",
     },
-    body: [
-      { type: 'p', text: 'Most VTT tokens are crops. A square portrait gets a circular mask slapped on top, the head ends up too small, and the corners look awkward at any zoom level. There is a better way.' },
-      { type: 'h2', text: 'Design for the circle from the start' },
-      { type: 'p', text: 'A purpose-painted token uses the round frame as composition. The head fills more of the canvas. The shoulders curve into the edge. Decorative borders pull the eye inward.' },
-      { type: 'h2', text: 'Three tokens that earned their pixel budget' },
-      { type: 'ul', items: [
-        'A wraith with smoke that breaks the circle slightly — only visible at hover zoom.',
-        'A dwarf cleric whose hammer rests across the lower third, giving the token visual weight.',
-        'A drow ranger with two glowing eyes that read clearly at 64 pixels — token-first detailing.',
-      ] },
-      { type: 'figure', gradient: 'from-emerald-900 via-teal-700 to-cyan-600', caption: 'Three tokens, each painted for the circle.' },
-      { type: 'p', text: 'At 512 pixels, every choice matters. A token that was a full portrait first will always look like a portrait someone clipped. A token painted as a token reads at every zoom.' },
-    ],
+    body: `Most VTT tokens are *crops*. A square portrait gets a circular mask slapped on top, the head ends up too small, and the corners look awkward at any zoom level. There is a better way.
+
+## Design for the circle from the start
+
+A purpose-painted token uses the round frame as composition. The head fills more of the canvas. The shoulders curve into the edge. **Decorative borders pull the eye inward**.
+
+## Three tokens that earned their pixel budget
+
+- A **wraith** with smoke that breaks the circle slightly — only visible at hover zoom.
+- A **dwarf cleric** whose hammer rests across the lower third, giving the token visual weight.
+- A **drow ranger** with two glowing eyes that read clearly at 64 pixels — token-first detailing.
+
+At 512 pixels, every choice matters. A token that was a full portrait first will always look like a portrait someone clipped. A token painted as a token reads at every zoom.
+
+Browse our [VTT token service](/services/vtt-tokens) or start a [commission](/order) for your party.`,
   },
 ]
 
@@ -145,7 +175,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = POST_MAP.get(slug)
   if (!post) return { title: 'Article not found' }
   return {
-    title: `${post.title} — DesignVortek Blog`,
+    title: `${post.title} — Design Vortek Blog`,
     description: post.excerpt,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
@@ -171,7 +201,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     description: post.excerpt,
     datePublished: post.isoDate,
     author: { '@type': 'Person', name: 'Theo' },
-    publisher: { '@type': 'Organization', name: 'DesignVortek' },
+    publisher: { '@type': 'Organization', name: 'Design Vortek' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/blog/${post.slug}` },
   }
 
@@ -230,53 +260,23 @@ export default async function BlogPostPage({ params }: PageProps) {
             <div className={cn('max-w-4xl mx-auto aspect-[16/9] rounded-2xl overflow-hidden mb-12 md:mb-16', `bg-gradient-to-br ${post.gradient}`)} />
           </Container>
 
-          {/* Body */}
+          {/* Body — single markdown string rendered through branded Markdown component.
+              Tailwind utilities target h2/h3/ul/blockquote via [&_…] selectors so
+              react-markdown's plain tags still get the Cormorant + gold-rail treatment. */}
           <div className="pb-16">
             <Container>
-              <div className="max-w-prose mx-auto font-body text-ink-700 leading-[1.8]">
-                {post.body.map((block, i) => {
-                  if (block.type === 'p') {
-                    return <p key={i} className="text-[1.0625rem] mb-5">{block.text}</p>
-                  }
-                  if (block.type === 'h2') {
-                    return (
-                      <h2 key={i} className="font-display text-3xl md:text-[2rem] font-semibold text-ink-900 leading-tight mt-12 mb-5 tracking-tight">
-                        {block.text}
-                      </h2>
-                    )
-                  }
-                  if (block.type === 'h3') {
-                    return (
-                      <h3 key={i} className="font-display text-2xl font-semibold text-ink-900 leading-snug mt-10 mb-4 tracking-tight">
-                        {block.text}
-                      </h3>
-                    )
-                  }
-                  if (block.type === 'ul') {
-                    return (
-                      <ul key={i} className="list-disc pl-6 mb-6 space-y-2.5 text-[1.0625rem]">
-                        {block.items.map((it, j) => <li key={j}>{it}</li>)}
-                      </ul>
-                    )
-                  }
-                  if (block.type === 'quote') {
-                    return (
-                      <blockquote key={i} className="my-10 pl-6 border-l-2 border-gold-500 font-display italic text-2xl md:text-[1.75rem] leading-snug text-ink-900">
-                        <p className="mb-3">&ldquo;{block.text}&rdquo;</p>
-                        {block.cite && <cite className="not-italic font-body text-sm text-ink-500 tracking-wide">— {block.cite}</cite>}
-                      </blockquote>
-                    )
-                  }
-                  if (block.type === 'figure') {
-                    return (
-                      <figure key={i} className="my-10">
-                        <div className={cn('aspect-[16/10] rounded-xl overflow-hidden', `bg-gradient-to-br ${block.gradient}`)} />
-                        <figcaption className="mt-3 text-sm text-ink-500 text-center italic">{block.caption}</figcaption>
-                      </figure>
-                    )
-                  }
-                  return null
-                })}
+              <div
+                className={cn(
+                  'max-w-prose mx-auto font-body text-ink-700 leading-[1.8] text-[1.0625rem]',
+                  '[&_p]:mb-5',
+                  '[&_h2]:font-display [&_h2]:text-3xl md:[&_h2]:text-[2rem] [&_h2]:font-semibold [&_h2]:text-ink-900 [&_h2]:leading-tight [&_h2]:mt-12 [&_h2]:mb-5 [&_h2]:tracking-tight',
+                  '[&_h3]:font-display [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:text-ink-900 [&_h3]:leading-snug [&_h3]:mt-10 [&_h3]:mb-4 [&_h3]:tracking-tight',
+                  '[&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-6 [&_ul]:space-y-2.5 [&_ul]:marker:text-burgundy-700',
+                  '[&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-6 [&_ol]:space-y-2.5 [&_ol]:marker:text-burgundy-700',
+                  '[&_blockquote]:my-10 [&_blockquote]:pl-6 [&_blockquote]:border-l-2 [&_blockquote]:border-gold-500 [&_blockquote]:font-display [&_blockquote]:italic [&_blockquote]:text-2xl md:[&_blockquote]:text-[1.75rem] [&_blockquote]:leading-snug [&_blockquote]:text-ink-900',
+                )}
+              >
+                <Markdown>{post.body}</Markdown>
               </div>
             </Container>
           </div>

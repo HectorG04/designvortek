@@ -5,6 +5,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import Container from '@/components/ui/Container'
 import { LinkButton } from '@/components/ui/Button'
 import SectionLabel from '@/components/ui/SectionLabel'
+import Markdown from '@/components/ui/Markdown'
 
 export const metadata: Metadata = {
   title: 'Brief received',
@@ -13,23 +14,25 @@ export const metadata: Metadata = {
   alternates: { canonical: '/order/success' },
 }
 
+/* Each step body is a markdown string so bold time markers ("**Within 24 hours**") +
+   optional inline links survive the data layer. Renders via Markdown component. */
 const NEXT_STEPS = [
   {
     when: 'Within 24 hours',
     strong: 'Check your inbox',
-    body: 'A confirmation just landed. If you don’t see it in ten minutes, peek in spam.',
+    body: `A confirmation just landed. If you don't see it in **ten minutes**, peek in spam — or email us directly at [hello@designvortek.com](mailto:hello@designvortek.com).`,
     Icon: Mail,
   },
   {
     when: 'Within 48 hours',
     strong: 'We review and reply',
-    body: 'You’ll receive a fixed quote, a proposed timeline, and any clarifying questions.',
+    body: `You'll receive a **fixed quote**, a proposed timeline, and any clarifying questions if needed.`,
     Icon: Clock,
   },
   {
     when: 'Within 5 days',
     strong: 'Sketches begin',
-    body: 'Once you approve and the 25% deposit lands, first sketches usually arrive in under a week.',
+    body: `Once you approve and the **25% deposit** lands, first sketches usually arrive in under a week.`,
     Icon: Sparkles,
   },
 ] as const
@@ -59,7 +62,7 @@ export default function OrderSuccessPage() {
             and a 25% deposit holds your slot — refundable until the first sketch.
           </p>
 
-          {/* 3-step timeline */}
+          {/* 3-step timeline — body copy via Markdown for bold time markers + email link */}
           <div className="mt-14 max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
             {NEXT_STEPS.map(({ when, strong, body, Icon }, i) => (
               <div
@@ -77,7 +80,9 @@ export default function OrderSuccessPage() {
                 <div className="font-display text-xl font-semibold text-ink-900 leading-tight mb-1">
                   {strong}
                 </div>
-                <p className="text-sm text-ink-500 leading-snug">{body}</p>
+                <div className="text-sm text-ink-500 leading-snug">
+                  <Markdown>{body}</Markdown>
+                </div>
               </div>
             ))}
           </div>
