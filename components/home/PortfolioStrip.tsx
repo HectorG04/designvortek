@@ -23,7 +23,7 @@ export default function PortfolioStrip() {
     : PORTFOLIO_FEATURED.filter((p) => p.category === active)
 
   return (
-    <section className="bg-parchment-100 py-24 md:py-32">
+    <section className="bg-parchment-100 py-16 md:py-32">
       <Container>
         {/* Section head */}
         <motion.div
@@ -31,15 +31,15 @@ export default function PortfolioStrip() {
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
           variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
-          className="text-center max-w-[720px] mx-auto mb-12"
+          className="text-center max-w-[720px] mx-auto mb-16"
         >
           <motion.div variants={fadeUp} className="mb-4 flex justify-center">
             <SectionLabel>Recent work</SectionLabel>
           </motion.div>
-          <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl font-semibold text-ink-900 leading-[1.1] tracking-tight">
+          <motion.h2 variants={fadeUp} className="font-display text-[2rem] md:text-5xl font-semibold text-ink-900 leading-[1.1] tracking-tight">
             Crafted with <em className="font-display italic font-medium text-burgundy-700">care</em>
           </motion.h2>
-          <motion.p variants={fadeUp} className="text-lg text-ink-500 mt-4 leading-relaxed">
+          <motion.p variants={fadeUp} className="text-lg text-ink-500 mt-4 leading-[1.6]">
             A small slice of the last few months. Each piece took 2&ndash;4 weeks of close collaboration with the client.
           </motion.p>
         </motion.div>
@@ -57,10 +57,10 @@ export default function PortfolioStrip() {
               key={cat}
               onClick={() => setActive(cat)}
               className={cn(
-                'px-4 py-2 rounded-full text-xs uppercase tracking-[0.12em] font-semibold transition-all',
+                'px-4 py-2 rounded-full font-body text-[0.8125rem] font-medium transition-all duration-150 border',
                 active === cat
-                  ? 'bg-burgundy-700 text-cream-50 shadow-sm'
-                  : 'bg-parchment-50 text-ink-700 border border-border-light hover:border-burgundy-700 hover:text-burgundy-700'
+                  ? 'bg-burgundy-700 border-burgundy-700 text-cream-50'
+                  : 'bg-parchment-100 text-ink-700 border-border-light hover:bg-parchment-200 hover:border-border-medium'
               )}
             >
               {cat}
@@ -71,7 +71,7 @@ export default function PortfolioStrip() {
         {/* Grid */}
         <motion.div
           layout
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
+          className="grid grid-cols-2 lg:grid-cols-4 gap-4"
         >
           <AnimatePresence mode="popLayout">
             {filtered.map((item, i) => (
@@ -84,11 +84,9 @@ export default function PortfolioStrip() {
                 transition={{ duration: 0.35, delay: i * 0.04 }}
                 whileHover={{ y: -3 }}
                 className={cn(
-                  'group relative rounded-xl overflow-hidden border border-border-light cursor-pointer',
-                  'hover:shadow-[0_12px_32px_rgba(30,20,8,0.10)] transition-shadow',
-                  item.tall && 'row-span-2',
-                  `bg-gradient-to-br ${item.gradient}`,
-                  item.tall ? 'aspect-[4/10]' : 'aspect-[4/5]'
+                  'group relative rounded-lg overflow-hidden border border-border-light cursor-pointer aspect-[4/5]',
+                  'hover:shadow-lg transition-shadow duration-250',
+                  `bg-gradient-to-br ${item.gradient}`
                 )}
               >
                 {/* Placeholder content */}
@@ -97,11 +95,16 @@ export default function PortfolioStrip() {
                 </div>
 
                 {/* Hover overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-tome-950/85 via-tome-950/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-5">
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-250 flex flex-col justify-end p-5 text-cream-50"
+                  style={{
+                    background: 'linear-gradient(180deg, transparent 50%, rgba(26, 19, 12, 0.85) 100%)',
+                  }}
+                >
                   <div className="text-[0.625rem] uppercase tracking-[0.15em] font-bold text-gold-glow mb-1">
                     {item.category}
                   </div>
-                  <div className="font-display text-base lg:text-lg font-semibold text-cream-50 leading-tight">
+                  <div className="font-display text-[1.125rem] font-semibold text-cream-50 leading-[1.2]">
                     {item.title}
                   </div>
                 </div>

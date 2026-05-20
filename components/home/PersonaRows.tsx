@@ -21,7 +21,7 @@ const fadeUp = {
 
 export default function PersonaRows() {
   return (
-    <section className="bg-parchment-50 py-24 md:py-32">
+    <section className="bg-parchment-50 py-16 md:py-32">
       <Container>
         {/* Section head */}
         <motion.div
@@ -34,10 +34,10 @@ export default function PersonaRows() {
           <motion.div variants={fadeUp} className="mb-4 flex justify-center">
             <SectionLabel>Who we make art for</SectionLabel>
           </motion.div>
-          <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl font-semibold text-ink-900 leading-[1.1] tracking-tight">
+          <motion.h2 variants={fadeUp} className="font-display text-[2rem] md:text-5xl font-semibold text-ink-900 leading-[1.1] tracking-tight">
             Three kinds of <em className="font-display italic font-medium text-burgundy-700">storytellers</em>
           </motion.h2>
-          <motion.p variants={fadeUp} className="text-lg text-ink-500 mt-4 leading-relaxed">
+          <motion.p variants={fadeUp} className="text-lg text-ink-500 mt-4 leading-[1.6]">
             We&rsquo;ve spent years working alongside the people who care most about their characters. Here&rsquo;s who usually finds us.
           </motion.p>
         </motion.div>
@@ -52,7 +52,7 @@ export default function PersonaRows() {
               viewport={{ once: true, margin: '-100px' }}
               variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
               className={cn(
-                'grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-14 items-center',
+                'grid grid-cols-1 gap-6 items-center lg:grid-cols-[1fr_1.1fr] lg:gap-14',
                 p.reverse && 'lg:grid-cols-[1.1fr_1fr]'
               )}
             >
@@ -60,12 +60,12 @@ export default function PersonaRows() {
               <motion.div
                 variants={fadeUp}
                 className={cn(
-                  'relative rounded-3xl overflow-hidden aspect-[5/4] border border-border-light flex items-end p-5',
+                  'relative rounded-2xl overflow-hidden aspect-[5/4] border border-border-light flex items-end p-5',
                   personaBgClasses[p.bg],
                   p.reverse && 'lg:order-2'
                 )}
               >
-                <span className="inline-block bg-tome-950/65 backdrop-blur-md border border-cream-50/15 text-cream-50 text-[0.6875rem] tracking-[0.1em] uppercase font-mono px-2.5 py-1.5 rounded">
+                <span className="inline-block bg-tome-950/65 backdrop-blur-md border border-cream-50/15 text-cream-50 text-[0.6875rem] tracking-[0.1em] uppercase font-mono px-2.5 py-1.5 rounded-sm">
                   {p.tag}
                 </span>
               </motion.div>
@@ -74,21 +74,21 @@ export default function PersonaRows() {
               <motion.div variants={fadeUp} className={cn(p.reverse && 'lg:order-1')}>
                 <div className="flex items-center gap-3 mb-3">
                   <span className="h-px w-7 bg-gold-500" aria-hidden="true" />
-                  <span className="font-display text-sm font-semibold text-gold-700 tracking-[0.15em]">{p.num}</span>
+                  <span className="font-display text-[0.875rem] font-semibold text-gold-700 tracking-[0.15em]">{p.num}</span>
                 </div>
-                <h3 className="font-display text-3xl md:text-4xl font-semibold text-ink-900 leading-[1.1] tracking-tight mb-2">
+                <h3 className="font-display text-[1.875rem] md:text-[2.25rem] font-semibold text-ink-900 leading-[1.1] tracking-tight mb-2">
                   {p.title}{' '}
                   <em className="font-display italic font-medium text-burgundy-700">{p.titleEm}</em>
                   {'titleAfter' in p && p.titleAfter ? p.titleAfter : ''}
                 </h3>
-                <p className="font-accent text-2xl text-burgundy-700 mb-4">{p.sub}</p>
+                <p className="font-accent text-[1.375rem] text-burgundy-700 mb-4">{p.sub}</p>
                 <p className="text-ink-700 leading-[1.7] mb-5 max-w-[52ch]">{p.body}</p>
 
                 <div className="flex flex-wrap gap-2 mb-6">
                   {p.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-parchment-100 border border-border-light text-xs text-ink-700"
+                      className="inline-flex items-center gap-[5px] px-2.5 py-1 rounded-full bg-parchment-100 border border-border-light text-[0.75rem] text-ink-700"
                     >
                       <Check size={11} strokeWidth={2} className="text-gold-700" />
                       {tag}
@@ -98,7 +98,7 @@ export default function PersonaRows() {
 
                 <Link
                   href={p.href}
-                  className="inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.15em] font-semibold text-burgundy-700 hover:text-burgundy-500 hover:gap-3.5 transition-all"
+                  className="inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.15em] font-semibold text-burgundy-700 hover:text-burgundy-500 hover:gap-3.5 transition-all duration-150"
                 >
                   {p.cta} <ArrowRight size={14} strokeWidth={1.8} />
                 </Link>

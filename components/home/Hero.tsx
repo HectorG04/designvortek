@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { ArrowRight, Star, ChevronDown } from 'lucide-react'
+import { ArrowRight, Star } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import PaperTexture from '@/components/decor/PaperTexture'
 import { HERO_THUMBS } from '@/lib/constants'
@@ -39,7 +39,7 @@ export default function Hero() {
       <PaperTexture variant="cream" opacity={0.5} />
 
       <div className="relative z-10 w-full mx-auto max-w-[1280px] px-6 md:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-14 lg:gap-20 items-center">
 
           {/* Text column */}
           <motion.div
@@ -148,12 +148,12 @@ export default function Hero() {
                     key={thumb.label}
                     variants={thumbIn}
                     whileHover={{ y: -4 }}
-                    transition={{ type: 'spring', stiffness: 300, damping: 24 }}
+                    transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
                     className={cn(
-                      'relative aspect-[4/5] rounded-2xl overflow-hidden cursor-pointer',
+                      'relative aspect-[4/5] rounded-xl overflow-hidden cursor-pointer',
                       'border border-gold-glow/[0.18] hover:border-gold-glow/40',
-                      'transition-shadow duration-250',
-                      'hover:shadow-[0_8px_24px_rgba(201,160,74,0.32)]',
+                      'transition-[box-shadow,border-color] duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]',
+                      'hover:shadow-[0_8px_24px_rgba(201,160,74,0.18)]',
                       `bg-gradient-to-br ${thumb.gradient}`,
                       isOffset && 'mt-9'
                     )}
@@ -165,7 +165,7 @@ export default function Hero() {
 
                     {/* Badge */}
                     <div className="absolute top-3.5 left-3.5">
-                      <span className="inline-block bg-tome-950/70 backdrop-blur-md border border-gold-glow/30 text-cream-50 text-[0.625rem] font-bold uppercase tracking-[0.15em] px-2.5 py-1.5 rounded-full">
+                      <span className="inline-block bg-tome-950/70 backdrop-blur-md border border-gold-glow/30 text-cream-50 text-[0.625rem] font-bold uppercase tracking-[0.15em] px-2.5 py-[5px] rounded-full">
                         {thumb.label}
                       </span>
                     </div>
@@ -181,18 +181,22 @@ export default function Hero() {
       {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
+        animate={{ opacity: 0.7 }}
         transition={{ delay: 1.4, duration: 0.6 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-cream-200/60"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-cream-200 font-body text-xs font-semibold tracking-[0.2em] uppercase"
         aria-hidden="true"
       >
-        <span className="font-body text-[0.6rem] tracking-[0.25em] uppercase">Scroll</span>
+        <span>Scroll</span>
         <motion.span
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
-        >
-          <ChevronDown size={16} className="text-gold-glow/60" />
-        </motion.span>
+          animate={{ scaleY: [0.6, 1, 0.6], opacity: [0.4, 1, 0.4] }}
+          transition={{ duration: 2.5, repeat: Infinity, ease: 'easeInOut' }}
+          style={{
+            width: '1px',
+            height: '36px',
+            background: 'linear-gradient(180deg, transparent, var(--color-gold-glow))',
+            transformOrigin: 'top',
+          }}
+        />
       </motion.div>
     </section>
   )

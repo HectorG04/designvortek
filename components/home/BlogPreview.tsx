@@ -49,34 +49,34 @@ export default function BlogPreview() {
             <motion.article key={post.slug} variants={fadeUp}>
               <Link
                 href={`/blog/${post.slug}`}
-                className="group block bg-parchment-50 border border-border-light rounded-2xl overflow-hidden hover:border-border-medium hover:shadow-[0_12px_32px_rgba(30,20,8,0.10)] transition-shadow h-full"
+                className="group block bg-parchment-50 border border-border-light rounded-2xl overflow-hidden hover:border-border-medium hover:shadow-[0_4px_12px_rgba(30,20,8,0.08)] hover:-translate-y-1 transition-[transform,box-shadow,border-color] duration-[250ms] h-full"
               >
                 {/* Featured image placeholder */}
                 <div className={cn(
-                  'relative aspect-[16/10] flex items-end p-4',
+                  'relative aspect-[16/9] flex items-start p-[14px]',
                   `bg-gradient-to-br ${post.gradient}`
                 )}>
-                  <span className="inline-block bg-tome-950/65 backdrop-blur-md border border-cream-50/15 text-cream-50 text-[0.625rem] tracking-[0.15em] uppercase font-bold px-2.5 py-1 rounded-full">
+                  <span className="inline-block bg-[rgba(251,246,233,0.92)] backdrop-blur-md border border-gold-300 text-ink-900 text-[0.625rem] tracking-[0.15em] uppercase font-bold px-2.5 py-[5px] rounded-full">
                     {post.category}
                   </span>
                 </div>
 
                 {/* Body */}
-                <div className="p-6 flex flex-col">
-                  <h4 className="font-display text-xl font-semibold text-ink-900 leading-snug mb-3 group-hover:text-burgundy-700 transition-colors line-clamp-3">
+                <div className="pt-5 px-6 pb-6 flex flex-col">
+                  <h4 className="font-display text-[1.375rem] font-bold text-ink-900 leading-[1.25] tracking-[-0.015em] mb-[10px] group-hover:text-burgundy-700 transition-colors line-clamp-3">
                     {post.title}
                   </h4>
 
-                  <div className="flex items-center gap-2 text-xs text-ink-500 mb-3">
-                    <span>{post.date}</span>
-                    <span className="w-1 h-1 rounded-full bg-ink-400" aria-hidden="true" />
-                    <span className="inline-flex items-center gap-1">
-                      <Clock size={11} strokeWidth={1.8} />
+                  <div className="flex items-center gap-[10px] mb-[14px]">
+                    <span className="font-body text-[0.6875rem] font-bold tracking-[0.15em] uppercase text-gold-700">{post.date}</span>
+                    <span className="w-1 h-1 rounded-full bg-gold-500 flex-shrink-0" aria-hidden="true" />
+                    <span className="inline-flex items-center gap-[5px] text-[0.8125rem] text-ink-500 tabular-nums">
+                      <Clock size={12} strokeWidth={1.6} className="text-ink-400" />
                       {post.readTime}
                     </span>
                   </div>
 
-                  <p className="text-sm text-ink-700 leading-relaxed">{post.excerpt}</p>
+                  <p className="text-[0.9375rem] text-ink-700 leading-[1.55]">{post.excerpt}</p>
                 </div>
               </Link>
             </motion.article>

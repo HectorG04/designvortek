@@ -44,16 +44,21 @@ export default function SiteHeader({ transparent = false }: SiteHeaderProps) {
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className={cn(
-          'fixed top-0 left-0 right-0 z-50 transition-all duration-250 ease-out',
+        style={
           scrolled
-            ? 'bg-parchment-50/92 backdrop-blur-md border-b border-border-light shadow-sm py-[14px]'
+            ? { boxShadow: '0 1px 0 var(--color-border-light), 0 1px 2px rgba(30, 20, 8, 0.05)' }
+            : undefined
+        }
+        className={cn(
+          'fixed top-0 left-0 right-0 z-50 transition-[background-color,padding,box-shadow] duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]',
+          scrolled
+            ? 'bg-parchment-50/[0.92] backdrop-blur-md py-3 min-[901px]:py-[14px]'
             : transparent
-              ? 'bg-transparent py-5'
-              : 'bg-parchment-50/92 backdrop-blur-md border-b border-border-light py-5'
+              ? 'bg-transparent py-4 min-[901px]:py-5'
+              : 'bg-parchment-50/[0.92] backdrop-blur-md py-4 min-[901px]:py-5'
         )}
       >
-        <div className="mx-auto max-w-[1280px] px-6 md:px-12 flex items-center justify-between">
+        <div className="mx-auto max-w-[1280px] px-6 min-[901px]:px-12 flex items-center justify-between">
 
           {/* Logo */}
           <Logo
@@ -64,7 +69,7 @@ export default function SiteHeader({ transparent = false }: SiteHeaderProps) {
           {/* Desktop nav */}
           <nav
             className={cn(
-              'hidden lg:flex items-center gap-9',
+              'hidden min-[901px]:flex items-center gap-9',
               onHero ? 'text-cream-200' : 'text-ink-700'
             )}
             aria-label="Primary"
@@ -83,8 +88,8 @@ export default function SiteHeader({ transparent = false }: SiteHeaderProps) {
                     <Link
                       href={link.href}
                       className={cn(
-                        'inline-flex items-center gap-1 text-[0.9375rem] py-1 transition-all duration-150',
-                        'opacity-85 hover:opacity-100',
+                        'inline-flex items-center gap-1 text-[0.9375rem] py-1 transition-[color,opacity] duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]',
+                        'opacity-[0.85] hover:opacity-100',
                         onHero ? 'hover:text-gold-glow' : 'hover:text-burgundy-700',
                         active && (onHero ? 'text-gold-glow opacity-100' : 'text-burgundy-700 opacity-100')
                       )}
@@ -92,7 +97,7 @@ export default function SiteHeader({ transparent = false }: SiteHeaderProps) {
                       {link.label}
                       <ChevronDown
                         size={12}
-                        className={cn('transition-transform duration-200', servicesOpen && 'rotate-180')}
+                        className={cn('transition-transform duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]', servicesOpen && 'rotate-180')}
                       />
                     </Link>
                     <AnimatePresence>
@@ -127,8 +132,8 @@ export default function SiteHeader({ transparent = false }: SiteHeaderProps) {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    'text-[0.9375rem] py-1 transition-all duration-150',
-                    'opacity-85 hover:opacity-100',
+                    'text-[0.9375rem] py-1 transition-[color,opacity] duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]',
+                    'opacity-[0.85] hover:opacity-100',
                     onHero ? 'hover:text-gold-glow' : 'hover:text-burgundy-700',
                     active && (onHero ? 'text-gold-glow opacity-100' : 'text-burgundy-700 opacity-100')
                   )}
@@ -154,7 +159,7 @@ export default function SiteHeader({ transparent = false }: SiteHeaderProps) {
               type="button"
               onClick={() => setMobileOpen(!mobileOpen)}
               className={cn(
-                'lg:hidden inline-flex items-center justify-center w-10 h-10 rounded-md transition-colors',
+                'min-[901px]:hidden inline-flex items-center justify-center w-10 h-10 rounded-md transition-colors duration-150',
                 onHero ? 'text-cream-50 hover:bg-white/10' : 'text-ink-700 hover:bg-parchment-100'
               )}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
@@ -175,7 +180,7 @@ export default function SiteHeader({ transparent = false }: SiteHeaderProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.22, ease: 'easeOut' }}
-            className="fixed top-[72px] left-0 right-0 z-40 lg:hidden bg-parchment-50 border-b border-border-light shadow-lg"
+            className="fixed top-[64px] left-0 right-0 z-40 min-[901px]:hidden bg-parchment-50 border-b border-border-light shadow-lg"
           >
             <nav className="mx-auto max-w-[1280px] px-6 py-6 flex flex-col gap-1" aria-label="Mobile">
               {NAV_LINKS.map((link, i) => (

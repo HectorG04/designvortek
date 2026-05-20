@@ -33,7 +33,7 @@ export default function FAQ() {
   }
 
   return (
-    <section className="bg-parchment-50 py-24 md:py-32">
+    <section className="bg-parchment-50 py-16 md:py-32">
       {/* JSON-LD for FAQPage schema (Google rich result eligible) */}
       <script
         type="application/ld+json"
@@ -41,7 +41,7 @@ export default function FAQ() {
       />
 
       <Container>
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-12 lg:gap-16 max-w-[1080px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-8 lg:gap-16 max-w-[1080px] mx-auto">
 
           {/* Side column */}
           <motion.div
@@ -55,11 +55,11 @@ export default function FAQ() {
             </motion.div>
             <motion.h2
               variants={fadeUp}
-              className="font-display text-4xl md:text-5xl font-semibold text-ink-900 leading-[1.1] tracking-tight mb-4"
+              className="font-display text-[2rem] md:text-[3rem] font-semibold text-ink-900 leading-[1.1] tracking-tight mb-4"
             >
               Quick answers, no <em className="font-display italic font-medium text-burgundy-700">fluff</em>
             </motion.h2>
-            <motion.p variants={fadeUp} className="text-ink-500 leading-relaxed mb-5">
+            <motion.p variants={fadeUp} className="text-base text-ink-500 leading-[1.65] mb-5">
               The questions clients ask most. Don&rsquo;t see yours? Send a note — we usually reply within 48 hours.
             </motion.p>
             <motion.div variants={fadeUp}>
@@ -99,7 +99,7 @@ export default function FAQ() {
                     aria-expanded={isOpen}
                     className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 cursor-pointer"
                   >
-                    <span className="font-display text-lg md:text-xl font-semibold text-ink-900 leading-snug">
+                    <span className="font-display text-[1.25rem] font-semibold text-ink-900 leading-[1.3]">
                       {item.q}
                     </span>
                     <span
@@ -123,9 +123,9 @@ export default function FAQ() {
                         transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                         style={{ overflow: 'hidden' }}
                       >
-                        <div className="px-6 pb-5 text-ink-700 leading-[1.7] max-w-[64ch] space-y-3">
+                        <div className="px-6 pb-[22px] text-ink-700 text-base leading-[1.7] max-w-[64ch] [&_a]:text-burgundy-700 [&_a]:border-b [&_a]:border-gold-500">
                           {item.a.map((para, i) => (
-                            <p key={i}>{para}</p>
+                            <p key={i} className="mb-3 last:mb-0">{para}</p>
                           ))}
                         </div>
                       </motion.div>

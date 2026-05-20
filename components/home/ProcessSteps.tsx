@@ -61,10 +61,10 @@ export default function ProcessSteps() {
                 <div className="w-14 h-14 rounded-full bg-parchment-50 border-[1.5px] border-gold-500 text-gold-700 inline-flex items-center justify-center mx-auto mb-5 font-display text-2xl font-semibold">
                   {step.num}
                 </div>
-                <h3 className="font-display text-2xl font-semibold text-ink-900 leading-tight mb-2">
+                <h3 className="font-display text-2xl font-semibold text-ink-900 leading-[1.2] mb-2">
                   {step.title}
                 </h3>
-                <p className="text-[0.9375rem] text-ink-500 leading-relaxed max-w-[22ch] mx-auto">
+                <p className="text-[0.9375rem] text-ink-500 leading-[1.6] max-w-[22ch] mx-auto">
                   {step.body}
                 </p>
               </motion.div>
@@ -82,7 +82,7 @@ export default function ProcessSteps() {
         >
           <span className="inline-flex items-baseline gap-2 text-[0.9375rem] text-ink-500">
             Average turnaround{' '}
-            <strong className="font-display text-xl font-semibold text-ink-900">7–14 days</strong>
+            <strong className="font-display text-[1.25rem] font-semibold text-ink-900">7–14 days</strong>
           </span>
         </motion.div>
       </Container>

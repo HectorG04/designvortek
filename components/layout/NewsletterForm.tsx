@@ -28,7 +28,7 @@ export default function NewsletterForm() {
 
   if (submitted) {
     return (
-      <div className="mb-6 max-w-sm inline-flex items-center gap-2 bg-forest-500/10 border border-forest-500/30 rounded-md px-3 py-2.5 text-sm text-forest-700">
+      <div className="mt-3 mb-3 max-w-sm inline-flex items-center gap-2 bg-forest-500/10 border border-forest-500/30 rounded-md px-3 py-2.5 text-sm text-forest-700">
         <Check size={14} strokeWidth={2.5} />
         <span>Thanks — you&rsquo;re on the list.</span>
       </div>
@@ -36,29 +36,27 @@ export default function NewsletterForm() {
   }
 
   return (
-    <form className="mb-6" onSubmit={handleSubmit}>
-      <label htmlFor="footer-newsletter" className="block text-[0.7rem] tracking-[0.15em] uppercase font-semibold text-ink-700 mb-2">
-        Studio Notes
+    <form className="flex gap-1.5 mt-3 mb-3 max-w-sm" onSubmit={handleSubmit}>
+      <label htmlFor="footer-newsletter" className="sr-only">
+        Email address
       </label>
-      <div className="flex gap-2 max-w-sm">
-        <input
-          id="footer-newsletter"
-          type="email"
-          required
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="your@email.com"
-          disabled={loading}
-          className="flex-1 bg-parchment-50 border border-border-light rounded-md px-3 py-2.5 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors disabled:opacity-60"
-        />
-        <button
-          type="submit"
-          disabled={loading}
-          className="bg-burgundy-700 text-cream-50 px-4 py-2.5 rounded-md text-xs font-semibold uppercase tracking-wider hover:bg-burgundy-500 transition-colors disabled:opacity-60"
-        >
-          {loading ? '...' : 'Join'}
-        </button>
-      </div>
+      <input
+        id="footer-newsletter"
+        type="email"
+        required
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="your@email.com"
+        disabled={loading}
+        className="flex-1 min-w-0 bg-parchment-50 border-[1.5px] border-border-light rounded-md px-[14px] py-[10px] font-body text-[0.8125rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] disabled:opacity-60"
+      />
+      <button
+        type="submit"
+        disabled={loading}
+        className="inline-flex items-center justify-center gap-2 bg-burgundy-700 text-cream-50 px-5 py-[10px] rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em] whitespace-nowrap hover:bg-burgundy-500 hover:-translate-y-px hover:shadow-md active:bg-burgundy-900 active:scale-[0.98] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] disabled:opacity-60 disabled:cursor-not-allowed disabled:translate-y-0 disabled:shadow-none"
+      >
+        {loading ? '...' : 'Subscribe'}
+      </button>
     </form>
   )
 }

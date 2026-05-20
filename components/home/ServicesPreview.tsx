@@ -20,7 +20,7 @@ const fadeUp = {
 
 export default function ServicesPreview() {
   return (
-    <section className="bg-parchment-50 py-24 md:py-32">
+    <section className="bg-parchment-50 py-16 md:py-32">
       <Container>
         {/* Section head */}
         <motion.div
@@ -33,10 +33,10 @@ export default function ServicesPreview() {
           <motion.div variants={fadeUp} className="mb-4 flex justify-center">
             <SectionLabel>What we create</SectionLabel>
           </motion.div>
-          <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl font-semibold text-ink-900 leading-[1.1] tracking-tight">
+          <motion.h2 variants={fadeUp} className="font-display text-[2rem] md:text-5xl font-semibold text-ink-900 leading-[1.1] tracking-tight">
             Three signature <em className="font-display italic font-medium text-burgundy-700">services</em>
           </motion.h2>
-          <motion.p variants={fadeUp} className="text-lg text-ink-500 mt-4 leading-relaxed">
+          <motion.p variants={fadeUp} className="text-lg text-ink-500 mt-4 leading-[1.6]">
             Painterly portraits, virtual tokens, and group illustrations — each held to the same craft. Choose what fits, or commission something custom.
           </motion.p>
         </motion.div>
@@ -57,41 +57,43 @@ export default function ServicesPreview() {
                 variants={fadeUp}
                 whileHover={{ y: -4 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-                className="group bg-parchment-100 border border-border-light rounded-2xl p-8 flex flex-col hover:border-border-medium hover:shadow-[0_12px_32px_rgba(30,20,8,0.10)] transition-shadow"
+                className="group bg-parchment-50 border border-border-light rounded-2xl p-8 flex flex-col gap-3.5 hover:border-border-medium hover:shadow-gold transition-[box-shadow,border-color]"
               >
                 {/* Icon */}
-                <div className="w-12 h-12 rounded-xl bg-parchment-50 border border-border-light flex items-center justify-center mb-6 text-burgundy-700 group-hover:border-gold-500 transition-colors">
+                <div className="w-11 h-11 rounded-lg bg-gold-100 flex items-center justify-center text-gold-700 mb-1">
                   <Icon size={22} strokeWidth={1.5} />
                 </div>
 
-                {/* Title + sub */}
-                <h4 className="font-display text-2xl font-semibold text-ink-900 leading-tight">{service.title}</h4>
-                <p className="font-accent text-xl text-burgundy-700 mt-1 mb-4">{service.sub}</p>
+                {/* Title */}
+                <h4 className="font-display text-2xl font-semibold text-ink-900 leading-[1.2]">{service.title}</h4>
+
+                {/* Sub */}
+                <p className="font-accent text-lg text-burgundy-700 -mt-2.5">{service.sub}</p>
 
                 {/* Body */}
-                <p className="text-ink-700 leading-relaxed mb-5">{service.body}</p>
+                <p className="text-ink-700 leading-[1.6]">{service.body}</p>
 
                 {/* Features */}
-                <ul className="space-y-2 mb-6">
+                <ul className="flex flex-col gap-2 list-none p-0 m-0">
                   {service.features.map((f) => (
-                    <li key={f} className="flex items-start gap-2 text-sm text-ink-700">
-                      <Check size={14} strokeWidth={2.4} className="text-forest-700 mt-1 flex-shrink-0" />
+                    <li key={f} className="flex items-center gap-2.5 text-[0.9375rem] text-ink-700">
+                      <Check size={14} strokeWidth={2} className="text-gold-700 flex-shrink-0" />
                       {f}
                     </li>
                   ))}
                 </ul>
 
                 {/* Footer: price + link */}
-                <div className="mt-auto pt-5 border-t border-border-light flex items-center justify-between">
-                  <div>
-                    <div className="text-[0.7rem] uppercase tracking-[0.15em] font-semibold text-ink-500">Starting at</div>
-                    <div className="font-display text-2xl font-semibold text-burgundy-700">{service.price}</div>
+                <div className="mt-auto pt-4 border-t border-border-light flex items-center justify-between gap-3 flex-nowrap">
+                  <div className="inline-flex items-baseline gap-2.5 min-w-0">
+                    <span className="font-body text-[0.625rem] font-bold uppercase tracking-[0.15em] text-gold-700 whitespace-nowrap">Starting at</span>
+                    <span className="font-display text-[1.625rem] font-semibold text-ink-900 leading-none -tracking-[0.01em]">{service.price}</span>
                   </div>
                   <Link
                     href={service.href}
-                    className="inline-flex items-center gap-1.5 text-[0.75rem] uppercase tracking-[0.15em] font-semibold text-burgundy-700 hover:text-burgundy-500 transition-all hover:gap-2.5"
+                    className="group/link inline-flex items-center gap-1.5 text-[0.75rem] uppercase tracking-[0.15em] font-semibold text-burgundy-700 hover:text-burgundy-500 hover:gap-2.5 transition-all duration-150"
                   >
-                    Explore <ArrowRight size={14} strokeWidth={1.8} />
+                    Explore <ArrowRight size={12} strokeWidth={1.8} />
                   </Link>
                 </div>
               </motion.article>
@@ -103,7 +105,7 @@ export default function ServicesPreview() {
         <div className="text-center mt-12">
           <Link
             href="/services"
-            className="inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.15em] font-semibold text-burgundy-700 hover:text-burgundy-500 transition-all hover:gap-3.5"
+            className="inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.15em] font-semibold text-burgundy-700 hover:text-burgundy-500 hover:gap-3.5 transition-all duration-150"
           >
             See all five services <ArrowRight size={14} strokeWidth={1.8} />
           </Link>

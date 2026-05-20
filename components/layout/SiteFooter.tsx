@@ -22,15 +22,15 @@ export default function SiteFooter() {
         </svg>
       </div>
 
-      <div className="mx-auto max-w-[1280px] px-6 md:px-12 pt-20 pb-12">
+      <div className="mx-auto max-w-[1280px] px-6 md:px-12 pt-[72px] pb-7">
 
-        {/* Top grid: brand + 4 link columns */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 mb-16">
+        {/* Top grid: brand + 4 link columns (1.6fr + 4 * 1fr per spec) */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:[grid-template-columns:1.6fr_repeat(4,1fr)] gap-10 md:gap-8 lg:gap-10 mb-12">
 
-          {/* Brand column — takes 2 columns on lg */}
-          <div className="col-span-2">
-            <Logo className="text-burgundy-700 mb-5" textClassName="text-ink-900" />
-            <p className="text-ink-500 text-sm leading-relaxed max-w-xs mb-6">
+          {/* Brand column — spans 2 cols on smaller, 1 grid cell on lg (1.6fr) */}
+          <div className="col-span-2 md:col-span-3 lg:col-span-1 flex flex-col gap-1.5">
+            <Logo className="text-burgundy-700 mb-3" textClassName="text-ink-900" />
+            <p className="text-ink-500 text-sm leading-[1.6] max-w-[32ch] mb-[18px]">
               Bespoke art commissions for the TTRPG community and beyond. Painterly portraits, VTT tokens, and custom illustrations — crafted by hand.
             </p>
 
@@ -38,7 +38,7 @@ export default function SiteFooter() {
             <NewsletterForm />
 
             {/* Social */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               {SOCIAL_LINKS.map(({ Icon, href, label }) => (
                 <a
                   key={label}
@@ -46,9 +46,9 @@ export default function SiteFooter() {
                   aria-label={label}
                   target={href.startsWith('mailto') ? undefined : '_blank'}
                   rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                  className="w-9 h-9 rounded-md border border-border-light text-ink-700 inline-flex items-center justify-center hover:border-burgundy-700 hover:text-burgundy-700 hover:bg-parchment-50 transition-all duration-200"
+                  className="w-9 h-9 rounded-full bg-parchment-50 border border-border-light text-ink-700 inline-flex items-center justify-center hover:bg-burgundy-700 hover:text-cream-50 hover:border-burgundy-700 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]"
                 >
-                  <Icon size={15} />
+                  <Icon size={16} />
                 </a>
               ))}
             </div>
@@ -56,16 +56,16 @@ export default function SiteFooter() {
 
           {/* Link columns */}
           {Object.entries(FOOTER_LINKS).map(([heading, links]) => (
-            <div key={heading}>
-              <h4 className="font-body text-[0.7rem] tracking-[0.18em] uppercase font-semibold text-burgundy-700 mb-5">
+            <div key={heading} className="flex flex-col gap-1.5">
+              <h4 className="font-body text-xs tracking-[0.15em] uppercase font-semibold text-ink-500 mb-[14px]">
                 {heading}
               </h4>
-              <ul className="space-y-3">
+              <ul className="flex flex-col gap-0">
                 {links.map((link) => (
                   <li key={link.href}>
                     <Link
                       href={link.href}
-                      className="text-ink-500 hover:text-ink-900 text-sm transition-colors duration-200"
+                      className="block py-[3px] text-sm text-ink-700 hover:text-burgundy-700 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)]"
                     >
                       {link.label}
                     </Link>
@@ -78,11 +78,11 @@ export default function SiteFooter() {
         </div>
 
         {/* Bottom bar */}
-        <div className="pt-8 border-t border-border-light/60 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-ink-500 text-xs">
+        <div className="pt-6 border-t border-border-light flex flex-col sm:flex-row items-center justify-between gap-3 flex-wrap">
+          <p className="text-ink-500 text-[0.8125rem]">
             © {new Date().getFullYear()} {SITE_NAME}. All rights reserved.
           </p>
-          <p className="text-ink-500 text-xs font-accent text-base">
+          <p className="text-ink-500 text-[0.8125rem] font-accent">
             Crafted with care · Painterly TTRPG art &amp; beyond
           </p>
         </div>

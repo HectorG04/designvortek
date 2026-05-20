@@ -43,39 +43,40 @@ export default function Testimonials() {
             <motion.article
               key={t.name}
               variants={fadeUp}
-              whileHover={{ y: -3 }}
+              whileHover={{ y: -4 }}
               transition={{ type: 'spring', stiffness: 300, damping: 24 }}
-              className="bg-parchment-50 border border-border-light rounded-2xl p-8 flex flex-col hover:border-border-medium hover:shadow-[0_12px_32px_rgba(30,20,8,0.10)] transition-shadow"
+              className="relative border border-border-light rounded-2xl p-8 flex flex-col hover:border-border-medium hover:shadow-[0_4px_12px_rgba(30,20,8,0.08)] transition-[box-shadow,border-color] duration-[250ms]"
+              style={{ background: 'linear-gradient(155deg, var(--color-parchment-100), var(--color-parchment-50))' }}
             >
               {/* Quote glyph */}
-              <Quote size={32} className="text-gold-300 mb-4" strokeWidth={1.5} />
+              <Quote size={28} className="text-gold-500 mb-3" strokeWidth={1.5} />
 
               {/* Stars */}
-              <div className="flex gap-px mb-4 text-gold-500">
+              <div className="flex gap-[2px] text-gold-500" style={{ marginBottom: 14 }}>
                 {Array.from({ length: t.rating }).map((_, i) => (
-                  <Star key={i} size={14} fill="currentColor" strokeWidth={0} />
+                  <Star key={i} size={16} fill="currentColor" strokeWidth={0} />
                 ))}
               </div>
 
               {/* Quote */}
-              <blockquote className="text-ink-700 text-[0.9375rem] leading-[1.7] mb-6 flex-1">
-                &ldquo;{t.quote}&rdquo;
+              <blockquote className="font-display italic text-ink-900 text-[1.125rem] leading-[1.55] flex-1 m-0">
+                {t.quote}
               </blockquote>
 
-              <div className="h-px bg-border-light mb-5" aria-hidden="true" />
+              <div className="w-8 h-px bg-gold-500 my-5" aria-hidden="true" />
 
               {/* Attribution */}
               <div className="flex items-center gap-3">
                 <div
-                  className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-display font-semibold text-cream-50 flex-shrink-0"
-                  style={{ background: 'linear-gradient(135deg, var(--color-burgundy-700), var(--color-burgundy-500))' }}
+                  className="w-10 h-10 rounded-full flex items-center justify-center font-display font-semibold text-cream-50 flex-shrink-0 bg-burgundy-700"
+                  style={{ fontSize: '0.875rem' }}
                   aria-hidden="true"
                 >
                   {t.initials}
                 </div>
                 <div>
-                  <div className="font-display text-base font-semibold text-ink-900 leading-tight">{t.name}</div>
-                  <div className="text-xs text-ink-500 mt-0.5">{t.role}</div>
+                  <div className="text-[0.9375rem] font-semibold text-ink-900 leading-tight">{t.name}</div>
+                  <div className="text-[0.8125rem] text-ink-500 mt-0.5">{t.role}</div>
                 </div>
               </div>
             </motion.article>

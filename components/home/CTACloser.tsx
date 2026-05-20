@@ -18,7 +18,7 @@ const TRUST_ITEMS = [
 
 export default function CTACloser() {
   return (
-    <section className="relative bg-tome-950 text-cream-50 py-24 md:py-32 overflow-hidden">
+    <section className="relative bg-tome-950 text-cream-50 py-16 md:py-32 overflow-hidden">
       {/* Ambient orbs */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
         <motion.div
@@ -35,7 +35,7 @@ export default function CTACloser() {
 
       <PaperTexture variant="cream" opacity={0.4} />
 
-      <div className="relative z-10 max-w-[720px] mx-auto px-6 text-center">
+      <div className="relative z-[1] max-w-[720px] mx-auto px-6 text-center">
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -50,7 +50,7 @@ export default function CTACloser() {
             <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
               <circle cx="16" cy="16" r="11" stroke="currentColor" strokeWidth="0.8" />
               <path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor" />
-              <circle cx="16" cy="16" r="1.6" fill="var(--color-tome-950)" />
+              <circle cx="16" cy="16" r="1.6" fill="var(--color-tome-950, #0d0a06)" />
             </svg>
           </motion.div>
 
@@ -72,7 +72,7 @@ export default function CTACloser() {
           </motion.p>
 
           {/* CTAs */}
-          <motion.div variants={fadeUp} className="inline-flex flex-wrap justify-center gap-3.5 mb-8">
+          <motion.div variants={fadeUp} className="inline-flex flex-wrap justify-center gap-[14px] mb-8">
             <Button href="/order" variant="gold" size="lg">
               Start commission <ArrowRight size={14} strokeWidth={1.8} />
             </Button>
@@ -84,7 +84,7 @@ export default function CTACloser() {
           {/* Trust strip */}
           <motion.div
             variants={fadeUp}
-            className="inline-flex flex-wrap justify-center gap-6 pt-6 border-t border-cream-50/12 text-sm text-cream-200"
+            className="inline-flex flex-wrap justify-center gap-6 pt-6 border-t border-cream-50/[0.12] text-sm text-cream-200"
           >
             {TRUST_ITEMS.map((item) => (
               <span key={item} className="inline-flex items-center gap-2">

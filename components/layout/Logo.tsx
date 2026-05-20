@@ -23,35 +23,19 @@ export default function Logo({ className, textClassName, iconSize = 28 }: LogoPr
         width={iconSize}
         height={iconSize}
         viewBox="0 0 32 32"
-        fill="none"
-        className="text-current transition-transform duration-300 group-hover:rotate-[15deg]"
+        aria-hidden="true"
+        className="text-current transition-transform duration-[250ms] ease-out group-hover:rotate-[15deg]"
       >
         <circle
           cx="16" cy="16" r="14"
+          fill="none"
           stroke="currentColor"
-          strokeWidth="1"
-          opacity="0.5"
+          strokeWidth="1.2"
         />
-        <circle
-          cx="16" cy="16" r="10"
+        <path
+          d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z"
           fill="currentColor"
-          opacity="0.08"
         />
-        <text
-          x="16" y="20"
-          textAnchor="middle"
-          fontSize="9"
-          fontWeight="700"
-          fontFamily="var(--font-display)"
-          fill="currentColor"
-        >
-          DV
-        </text>
-        {/* Four compass-point dots */}
-        <circle cx="16" cy="3" r="1" fill="currentColor" />
-        <circle cx="16" cy="29" r="1" fill="currentColor" />
-        <circle cx="3" cy="16" r="1" fill="currentColor" />
-        <circle cx="29" cy="16" r="1" fill="currentColor" />
       </svg>
       <span
         className={cn(
