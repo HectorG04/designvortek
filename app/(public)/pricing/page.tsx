@@ -1,147 +1,236 @@
 import type { Metadata } from 'next'
-import { ArrowRight, Check, Clock, Zap, Layers, Award, Printer, RotateCcw, Circle } from 'lucide-react'
+import Link from 'next/link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import PageHero from '@/components/layout/PageHero'
 import Container from '@/components/ui/Container'
 import SectionLabel from '@/components/ui/SectionLabel'
-import Button from '@/components/ui/Button'
+import SectionHead from '@/components/ui/SectionHead'
 import Markdown from '@/components/ui/Markdown'
+import PaperTexture from '@/components/decor/PaperTexture'
 import { cn } from '@/lib/utils'
 
 /* =====================================================================
    PRICING — literal port of Pricing.html.
-   Static (server component). Five per-service comparison tables with
-   horizontal scroll on mobile, 6-card add-ons grid, "8 things always
-   included" two-column block, FAQ accordion, dark tome CTA closer.
 
-   Markdown is used for:
-     • Add-on descriptions — some embed **$ amounts** in body
-     • "Always included" items — copy with **emphasis**
-     • FAQ answers — **$ amounts** + [refund policy](/refunds) links
+   Structure (matches design HTML exactly):
+     1. Hero
+     2. Per-service tier blocks (3 services × 3 tiers — .pr-service-block + .sd-tiers)
+     3. Add-ons section (6-card grid — .pr-addons)
+     4. Custom quote block (dark tome — .pr-custom)
+     5. Pricing FAQ (3 questions — .hp-faq-layout pattern)
+
+   The design does NOT include: "8 things always included" block, dark
+   pg-cta-strip closer, or NPC Pack tier breakdowns (NPC packs route
+   through the Custom block).
    ===================================================================== */
 
 export const metadata: Metadata = {
   title: 'Pricing · Design Vortek',
   description:
-    'Transparent flat-rate pricing across all five services. Character art from $180, VTT tokens from $80, party portraits from $400. No hourly games.',
+    "Transparent pricing. No surprises. Flat-rate quotes for character art, VTT tokens, and party portraits — plus add-ons and custom projects.",
 }
 
-type ServiceBlock = {
-  slug: string
+const Check = () => (
+  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-gold-700 flex-shrink-0 mt-1" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+    <path d="M5 12l5 5L20 7" />
+  </svg>
+)
+
+const ClockIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 text-gold-700" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 3" />
+  </svg>
+)
+
+const ArrowRightMd = () => (
+  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+    <path d="M5 12h14M13 6l6 6-6 6" />
+  </svg>
+)
+
+interface Tier {
+  name: string
+  best: string
+  priceNum: string
+  priceNote: string
+  features: string[]
+  featured?: boolean
+  flag?: string
+  cta: string
+}
+
+interface ServiceBlock {
   name: string
   sub: string
   turnaround: string
-  rows: { feature: string; standard: string; deluxe: string; premium: string }[]
-  tierNames: [string, string, string]
+  tiers: [Tier, Tier, Tier]
 }
 
 const SERVICES: ServiceBlock[] = [
   {
-    slug: 'character-art',
     name: 'Character Art',
     sub: 'your hero, painted',
     turnaround: '7–14 days',
-    tierNames: ['Standard', 'Deluxe', 'Premium'],
-    rows: [
-      { feature: 'Starting price',   standard: '$180',             deluxe: '$320',                premium: '$520' },
-      { feature: 'Framing',          standard: 'Bust shot',        deluxe: 'Half-body',           premium: 'Full body' },
-      { feature: 'Background',       standard: 'Solid color',      deluxe: 'Detailed scene',      premium: 'Cinematic scene' },
-      { feature: 'Revisions',        standard: '1 included',       deluxe: '2 included',          premium: '3 included' },
-      { feature: 'Final resolution', standard: '4K PNG + JPG',     deluxe: '4K + transparent',    premium: '6K + layered PSD' },
-      { feature: 'Best for',         standard: 'First commission', deluxe: 'The sweet spot',      premium: 'Heirloom piece' },
+    tiers: [
+      {
+        name: 'Standard',
+        best: 'your first commission',
+        priceNum: '$180',
+        priceNote: 'bust shot',
+        features: ['Head & shoulders', '1 revision', 'Solid background', '4K PNG & JPG'],
+        cta: 'Choose Standard',
+      },
+      {
+        name: 'Deluxe',
+        best: 'the sweet spot',
+        priceNum: '$320',
+        priceNote: 'half-body',
+        features: ['Waist-up portrait', '2 revisions', 'Detailed background', 'Transparent export'],
+        featured: true,
+        flag: 'Most popular',
+        cta: 'Choose Deluxe',
+      },
+      {
+        name: 'Premium',
+        best: 'the heirloom piece',
+        priceNum: '$520',
+        priceNote: 'full body',
+        features: ['Full body, head to toe', '3 revisions', 'Cinematic scene', '6K + layered PSD'],
+        cta: 'Choose Premium',
+      },
     ],
   },
   {
-    slug: 'vtt-tokens',
     name: 'VTT Tokens',
     sub: 'for the virtual tabletop',
     turnaround: '3–7 days',
-    tierNames: ['Single', 'Party', 'Bulk'],
-    rows: [
-      { feature: 'Starting price',  standard: '$80',          deluxe: '$280',           premium: '$60 / token' },
-      { feature: 'Tokens included', standard: '1 token',      deluxe: '4 tokens',       premium: '8+ tokens' },
-      { feature: 'Resolution',      standard: '512 + 1024px', deluxe: '512 + 1024px',   premium: '512 + 1024px' },
-      { feature: 'Revisions',       standard: '1 included',   deluxe: '1 per token',    premium: '1 per token' },
-      { feature: 'Border style',    standard: 'Default',      deluxe: 'Consistent set', premium: 'Custom template' },
-      { feature: 'Best for',        standard: 'One PC token', deluxe: 'Whole party',    premium: 'DM stockpile' },
+    tiers: [
+      {
+        name: 'Single',
+        best: 'one perfect token',
+        priceNum: '$80',
+        priceNote: '1 token',
+        features: ['512 + 1024 px exports', 'Transparent PNG', '1 revision'],
+        cta: 'Choose Single',
+      },
+      {
+        name: 'Party',
+        best: 'your whole table',
+        priceNum: '$280',
+        priceNote: '4 tokens',
+        features: ['4 matching tokens', 'Consistent border style', '1 revision each', '$30 savings vs single'],
+        featured: true,
+        flag: 'Best value',
+        cta: 'Choose Party',
+      },
+      {
+        name: 'Bulk',
+        best: 'DM stockpile',
+        priceNum: '$60',
+        priceNote: 'per token · 8+',
+        features: ['8+ tokens, $60 each', 'Matching style guaranteed', 'Custom border template', 'Schedule-friendly delivery'],
+        cta: 'Choose Bulk',
+      },
     ],
   },
   {
-    slug: 'party-portraits',
     name: 'Party Portraits',
     sub: 'the whole gang',
     turnaround: '14–21 days',
-    tierNames: ['Trio', 'Adventurers', 'Epic'],
-    rows: [
-      { feature: 'Starting price', standard: '$400',         deluxe: '$680',              premium: '$980' },
-      { feature: 'Figures',        standard: '3 figures',    deluxe: '4–5 figures',       premium: '6–8 figures' },
-      { feature: 'Framing',        standard: 'Half-body',    deluxe: 'Half-body',         premium: 'Full body' },
-      { feature: 'Background',     standard: 'Simple',       deluxe: 'Detailed scene',    premium: 'Cinematic' },
-      { feature: 'Revisions',      standard: '2 included',   deluxe: '2 included',        premium: '3 included' },
-      { feature: 'Deliverables',   standard: '4K PNG + JPG', deluxe: 'Print-ready files', premium: 'Print + layered PSD' },
+    tiers: [
+      {
+        name: 'Trio',
+        best: 'small parties',
+        priceNum: '$400',
+        priceNote: '3 figures',
+        features: ['3 figures, half-body', 'Simple background', '2 revisions'],
+        cta: 'Choose Trio',
+      },
+      {
+        name: 'Adventurers',
+        best: 'classic D&D party',
+        priceNum: '$680',
+        priceNote: '4–5 figures',
+        features: ['4–5 figures, half-body', 'Detailed scene background', '2 revisions', 'Print-ready files'],
+        featured: true,
+        flag: 'Most parties',
+        cta: 'Choose Adventurers',
+      },
+      {
+        name: 'Epic',
+        best: 'groups + scenes',
+        priceNum: '$980',
+        priceNote: '6–8 figures',
+        features: ['6–8 figures, full body', 'Cinematic scene', '3 revisions', 'Print + layered PSD'],
+        cta: 'Choose Epic',
+      },
     ],
+  },
+]
+
+/* ---------- Add-ons (custom inline SVGs from design HTML) ---------- */
+const RushIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M13 2L3 14h7l-1 8L19 10h-7z" />
+  </svg>
+)
+const LayersIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="3" width="18" height="18" rx="2" />
+    <path d="M3 9h18M9 3v18" />
+  </svg>
+)
+const LicenseIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M21 11.5a8.4 8.4 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.4 8.4 0 013.8-.9h.5a8.5 8.5 0 018 8z" />
+  </svg>
+)
+const RevisionIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="4" width="18" height="16" rx="2" />
+    <path d="M3 10h18" />
+  </svg>
+)
+const TokenIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" />
+    <circle cx="12" cy="12" r="5" />
+  </svg>
+)
+const PrintIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <rect x="3" y="3" width="18" height="14" rx="2" />
+    <path d="M8 21h8M12 17v4" />
+  </svg>
+)
+
+interface AddOn { Icon: () => React.ReactElement; name: string; desc: string; price: string }
+
+const ADDONS: AddOn[] = [
+  { Icon: RushIcon,     name: 'Rush delivery',        desc: 'Move to the front of the queue. 3-day turnaround on Character & Token services.', price: '+$50' },
+  { Icon: LayersIcon,   name: 'Layered PSD',          desc: 'Source files with separated layers. Edit the background, change colors, build variations.', price: '+$30' },
+  { Icon: LicenseIcon,  name: 'Commercial license',   desc: 'For books, merch, paid streaming, Patreon. Personal use is included by default.', price: '+$150 per piece' },
+  { Icon: RevisionIcon, name: 'Extra revision',       desc: 'A 3rd round of paint revisions, if your character needs the polish.', price: '+$40' },
+  { Icon: TokenIcon,    name: 'Matching VTT token',   desc: 'A token version of your portrait, cropped and bordered for tabletop play.', price: '+$40' },
+  { Icon: PrintIcon,    name: 'Print delivery',       desc: 'Museum-quality giclée print, 11×14 or 16×20, shipped from our partner studio.', price: 'From $60' },
+]
+
+/* ---------- FAQ ---------- */
+const FAQ: { q: string; a: string }[] = [
+  {
+    q: 'Why flat-rate instead of hourly?',
+    a: "Because you deserve to know the price before we start. Hourly billing punishes care — the artist who polishes for an extra two hours shouldn't cost you more. Fixed scope, fixed price, every time.",
   },
   {
-    slug: 'npc-packs',
-    name: 'NPC Packs',
-    sub: 'consistent cast for your campaign',
-    turnaround: '3–6 weeks',
-    tierNames: ['Starter', 'Campaign', 'Saga'],
-    rows: [
-      { feature: 'Starting price', standard: '$600',        deluxe: '$1,400',        premium: '$2,800' },
-      { feature: 'NPCs included',  standard: '5 portraits', deluxe: '12 portraits',  premium: '20+ portraits' },
-      { feature: 'VTT tokens',     standard: '5 included',  deluxe: '12 included',   premium: '20+ included' },
-      { feature: 'Style guide',    standard: 'Style notes', deluxe: 'Kickoff call',  premium: 'Custom style guide' },
-      { feature: 'Revisions',      standard: '2 per piece', deluxe: '2 per piece',   premium: '3 per piece' },
-      { feature: 'Best for',       standard: 'Short arc',   deluxe: 'Full season',   premium: 'Long-form world' },
-    ],
+    q: 'How does payment work?',
+    a: '**25% deposit** to hold your slot (refundable until first sketch). The remaining **75% on delivery**. All payments through Stripe — cards, Apple Pay, Google Pay, all common methods.',
   },
   {
-    slug: 'custom-projects',
-    name: 'Custom Projects',
-    sub: 'bespoke illustration projects',
-    turnaround: 'By scope',
-    tierNames: ['Small', 'Project', 'Retainer'],
-    rows: [
-      { feature: 'Starting price', standard: 'From $500',       deluxe: 'From $2k',            premium: 'From $4k/mo' },
-      { feature: 'Scope',          standard: 'Single piece',    deluxe: '3–10 pieces',         premium: 'Dedicated slots' },
-      { feature: 'License',        standard: 'Commercial inc.', deluxe: 'Commercial inc.',     premium: 'Commercial inc.' },
-      { feature: 'NDA',            standard: 'On request',      deluxe: 'On request',          premium: 'Standard' },
-      { feature: 'Source files',   standard: 'Layered PSD',     deluxe: 'Style guide + PSD',   premium: 'All source files' },
-      { feature: 'Best for',       standard: 'One-off piece',   deluxe: 'Multi-piece project', premium: 'Ongoing work' },
-    ],
+    q: 'What if I need to cancel?',
+    a: 'Before first sketch: **100% refundable**. After first sketch: deposit covers sketch work. After paint begins: pro-rated based on stage completed. See full [refund policy](/refunds).',
   },
-]
-
-/* Add-on descriptions stored as MARKDOWN — supports **bold** emphasis. */
-const ADDONS = [
-  { icon: Zap,        name: 'Rush delivery',      desc: 'Move to the front of the queue. **3-day turnaround** on Character & Token services.',          price: '+$50' },
-  { icon: Layers,     name: 'Layered PSD',        desc: 'Source files with separated layers. Edit the background, change colors, build variations.',    price: '+$30' },
-  { icon: Award,      name: 'Commercial license', desc: 'For **books, merch, paid streaming, Patreon**. Personal use is included by default.',           price: '+$150 / piece' },
-  { icon: RotateCcw,  name: 'Extra revision',     desc: 'A **3rd round** of paint revisions, if your character needs the polish.',                       price: '+$40' },
-  { icon: Circle,     name: 'Matching VTT token', desc: 'A token version of your portrait, cropped and bordered for tabletop play.',                     price: '+$40' },
-  { icon: Printer,    name: 'Print delivery',     desc: 'Museum-quality giclée print, **11×14 or 16×20**, shipped from our partner studio.',             price: 'From $60' },
-]
-
-/* "Always included" items stored as MARKDOWN — preserves **emphasis** like
-   "**2 paint-stage revisions**" or "**hand-painted** by humans". */
-const ALWAYS_INCLUDED = [
-  '**2 paint-stage revisions** on every commission',
-  'Sketch revisions are always **free**, no limit',
-  '**4K final delivery** (PNG + JPG)',
-  'Process updates **every 3 days**',
-  'Personal use rights baked in',
-  '**Fixed-rate quote** — no hourly games',
-  'Hand-painted by humans, **no AI ever**',
-  '**48-hour quote** turnaround on every brief',
-]
-
-/* FAQ answers as MARKDOWN — most have **$ amounts** + [refund policy] link. */
-const PRICING_FAQ = [
-  { q: 'Why flat-rate instead of hourly?', a: 'Because **you deserve to know the price before we start.** Hourly billing punishes care — the artist who polishes for an extra two hours shouldn’t cost you more. Fixed scope, fixed price, every time.' },
-  { q: 'How does payment work?',           a: '**25% deposit** to hold your slot (refundable until first sketch). The remaining **75% on delivery**. All payments through Stripe — cards, Apple Pay, Google Pay, all common methods.' },
-  { q: 'What if I need to cancel?',        a: 'Before first sketch: **100% refundable**. After first sketch: deposit covers sketch work. After paint begins: pro-rated based on stage completed. See the full [refund policy](/refunds).' },
 ]
 
 export default function PricingPage() {
@@ -149,273 +238,255 @@ export default function PricingPage() {
     <>
       <SiteHeader />
       <main className="bg-parchment-50">
+
+        {/* Hero */}
         <PageHero
           eyebrow="Pricing"
           title={
             <>
-              Honest prices, <em className="font-display italic font-medium text-burgundy-700">no surprises</em>
+              Transparent pricing.<br />
+              <em className="font-display italic font-medium text-burgundy-700">No surprises.</em>
             </>
           }
           description="Flat-rate quotes, fixed scopes, no hourly games. Every price below is what you'll actually pay — the quote you approve is the price we charge."
         />
 
-        {/* Per-service comparison tables — 5 blocks, horizontal scroll on mobile */}
-        <section className="py-12 md:py-20">
+        {/* Per-service tier blocks (.pr-services) */}
+        <section className="pb-16 md:pb-24">
           <Container>
-            <div className="flex flex-col gap-16 md:gap-24">
-              {SERVICES.map((service) => (
-                <article key={service.slug}>
+            <div className="flex flex-col gap-20">
+              {SERVICES.map((svc) => (
+                <div key={svc.name}>
                   {/* Service head */}
-                  <div className="flex flex-wrap items-end justify-between gap-4 mb-6 pb-5 border-b border-border-light">
+                  <div className="flex flex-wrap justify-between items-end gap-4 pb-4 mb-7 border-b border-border-light">
                     <div>
-                      <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink-900 leading-tight tracking-tight">
-                        {service.name}
-                      </h2>
-                      <p className="font-accent text-xl text-burgundy-700 italic mt-1">{service.sub}</p>
+                      <div className="font-display text-[2rem] font-semibold text-ink-900 leading-[1.1]">
+                        {svc.name}
+                      </div>
+                      <div className="font-accent text-[1.25rem] text-burgundy-700">
+                        {svc.sub}
+                      </div>
                     </div>
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-parchment-100 border border-border-light text-ink-700 text-sm">
-                      <Clock size={14} strokeWidth={1.5} />
-                      Turnaround{' '}
-                      <strong className="font-display text-base text-ink-900 font-semibold">{service.turnaround}</strong>
+                    <div className="inline-flex items-center gap-2 text-[0.875rem] text-ink-500">
+                      <ClockIcon />
+                      <span>
+                        Turnaround{' '}
+                        <strong className="font-display text-ink-900 font-semibold">{svc.turnaround}</strong>
+                      </span>
                     </div>
                   </div>
 
-                  {/* Horizontal-scroll table */}
-                  <div className="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0">
-                    <table className="w-full min-w-[640px] bg-parchment-100 border border-border-light rounded-2xl overflow-hidden">
-                      <thead>
-                        <tr className="bg-parchment-50 border-b border-border-light">
-                          <th className="text-left px-5 py-4 text-[0.7rem] uppercase tracking-[0.15em] font-semibold text-ink-500 w-[28%]">
-                            Feature
-                          </th>
-                          {service.tierNames.map((name, i) => (
-                            <th
-                              key={name}
-                              className={cn(
-                                'text-left px-5 py-4 font-display text-lg font-semibold text-ink-900',
-                                i === 1 && 'bg-gold-100/40',
-                              )}
-                            >
-                              {name}
-                              {i === 1 && (
-                                <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full bg-gold-500 text-ink-900 text-[0.6rem] uppercase tracking-[0.15em] font-semibold">
-                                  Popular
-                                </span>
-                              )}
-                            </th>
+                  {/* Tiers — 3-col desktop, 1-col mobile */}
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    {svc.tiers.map((tier) => (
+                      <div
+                        key={tier.name}
+                        className={cn(
+                          'relative rounded-2xl p-7 md:p-8 flex flex-col gap-3.5',
+                          'transition-transform duration-250 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1 hover:shadow-md',
+                          tier.featured
+                            ? 'bg-parchment-50 border border-gold-500 shadow-[0_8px_24px_rgba(201,160,74,0.18)]'
+                            : 'bg-parchment-100 border border-border-light',
+                        )}
+                      >
+                        {/* Featured flag */}
+                        {tier.flag && (
+                          <span className="absolute -top-2.5 right-6 bg-gold-500 text-ink-900 font-body text-[0.625rem] font-bold uppercase tracking-[0.15em] px-2.5 py-1 rounded-full">
+                            {tier.flag}
+                          </span>
+                        )}
+
+                        {/* Name + best-for */}
+                        <div>
+                          <div className="font-display text-2xl font-semibold text-ink-900">
+                            {tier.name}
+                          </div>
+                          <div className="font-accent text-base text-burgundy-700 -mt-2">
+                            {tier.best}
+                          </div>
+                        </div>
+
+                        {/* Price — dashed borders top + bottom */}
+                        <div className="flex items-baseline gap-2 py-3 border-y border-dashed border-border-light">
+                          <span className="font-display text-[2.75rem] font-semibold text-ink-900 leading-none tracking-[-0.02em]">
+                            {tier.priceNum}
+                          </span>
+                          <span className="text-[0.875rem] text-ink-500">
+                            {tier.priceNote}
+                          </span>
+                        </div>
+
+                        {/* Feature list */}
+                        <ul className="flex flex-col gap-2.5 list-none p-0 m-0">
+                          {tier.features.map((f) => (
+                            <li key={f} className="flex gap-2.5 items-start text-[0.9375rem] text-ink-700 leading-[1.4]">
+                              <Check />
+                              <span>{f}</span>
+                            </li>
                           ))}
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {service.rows.map((row, idx) => (
-                          <tr
-                            key={row.feature}
-                            className={cn(
-                              'border-b border-border-light last:border-b-0',
-                              idx % 2 === 1 && 'bg-parchment-50/40',
-                            )}
-                          >
-                            <td className="px-5 py-4 text-sm font-semibold text-ink-700 align-top">
-                              {row.feature}
-                            </td>
-                            <td
-                              className={cn(
-                                'px-5 py-4 text-sm text-ink-700 align-top',
-                                row.feature === 'Starting price' && 'font-display text-xl text-burgundy-700 font-semibold',
-                              )}
-                            >
-                              {row.standard}
-                            </td>
-                            <td
-                              className={cn(
-                                'px-5 py-4 text-sm text-ink-700 align-top bg-gold-100/30',
-                                row.feature === 'Starting price' && 'font-display text-xl text-burgundy-700 font-semibold',
-                              )}
-                            >
-                              {row.deluxe}
-                            </td>
-                            <td
-                              className={cn(
-                                'px-5 py-4 text-sm text-ink-700 align-top',
-                                row.feature === 'Starting price' && 'font-display text-xl text-burgundy-700 font-semibold',
-                              )}
-                            >
-                              {row.premium}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
+                        </ul>
 
-                  {/* CTA row */}
-                  <div className="mt-5 flex flex-wrap gap-3 justify-end">
-                    <Button href={`/services/${service.slug}`} variant="outline" size="sm">
-                      Service details
-                    </Button>
-                    <Button href="/order" variant="primary" size="sm">
-                      Commission this <ArrowRight size={14} strokeWidth={1.8} />
-                    </Button>
+                        {/* CTA */}
+                        <Link
+                          href="/order"
+                          className={cn(
+                            'mt-2 inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full font-body text-[0.75rem] font-semibold uppercase tracking-[0.12em] transition-all',
+                            tier.featured
+                              ? 'bg-burgundy-700 text-cream-50 hover:bg-burgundy-500'
+                              : 'border-[1.5px] border-burgundy-700 text-burgundy-700 hover:bg-burgundy-700 hover:text-cream-50',
+                          )}
+                        >
+                          {tier.cta}
+                        </Link>
+                      </div>
+                    ))}
                   </div>
-                </article>
+                </div>
               ))}
             </div>
           </Container>
         </section>
 
-        {/* Add-ons — 6 cards (Markdown descriptions for **$ amounts**) */}
-        <section className="bg-parchment-100 border-y border-border-light py-20 md:py-28">
+        {/* Add-ons (.pr-addons) */}
+        <section className="pt-8 pb-16 md:pb-24">
           <Container>
-            <div className="text-center max-w-[720px] mx-auto mb-12">
-              <div className="mb-4 flex justify-center">
-                <SectionLabel>Add-ons</SectionLabel>
-              </div>
-              <h2 className="font-display text-4xl md:text-5xl font-semibold text-ink-900 leading-[1.1] tracking-tight">
-                Optional <em className="font-display italic font-medium text-burgundy-700">extras</em>
-              </h2>
-              <p className="text-lg text-ink-500 mt-4 leading-relaxed">
-                Tweaks and upgrades available on any commission.
-              </p>
-            </div>
+            <SectionHead
+              eyebrow="Add-ons"
+              title={
+                <>
+                  Optional <em className="font-display italic font-medium text-burgundy-700">extras</em>
+                </>
+              }
+              description="Tweaks and upgrades available on any commission."
+            />
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {ADDONS.map((addon) => {
-                const Icon = addon.icon
-                return (
-                  <div
-                    key={addon.name}
-                    className="bg-parchment-50 border border-border-light rounded-xl p-6 flex gap-4 hover:border-border-medium transition-colors"
-                  >
-                    <span className="flex-shrink-0 w-11 h-11 rounded-xl bg-parchment-100 border border-border-light text-burgundy-700 inline-flex items-center justify-center">
-                      <Icon size={20} strokeWidth={1.5} />
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <h3 className="font-display text-lg font-semibold text-ink-900 leading-tight mb-1">
-                        {addon.name}
-                      </h3>
-                      <div className="text-sm text-ink-500 leading-relaxed mb-3 [&_p]:mb-0 [&_strong]:text-ink-700">
-                        <Markdown>{addon.desc}</Markdown>
-                      </div>
-                      <div className="font-display text-lg font-semibold text-burgundy-700">
-                        {addon.price}
+            <div className="bg-parchment-100 border border-border-light rounded-3xl p-7 md:p-12">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                {ADDONS.map((addon) => {
+                  const Icon = addon.Icon
+                  return (
+                    <div
+                      key={addon.name}
+                      className="bg-parchment-50 border border-border-light rounded-xl px-[22px] py-5 flex gap-4 items-start"
+                    >
+                      <span className="w-10 h-10 rounded-md bg-gold-100 text-gold-700 flex items-center justify-center flex-shrink-0">
+                        <Icon />
+                      </span>
+                      <div>
+                        <div className="font-display text-[1.125rem] font-semibold text-ink-900 mb-0.5">
+                          {addon.name}
+                        </div>
+                        <div className="text-[0.875rem] text-ink-500 leading-[1.5] mb-2">
+                          {addon.desc}
+                        </div>
+                        <div className="font-display text-[1.125rem] font-semibold text-burgundy-700">
+                          {addon.price}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )
-              })}
+                  )
+                })}
+              </div>
             </div>
           </Container>
         </section>
 
-        {/* "8 things always included" two-column block (Markdown items) */}
-        <section className="py-20 md:py-28">
+        {/* Custom quote block — dark tome (.pr-custom) */}
+        <section className="pt-8 pb-16 md:pb-24">
           <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-16 max-w-[1080px] mx-auto items-start">
-              <div>
-                <div className="mb-3">
-                  <SectionLabel>Always included</SectionLabel>
+            <div className="relative bg-tome-950 text-cream-50 rounded-3xl px-7 py-12 md:px-12 md:py-14 grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-8 items-center overflow-hidden">
+              <PaperTexture variant="cream" opacity={0.4} />
+              <div className="relative">
+                <div className="inline-flex items-center gap-[10px] mb-4">
+                  <span className="h-px w-6 bg-gold-glow" aria-hidden="true" />
+                  <span className="font-body text-[0.75rem] font-semibold uppercase tracking-[0.15em] text-gold-glow">
+                    Custom projects
+                  </span>
                 </div>
-                <h2 className="font-display text-4xl md:text-5xl font-semibold text-ink-900 leading-[1.1] tracking-tight mb-4">
-                  Eight things <em className="font-display italic font-medium text-burgundy-700">in every quote</em>
-                </h2>
-                <p className="text-ink-500 leading-relaxed">
-                  Whichever tier, whichever service — these eight promises ride along with every commission, no upcharge, no asterisk.
+                <h3
+                  className="font-display font-semibold leading-[1.1] tracking-tight text-cream-50 mb-3 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-gold-glow"
+                  style={{ fontSize: 'clamp(1.875rem, 3.5vw, 2.5rem)' }}
+                >
+                  Something <em>bigger</em>?
+                </h3>
+                <p className="text-cream-200 text-base leading-[1.6] max-w-[52ch]">
+                  Book covers, indie game asset packs, merch design, concept art, or commissions over $1,000 — let&rsquo;s talk. Custom scopes get custom quotes, and frequent collaborators get retainer arrangements.
                 </p>
               </div>
-
-              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {ALWAYS_INCLUDED.map((item) => (
-                  <li
-                    key={item}
-                    className="flex items-start gap-3 bg-parchment-100 border border-border-light rounded-xl px-5 py-4"
-                  >
-                    <span className="flex-shrink-0 w-7 h-7 rounded-full bg-forest-700 text-cream-50 inline-flex items-center justify-center mt-px">
-                      <Check size={14} strokeWidth={2.4} />
-                    </span>
-                    <div className="text-ink-700 text-sm leading-relaxed [&_p]:mb-0">
-                      <Markdown>{item}</Markdown>
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <div className="relative flex flex-col gap-2.5 md:self-end">
+                <Link
+                  href="/order"
+                  className="inline-flex items-center justify-center gap-2 bg-gold-500 text-ink-900 px-9 py-[18px] rounded-full font-body text-[0.8125rem] font-semibold uppercase tracking-[0.12em] hover:bg-gold-300 hover:-translate-y-px transition-all whitespace-nowrap"
+                >
+                  Request a custom quote <ArrowRightMd />
+                </Link>
+                <a
+                  href="mailto:hello@designvortek.com"
+                  className="inline-flex items-center justify-center gap-2 border-[1.5px] border-cream-200 text-cream-50 px-9 py-[18px] rounded-full font-body text-[0.8125rem] font-semibold uppercase tracking-[0.12em] hover:bg-cream-50 hover:text-ink-900 hover:border-cream-50 transition-all whitespace-nowrap"
+                >
+                  Email hello@designvortek.com
+                </a>
+              </div>
             </div>
           </Container>
         </section>
 
-        {/* Pricing FAQ */}
-        <section className="bg-parchment-100 border-y border-border-light py-20 md:py-28">
+        {/* Pricing FAQ (reuses .hp-faq-layout pattern) */}
+        <section className="pb-16 md:pb-24">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-12 lg:gap-16 max-w-[1080px] mx-auto">
+
+              {/* Side column */}
               <div>
                 <div className="mb-3">
                   <SectionLabel>Pricing questions</SectionLabel>
                 </div>
-                <h2 className="font-display text-4xl md:text-5xl font-semibold text-ink-900 leading-[1.1] tracking-tight mb-4">
-                  The fine <em className="font-display italic font-medium text-burgundy-700">print</em>
+                <h2
+                  className="font-display font-semibold leading-[1.1] tracking-tight text-ink-900 mb-4 [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700"
+                  style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}
+                >
+                  The fine <em>print</em>
                 </h2>
-                <p className="text-ink-500 leading-relaxed">
-                  Common questions about payment, refunds, and what’s covered.
+                <p className="text-ink-500 leading-[1.65] mb-5">
+                  Common questions about payment, refunds, and what&rsquo;s covered.
                 </p>
+                <Link
+                  href="/faq"
+                  className="inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[0.15em] text-burgundy-700 hover:gap-3.5 transition-all"
+                >
+                  Full FAQ <ArrowRightMd />
+                </Link>
               </div>
 
+              {/* Accordion list — native details/summary, server-rendered */}
               <div className="flex flex-col gap-3">
-                {PRICING_FAQ.map((item, idx) => (
+                {FAQ.map((item, i) => (
                   <details
-                    key={idx}
-                    className="group bg-parchment-50 border border-border-light rounded-xl open:border-border-medium open:shadow-sm transition-colors"
-                    open={idx === 0}
+                    key={i}
+                    open={i === 0}
+                    className="group bg-parchment-100 border border-border-light rounded-xl open:bg-parchment-50 open:border-border-medium open:shadow-sm transition-colors"
                   >
-                    <summary className="px-6 py-5 flex items-center justify-between gap-4 cursor-pointer list-none">
-                      <span className="font-display text-lg md:text-xl font-semibold text-ink-900 leading-snug">
+                    <summary className="list-none cursor-pointer flex items-center justify-between gap-4 px-6 py-5 [&::-webkit-details-marker]:hidden">
+                      <span className="font-display text-xl font-semibold text-ink-900 leading-[1.3]">
                         {item.q}
                       </span>
-                      <span className="flex-shrink-0 w-8 h-8 rounded-full bg-parchment-50 text-burgundy-700 border border-border-medium inline-flex items-center justify-center group-open:bg-burgundy-700 group-open:text-cream-50 group-open:border-transparent group-open:rotate-45 transition-all">
-                        <svg
-                          width="14"
-                          height="14"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2.2"
-                          strokeLinecap="round"
-                          aria-hidden="true"
-                        >
+                      <span className="flex-shrink-0 w-8 h-8 rounded-full inline-flex items-center justify-center transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] bg-parchment-50 text-burgundy-700 border border-border-medium group-open:bg-burgundy-700 group-open:text-cream-50 group-open:border-burgundy-700 group-open:rotate-45">
+                        <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
                           <path d="M12 5v14M5 12h14" />
                         </svg>
                       </span>
                     </summary>
-                    <div className="px-6 pb-5 text-ink-700 leading-[1.7] max-w-[64ch] [&_p]:mb-0">
+                    <div className="px-6 pb-5 text-base text-ink-700 leading-[1.7] max-w-[64ch]">
                       <Markdown>{item.a}</Markdown>
                     </div>
                   </details>
                 ))}
               </div>
+
             </div>
           </Container>
         </section>
 
-        {/* CTA closer — dark tome */}
-        <section className="bg-tome-950 text-cream-50 py-20 md:py-28 text-center">
-          <Container>
-            <h2
-              className="font-display font-semibold text-cream-50 leading-[1.1] tracking-tight mb-4"
-              style={{ fontSize: 'clamp(2rem, 4.5vw, 3rem)' }}
-            >
-              Ready for a <em className="font-display italic font-medium text-gold-glow">fixed quote</em>?
-            </h2>
-            <p className="text-lg text-cream-200 leading-relaxed max-w-[52ch] mx-auto mb-8">
-              Three minutes to brief. Quote within 48 hours. No commitment until you’re ready.
-            </p>
-            <div className="inline-flex flex-wrap justify-center gap-3.5">
-              <Button href="/order" variant="gold" size="lg">
-                Start commission <ArrowRight size={14} strokeWidth={1.8} />
-              </Button>
-              <Button href="/services" variant="outline-cream" size="lg">
-                Browse services
-              </Button>
-            </div>
-          </Container>
-        </section>
       </main>
       <SiteFooter />
     </>
