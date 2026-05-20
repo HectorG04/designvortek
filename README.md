@@ -1,36 +1,109 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Design Vortex
 
-## Getting Started
+Premium art commission studio — Next.js 16 + Supabase + Vercel.
 
-First, run the development server:
+> **Status:** Coming soon. Public homepage shows a waitlist capture page. Admin scaffolding exists but is intentionally minimal until visual designs land.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+---
+
+## Tech Stack
+
+- **Framework:** [Next.js 16](https://nextjs.org) (App Router)
+- **Styling:** [Tailwind CSS v4](https://tailwindcss.com)
+- **Animation:** [Framer Motion](https://motion.dev)
+- **Database / Auth:** [Supabase](https://supabase.com)
+- **Email:** [Resend](https://resend.com)
+- **Hosting:** [Vercel](https://vercel.com)
+- **Fonts:** Cormorant Garamond (display) · Inter (body) · Caveat (accent)
+
+---
+
+## Project Structure
+
+```
+designvortek-next/
+├── app/
+│   ├── (public)/              Route group — marketing site
+│   │   ├── _components/       Page-local components (coming soon)
+│   │   ├── layout.tsx         Public layout
+│   │   └── page.tsx           Homepage (coming soon page)
+│   ├── admin/                 Admin CMS (auth-protected via middleware)
+│   │   ├── login/             Sign-in page
+│   │   ├── layout.tsx
+│   │   └── page.tsx           Dashboard
+│   ├── api/                   Server API routes
+│   │   └── waitlist/          Waitlist signup endpoint
+│   ├── globals.css            Design tokens (parchment palette)
+│   ├── layout.tsx             Root layout (fonts, metadata)
+│   ├── sitemap.ts             Dynamic sitemap.xml
+│   ├── robots.ts              robots.txt
+│   └── not-found.tsx          404 page
+├── lib/
+│   ├── supabase/
+│   │   ├── client.ts          Browser Supabase client
+│   │   ├── server.ts          Server + admin (service role) clients
+│   │   ├── middleware.ts      Auth session refresh helper
+│   │   └── types.ts           Database types
+│   └── utils.ts               `cn()` helper
+├── supabase/
+│   ├── schema.sql             Database DDL (run once in Supabase)
+│   └── policies.sql           Row Level Security policies
+├── middleware.ts              Route protection for /admin/*
+├── .env.local.example         Environment variable template
+├── DEPLOYMENT.md              Step-by-step Vercel + Supabase + DNS setup
+└── README.md                  This file
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Local Development
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# 1. Install dependencies
+npm install
 
-## Learn More
+# 2. Copy env template
+cp .env.local.example .env.local
+# (PowerShell) Copy-Item .env.local.example .env.local
 
-To learn more about Next.js, take a look at the following resources:
+# 3. Fill in your Supabase keys (see DEPLOYMENT.md)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# 4. Run dev server
+npm run dev
+# → http://localhost:3000
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## Deployment
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+See [`DEPLOYMENT.md`](./DEPLOYMENT.md) for full step-by-step:
+1. Supabase project + schema setup
+2. GitHub repo
+3. Vercel deployment
+4. GoDaddy DNS → Vercel
+5. Custom domain SSL
+6. Environment variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## Database
+
+The Supabase schema is at [`supabase/schema.sql`](./supabase/schema.sql). It defines:
+
+- **`waitlist`** — coming-soon email capture
+- **`commission_orders`** — full commission inquiry pipeline
+- **`portfolio_pieces`** — gallery
+- **`blog_posts`** — articles
+- **`services`** — service catalog
+- **`reviews`** — testimonials
+- **`slots`** — slot availability widget data
+- **`inquiries`** — contact form messages
+
+RLS policies are in [`supabase/policies.sql`](./supabase/policies.sql).
+
+---
+
+## License
+
+Private / proprietary. © Design Vortex.
