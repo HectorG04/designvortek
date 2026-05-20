@@ -61,8 +61,8 @@ export default function Hero() {
               className="font-display font-semibold leading-[1.02] mb-6 text-cream-50"
               style={{ fontSize: 'clamp(2.75rem, 6vw, 5rem)', letterSpacing: '-0.025em' }}
             >
-              Painterly portraits for{' '}
-              <em className="not-italic font-display italic font-medium text-gold-glow">your character.</em>
+              Bring your<br />
+              <em className="font-display italic font-medium text-gold-glow">character</em> to life.
             </motion.h1>
 
             {/* Subtitle */}
@@ -70,26 +70,25 @@ export default function Hero() {
               variants={fadeUp}
               className="text-lg text-cream-200 leading-[1.65] max-w-[52ch] mb-9"
             >
-              Hand-crafted character art, VTT tokens, party portraits and bespoke illustrations
-              for D&amp;D players, DMs, indie creators and the wider TTRPG community. From $80.
-              7–14 day turnaround. 2 revisions included.
+              Painterly TTRPG portraits, VTT tokens, and party illustrations. Crafted by hand,
+              by humans &mdash; not generated, never traced.
             </motion.p>
 
             {/* CTAs */}
             <motion.div variants={fadeUp} className="flex flex-wrap gap-3.5 mb-10">
-              <Button href="/order" variant="gold" size="md">
-                Start Commission
-                <ArrowRight size={14} />
+              <Button href="/order" variant="gold" size="lg">
+                Start commission
+                <ArrowRight size={14} strokeWidth={1.8} />
               </Button>
-              <Button href="/portfolio" variant="outline-cream" size="md">
-                See Portfolio
+              <Button href="/portfolio" variant="outline-cream" size="lg">
+                View portfolio
               </Button>
             </motion.div>
 
             {/* Trust strip */}
             <motion.div
               variants={fadeUp}
-              className="flex flex-wrap items-center gap-6 pt-6 border-t border-cream-50/12 text-sm text-cream-200"
+              className="flex flex-wrap items-center gap-6 pt-6 border-t border-cream-50/[0.12] text-sm text-cream-200"
             >
               <div className="inline-flex items-center gap-2">
                 <span className="font-display text-2xl font-semibold text-gold-glow leading-none">500+</span>
@@ -134,8 +133,8 @@ export default function Hero() {
                 />
               </span>
               <span className="text-[0.8125rem] font-medium leading-none">
-                <span className="font-display text-base font-semibold text-gold-glow mr-1">2 of 5</span>
-                slots open · June
+                <span className="font-display text-base font-semibold text-gold-glow mr-1">2</span>
+                slots open · May 2026
               </span>
             </motion.div>
 
