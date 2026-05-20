@@ -46,11 +46,11 @@ export default function SiteFooter() {
     <footer className="bg-parchment-200 border-t border-border-light pt-[72px] pb-7">
       <div className="mx-auto max-w-[1280px] px-6 md:px-12">
 
-        {/* Top grid: brand (1.6fr) + 4 link cols (1fr each) on desktop. 2 cols at <900px. */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 min-[901px]:[grid-template-columns:1.6fr_repeat(4,1fr)] gap-8 min-[901px]:gap-10 mb-12">
+        {/* Top grid: brand (1.6fr) + 4 link cols (1fr each) on desktop. 2 cols at tablet. 1 col at mobile. */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.6fr_repeat(4,1fr)] gap-8 lg:gap-10 mb-12">
 
           {/* Brand column */}
-          <div className="sm:col-span-2 min-[901px]:col-span-1 flex flex-col gap-1.5">
+          <div className="sm:col-span-2 lg:col-span-1 flex flex-col gap-1.5">
             <Logo className="text-burgundy-700 mb-3" textClassName="text-ink-900" />
             <p className="text-ink-500 text-sm leading-[1.6] max-w-[32ch] mb-[18px]">
               Premium art commissions, since 2022. Every piece, by hand, by humans.
