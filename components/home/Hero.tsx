@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import PaperTexture from '@/components/decor/PaperTexture'
@@ -230,12 +231,26 @@ export default function Hero() {
                       isOffset && 'mt-9'
                     )}
                   >
-                    {/* painterly placeholder mass */}
-                    <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-25">
-                      <div className="h-20 w-20 rounded-full bg-white/10 backdrop-blur-sm" />
-                    </div>
-                    {/* badge (.hp-hero-badge) */}
-                    <span className="relative inline-block rounded-full border border-gold-glow/30 bg-tome-950/70 px-[10px] py-[5px] font-body text-[0.625rem] font-bold uppercase tracking-[0.15em] text-cream-50 backdrop-blur-md">
+                    {/* Real artwork overlay — fills the thumb, gradient
+                        stays behind for any transparent edges */}
+                    {thumb.image ? (
+                      <Image
+                        src={thumb.image}
+                        alt={thumb.alt ?? thumb.label}
+                        fill
+                        sizes="(min-width: 1024px) 280px, 45vw"
+                        className="pointer-events-none object-cover"
+                        priority={i === 0}
+                      />
+                    ) : (
+                      /* Fallback painterly placeholder mass for thumbs
+                         without an image yet */
+                      <div className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-25">
+                        <div className="h-20 w-20 rounded-full bg-white/10 backdrop-blur-sm" />
+                      </div>
+                    )}
+                    {/* badge (.hp-hero-badge) — sits above the image */}
+                    <span className="relative z-10 inline-block rounded-full border border-gold-glow/30 bg-tome-950/70 px-[10px] py-[5px] font-body text-[0.625rem] font-bold uppercase tracking-[0.15em] text-cream-50 backdrop-blur-md">
                       {thumb.label}
                     </span>
                   </motion.div>

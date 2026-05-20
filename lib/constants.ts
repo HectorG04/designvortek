@@ -48,8 +48,21 @@ export const FOOTER_LINKS = {
   ],
 }
 
-export const HERO_THUMBS = [
-  { label: 'Character Art', gradient: 'from-violet-950 via-purple-800 to-indigo-700' },
+/** Homepage hero 2×2 thumb collage. `image` is optional — when set, an
+ *  <Image> renders on top of the gradient (gradient becomes a tinted
+ *  backdrop behind any transparent edges). `alt` describes the piece. */
+export const HERO_THUMBS: Array<{
+  label: string
+  gradient: string
+  image?: string
+  alt?: string
+}> = [
+  {
+    label: 'Character Art',
+    gradient: 'from-violet-950 via-purple-800 to-indigo-700',
+    image: '/images/portfolio/lyra-vexweaver.webp',
+    alt: 'A dragonborn-bonded warrior with twin axes standing before a towering red dragon, painted in warm umber and ember tones.',
+  },
   { label: 'VTT Token',     gradient: 'from-amber-950 via-orange-800 to-yellow-700' },
   { label: 'Anime',         gradient: 'from-rose-950 via-pink-800 to-fuchsia-700' },
   { label: 'Party',         gradient: 'from-emerald-950 via-teal-800 to-cyan-700' },

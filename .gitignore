@@ -41,3 +41,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# raw artwork uploads (staging dir — large source files; the optimized
+# webp versions live in public/images/ and DO get committed)
+/public/artwork-upload/
