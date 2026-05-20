@@ -85,7 +85,7 @@ const BOTTOM_LABEL_MAP: Record<string, string> = {
   'Terms of Service': 'Terms',
   'Refund Policy':    'Refunds',
 }
-const BOTTOM_LINKS = FOOTER_LINKS.Legal.filter((l) => l.label !== 'Contact')
+const BOTTOM_LINKS = FOOTER_LINKS.Legal
 
 export default function SiteFooter() {
   return (

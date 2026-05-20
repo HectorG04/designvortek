@@ -34,12 +34,12 @@ export const FOOTER_LINKS = {
     { label: 'FAQ',        href: '/faq' },
     { label: 'Reviews',    href: '/reviews' },
     { label: 'Order Form', href: '/order' },
+    { label: 'Contact',    href: '/contact' },
   ],
   Legal: [
     { label: 'Privacy Policy',    href: '/privacy' },
     { label: 'Terms of Service',  href: '/terms' },
     { label: 'Refund Policy',     href: '/refunds' },
-    { label: 'Contact',           href: '/contact' },
   ],
 }
 
