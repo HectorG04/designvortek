@@ -60,8 +60,8 @@ export const HERO_THUMBS: Array<{
   {
     label: 'Character Art',
     gradient: 'from-violet-950 via-purple-800 to-indigo-700',
-    image: '/images/portfolio/lyra-vexweaver.webp',
-    alt: 'A dragonborn-bonded warrior with twin axes standing before a towering red dragon, painted in warm umber and ember tones.',
+    image: '/images/portfolio/elgin-character.webp',
+    alt: 'Elgin — a hand-painted character commission in the studio’s signature painterly style.',
   },
   { label: 'VTT Token',     gradient: 'from-amber-950 via-orange-800 to-yellow-700' },
   { label: 'Anime',         gradient: 'from-rose-950 via-pink-800 to-fuchsia-700' },
