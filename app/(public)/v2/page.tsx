@@ -2,20 +2,41 @@ import type { Metadata } from 'next'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import Hero from '@/components/home/Hero'
+import ServicesPreview from '@/components/home/ServicesPreview'
+import PersonaRows from '@/components/home/PersonaRows'
+import PortfolioStrip from '@/components/home/PortfolioStrip'
+import ProcessSteps from '@/components/home/ProcessSteps'
+import Testimonials from '@/components/home/Testimonials'
+import BlogPreview from '@/components/home/BlogPreview'
+import AvailabilityWidget from '@/components/home/AvailabilityWidget'
+import FAQ from '@/components/home/FAQ'
+import CTACloser from '@/components/home/CTACloser'
+import CompassDivider from '@/components/decor/CompassDivider'
 
 export const metadata: Metadata = {
-  title: 'Design Vortek — Preview (M1)',
-  description: 'Work-in-progress preview of the new Design Vortek homepage.',
-  // ❗ NOT indexed by Google — we don't want WIP pages competing with the real site.
+  title: 'Design Vortek — Preview (M2)',
+  description:
+    'Premium D&D, TTRPG, and custom character art commissions — hand-painted by humans. Coming soon.',
+  // NOT indexed by Google — work-in-progress preview
   robots: { index: false, follow: false },
 }
 
 /**
- * MILESTONE 1 PREVIEW — Hero only.
- * Coming Soon stays live at "/" for the public.
- * This route at /v2 lets you preview new homepage as we build it section-by-section.
+ * MILESTONE 2 PREVIEW — Full homepage (all body sections).
  *
- * As each milestone completes, more sections are added below the Hero.
+ * Order matches the design brief:
+ *   1. Hero            (dark tome, fold)
+ *   2. Services        (3 featured cards)
+ *   3. Personas        (3 SEO-rich alternating rows)
+ *   4. Portfolio strip (8-piece masonry w/ filter)
+ *   5. Process         (4-step horizontal)
+ *   6. Testimonials    (3-card row)
+ *   7. Blog preview    (3 latest articles)
+ *   8. Availability    (slot widget — signature feature)
+ *   9. FAQ             (6-item accordion + FAQPage JSON-LD)
+ *  10. CTA closer      (dark tome bookend)
+ *
+ * Compass dividers separate major thematic blocks.
  */
 export default function HomePreviewPage() {
   return (
@@ -23,25 +44,20 @@ export default function HomePreviewPage() {
       <SiteHeader transparent />
       <main>
         <Hero />
+        <ServicesPreview />
 
-        {/* Placeholder strip showing what's coming next */}
-        <section className="bg-parchment-50 py-32 border-t border-border-light">
-          <div className="mx-auto max-w-[1280px] px-6 md:px-12 text-center">
-            <span className="inline-flex items-center gap-[10px] mb-6">
-              <span className="h-px w-6 bg-burgundy-700" aria-hidden="true" />
-              <span className="font-body text-[0.75rem] font-semibold uppercase tracking-[0.15em] text-burgundy-700">
-                Milestone 1 of 5 · Foundation Complete
-              </span>
-            </span>
-            <h2 className="font-display text-4xl md:text-5xl font-semibold text-ink-900 mb-4">
-              Hero shipped. <em className="font-display italic font-medium text-burgundy-700">More sections coming.</em>
-            </h2>
-            <p className="text-ink-500 text-lg max-w-xl mx-auto">
-              Next up in Milestone 2: services preview, persona rows, portfolio strip, process steps,
-              testimonials, blog preview, availability widget, FAQ, and the closing CTA.
-            </p>
-          </div>
-        </section>
+        <div className="bg-parchment-50">
+          <CompassDivider />
+        </div>
+
+        <PersonaRows />
+        <PortfolioStrip />
+        <ProcessSteps />
+        <Testimonials />
+        <BlogPreview />
+        <AvailabilityWidget />
+        <FAQ />
+        <CTACloser />
       </main>
       <SiteFooter />
     </>
