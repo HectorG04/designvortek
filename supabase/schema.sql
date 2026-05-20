@@ -48,7 +48,7 @@ create table if not exists public.commission_orders (
   service_type    text not null,
   style           text,
   description     text not null,
-  references      text,
+  reference_links text,
   budget          text,
   deadline        date,
   status          order_status default 'pending' not null,

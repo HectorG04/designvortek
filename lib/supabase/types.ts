@@ -52,7 +52,7 @@ export type Database = {
           service_type: string
           style: string | null
           description: string
-          references: string | null
+          reference_links: string | null
           budget: string | null
           deadline: string | null
           status: string
@@ -69,7 +69,7 @@ export type Database = {
           service_type: string
           style?: string | null
           description: string
-          references?: string | null
+          reference_links?: string | null
           budget?: string | null
           deadline?: string | null
           status?: string
@@ -86,7 +86,7 @@ export type Database = {
           service_type?: string
           style?: string | null
           description?: string
-          references?: string | null
+          reference_links?: string | null
           budget?: string | null
           deadline?: string | null
           status?: string
