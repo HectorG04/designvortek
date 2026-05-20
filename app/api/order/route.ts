@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
+import { sendEmail, orderConfirmationHTML, adminOrderNotifyHTML, ADMIN_EMAIL } from '@/lib/email'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -45,20 +46,24 @@ export async function POST(request: NextRequest) {
 
     const supabase = createAdminClient()
 
-    const { error } = await supabase.from('commission_orders').insert([
-      {
-        customer_name: customer_name.trim(),
-        customer_email: trimmedEmail,
-        customer_phone: customer_phone?.trim() || null,
-        service_type,
-        style: style?.trim() || null,
-        description: description.trim(),
-        reference_links: reference_links?.trim() || null,
-        budget: budget?.trim() || null,
-        deadline: deadline?.trim() || null,
-        status: 'pending',
-      },
-    ])
+    const { data: inserted, error } = await supabase
+      .from('commission_orders')
+      .insert([
+        {
+          customer_name: customer_name.trim(),
+          customer_email: trimmedEmail,
+          customer_phone: customer_phone?.trim() || null,
+          service_type,
+          style: style?.trim() || null,
+          description: description.trim(),
+          reference_links: reference_links?.trim() || null,
+          budget: budget?.trim() || null,
+          deadline: deadline?.trim() || null,
+          status: 'pending',
+        },
+      ])
+      .select('id')
+      .single()
 
     if (error) {
       console.error('Commission order insert error:', error)
@@ -68,7 +73,36 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    return NextResponse.json({ success: true })
+    // Fire-and-forget email notifications (no-op if RESEND_API_KEY missing).
+    // We don't await — but we use Promise.allSettled so failures don't crash the response.
+    Promise.allSettled([
+      sendEmail({
+        to: trimmedEmail,
+        subject: `Brief received — we'll be in touch within 48 hours`,
+        html: orderConfirmationHTML({
+          customerName: customer_name.trim(),
+          serviceType: service_type,
+          description: description.trim(),
+        }),
+      }),
+      ADMIN_EMAIL
+        ? sendEmail({
+            to: ADMIN_EMAIL,
+            subject: `New commission brief #${inserted?.id} — ${customer_name.trim()}`,
+            replyTo: trimmedEmail,
+            html: adminOrderNotifyHTML({
+              id: inserted?.id ?? 0,
+              customerName: customer_name.trim(),
+              customerEmail: trimmedEmail,
+              serviceType: service_type,
+              budget: budget?.trim() || null,
+              description: description.trim(),
+            }),
+          })
+        : Promise.resolve(false),
+    ]).catch(() => {})
+
+    return NextResponse.json({ success: true, id: inserted?.id })
   } catch (err) {
     console.error('Order API error:', err)
     return NextResponse.json({ error: 'Internal server error.' }, { status: 500 })

@@ -14,10 +14,9 @@ import CTACloser from '@/components/home/CTACloser'
 import CompassDivider from '@/components/decor/CompassDivider'
 
 export const metadata: Metadata = {
-  title: 'Design Vortek — Preview (M2)',
+  title: 'Design Vortek — Preview',
   description:
-    'Premium D&D, TTRPG, and custom character art commissions — hand-painted by humans. Coming soon.',
-  // NOT indexed by Google — work-in-progress preview
+    'Internal preview of the homepage. Public site is at the root domain.',
   robots: { index: false, follow: false },
 }
 

@@ -1,13 +1,108 @@
 import type { Metadata } from 'next'
-import ComingSoon from './_components/ComingSoon'
+import SiteHeader from '@/components/layout/SiteHeader'
+import SiteFooter from '@/components/layout/SiteFooter'
+import Hero from '@/components/home/Hero'
+import ServicesPreview from '@/components/home/ServicesPreview'
+import PersonaRows from '@/components/home/PersonaRows'
+import PortfolioStrip from '@/components/home/PortfolioStrip'
+import ProcessSteps from '@/components/home/ProcessSteps'
+import Testimonials from '@/components/home/Testimonials'
+import BlogPreview from '@/components/home/BlogPreview'
+import AvailabilityWidget from '@/components/home/AvailabilityWidget'
+import FAQ from '@/components/home/FAQ'
+import CTACloser from '@/components/home/CTACloser'
+import CompassDivider from '@/components/decor/CompassDivider'
+import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from '@/lib/constants'
 
 export const metadata: Metadata = {
-  title: 'Design Vortek — Premium TTRPG & Character Art Commissions',
+  title: 'Design Vortek — Premium TTRPG, Character Art & VTT Token Commissions',
   description:
-    'A premium art studio crafting D&D character art, VTT tokens, party portraits, and custom illustrations. New site launching soon — join the waitlist.',
+    'Painterly D&D character portraits, VTT tokens, party illustrations and bespoke art — hand-painted by humans, never AI. 7–14 day turnaround. Commissions from $80.',
   alternates: { canonical: '/' },
+  openGraph: {
+    title: 'Design Vortek — Premium TTRPG & Character Art Commissions',
+    description:
+      'Painterly D&D character portraits, VTT tokens, party illustrations and bespoke art — hand-painted, never AI.',
+    url: SITE_URL,
+    type: 'website',
+  },
 }
 
+/**
+ * Homepage — the real one.
+ *
+ * Sections in order:
+ *   1. Hero            (dark tome, fold)
+ *   2. Services        (3 featured cards)
+ *   3. Personas        (3 SEO-rich alternating rows)
+ *   4. Portfolio strip (8-piece masonry w/ filter)
+ *   5. Process         (4-step horizontal)
+ *   6. Testimonials    (3-card row)
+ *   7. Blog preview    (3 latest articles)
+ *   8. Availability    (slot widget — signature feature)
+ *   9. FAQ             (6-item accordion + FAQPage JSON-LD)
+ *  10. CTA closer      (dark tome bookend)
+ */
 export default function HomePage() {
-  return <ComingSoon />
+  // Organization JSON-LD — Google understands this as the canonical brand entity
+  const orgSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: SITE_NAME,
+    url: SITE_URL,
+    logo: `${SITE_URL}/og-default.png`,
+    description: SITE_DESCRIPTION,
+    sameAs: [
+      // TODO: real social URLs when ready
+      // 'https://instagram.com/designvortek',
+      // 'https://twitter.com/designvortek',
+    ],
+    contactPoint: {
+      '@type': 'ContactPoint',
+      email: 'hello@designvortek.com',
+      contactType: 'customer support',
+      areaServed: 'Worldwide',
+      availableLanguage: 'English',
+    },
+  }
+
+  // WebSite schema with SearchAction (enables Google sitelinks search box)
+  const websiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE_NAME,
+    url: SITE_URL,
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: { '@type': 'EntryPoint', urlTemplate: `${SITE_URL}/portfolio?q={search_term_string}` },
+      'query-input': 'required name=search_term_string',
+    },
+  }
+
+  return (
+    <>
+      <SiteHeader transparent />
+      <main>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }} />
+
+        <Hero />
+        <ServicesPreview />
+
+        <div className="bg-parchment-50">
+          <CompassDivider />
+        </div>
+
+        <PersonaRows />
+        <PortfolioStrip />
+        <ProcessSteps />
+        <Testimonials />
+        <BlogPreview />
+        <AvailabilityWidget />
+        <FAQ />
+        <CTACloser />
+      </main>
+      <SiteFooter />
+    </>
+  )
 }

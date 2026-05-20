@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
+import { sendEmail, adminInquiryNotifyHTML, ADMIN_EMAIL } from '@/lib/email'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -28,13 +29,17 @@ export async function POST(request: NextRequest) {
 
     const supabase = createAdminClient()
 
-    const { error } = await supabase.from('inquiries').insert([
-      {
-        name: name.trim(),
-        email: trimmedEmail,
-        message: message.trim(),
-      },
-    ])
+    const { data: inserted, error } = await supabase
+      .from('inquiries')
+      .insert([
+        {
+          name: name.trim(),
+          email: trimmedEmail,
+          message: message.trim(),
+        },
+      ])
+      .select('id')
+      .single()
 
     if (error) {
       console.error('Inquiry insert error:', error)
@@ -42,6 +47,21 @@ export async function POST(request: NextRequest) {
         { error: 'Failed to send. Please try again.' },
         { status: 500 }
       )
+    }
+
+    // Admin notification (no-op if RESEND_API_KEY missing)
+    if (ADMIN_EMAIL) {
+      sendEmail({
+        to: ADMIN_EMAIL,
+        subject: `New inquiry from ${name.trim()}`,
+        replyTo: trimmedEmail,
+        html: adminInquiryNotifyHTML({
+          id: inserted?.id ?? 0,
+          name: name.trim(),
+          email: trimmedEmail,
+          message: message.trim(),
+        }),
+      }).catch(() => {})
     }
 
     return NextResponse.json({ success: true })
