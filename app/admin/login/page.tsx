@@ -21,7 +21,7 @@ export default function LoginPage() {
             </div>
           </div>
           <span className="font-display text-ink-900 text-xs font-semibold tracking-[0.25em] uppercase">
-            Design Vortex
+            Design Vortek
           </span>
         </div>
 

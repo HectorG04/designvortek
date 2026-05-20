@@ -27,8 +27,8 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://designvortek.com'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Design Vortex — Premium Art Commissions',
-    template: '%s | Design Vortex',
+    default: 'Design Vortek — Premium Art Commissions',
+    template: '%s | Design Vortek',
   },
   description:
     'Premium custom art commissions — D&D character art, VTT tokens, party portraits, anime portraits, and bespoke illustrations crafted with care.',
@@ -43,24 +43,24 @@ export const metadata: Metadata = {
     'npc portraits',
     'fantasy art commission',
   ],
-  authors: [{ name: 'Design Vortex' }],
-  creator: 'Design Vortex',
-  publisher: 'Design Vortex',
+  authors: [{ name: 'Design Vortek' }],
+  creator: 'Design Vortek',
+  publisher: 'Design Vortek',
   metadataBase: new URL(SITE_URL),
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: SITE_URL,
-    siteName: 'Design Vortex',
-    title: 'Design Vortex — Premium Art Commissions',
+    siteName: 'Design Vortek',
+    title: 'Design Vortek — Premium Art Commissions',
     description:
       'Premium D&D, TTRPG, and custom character art commissions — crafted with care.',
-    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Design Vortex' }],
+    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Design Vortek' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Design Vortex — Premium Art Commissions',
+    title: 'Design Vortek — Premium Art Commissions',
     description: 'Premium D&D, TTRPG, and custom character art commissions.',
     images: ['/og-default.png'],
   },
