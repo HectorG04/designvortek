@@ -108,10 +108,11 @@ export default function SiteHeader({ transparent = false }: SiteHeaderProps) {
           textClassName={onHero ? 'text-cream-50' : 'text-ink-900'}
         />
 
-        {/* Desktop nav — gap 36px = gap-9 */}
+        {/* Desktop nav — tighter gap (24px / 32px at xl) accommodates 8 items
+            cleanly at the 1024px breakpoint without crowding. */}
         <nav
           className={cn(
-            'hidden items-center gap-9 lg:flex',
+            'hidden items-center gap-6 lg:flex xl:gap-8',
             onHero ? 'text-cream-50' : 'text-ink-700'
           )}
           aria-label="Primary"

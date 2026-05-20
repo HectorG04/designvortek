@@ -4,13 +4,18 @@ export const SITE_TAGLINE = 'Premium Art Commissions'
 export const SITE_DESCRIPTION =
   'Painterly TTRPG portraits, VTT tokens, party illustrations and custom art — crafted by hand. Commissions from $80. 7–14 day turnaround.'
 
+/* Primary nav order — Home first (universal convention), then content
+ * sections in the design order (Portfolio → Blog), Contact last so the
+ * reach-out actions stay grouped on the right next to the CTA button. */
 export const NAV_LINKS = [
+  { label: 'Home',      href: '/' },
   { label: 'Portfolio', href: '/portfolio' },
-  { label: 'Services', href: '/services', hasDropdown: true },
+  { label: 'Services',  href: '/services', hasDropdown: true },
   { label: 'Process',   href: '/process' },
   { label: 'Pricing',   href: '/pricing' },
   { label: 'About',     href: '/about' },
   { label: 'Blog',      href: '/blog' },
+  { label: 'Contact',   href: '/contact' },
 ]
 
 export const SERVICES_NAV = [
