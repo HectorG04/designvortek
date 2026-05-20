@@ -65,7 +65,12 @@ export const HERO_THUMBS: Array<{
   },
   { label: 'VTT Token',     gradient: 'from-amber-950 via-orange-800 to-yellow-700' },
   { label: 'Anime',         gradient: 'from-rose-950 via-pink-800 to-fuchsia-700' },
-  { label: 'Party',         gradient: 'from-emerald-950 via-teal-800 to-cyan-700' },
+  {
+    label: 'NPC',
+    gradient: 'from-emerald-950 via-teal-800 to-cyan-700',
+    image: '/images/portfolio/npc-character.webp',
+    alt: 'A hand-painted campaign NPC portrait in the studio’s signature painterly style.',
+  },
 ]
 
 /* =====================================================================
