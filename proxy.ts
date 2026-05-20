@@ -1,15 +1,17 @@
 import { NextResponse, type NextRequest } from 'next/server'
 import { updateSession } from '@/lib/supabase/middleware'
 
-export async function middleware(request: NextRequest) {
-  // Only run Supabase session refresh + admin auth on /admin/* paths.
-  // Everything else (public site) bypasses middleware entirely → no risk of crashing the public pages.
+/**
+ * Next.js 16+ "proxy" (formerly "middleware").
+ * Only runs Supabase auth check on /admin/* paths.
+ * Public pages bypass this entirely.
+ */
+export async function proxy(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/admin')) {
     try {
       return await updateSession(request)
     } catch (err) {
-      console.error('[middleware] auth error:', err)
-      // If auth check crashes, send admin visitors to login instead of 500-ing
+      console.error('[proxy] auth error:', err)
       if (!request.nextUrl.pathname.startsWith('/admin/login')) {
         const loginUrl = request.nextUrl.clone()
         loginUrl.pathname = '/admin/login'
@@ -23,11 +25,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static, _next/image, favicon.ico, sitemap.xml, robots.txt
-     * - public assets (svg, png, jpg, jpeg, gif, webp)
-     */
     '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
   ],
 }
