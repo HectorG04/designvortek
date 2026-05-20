@@ -3,69 +3,51 @@
 import { motion } from 'framer-motion'
 import { Check } from 'lucide-react'
 import Container from '@/components/ui/Container'
+import SectionHead from '@/components/ui/SectionHead'
 import SectionLabel from '@/components/ui/SectionLabel'
-import Button from '@/components/ui/Button'
 import PaperTexture from '@/components/decor/PaperTexture'
+import { LinkButton } from '@/components/ui/Button'
 import { CURRENT_AVAILABILITY } from '@/lib/constants'
-import { cn } from '@/lib/utils'
-
-const fadeUp = {
-  hidden:  { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
-}
 
 export default function AvailabilityWidget() {
-  const open = CURRENT_AVAILABILITY.slots.filter((s) => !s.booked).length
-  const booked = CURRENT_AVAILABILITY.total - open
+  const openSlots = CURRENT_AVAILABILITY.slots.filter((s) => !s.booked)
+  const bookedCount = CURRENT_AVAILABILITY.slots.filter((s) => s.booked).length
+  const remaining = openSlots.length
 
   return (
-    <section className="relative bg-parchment-200 py-16 md:py-32 overflow-hidden">
+    <section className="relative overflow-hidden bg-parchment-200 py-16 md:py-32">
       <PaperTexture variant="parchment" opacity={0.4} />
 
       <Container className="relative">
-        {/* Section head */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-100px' }}
-          variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
-          className="text-center max-w-[720px] mx-auto mb-16"
-        >
-          <motion.div variants={fadeUp} className="mb-4 flex justify-center">
-            <SectionLabel>Availability</SectionLabel>
-          </motion.div>
-          <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl font-semibold text-ink-900 leading-[1.1] tracking-tight">
-            Currently open for <em className="font-display italic font-medium text-burgundy-700">commissions</em>
-          </motion.h2>
-          <motion.p variants={fadeUp} className="text-lg text-ink-500 mt-4 leading-relaxed">
-            We take a fixed number of pieces each month so every commission gets the attention it deserves.
-          </motion.p>
-        </motion.div>
+        <SectionHead
+          eyebrow="Availability"
+          title={<>Currently open for <em>commissions</em></>}
+          description="We take a fixed number of pieces each month so every commission gets the attention it deserves."
+        />
 
         {/* Slot card */}
         <motion.div
-          initial={{ opacity: 0, y: 32 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-          className="bg-parchment-50 border border-border-light rounded-3xl px-6 py-8 md:px-14 md:py-12 max-w-[760px] mx-auto"
-          style={{ boxShadow: '0 4px 12px rgba(30, 20, 8, 0.08)' }}
+          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="bg-parchment-50 border border-border-light rounded-3xl max-w-[760px] mx-auto shadow-md px-6 py-8 md:px-14 md:py-12"
         >
           {/* Month head */}
           <div className="text-center mb-6">
-            <div className="inline-flex items-center gap-[10px] mb-2">
-              <span className="h-px w-6 bg-burgundy-700" aria-hidden="true" />
-              <span className="font-body text-[0.75rem] font-semibold uppercase tracking-[0.15em] text-burgundy-700">
-                {CURRENT_AVAILABILITY.month}
-              </span>
+            <div className="mb-3 flex justify-center">
+              <SectionLabel>{CURRENT_AVAILABILITY.month}</SectionLabel>
             </div>
             <h3 className="font-display text-[2.5rem] font-semibold text-ink-900 leading-[1.05]">
-              {open} {open === 1 ? 'slot' : 'slots'} remaining
+              {remaining} slots remaining
             </h3>
           </div>
 
           {/* Slot row */}
-          <div className="flex items-center justify-center gap-[14px] py-6" role="list">
+          <div
+            className="flex items-center justify-center gap-[14px] py-6"
+            role="list"
+          >
             {CURRENT_AVAILABILITY.slots.map((slot, i) => {
               if (slot.booked) {
                 return (
@@ -73,7 +55,7 @@ export default function AvailabilityWidget() {
                     key={slot.num}
                     role="listitem"
                     aria-label={`Slot ${slot.num}, booked`}
-                    className="w-16 h-16 rounded-full bg-burgundy-700 text-cream-50 flex items-center justify-center flex-shrink-0"
+                    className="w-16 h-16 rounded-full flex-shrink-0 bg-burgundy-700 text-cream-50 flex items-center justify-center"
                   >
                     <Check size={24} strokeWidth={2.4} />
                   </div>
@@ -82,49 +64,46 @@ export default function AvailabilityWidget() {
               return (
                 <motion.button
                   key={slot.num}
-                  type="button"
-                  aria-label={`Slot ${slot.num}, click to reserve`}
                   role="listitem"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.97 }}
+                  aria-label={`Slot ${slot.num}, click to reserve`}
+                  className="w-16 h-16 rounded-full flex-shrink-0 bg-transparent border-2 border-burgundy-700 text-burgundy-700 flex items-center justify-center cursor-pointer transition-colors hover:bg-burgundy-100"
                   animate={{
                     boxShadow: [
-                      '0 0 0 0 #F3D6D9',
-                      '0 0 0 6px rgba(107, 31, 42, 0.06)',
-                      '0 0 0 0 #F3D6D9',
+                      '0 0 0 0 rgba(214,196,178,1)',
+                      '0 0 0 6px rgba(107,31,42,0.06)',
+                      '0 0 0 0 rgba(214,196,178,1)',
                     ],
                     scale: [1, 1.04, 1],
                   }}
-                  transition={{ duration: 1.8, repeat: Infinity, ease: [0.22, 1, 0.36, 1], delay: i * 0.3 }}
-                  className={cn(
-                    'w-16 h-16 rounded-full flex-shrink-0',
-                    'bg-transparent border-2 border-burgundy-700 text-burgundy-700',
-                    'flex items-center justify-center font-display',
-                    'hover:bg-burgundy-100 transition-colors cursor-pointer'
-                  )}
-                  onClick={() => {
-                    window.location.href = '/order'
+                  transition={{
+                    duration: 1.8,
+                    repeat: Infinity,
+                    ease: [0.22, 1, 0.36, 1],
+                    delay: i * 0.3,
                   }}
+                  whileHover={{ scale: 1.1 }}
                 >
-                  <span className="font-display text-[1.25rem] font-semibold">{slot.num}</span>
+                  <span className="font-display text-[1.25rem] font-semibold">
+                    {slot.num}
+                  </span>
                 </motion.button>
               )
             })}
           </div>
 
-          {/* Footer */}
-          <div className="text-center text-ink-500 text-base pt-3 pb-6">
-            {booked} of {CURRENT_AVAILABILITY.total} {CURRENT_AVAILABILITY.month.split(' ')[0]} slots booked · {open} remaining · June waitlist now open
+          {/* Footer line */}
+          <div className="text-center text-base text-ink-500 px-3 pt-3 pb-6">
+            <strong className="text-ink-700 font-semibold">{bookedCount} of {CURRENT_AVAILABILITY.total}</strong> {CURRENT_AVAILABILITY.month.split(' ')[0]} slots booked &middot; {remaining} remaining &middot; June waitlist now open
           </div>
 
           {/* Actions */}
           <div className="flex flex-wrap justify-center gap-[14px]">
-            <Button href="/order" variant="gold" size="md">
-              Reserve a {CURRENT_AVAILABILITY.month.split(' ')[0]} slot
-            </Button>
-            <Button href="/order" variant="outline" size="md">
+            <LinkButton href="/order" variant="gold" size="md">
+              Reserve a May slot
+            </LinkButton>
+            <LinkButton href="/order" variant="outline" size="md">
               Join June waitlist
-            </Button>
+            </LinkButton>
           </div>
         </motion.div>
       </Container>
