@@ -161,7 +161,7 @@ export const PERSONAS: readonly Persona[] = [
     reverse: false,
   },
   {
-    tag: 'NPC PACK · CURSE OF STRAHD · 5:4',
+    tag: 'NPC PACK · ZIPPERON · 5:4',
     num: '02 · The Dungeon Master',
     title: 'For the',
     titleEm: 'campaign',
@@ -172,6 +172,11 @@ export const PERSONAS: readonly Persona[] = [
     cta: 'See NPC packs',
     href: '/services/npc-packs',
     bg: 'persona-dm',
+    /* Wide 16:9 NPC scene — uses object-contain so the full composition
+     * stays visible against the forest-burgundy gradient backdrop. */
+    image: '/images/portfolio/npc-zipperon.webp',
+    imageFit: 'contain' as const,
+    alt: 'Zipperon — a hand-painted campaign NPC in the studio’s signature painterly style, ready for the table.',
     reverse: true,
   },
   {
