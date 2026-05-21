@@ -69,7 +69,12 @@ export const HERO_THUMBS: Array<{
     image: '/images/portfolio/dusk-character.webp',
     alt: 'Dusk — a hand-painted D&D character commission in the studio’s signature painterly style.',
   },
-  { label: 'Anime',         gradient: 'from-rose-950 via-pink-800 to-fuchsia-700' },
+  {
+    label: 'Halfbody Character',
+    gradient: 'from-rose-950 via-pink-800 to-fuchsia-700',
+    image: '/images/portfolio/echo-character.webp',
+    alt: 'Echo — a half-body painted character commission in the studio’s signature painterly style.',
+  },
   {
     label: 'NPC',
     gradient: 'from-emerald-950 via-teal-800 to-cyan-700',
