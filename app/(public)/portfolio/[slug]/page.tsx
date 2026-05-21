@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowRight, ChevronRight, ZoomIn } from 'lucide-react'
@@ -33,7 +34,16 @@ interface PortfolioPiece {
   revisions: string
   delivered: string
   tags: string[]
+  /** Tailwind gradient classes — used as fallback when heroImage is absent
+   *  AND as the tint/backdrop behind transparent edges of the hero. */
   gradient: string
+  /** Optional real artwork — when set, overlays next/image on top of the
+   *  gradient hero slot. Path under /public (e.g. /images/portfolio/<slug>/hero.webp). */
+  heroImage?: string
+  /** Optional process gallery (sketch/lineart/color/final). Each entry is
+   *  rendered into the 4-slot thumb grid below the hero. The first entry
+   *  defaults to the active/highlighted thumb. */
+  processImages?: { src: string; label: string }[]
   /** Artist pull-quote, also markdown — anticipating future emphasis. */
   artistNote: string
 }
@@ -77,6 +87,36 @@ const PIECES: Record<string, PortfolioPiece> = {
     tags: ['Half-Orc', 'Paladin', 'D&D 5e', 'Painterly', 'Sunset', 'Armor'],
     gradient: 'from-amber-950 via-orange-800 to-yellow-700',
     artistNote: 'We rebuilt the armor twice. Plate is unforgiving — every dent has to earn its place.',
+  },
+  /* Pilot entry — first real artwork commissioned in May 2026 portfolio
+   * batch. Client used the player handle "Bill Nye" but the character is
+   * a fictional feral-noble wizard; renamed for portfolio display. */
+  'vesper-goldclaw-feral-wizard': {
+    slug: 'vesper-goldclaw-feral-wizard',
+    title: 'Vesper Goldclaw, Feral Wizard',
+    category: 'Character Art',
+    client: 'commissioned by Tess R.',
+    description: [
+      "A **female wizard with feral, sharp-toothed features** and golden talons — noble pomp on the outside, primal predator underneath. The brief called for stoic and guarded with the air of someone who knows exactly which spell she'd cast if you asked the wrong question.",
+      "Full extensive direction came in at 3.3 MB of mood boards, Heroforge stills, and pose annotations — down to which fingers wore signet rings. The background stayed simple by request: a Skyrim-loading-screen gradient so the figure carries the whole frame. See more [character art](/services/character-art) or [browse the gallery](/portfolio).",
+    ],
+    tools: 'Procreate · Photoshop · Clip Studio Paint',
+    hours: '16h across 12 days',
+    style: 'Painterly · stoic noble',
+    resolution: '4096 × 5120 px',
+    revisions: '2 of 2 used',
+    delivered: 'February 06, 2026',
+    tags: ['Wizard', 'D&D 5e', 'Painterly', 'Feral features', 'Stoic noble', 'Gold talons'],
+    gradient: 'from-amber-950 via-orange-800 to-yellow-700',
+    heroImage: '/images/portfolio/bill-nye/hero.webp',
+    processImages: [
+      { src: '/images/portfolio/bill-nye/hero.webp',      label: 'FINAL' },
+      { src: '/images/portfolio/bill-nye/lineart.webp',   label: 'LINEART' },
+      { src: '/images/portfolio/bill-nye/greyscale.webp', label: 'GREYSCALE' },
+      { src: '/images/portfolio/bill-nye/color.webp',     label: 'COLOR V1' },
+    ],
+    artistNote:
+      "The **golden talons** and the **signet ring on the index finger** — those tiny details came straight from Tess's brief and ended up doing more storytelling than the armor.",
   },
   'stormwatch-adventuring-party': {
     slug: 'stormwatch-adventuring-party',
@@ -210,52 +250,95 @@ export default async function PortfolioDetailPage({
             <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-16">
               {/* Left: hero image + thumb gallery */}
               <div>
+                {/* HERO — real artwork via next/image when heroImage is set,
+                    otherwise the original gradient placeholder. Gradient is
+                    always rendered as the backdrop so transparent edges and
+                    letter-box bars (for non-4:5 sources) tint correctly. */}
                 <div
                   className={cn(
                     'relative rounded-2xl overflow-hidden border border-border-medium aspect-[4/5] bg-gradient-to-br',
                     piece.gradient,
                   )}
                 >
-                  <div className="absolute inset-0 flex items-center justify-center opacity-15 pointer-events-none">
-                    <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-sm" />
-                  </div>
+                  {piece.heroImage ? (
+                    <Image
+                      src={piece.heroImage}
+                      alt={`${piece.title} — hand-painted portrait`}
+                      fill
+                      sizes="(min-width: 1024px) 56vw, 100vw"
+                      className="object-contain"
+                      priority
+                    />
+                  ) : (
+                    <div className="absolute inset-0 flex items-center justify-center opacity-15 pointer-events-none">
+                      <div className="w-24 h-24 rounded-full bg-white/10 backdrop-blur-sm" />
+                    </div>
+                  )}
                   <button
                     type="button"
                     aria-label="Zoom image"
-                    className="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-tome-950/70 backdrop-blur-sm flex items-center justify-center text-cream-50 hover:bg-tome-950/90 transition-colors cursor-pointer"
+                    className="absolute bottom-4 right-4 z-10 w-10 h-10 rounded-full bg-tome-950/70 backdrop-blur-sm flex items-center justify-center text-cream-50 hover:bg-tome-950/90 transition-colors cursor-pointer"
                   >
                     <ZoomIn size={16} strokeWidth={1.6} />
                   </button>
                 </div>
 
-                {/* Thumbnails */}
+                {/* PROCESS THUMBS — iterate piece.processImages when set
+                    (each entry = real stage), otherwise fall back to the
+                    legacy 4 gradient-filtered placeholder squares. */}
                 <div className="grid grid-cols-4 gap-3 mt-4">
-                  {['FINAL', 'SKETCH', 'BLOCK', 'REV 01'].map((label, i) => (
-                    <div
-                      key={label}
-                      className={cn(
-                        'relative aspect-square rounded-lg overflow-hidden border bg-gradient-to-br cursor-pointer transition-all',
-                        piece.gradient,
-                        i === 0
-                          ? 'border-gold-500 ring-2 ring-gold-500/30'
-                          : 'border-border-light opacity-75 hover:opacity-100',
-                      )}
-                      style={{
-                        filter:
-                          i === 1
-                            ? 'grayscale(1) brightness(1.1)'
-                            : i === 2
-                              ? 'saturate(0.4)'
-                              : i === 3
-                                ? 'hue-rotate(30deg)'
-                                : undefined,
-                      }}
-                    >
-                      <span className="absolute bottom-1.5 left-1.5 text-[0.5625rem] font-semibold uppercase tracking-[0.12em] text-cream-50 bg-tome-950/60 px-1.5 py-0.5 rounded">
-                        {label}
-                      </span>
-                    </div>
-                  ))}
+                  {piece.processImages && piece.processImages.length > 0 ? (
+                    piece.processImages.slice(0, 4).map((thumb, i) => (
+                      <div
+                        key={thumb.label}
+                        className={cn(
+                          'relative aspect-square rounded-lg overflow-hidden border cursor-pointer transition-all bg-gradient-to-br',
+                          piece.gradient,
+                          i === 0
+                            ? 'border-gold-500 ring-2 ring-gold-500/30'
+                            : 'border-border-light opacity-90 hover:opacity-100',
+                        )}
+                      >
+                        <Image
+                          src={thumb.src}
+                          alt={`${piece.title} — ${thumb.label.toLowerCase()} stage`}
+                          fill
+                          sizes="(min-width: 1024px) 140px, 22vw"
+                          className="object-cover"
+                        />
+                        <span className="absolute bottom-1.5 left-1.5 z-10 text-[0.5625rem] font-semibold uppercase tracking-[0.12em] text-cream-50 bg-tome-950/60 px-1.5 py-0.5 rounded">
+                          {thumb.label}
+                        </span>
+                      </div>
+                    ))
+                  ) : (
+                    ['FINAL', 'SKETCH', 'BLOCK', 'REV 01'].map((label, i) => (
+                      <div
+                        key={label}
+                        className={cn(
+                          'relative aspect-square rounded-lg overflow-hidden border bg-gradient-to-br cursor-pointer transition-all',
+                          piece.gradient,
+                          i === 0
+                            ? 'border-gold-500 ring-2 ring-gold-500/30'
+                            : 'border-border-light opacity-75 hover:opacity-100',
+                        )}
+                        style={{
+                          filter:
+                            i === 1
+                              ? 'grayscale(1) brightness(1.1)'
+                              : i === 2
+                                ? 'saturate(0.4)'
+                                : i === 3
+                                  ? 'hue-rotate(30deg)'
+                                  : undefined,
+                        }}
+                      >
+                        <span className="absolute bottom-1.5 left-1.5 text-[0.5625rem] font-semibold uppercase tracking-[0.12em] text-cream-50 bg-tome-950/60 px-1.5 py-0.5 rounded">
+                          {label}
+                        </span>
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
 
