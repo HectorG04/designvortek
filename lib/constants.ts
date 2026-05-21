@@ -150,8 +150,9 @@ export const PERSONAS = [
   {
     tag: 'PARTY PORTRAIT · HEIRLOOM · 5:4',
     num: '03 · The Gift Giver',
-    title: 'For a portrait styled like an',
+    title: 'For an',
     titleEm: '1800s heirloom',
+    titleAfter: ' portrait',
     sub: 'their party, framed like family history',
     body:
       "Wedding, anniversary, retirement, milestone birthday — for the friend who's played D&D every Sunday for the last decade. We paint their adventuring party as a 19th-century family portrait: central oval cameo of the main party, supporting NPCs in smaller medallions around the edges, ornate gilded borders, the works. The kind of painting that gets passed down, not just hung. Surprise-friendly process — you brief us, we coordinate references with a co-conspirator at the table, you approve at every step.",
