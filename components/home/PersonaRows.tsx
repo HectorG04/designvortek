@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { ArrowRight, Check } from 'lucide-react'
 import Container from '@/components/ui/Container'
@@ -54,7 +55,10 @@ export default function PersonaRows() {
                   : 'lg:grid-cols-[1fr_1.1fr]'
               )}
             >
-              {/* Image — aspect 5/4, rounded-2xl, 1px border, padding 20px */}
+              {/* Image — aspect 5/4, rounded-2xl, 1px border, padding 20px.
+                 If `image` is set on the persona, an <Image> renders on top
+                 of the gradient backdrop; gradient stays visible behind any
+                 letter-boxed edges (object-contain) or absent in cover mode. */}
               <motion.div
                 variants={fadeUp}
                 className={cn(
@@ -63,7 +67,19 @@ export default function PersonaRows() {
                 )}
                 style={{ background: personaBackgrounds[p.bg] }}
               >
-                <span className="inline-block font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-cream-50 bg-tome-950/[0.65] backdrop-blur-md border border-cream-50/[0.15] px-2.5 py-1.5 rounded-sm">
+                {'image' in p && p.image ? (
+                  <Image
+                    src={p.image}
+                    alt={('alt' in p && p.alt) ? p.alt : p.tag}
+                    fill
+                    sizes="(min-width: 1024px) 500px, 90vw"
+                    className={cn(
+                      'pointer-events-none',
+                      ('imageFit' in p && p.imageFit === 'contain') ? 'object-contain' : 'object-cover',
+                    )}
+                  />
+                ) : null}
+                <span className="relative z-10 inline-block font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-cream-50 bg-tome-950/[0.65] backdrop-blur-md border border-cream-50/[0.15] px-2.5 py-1.5 rounded-sm">
                   {p.tag}
                 </span>
               </motion.div>

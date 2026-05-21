@@ -148,17 +148,23 @@ export const PERSONAS = [
     reverse: true,
   },
   {
-    tag: 'PARTY PORTRAIT · WEDDING · 5:4',
+    tag: 'PARTY PORTRAIT · HEIRLOOM · 5:4',
     num: '03 · The Gift Giver',
-    title: 'For the',
-    titleEm: 'impossible',
-    titleAfter: ' birthday',
-    sub: 'a heirloom for the table they love',
-    body: "Looking for a wedding, birthday, or graduation gift for someone who plays D&D every week? A party portrait of their adventuring group is the gift they didn't know they wanted. We handle every detail — you brief us, we collect references, you approve at every step. Surprise-friendly process available.",
-    tags: ['Gift commissions', 'Surprise-friendly', 'Print-ready files'],
+    title: 'For a portrait styled like an',
+    titleEm: '1800s heirloom',
+    sub: 'their party, framed like family history',
+    body:
+      "Wedding, anniversary, retirement, milestone birthday — for the friend who's played D&D every Sunday for the last decade. We paint their adventuring party as a 19th-century family portrait: central oval cameo of the main party, supporting NPCs in smaller medallions around the edges, ornate gilded borders, the works. The kind of painting that gets passed down, not just hung. Surprise-friendly process — you brief us, we coordinate references with a co-conspirator at the table, you approve at every step.",
+    tags: ['1800s heirloom style', 'Up to 8 figures', 'Surprise-friendly process'],
     cta: 'See party portraits',
     href: '/services/party-portraits',
     bg: 'persona-gift',
+    /* Wide framed-piece artwork — uses object-contain so the gilded frame
+     * + side medallions stay fully visible against the gradient backdrop.
+     * Source is 16:9-ish, slot is 5:4, so letter-boxing is intentional. */
+    image: '/images/portfolio/party-framed.webp',
+    imageFit: 'contain' as const,
+    alt: 'The Adventurers — a hand-painted party portrait in a 19th-century family-portrait composition: central oval cameo of the main party with supporting NPCs in smaller medallions, framed in gilded borders.',
     reverse: false,
   },
 ] as const
