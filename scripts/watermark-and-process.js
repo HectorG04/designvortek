@@ -32,16 +32,42 @@ const SRC_PROJECTS = 'public/artwork-upload/projects'
 const SRC_ROOT = 'public/artwork-upload'
 const DST = 'public/images/portfolio'
 
-/* ---------- Watermark SVG generator ---------- */
-function makeWatermarkSvg(size, opacity = 0.25) {
+/* ---------- Watermark SVG generator ----------
+ * Dual-tone watermark so it stays visible on every background.
+ *
+ * Single-color marks disappear when they match the underlying art
+ * (white on a sky, black on a shadow). The fix is to render TWO
+ * passes: a slightly thicker dark stroke underneath, then a thinner
+ * white stroke + fill on top. On dark image areas the white shows,
+ * on light areas the dark outline shows, on midtones both contribute.
+ *
+ * SVG `paint-order="stroke"` on the text draws the stroke first then
+ * the fill paints over it, so the dark outline only peeks around the
+ * letter edges — gives a clean stamped/embossed look.
+ */
+function makeWatermarkSvg(size, _opacity = 0.25) {
   const center = size / 2
   const radius = size * 0.44
-  const strokeWidth = size * 0.025
+  const strokeWhite = size * 0.025
+  const strokeDark = strokeWhite * 1.7  // slightly thicker so it peeks
   const fontSize = size * 0.40
+  const textStroke = fontSize * 0.06
+  const opLight = 0.55  // white layer
+  const opDark = 0.30   // dark layer
+
   return Buffer.from(
     `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="${center}" cy="${center}" r="${radius}" fill="none" stroke="white" stroke-width="${strokeWidth}" opacity="${opacity}"/>
-      <text x="${center}" y="${center}" text-anchor="middle" dominant-baseline="central" font-family="Georgia, 'Times New Roman', serif" font-size="${fontSize}" font-weight="600" fill="white" opacity="${opacity}" letter-spacing="-${fontSize * 0.03}">DV</text>
+      <!-- Dark base layer: provides contrast against light backgrounds -->
+      <circle cx="${center}" cy="${center}" r="${radius}" fill="none" stroke="black" stroke-width="${strokeDark}" opacity="${opDark}"/>
+      <!-- White overlay: provides contrast against dark backgrounds -->
+      <circle cx="${center}" cy="${center}" r="${radius}" fill="none" stroke="white" stroke-width="${strokeWhite}" opacity="${opLight}"/>
+      <!-- DV text: white fill with dark stroke behind (paint-order:stroke) -->
+      <text x="${center}" y="${center}" text-anchor="middle" dominant-baseline="central"
+        font-family="Georgia, 'Times New Roman', serif" font-size="${fontSize}" font-weight="600"
+        letter-spacing="-${fontSize * 0.03}"
+        paint-order="stroke"
+        fill="white" fill-opacity="${opLight}"
+        stroke="black" stroke-width="${textStroke}" stroke-opacity="${opDark}">DV</text>
     </svg>`,
   )
 }
