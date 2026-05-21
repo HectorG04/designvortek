@@ -98,13 +98,13 @@ const PIECES: Record<string, PortfolioPiece> = {
     client: 'commissioned by Tess R.',
     description: [
       "A **female wizard with feral, sharp-toothed features** and golden talons — noble pomp on the outside, primal predator underneath. The brief called for stoic and guarded with the air of someone who knows exactly which spell she'd cast if you asked the wrong question.",
-      "Full extensive direction came in at 3.3 MB of mood boards, Heroforge stills, and pose annotations — down to which fingers wore signet rings. The background stayed simple by request: a Skyrim-loading-screen gradient so the figure carries the whole frame. See more [character art](/services/character-art) or [browse the gallery](/portfolio).",
+      "Tess had been playing this character through a long D&D campaign and the brief showed it. The reference doc came in heavy: mood boards, pose annotations, the position of every toe ring spelled out. For the background she asked for something close to a Skyrim loading screen, soft and unfocused, so Vesper held the frame herself.",
     ],
     tools: 'Procreate · Photoshop · Clip Studio Paint',
     hours: '16h across 12 days',
     style: 'Painterly · stoic noble',
     resolution: '4096 × 5120 px',
-    revisions: '2 of 2 used',
+    revisions: '3 of 5 used',
     delivered: 'February 06, 2026',
     tags: ['Wizard', 'D&D 5e', 'Painterly', 'Feral features', 'Stoic noble', 'Gold talons'],
     gradient: 'from-amber-950 via-orange-800 to-yellow-700',
@@ -116,7 +116,7 @@ const PIECES: Record<string, PortfolioPiece> = {
       { src: '/images/portfolio/bill-nye/color.webp',     label: 'COLOR V1' },
     ],
     artistNote:
-      "The **golden talons** and the **signet ring on the index finger** — those tiny details came straight from Tess's brief and ended up doing more storytelling than the armor.",
+      "The signet ring and gold talons came from Tess's brief. They ended up doing more work than the armor did.",
   },
   'stormwatch-adventuring-party': {
     slug: 'stormwatch-adventuring-party',
