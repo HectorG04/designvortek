@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next'
+import { getAllSlugs } from '@/lib/portfolio-pieces'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://designvortek.com'
 
@@ -42,9 +43,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }))
 
-  // Portfolio detail pages (demo slugs — replace with Supabase data in M5)
-  const portfolioSlugs = ['lyra-vexweaver-tiefling-sorceror', 'eira-half-orc-paladin', 'stormwatch-adventuring-party']
-  const portfolioRoutes: MetadataRoute.Sitemap = portfolioSlugs.map((slug) => ({
+  // Portfolio detail pages — slugs come from the centralized portfolio
+  // data so adding/removing pieces auto-updates the sitemap.
+  const portfolioRoutes: MetadataRoute.Sitemap = getAllSlugs().map((slug) => ({
     url: `${SITE_URL}/portfolio/${slug}`,
     lastModified,
     changeFrequency: 'monthly',

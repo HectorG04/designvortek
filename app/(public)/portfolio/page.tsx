@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
@@ -9,72 +10,33 @@ import Container from '@/components/ui/Container'
 import Button from '@/components/ui/Button'
 import PaperTexture from '@/components/decor/PaperTexture'
 import { cn } from '@/lib/utils'
+import {
+  getAllPieces,
+  getCategoryCounts,
+  CATEGORY_FILTER_KEYS,
+  type PortfolioPiece,
+} from '@/lib/portfolio-pieces'
 
 /* =====================================================================
    PORTFOLIO INDEX — literal port of Portfolio.html.
    Hero → sticky controls (filters + search + sort) → masonry gallery →
    load-more row → dark CTA strip.
 
-   The sticky controls bar (.po-controls) sits at top: 76px so it tucks
-   right under the fixed site header once you scroll past the hero.
+   Reads from lib/portfolio-pieces.ts so the data matches the homepage
+   strip and the detail pages exactly. Filter chips use live counts from
+   getCategoryCounts() so chip numbers stay accurate as pieces are added
+   or removed.
    ===================================================================== */
-
-/* ---------- Design-spec gradients (from .ds-ph-* in design-system.css) ---------- */
-const GRADIENTS = {
-  character:
-    'radial-gradient(ellipse at 30% 20%, rgba(232,200,128,0.6), transparent 55%), radial-gradient(ellipse at 70% 80%, rgba(107,31,42,0.6), transparent 60%), linear-gradient(135deg, #2a1810, #3e1218 60%, #1a130c)',
-  token:
-    'radial-gradient(circle at 50% 50%, rgba(212,162,76,0.5), transparent 50%), radial-gradient(circle at 50% 50%, rgba(107,31,42,0.8), transparent 70%), linear-gradient(135deg, #1a130c, #251A10)',
-  party:
-    'radial-gradient(ellipse at 20% 40%, rgba(201,160,74,0.5), transparent 50%), radial-gradient(ellipse at 80% 60%, rgba(31,77,58,0.6), transparent 55%), linear-gradient(160deg, #3e1218, #6B1F2A, #1F4D3A)',
-  anime:
-    'radial-gradient(ellipse at 50% 30%, rgba(243,214,217,0.6), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(201,160,74,0.4), transparent 60%), linear-gradient(160deg, #6B1F2A, #8A2A35 70%, #3e1218)',
-  scene:
-    'radial-gradient(ellipse at 50% 80%, rgba(232,200,128,0.4), transparent 60%), linear-gradient(180deg, #1F4D3A 0%, #6B1F2A 60%, #1a130c 100%)',
-} as const
 
 type CategoryKey = 'all' | 'character-art' | 'vtt-tokens' | 'party-portraits' | 'anime' | 'custom'
 
-interface PortfolioItem {
-  slug: string
-  title: string
-  category: Exclude<CategoryKey, 'all'>
-  categoryLabel: string
-  gradient: string
-  aspect: '4/5' | '1/1' | '3/4' | '3/2'
-  featured?: boolean
-  hueRotate?: number
-}
-
-const REAL_SLUGS = [
-  'lyra-vexweaver-tiefling-sorceror',
-  'eira-half-orc-paladin',
-  'stormwatch-adventuring-party',
-]
-const slugFor = (i: number) => REAL_SLUGS[i % REAL_SLUGS.length]
-
-const ITEMS: PortfolioItem[] = [
-  { slug: slugFor(0),  title: 'Lyra Vexweaver · Tiefling Sorceror',  category: 'character-art',    categoryLabel: 'Character Art',  gradient: GRADIENTS.character, aspect: '4/5', featured: true },
-  { slug: slugFor(1),  title: 'The Hooded Stranger',                 category: 'vtt-tokens',       categoryLabel: 'VTT Token',      gradient: GRADIENTS.token,     aspect: '1/1' },
-  { slug: slugFor(2),  title: 'Kaeru — spring duelist',              category: 'anime',            categoryLabel: 'Anime',          gradient: GRADIENTS.anime,     aspect: '3/4' },
-  { slug: slugFor(0),  title: 'The Howling Crows · level 9',         category: 'party-portraits',  categoryLabel: 'Party Portrait', gradient: GRADIENTS.party,     aspect: '3/2' },
-  { slug: slugFor(1),  title: 'Aldric · half-elf paladin',           category: 'character-art',    categoryLabel: 'Character Art',  gradient: GRADIENTS.character, aspect: '4/5', featured: true, hueRotate: 20 },
-  { slug: slugFor(2),  title: 'Strahd NPC Pack · session 14',        category: 'custom',           categoryLabel: 'Custom',         gradient: GRADIENTS.scene,     aspect: '3/4' },
-  { slug: slugFor(0),  title: 'The Mage of Saltmarsh',               category: 'vtt-tokens',       categoryLabel: 'VTT Token',      gradient: GRADIENTS.token,     aspect: '1/1', hueRotate: -10 },
-  { slug: slugFor(1),  title: 'Nyssa & Vaelen · twin rogues',        category: 'character-art',    categoryLabel: 'Character Art',  gradient: GRADIENTS.character, aspect: '4/5', hueRotate: 40 },
-  { slug: slugFor(2),  title: 'The Wedding Adventurers',             category: 'party-portraits',  categoryLabel: 'Party Portrait', gradient: GRADIENTS.party,     aspect: '3/2', hueRotate: 15 },
-  { slug: slugFor(0),  title: 'Mei · jade scholar',                  category: 'anime',            categoryLabel: 'Anime',          gradient: GRADIENTS.anime,     aspect: '3/4', hueRotate: 30 },
-  { slug: slugFor(1),  title: 'Gorbash · ironforge berserker',       category: 'character-art',    categoryLabel: 'Character Art',  gradient: GRADIENTS.character, aspect: '4/5' },
-  { slug: slugFor(2),  title: 'Inkbloom · book cover',               category: 'custom',           categoryLabel: 'Custom',         gradient: GRADIENTS.scene,     aspect: '3/4', featured: true, hueRotate: -20 },
-]
-
-const FILTERS: { key: CategoryKey; label: string; count: number }[] = [
-  { key: 'all',              label: 'All',              count: 247 },
-  { key: 'character-art',    label: 'Character Art',    count: 142 },
-  { key: 'vtt-tokens',       label: 'VTT Tokens',       count: 58 },
-  { key: 'party-portraits',  label: 'Party Portraits',  count: 24 },
-  { key: 'anime',            label: 'Anime',            count: 16 },
-  { key: 'custom',           label: 'Custom',           count: 7 },
+const FILTER_DEFINITIONS: { key: CategoryKey; label: string }[] = [
+  { key: 'all',              label: 'All' },
+  { key: 'character-art',    label: 'Character Art' },
+  { key: 'vtt-tokens',       label: 'VTT Tokens' },
+  { key: 'party-portraits',  label: 'Party Portraits' },
+  { key: 'anime',            label: 'Anime' },
+  { key: 'custom',           label: 'Custom' },
 ]
 
 /* ---------- Inline SVGs from the design HTML (verbatim) ---------- */
@@ -127,12 +89,23 @@ const ArrowRightMd = () => (
 )
 
 /* ---------- Aspect → Tailwind class ---------- */
-const ASPECT_CLASSES: Record<PortfolioItem['aspect'], string> = {
+const ASPECT_CLASSES: Record<PortfolioPiece['aspect'], string> = {
   '4/5': 'aspect-[4/5]',
   '1/1': 'aspect-square',
   '3/4': 'aspect-[3/4]',
   '3/2': 'aspect-[3/2]',
 }
+
+/* All pieces and live counts get computed once at module level since
+ * the data is static at build time. When CMS lands, swap these for a
+ * server-fetched prop and the component is otherwise unchanged. */
+const ALL_PIECES = getAllPieces()
+const CATEGORY_COUNTS = getCategoryCounts()
+
+const FILTERS = FILTER_DEFINITIONS.map((f) => ({
+  ...f,
+  count: CATEGORY_COUNTS[f.key] ?? 0,
+}))
 
 export default function PortfolioPage() {
   const [activeFilter, setActiveFilter] = useState<CategoryKey>('all')
@@ -141,12 +114,23 @@ export default function PortfolioPage() {
 
   const visibleItems = useMemo(() => {
     const term = search.trim().toLowerCase()
-    return ITEMS.filter((item) => {
-      if (activeFilter !== 'all' && item.category !== activeFilter) return false
-      if (term && !item.title.toLowerCase().includes(term) && !item.categoryLabel.toLowerCase().includes(term)) return false
+    const sorted = [...ALL_PIECES].sort((a, b) => {
+      const aTime = new Date(a.delivered).getTime()
+      const bTime = new Date(b.delivered).getTime()
+      if (sort === 'oldest') return aTime - bTime
+      if (sort === 'random') return Math.random() - 0.5
+      // 'newest' and 'popular' both default to newest-first for now
+      return bTime - aTime
+    })
+    return sorted.filter((piece) => {
+      if (activeFilter !== 'all' && CATEGORY_FILTER_KEYS[piece.category] !== activeFilter) return false
+      if (term) {
+        const haystack = [piece.title, piece.category, ...piece.tags].join(' ').toLowerCase()
+        if (!haystack.includes(term)) return false
+      }
       return true
     })
-  }, [activeFilter, search])
+  }, [activeFilter, search, sort])
 
   return (
     <>
@@ -167,8 +151,8 @@ export default function PortfolioPage() {
             <>
               <ClockIcon />
               <span>
-                <strong className="font-display text-base font-semibold text-ink-900">500+ pieces</strong>
-                {' · '}updated weekly{' · '}last update May 18, 2026
+                <strong className="font-display text-base font-semibold text-ink-900">{CATEGORY_COUNTS.all} recent pieces</strong>
+                {' · '}updated as commissions wrap{' · '}last delivery {ALL_PIECES[0]?.delivered}
               </span>
             </>
           }
@@ -245,14 +229,14 @@ export default function PortfolioPage() {
             className="mb-14"
             style={{ columns: '4 280px', columnGap: '16px' }}
           >
-            {visibleItems.map((item, i) => (
+            {visibleItems.map((piece) => (
               <Link
-                key={`${item.slug}-${i}`}
-                href={`/portfolio/${item.slug}`}
+                key={piece.slug}
+                href={`/portfolio/${piece.slug}`}
                 className="group relative block mb-4 break-inside-avoid rounded-lg overflow-hidden border border-border-light bg-parchment-100 cursor-pointer transition-all duration-250 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-[3px] hover:shadow-lg hover:border-border-medium"
               >
-                {/* Gold corner flourishes — featured items only (per design HTML) */}
-                {item.featured && (
+                {/* Gold corner flourishes — featured pieces only (per design HTML) */}
+                {piece.featured && (
                   <>
                     <CornerTL />
                     <CornerTR />
@@ -261,7 +245,7 @@ export default function PortfolioPage() {
                   </>
                 )}
 
-                {/* Quick view eye — visible on hover (or always for featured) */}
+                {/* Quick view eye — always visible on featured, hover-only otherwise */}
                 <button
                   type="button"
                   aria-label="Quick view"
@@ -273,22 +257,27 @@ export default function PortfolioPage() {
                     'absolute top-3 right-3 z-[3] w-9 h-9 rounded-full inline-flex items-center justify-center',
                     'bg-parchment-50/90 border border-border-medium text-ink-700 cursor-pointer',
                     'transition-all duration-250',
-                    item.featured ? 'opacity-100' : 'opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0',
+                    piece.featured ? 'opacity-100' : 'opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0',
                     'hover:bg-burgundy-700 hover:text-cream-50 hover:border-burgundy-700',
                   )}
                 >
                   <EyeIcon />
                 </button>
 
-                {/* Image */}
+                {/* Image — real artwork via next/image, gradient backdrop
+                    for any letter-box edges when the source aspect doesn't
+                    match the slot's `piece.aspect` perfectly. */}
                 <div
-                  className={cn('block w-full', ASPECT_CLASSES[item.aspect])}
-                  style={{
-                    background: item.gradient,
-                    ...(item.hueRotate ? { filter: `hue-rotate(${item.hueRotate}deg)` } : {}),
-                  }}
-                  aria-hidden="true"
-                />
+                  className={cn('relative block w-full bg-gradient-to-br', ASPECT_CLASSES[piece.aspect], piece.gradient)}
+                >
+                  <Image
+                    src={piece.heroImage}
+                    alt={piece.title}
+                    fill
+                    sizes="(min-width: 1280px) 320px, (min-width: 768px) 33vw, 50vw"
+                    className="object-cover"
+                  />
+                </div>
 
                 {/* Hover overlay */}
                 <div
@@ -299,24 +288,26 @@ export default function PortfolioPage() {
                   }}
                 >
                   <div className="text-[0.625rem] font-bold uppercase tracking-[0.15em] text-gold-glow mb-1">
-                    {item.categoryLabel}
+                    {piece.category}
                   </div>
                   <div className="font-display text-[1.125rem] font-semibold text-cream-50 leading-[1.2]">
-                    {item.title}
+                    {piece.title}
                   </div>
                 </div>
               </Link>
             ))}
           </div>
 
-          {/* Load more */}
-          <div className="text-center mb-14">
-            <Button variant="outline" size="md">
-              Load 24 more
-            </Button>
-            <div className="font-body text-[0.875rem] text-ink-500 mt-3">
-              Showing {visibleItems.length} of 247
+          {/* Load more — hidden until we have more than the initial display */}
+          {visibleItems.length < ALL_PIECES.length && (
+            <div className="text-center mb-14">
+              <Button variant="outline" size="md">
+                Load more
+              </Button>
             </div>
+          )}
+          <div className="text-center mb-14 font-body text-[0.875rem] text-ink-500">
+            Showing {visibleItems.length} of {CATEGORY_COUNTS.all} pieces
           </div>
         </Container>
 

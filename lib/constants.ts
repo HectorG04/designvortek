@@ -203,20 +203,12 @@ export const PERSONAS: readonly Persona[] = [
 ]
 
 /* =====================================================================
-   PORTFOLIO STRIP
+   PORTFOLIO STRIP — category filter chips for the homepage strip.
+   The actual piece data lives in lib/portfolio-pieces.ts; PortfolioStrip
+   pulls the 8 featured pieces from there directly. Keep this list
+   aligned with the `category` literal union in PortfolioPiece.
    ===================================================================== */
 export const PORTFOLIO_CATEGORIES = ['All', 'Character Art', 'Tokens', 'Portraits', 'Anime', 'Custom']
-
-export const PORTFOLIO_FEATURED = [
-  { id: 1, title: 'Lyra Vexweaver, Tiefling Sorceror', category: 'Character Art', gradient: 'from-violet-900 via-purple-700 to-indigo-600', tall: false },
-  { id: 2, title: 'Eira the Half-Orc Paladin',         category: 'Character Art', gradient: 'from-amber-950 via-orange-800 to-yellow-700', tall: true },
-  { id: 3, title: 'Wraith VTT Token Set',              category: 'Tokens',        gradient: 'from-stone-900 via-amber-900 to-yellow-700', tall: false },
-  { id: 4, title: 'Stormwatch Adventuring Party',      category: 'Portraits',     gradient: 'from-emerald-900 via-teal-700 to-cyan-600', tall: false },
-  { id: 5, title: 'Cherry-Blossom Samurai',            category: 'Anime',         gradient: 'from-rose-900 via-pink-700 to-fuchsia-600', tall: false },
-  { id: 6, title: 'Strahd NPC Pack (8 portraits)',     category: 'Custom',        gradient: 'from-burgundy-900 via-red-800 to-rose-700', tall: false },
-  { id: 7, title: 'Drow Ranger w/ Direwolf',           category: 'Character Art', gradient: 'from-slate-900 via-violet-800 to-purple-700', tall: false },
-  { id: 8, title: 'Wedding Party as Adventurers',      category: 'Portraits',     gradient: 'from-forest-700 via-emerald-600 to-amber-700', tall: false },
-] as const
 
 /* =====================================================================
    PROCESS STEPS
