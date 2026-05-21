@@ -14,7 +14,7 @@ import CTACloser from '@/components/home/CTACloser'
 import CompassDivider from '@/components/decor/CompassDivider'
 
 export const metadata: Metadata = {
-  title: 'Design Vortek — Preview',
+  title: 'Design Vortex — Preview',
   description:
     'Internal preview of the homepage. Public site is at the root domain.',
   robots: { index: false, follow: false },

@@ -22,7 +22,7 @@ import Button from '@/components/ui/Button'
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'Studio Notes · Design Vortek Blog',
+  title: 'Studio Notes · Design Vortex Blog',
   description:
     'Guides on commissioning art, process walkthroughs, and thoughts on what makes a good character portrait. Updated weekly.',
   alternates: { canonical: '/blog' },

@@ -57,10 +57,10 @@ export default function LoginPage() {
         <p className="text-ink-500 text-[0.8125rem] text-center mt-6">
           Trouble signing in? Email{' '}
           <a
-            href="mailto:hello@designvortek.com"
+            href="mailto:hello@designvortex.co"
             className="text-burgundy-700 hover:text-burgundy-500 underline underline-offset-4 decoration-gold-500/60"
           >
-            hello@designvortek.com
+            hello@designvortex.co
           </a>
         </p>
       </div>

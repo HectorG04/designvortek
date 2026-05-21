@@ -90,7 +90,7 @@ export default function AdminShell({
         <Link href="/admin" className="inline-flex items-center gap-2.5 text-burgundy-700">
           <BrandMark />
           <span className="font-display text-base font-semibold text-ink-900 tracking-tight">
-            Design Vortek
+            Design Vortex
           </span>
         </Link>
         <button
@@ -120,7 +120,7 @@ export default function AdminShell({
           <BrandMark />
           <div className="flex flex-col leading-none">
             <span className="font-display text-[1.125rem] font-semibold text-ink-900 tracking-tight">
-              Design Vortek
+              Design Vortex
             </span>
             <span className="text-[0.625rem] uppercase tracking-[0.15em] text-ink-500 mt-[3px]">
               Studio Admin

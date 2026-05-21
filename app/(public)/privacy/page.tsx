@@ -8,7 +8,7 @@ import Markdown from '@/components/ui/Markdown'
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description:
-    'How Design Vortek collects, uses, and protects your information. Plain English. Last updated May 1, 2026.',
+    'How Design Vortex collects, uses, and protects your information. Plain English. Last updated May 1, 2026.',
   alternates: { canonical: '/privacy' },
 }
 
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
    terms, inline links, and headings survive the data layer. The
    Markdown component renders headings, lists, and inline emphasis
    through branded element selectors below. */
-const BODY = `Design Vortek ("we", "us", "the studio") is a small art commission practice. We collect the minimum information we need to deliver your commission and run the studio. **We don't sell your data, ever.** This page explains exactly what we collect and why — in plain English.
+const BODY = `Design Vortex ("we", "us", "the studio") is a small art commission practice. We collect the minimum information we need to deliver your commission and run the studio. **We don't sell your data, ever.** This page explains exactly what we collect and why — in plain English.
 
 ## 1. What we collect
 
@@ -76,17 +76,17 @@ Whether you're in the EU, UK, California, or anywhere else, you can:
 - **Correct anything** that's wrong.
 - **Opt out** of the newsletter or any other communication.
 
-Email [hello@designvortek.com](mailto:hello@designvortek.com) and we'll handle it personally. No tickets, no forms, no chatbots.
+Email [hello@designvortex.co](mailto:hello@designvortex.co) and we'll handle it personally. No tickets, no forms, no chatbots.
 
 ## 7. Children's privacy
 
-Design Vortek doesn't knowingly collect information from anyone under 13. If you're a parent who discovers your child has provided information, email us and we'll delete it immediately.
+Design Vortex doesn't knowingly collect information from anyone under 13. If you're a parent who discovers your child has provided information, email us and we'll delete it immediately.
 
 ## 8. Changes & contact
 
 We may update this policy occasionally — usually because we've added a new tool or simplified a process. Material changes will be announced via the studio dispatch and updated on this page. The "Last updated" date at the top of this page is always current.
 
-Questions, requests, concerns — email [hello@designvortek.com](mailto:hello@designvortek.com). A real human will reply within 48 hours.`
+Questions, requests, concerns — email [hello@designvortex.co](mailto:hello@designvortex.co). A real human will reply within 48 hours.`
 
 export default function PrivacyPage() {
   return (

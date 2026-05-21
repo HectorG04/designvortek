@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
-export const alt = 'Design Vortek — Premium TTRPG & Character Art Commissions'
+export const alt = 'Design Vortex — Premium TTRPG & Character Art Commissions'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -76,7 +76,7 @@ export default async function OGImage() {
               color: '#F4EAD3',
             }}
           >
-            Design Vortek
+            Design Vortex
           </div>
         </div>
 

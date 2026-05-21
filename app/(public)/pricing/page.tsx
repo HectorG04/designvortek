@@ -26,7 +26,7 @@ import { cn } from '@/lib/utils'
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'Pricing · Design Vortek',
+  title: 'Pricing · Design Vortex',
   description:
     "Transparent pricing. No surprises. Flat-rate quotes for character art, VTT tokens, and party portraits — plus add-ons and custom projects.",
 }
@@ -421,10 +421,10 @@ export default function PricingPage() {
                   Request a custom quote <ArrowRightMd />
                 </Link>
                 <a
-                  href="mailto:hello@designvortek.com"
+                  href="mailto:hello@designvortex.co"
                   className="inline-flex items-center justify-center gap-2 border-[1.5px] border-cream-200 text-cream-50 px-9 py-[18px] rounded-full font-body text-[0.8125rem] font-semibold uppercase tracking-[0.12em] hover:bg-cream-50 hover:text-ink-900 hover:border-cream-50 transition-all whitespace-nowrap"
                 >
-                  Email hello@designvortek.com
+                  Email hello@designvortex.co
                 </a>
               </div>
             </div>

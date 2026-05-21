@@ -7,7 +7,7 @@ import Container from '@/components/ui/Container'
 import Button from '@/components/ui/Button'
 
 export const metadata: Metadata = {
-  title: 'Reviews · 4.9 stars across 247 commissions · Design Vortek',
+  title: 'Reviews · 4.9 stars across 247 commissions · Design Vortex',
   description:
     'Four years, 500+ commissions, 247 verified reviews. Real words from D&D players, Dungeon Masters, and gift givers who have worked with us since 2022.',
   alternates: { canonical: '/reviews' },
@@ -146,7 +146,7 @@ export default function ReviewsPage() {
   const ld = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Design Vortek',
+    name: 'Design Vortex',
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: AGGREGATE.average.toString(),

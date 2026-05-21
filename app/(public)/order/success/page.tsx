@@ -20,7 +20,7 @@ const NEXT_STEPS = [
   {
     when: 'Within 24 hours',
     strong: 'Check your inbox',
-    body: `A confirmation just landed. If you don't see it in **ten minutes**, peek in spam — or email us directly at [hello@designvortek.com](mailto:hello@designvortek.com).`,
+    body: `A confirmation just landed. If you don't see it in **ten minutes**, peek in spam — or email us directly at [hello@designvortex.co](mailto:hello@designvortex.co).`,
     Icon: Mail,
   },
   {
@@ -99,8 +99,8 @@ export default function OrderSuccessPage() {
 
           <p className="mt-10 text-xs text-ink-500">
             Questions in the meantime?{' '}
-            <a href="mailto:hello@designvortek.com" className="text-burgundy-700 hover:text-burgundy-500 underline underline-offset-2 decoration-gold-500">
-              hello@designvortek.com
+            <a href="mailto:hello@designvortex.co" className="text-burgundy-700 hover:text-burgundy-500 underline underline-offset-2 decoration-gold-500">
+              hello@designvortex.co
             </a>
           </p>
         </Container>

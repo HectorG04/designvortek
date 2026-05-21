@@ -20,7 +20,7 @@ import PaperTexture from '@/components/decor/PaperTexture'
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'Services · Design Vortek',
+  title: 'Services · Design Vortex',
   description:
     'Five signature services — character art, VTT tokens, party portraits, NPC packs, and custom projects. Painterly craft, predictable timelines, transparent pricing.',
 }

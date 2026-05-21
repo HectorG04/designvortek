@@ -74,7 +74,7 @@ const EmailIcon = ({ size = 16 }: { size?: number }) => (
 const SOCIAL_LINKS = [
   { Icon: InstagramIcon, href: 'https://instagram.com',         label: 'Instagram' },
   { Icon: TwitterIcon,   href: 'https://twitter.com',           label: 'Twitter' },
-  { Icon: EmailIcon,     href: 'mailto:hello@designvortek.com', label: 'Email' },
+  { Icon: EmailIcon,     href: 'mailto:hello@designvortex.co', label: 'Email' },
 ]
 
 const LINK_COLUMNS: Array<keyof typeof FOOTER_LINKS> = ['Studio', 'Services', 'Resources']
@@ -141,10 +141,10 @@ export default function SiteFooter() {
               Stay in touch
             </h4>
             <a
-              href="mailto:hello@designvortek.com"
+              href="mailto:hello@designvortex.co"
               className="py-[3px] text-sm text-ink-700 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] hover:text-burgundy-700"
             >
-              hello@designvortek.com
+              hello@designvortex.co
             </a>
             <NewsletterForm />
           </div>

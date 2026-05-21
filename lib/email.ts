@@ -4,7 +4,7 @@
  */
 import { Resend } from 'resend'
 
-const FROM = process.env.FROM_EMAIL || 'hello@designvortek.com'
+const FROM = process.env.FROM_EMAIL || 'hello@designvortex.co'
 const ADMIN = process.env.ADMIN_NOTIFY_EMAIL || ''
 
 let _client: Resend | null = null
@@ -36,7 +36,7 @@ export async function sendEmail({ to, subject, html, replyTo }: SendOpts): Promi
   }
   try {
     await client.emails.send({
-      from: `Design Vortek <${FROM}>`,
+      from: `Design Vortex <${FROM}>`,
       to,
       subject,
       html,
@@ -67,7 +67,7 @@ export function orderConfirmationHTML(p: {
     <li><strong>Through the work:</strong> Sketches → color blocks → final paint. Two revisions baked in.</li>
   </ol>
   <p style="font-size: 14px; color: #6B5A48; margin-top: 32px;">Have questions? Just reply to this email.</p>
-  <p style="font-size: 12px; color: #9A8870; margin-top: 40px; padding-top: 20px; border-top: 1px solid #E8DBBE;">Design Vortek · Premium TTRPG art commissions · <a href="https://designvortek.com" style="color: #6B1F2A;">designvortek.com</a></p>
+  <p style="font-size: 12px; color: #9A8870; margin-top: 40px; padding-top: 20px; border-top: 1px solid #E8DBBE;">Design Vortex · Premium TTRPG art commissions · <a href="https://designvortex.co" style="color: #6B1F2A;">designvortex.co</a></p>
 </body></html>`
 }
 
@@ -90,7 +90,7 @@ export function adminOrderNotifyHTML(p: {
   </table>
   <h3 style="margin: 24px 0 8px; color: #1E1408;">Brief</h3>
   <div style="background: #F5EBD3; padding: 16px; border-radius: 8px; white-space: pre-wrap; font-size: 14px; line-height: 1.6;">${escapeHtml(p.description)}</div>
-  <p style="margin-top: 24px;"><a href="https://designvortek.com/admin/orders/${p.id}" style="background: #6B1F2A; color: #F4EAD3; padding: 12px 24px; border-radius: 24px; text-decoration: none; font-weight: 600;">Open in admin →</a></p>
+  <p style="margin-top: 24px;"><a href="https://designvortex.co/admin/orders/${p.id}" style="background: #6B1F2A; color: #F4EAD3; padding: 12px 24px; border-radius: 24px; text-decoration: none; font-weight: 600;">Open in admin →</a></p>
 </body></html>`
 }
 
@@ -105,7 +105,7 @@ export function adminInquiryNotifyHTML(p: {
   <h2 style="color: #6B1F2A; margin: 0 0 16px;">New inquiry · #${p.id}</h2>
   <p><strong>${p.name}</strong> · <a href="mailto:${p.email}">${p.email}</a></p>
   <div style="background: #F5EBD3; padding: 16px; border-radius: 8px; white-space: pre-wrap; font-size: 14px; line-height: 1.6; margin-top: 16px;">${escapeHtml(p.message)}</div>
-  <p style="margin-top: 24px;"><a href="https://designvortek.com/admin/inquiries" style="background: #6B1F2A; color: #F4EAD3; padding: 12px 24px; border-radius: 24px; text-decoration: none; font-weight: 600;">Open in admin →</a></p>
+  <p style="margin-top: 24px;"><a href="https://designvortex.co/admin/inquiries" style="background: #6B1F2A; color: #F4EAD3; padding: 12px 24px; border-radius: 24px; text-decoration: none; font-weight: 600;">Open in admin →</a></p>
 </body></html>`
 }
 

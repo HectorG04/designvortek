@@ -27,7 +27,7 @@ export default async function OrdersPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser()
-  const email = user?.email ?? 'admin@designvortek.com'
+  const email = user?.email ?? 'admin@designvortex.co'
   const initials = email.slice(0, 2).toUpperCase()
 
   const admin = createAdminClient()

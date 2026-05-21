@@ -15,12 +15,12 @@ import CompassDivider from '@/components/decor/CompassDivider'
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from '@/lib/constants'
 
 export const metadata: Metadata = {
-  title: 'Design Vortek — Premium TTRPG, Character Art & VTT Token Commissions',
+  title: 'Design Vortex — Premium TTRPG, Character Art & VTT Token Commissions',
   description:
     'Painterly D&D character portraits, VTT tokens, party illustrations and bespoke art — hand-painted by humans, never AI. 7–14 day turnaround. Commissions from $80.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Design Vortek — Premium TTRPG & Character Art Commissions',
+    title: 'Design Vortex — Premium TTRPG & Character Art Commissions',
     description:
       'Painterly D&D character portraits, VTT tokens, party illustrations and bespoke art — hand-painted, never AI.',
     url: SITE_URL,
@@ -59,7 +59,7 @@ export default function HomePage() {
     ],
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'hello@designvortek.com',
+      email: 'hello@designvortex.co',
       contactType: 'customer support',
       areaServed: 'Worldwide',
       availableLanguage: 'English',

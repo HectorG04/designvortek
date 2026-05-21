@@ -25,7 +25,7 @@ import ContactFormCard from './_ContactFormCard'
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'Contact · Design Vortek',
+  title: 'Contact · Design Vortex',
   description:
     'Ask a question, send a note, or start a conversation. We reply within 48 hours, every weekday.',
   alternates: { canonical: '/contact' },
@@ -73,10 +73,10 @@ interface Method {
 const METHODS: Method[] = [
   {
     Icon: EmailIcon,
-    href: 'mailto:hello@designvortek.com',
+    href: 'mailto:hello@designvortex.co',
     title: 'Email',
     body: 'Best for detailed questions, project ideas, or anything that needs more than a tweet.',
-    value: 'hello@designvortek.com',
+    value: 'hello@designvortex.co',
   },
   {
     Icon: BriefIcon,

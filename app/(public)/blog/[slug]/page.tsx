@@ -42,7 +42,7 @@ const POSTS: Post[] = [
     excerpt: 'The difference between "tiefling sorcerer" and a brief I can paint from. A working checklist with examples.',
     gradient: 'from-violet-900 via-burgundy-700 to-amber-800',
     author: {
-      name: 'Theo · Design Vortek founder',
+      name: 'Theo · Design Vortex founder',
       initials: 'T',
       bio: "Fourteen years painting characters, four years running this studio. Writes here about commissioning art, the painting process, and the occasional studio update.",
     },
@@ -98,7 +98,7 @@ If you've got a character waiting, [start a brief](/order). Or read more about [
     excerpt: 'Sketches, color blocks, and the revision where everything clicked. A full process walkthrough.',
     gradient: 'from-amber-900 via-orange-700 to-rose-700',
     author: {
-      name: 'Theo · Design Vortek founder',
+      name: 'Theo · Design Vortex founder',
       initials: 'T',
       bio: "Fourteen years painting characters, four years running this studio. Writes here about commissioning art, the painting process, and the occasional studio update.",
     },
@@ -138,7 +138,7 @@ Want to see how it works for your character? [Start a brief](/order) or browse t
     excerpt: 'A defense of the round portrait at 512px. Plus three tokens that earned their pixel budget.',
     gradient: 'from-emerald-900 via-teal-700 to-burgundy-700',
     author: {
-      name: 'Theo · Design Vortek founder',
+      name: 'Theo · Design Vortex founder',
       initials: 'T',
       bio: "Fourteen years painting characters, four years running this studio. Writes here about commissioning art, the painting process, and the occasional studio update.",
     },
@@ -175,7 +175,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const post = POST_MAP.get(slug)
   if (!post) return { title: 'Article not found' }
   return {
-    title: `${post.title} — Design Vortek Blog`,
+    title: `${post.title} — Design Vortex Blog`,
     description: post.excerpt,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
@@ -201,7 +201,7 @@ export default async function BlogPostPage({ params }: PageProps) {
     description: post.excerpt,
     datePublished: post.isoDate,
     author: { '@type': 'Person', name: 'Theo' },
-    publisher: { '@type': 'Organization', name: 'Design Vortek' },
+    publisher: { '@type': 'Organization', name: 'Design Vortex' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `${SITE_URL}/blog/${post.slug}` },
   }
 

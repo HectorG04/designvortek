@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getAllSlugs } from '@/lib/portfolio-pieces'
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://designvortek.com'
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://designvortex.co'
 
 /**
  * Dynamic sitemap.

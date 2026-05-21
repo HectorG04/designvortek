@@ -27,11 +27,11 @@ export async function generateMetadata(
   const data = SERVICES[slug as ServiceSlug]
 
   if (!data) {
-    return { title: 'Service not found · Design Vortek' }
+    return { title: 'Service not found · Design Vortex' }
   }
 
   return {
-    title: `${data.title} · Design Vortek`,
+    title: `${data.title} · Design Vortex`,
     description: data.metaDescription,
     alternates: { canonical: `/services/${data.slug}` },
   }

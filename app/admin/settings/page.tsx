@@ -34,7 +34,7 @@ const TABS: {
 export default function SettingsPage() {
   const [tab, setTab] = useState<TabKey>('site')
 
-  const adminEmail = 'admin@designvortek.com'
+  const adminEmail = 'admin@designvortex.co'
   const initials = adminEmail.slice(0, 2).toUpperCase()
 
   return (
@@ -128,11 +128,11 @@ function SiteTab() {
     <div className="flex flex-col gap-6">
       <Section
         title="Site identity"
-        description="What the world sees when they find Design Vortek."
+        description="What the world sees when they find Design Vortex."
       >
         <Row2>
           <Field label="Site name">
-            <Input defaultValue="Design Vortek" />
+            <Input defaultValue="Design Vortex" />
           </Field>
           <Field label="Tagline">
             <Input defaultValue="Premium art commissions, since 2022" />
@@ -169,7 +169,7 @@ function SiteTab() {
           </Field>
           <Field label="Public email" icon={Mail}>
             <Input
-              defaultValue="hello@designvortek.com"
+              defaultValue="hello@designvortex.co"
               type="email"
             />
           </Field>
@@ -199,7 +199,7 @@ function ProfileTab() {
         </Row2>
         <Field label="Bio">
           <Textarea
-            defaultValue="Theo is the studio owner behind Design Vortek — a one-person commission studio specializing in TTRPG portraits, character art and bespoke illustration."
+            defaultValue="Theo is the studio owner behind Design Vortex — a one-person commission studio specializing in TTRPG portraits, character art and bespoke illustration."
             rows={5}
           />
         </Field>
@@ -235,14 +235,14 @@ function SmtpTab() {
         </Row2>
         <Row2>
           <Field label="From email">
-            <Input type="email" defaultValue="hello@designvortek.com" />
+            <Input type="email" defaultValue="hello@designvortex.co" />
           </Field>
           <Field label="From name">
-            <Input defaultValue="Design Vortek" />
+            <Input defaultValue="Design Vortex" />
           </Field>
         </Row2>
         <Field label="Admin notification email">
-          <Input type="email" defaultValue="admin@designvortek.com" />
+          <Input type="email" defaultValue="admin@designvortex.co" />
           <Help>New orders and inquiries are CC&apos;d here.</Help>
         </Field>
       </Section>
@@ -281,7 +281,7 @@ function SeoTab() {
         description="Templates used when an individual page does not set its own metadata."
       >
         <Field label="Default meta title template">
-          <Input defaultValue="%s · Design Vortek" />
+          <Input defaultValue="%s · Design Vortex" />
           <Help>%s is replaced with the page title.</Help>
         </Field>
         <Field label="Default meta description">
@@ -299,7 +299,7 @@ function SeoTab() {
         <Field label="robots.txt">
           <Textarea
             rows={6}
-            defaultValue={`User-agent: *\nAllow: /\n\nSitemap: https://designvortek.com/sitemap.xml`}
+            defaultValue={`User-agent: *\nAllow: /\n\nSitemap: https://designvortex.co/sitemap.xml`}
             mono
           />
           <Help>Visual only — file is generated from /app/robots.ts.</Help>
@@ -323,7 +323,7 @@ function SeoTab() {
             <Input placeholder="G-XXXXXXXXXX" />
           </Field>
           <Field label="Plausible domain">
-            <Input placeholder="designvortek.com" />
+            <Input placeholder="designvortex.co" />
           </Field>
         </Row2>
       </Section>

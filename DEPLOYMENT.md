@@ -119,7 +119,7 @@ In the "Environment Variables" section before deploying, add these (paste in fro
 | `NEXT_PUBLIC_SUPABASE_URL` | `https://your-project-ref.supabase.co` |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | `eyJ...your anon key` |
 | `SUPABASE_SERVICE_ROLE_KEY` | `eyJ...your service role key` |
-| `NEXT_PUBLIC_SITE_URL` | `https://designvortek.com` |
+| `NEXT_PUBLIC_SITE_URL` | `https://designvortex.co` |
 
 Apply to **Production**, **Preview**, and **Development**.
 
@@ -136,7 +136,7 @@ You'll get a temporary URL like `designvortek-xxx.vercel.app`. Visit it — your
 ### 4.1 Add domain in Vercel
 
 1. In your Vercel project → **Settings** → **Domains**
-2. Type `designvortek.com` → click **Add**
+2. Type `designvortex.co` → click **Add**
 3. Vercel will show you DNS records you need to add at GoDaddy
 
 You'll typically need:
@@ -148,7 +148,7 @@ You'll typically need:
 ### 4.2 Update DNS at GoDaddy
 
 1. Log into [GoDaddy](https://godaddy.com)
-2. **My Products** → find `designvortek.com` → **DNS** (or "Manage DNS")
+2. **My Products** → find `designvortex.co` → **DNS** (or "Manage DNS")
 3. **Delete** any existing A records or CNAMEs pointing elsewhere (back them up first if unsure)
 4. **Add** the records Vercel showed you:
    - Type: **A** · Name: `@` · Value: `76.76.21.21` · TTL: 600
@@ -159,12 +159,12 @@ You'll typically need:
 
 - Usually 5–30 minutes
 - Sometimes up to 48 hours (rare)
-- Check status: [whatsmydns.net](https://www.whatsmydns.net/#A/designvortek.com)
+- Check status: [whatsmydns.net](https://www.whatsmydns.net/#A/designvortex.co)
 - Vercel will auto-detect propagation and provision SSL — when ready, your domain shows ✅ in the Vercel dashboard
 
 ### 4.4 Set canonical domain
 
-In Vercel domains settings, mark `designvortek.com` as the primary (or `www.designvortek.com`, whichever you prefer). The other will redirect to the canonical one.
+In Vercel domains settings, mark `designvortex.co` as the primary (or `www.designvortex.co`, whichever you prefer). The other will redirect to the canonical one.
 
 ---
 
@@ -172,14 +172,14 @@ In Vercel domains settings, mark `designvortek.com` as the primary (or `www.desi
 
 Once your domain is live:
 
-- [ ] `https://designvortek.com` → coming soon page loads
+- [ ] `https://designvortex.co` → coming soon page loads
 - [ ] SSL padlock is green (no warnings)
 - [ ] Submit a waitlist email → check Supabase `waitlist` table → entry exists
-- [ ] `https://designvortek.com/sitemap.xml` → returns valid XML
-- [ ] `https://designvortek.com/robots.txt` → shows the robots rules
-- [ ] `https://designvortek.com/admin/login` → login page loads
+- [ ] `https://designvortex.co/sitemap.xml` → returns valid XML
+- [ ] `https://designvortex.co/robots.txt` → shows the robots rules
+- [ ] `https://designvortex.co/admin/login` → login page loads
 - [ ] Sign in with your admin user → redirected to `/admin` dashboard
-- [ ] `https://designvortek.com/random-page` → 404 page loads (parchment styled)
+- [ ] `https://designvortex.co/random-page` → 404 page loads (parchment styled)
 
 ---
 
@@ -188,7 +188,7 @@ Once your domain is live:
 ### 6.1 Resend (for transactional emails — later)
 
 1. Sign up at [resend.com](https://resend.com)
-2. Add domain `designvortek.com` and verify via DNS records (TXT entries)
+2. Add domain `designvortex.co` and verify via DNS records (TXT entries)
 3. Create an API key
 4. Add to Vercel env vars: `RESEND_API_KEY`, `FROM_EMAIL`, `ADMIN_NOTIFY_EMAIL`
 5. Redeploy (Vercel → Deployments → ⋯ → Redeploy)
@@ -196,9 +196,9 @@ Once your domain is live:
 ### 6.2 Google Search Console
 
 1. Go to [search.google.com/search-console](https://search.google.com/search-console)
-2. Add property: `https://designvortek.com`
+2. Add property: `https://designvortex.co`
 3. Verify via DNS TXT record at GoDaddy
-4. Submit sitemap: `https://designvortek.com/sitemap.xml`
+4. Submit sitemap: `https://designvortex.co/sitemap.xml`
 
 ### 6.3 Vercel Analytics (free, lightweight)
 
@@ -227,7 +227,7 @@ Vercel auto-deploys every push to `main`. Preview deploys are created for every 
 |---|---|
 | `supabaseUrl is required` build error | Env vars not set in Vercel. Add them under Project Settings → Environment Variables, then redeploy. |
 | `Failed to fetch` on waitlist submit | Service role key wrong or RLS policies not applied. Re-check `SUPABASE_SERVICE_ROLE_KEY` value and run `policies.sql` again. |
-| `/admin/login` redirects in a loop | Cookies not setting correctly. Make sure your domain is over HTTPS and Supabase Site URL is set: Supabase dashboard → Authentication → URL Configuration → add `https://designvortek.com` as Site URL. |
+| `/admin/login` redirects in a loop | Cookies not setting correctly. Make sure your domain is over HTTPS and Supabase Site URL is set: Supabase dashboard → Authentication → URL Configuration → add `https://designvortex.co` as Site URL. |
 | DNS not propagating | Wait longer (up to 48h). Check [whatsmydns.net](https://whatsmydns.net). |
 | SSL not provisioning | Make sure A record points to exactly Vercel's IP. Remove conflicting AAAA records. |
 

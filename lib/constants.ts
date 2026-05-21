@@ -1,5 +1,5 @@
-export const SITE_NAME = 'Design Vortek'
-export const SITE_URL = 'https://designvortek.com'
+export const SITE_NAME = 'Design Vortex'
+export const SITE_URL = 'https://designvortex.co'
 export const SITE_TAGLINE = 'Premium Art Commissions'
 export const SITE_DESCRIPTION =
   'Painterly TTRPG portraits, VTT tokens, party illustrations and custom art — crafted by hand. Commissions from $80. 7–14 day turnaround.'

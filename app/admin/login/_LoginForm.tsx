@@ -59,7 +59,7 @@ export default function LoginForm() {
             autoComplete="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="you@designvortek.com"
+            placeholder="you@designvortex.co"
             disabled={loading}
             className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md pl-10 pr-4 py-2.5 text-ink-900 text-sm placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 focus:ring-[3px] focus:ring-burgundy-100 transition-all disabled:opacity-60"
           />

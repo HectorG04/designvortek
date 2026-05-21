@@ -20,9 +20,9 @@ import PaperTexture from '@/components/decor/PaperTexture'
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'About · Design Vortek',
+  title: 'About · Design Vortex',
   description:
-    'The studio behind Design Vortek — a single artist, four years of commissions, 500+ characters brought to life. Meet the maker.',
+    'The studio behind Design Vortex — a single artist, four years of commissions, 500+ characters brought to life. Meet the maker.',
   alternates: { canonical: '/about' },
 }
 
@@ -120,14 +120,14 @@ export default function AboutPage() {
                   className="font-display font-semibold text-ink-900 leading-[1.1] tracking-tight mt-3 mb-4 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700"
                   style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)' }}
                 >
-                  I started Design Vortek with one rule: <em>every piece, by hand</em>.
+                  I started Design Vortex with one rule: <em>every piece, by hand</em>.
                 </h2>
                 <div className="font-accent text-2xl text-burgundy-700 mb-6">
                   — and stuck to it
                 </div>
                 <div className="space-y-4 max-w-[56ch]">
                   <p className="text-[1.0625rem] text-ink-700 leading-[1.75]">
-                    I&apos;ve been painting digitally for fourteen years, but Design Vortek started in 2022 after a friend asked me to paint her D&amp;D character. She cried when she saw it. So did I.
+                    I&apos;ve been painting digitally for fourteen years, but Design Vortex started in 2022 after a friend asked me to paint her D&amp;D character. She cried when she saw it. So did I.
                   </p>
                   <p className="text-[1.0625rem] text-ink-700 leading-[1.75]">
                     That commission became a side hustle. The side hustle became a studio. Four years later I take five commissions a month — just enough to give each one the time and care it deserves, not so many that quality slips.

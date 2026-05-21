@@ -17,7 +17,7 @@ interface LogoProps {
  *       <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
  *       <path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/>
  *     </svg>
- *     <span>Design Vortek</span>
+ *     <span>Design Vortex</span>
  *   </a>
  */
 export default function Logo({ className, textClassName, iconSize = 28 }: LogoProps) {

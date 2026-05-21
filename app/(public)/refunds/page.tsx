@@ -46,7 +46,7 @@ Two rounds of revisions are baked into every commission — one at the sketch st
 
 ## 4. How to request a refund
 
-Email [hello@designvortek.com](mailto:hello@designvortek.com) with:
+Email [hello@designvortex.co](mailto:hello@designvortex.co) with:
 
 - Your name and commission reference (e.g. **DV-2026-0518-1234**).
 - A short note describing why you'd like to cancel.
@@ -67,7 +67,7 @@ If you have a concern about a commission, **please contact us first**. Chargebac
 
 We may update this policy. The version in effect when you book is the one that governs your commission.
 
-Questions? [hello@designvortek.com](mailto:hello@designvortek.com).`
+Questions? [hello@designvortex.co](mailto:hello@designvortex.co).`
 
 export default function RefundsPage() {
   return (

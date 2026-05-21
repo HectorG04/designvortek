@@ -22,7 +22,7 @@ import PaperTexture from '@/components/decor/PaperTexture'
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'Process · Design Vortek',
+  title: 'Process · Design Vortex',
   description:
     "How we work, end to end. Discuss, quote, create, deliver — four steps. Predictable, communicative, no surprises.",
 }

@@ -93,7 +93,7 @@ export default function ComingSoon() {
             <div className="absolute top-1/2 -right-1.5 -translate-y-1/2 w-1 h-1 rounded-full bg-gold-500" />
           </div>
           <span className="font-display text-ink-900 text-sm font-semibold tracking-[0.25em] uppercase">
-            Design Vortek
+            Design Vortex
           </span>
         </motion.div>
 
@@ -141,7 +141,7 @@ export default function ComingSoon() {
           transition={{ duration: 0.6, delay: 0.7 }}
           className="text-ink-500 text-lg max-w-lg mx-auto leading-relaxed mb-10"
         >
-          Design Vortek is a premium art studio crafting custom character art, VTT tokens, and bespoke illustrations for the TTRPG community and beyond. Our new site is on its way.
+          Design Vortex is a premium art studio crafting custom character art, VTT tokens, and bespoke illustrations for the TTRPG community and beyond. Our new site is on its way.
         </motion.p>
 
         {/* Service tags */}
@@ -180,7 +180,7 @@ export default function ComingSoon() {
               <h2 className="font-display text-2xl text-ink-900 mb-2">You&rsquo;re on the list.</h2>
               <p className="text-ink-500 text-sm">
                 We&rsquo;ll send a note the moment we open the gates. In the meantime,{' '}
-                <a href="mailto:hello@designvortek.com" className="text-burgundy-700 underline underline-offset-4 hover:text-burgundy-500 transition">
+                <a href="mailto:hello@designvortex.co" className="text-burgundy-700 underline underline-offset-4 hover:text-burgundy-500 transition">
                   reach out
                 </a>{' '}
                 if you have a commission in mind.
@@ -268,8 +268,8 @@ export default function ComingSoon() {
         >
           <p className="text-ink-400 text-xs">
             Currently accepting commissions via{' '}
-            <a href="mailto:hello@designvortek.com" className="text-burgundy-700 underline underline-offset-4 hover:text-burgundy-500 transition">
-              hello@designvortek.com
+            <a href="mailto:hello@designvortex.co" className="text-burgundy-700 underline underline-offset-4 hover:text-burgundy-500 transition">
+              hello@designvortex.co
             </a>
           </p>
           <p className="font-accent text-ink-500 text-lg mt-2">

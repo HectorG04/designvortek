@@ -184,7 +184,7 @@ export default function PortfolioForm({
               label="Slug"
               labelExtra={
                 <span className="text-ink-500 font-normal normal-case tracking-normal text-xs">
-                  designvortek.com/portfolio/
+                  designvortex.co/portfolio/
                   <strong className="text-burgundy-700 font-mono">{values.slug || '—'}</strong>
                 </span>
               }

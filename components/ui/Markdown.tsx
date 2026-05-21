@@ -17,7 +17,7 @@ interface MarkdownProps {
  *
  * Stores content as plain markdown strings (which works with the future admin
  * CMS — Tiptap/Lexical/markdown-it can read/write markdown trivially) and maps
- * tags through to Design Vortek's branded element styles:
+ * tags through to Design Vortex's branded element styles:
  *   • `**bold**`       → `<strong>` with font-semibold ink-900
  *   • `*italic*`       → `<em>` (true Cormorant italic via next/font config)
  *   • `[link](/path)`  → `<Link>` (Next router) with burgundy text + gold underline

@@ -8,15 +8,15 @@ import Markdown from '@/components/ui/Markdown'
 export const metadata: Metadata = {
   title: 'Terms of Service',
   description:
-    'The agreement between you and Design Vortek when you commission art. Plain English. Last updated May 1, 2026.',
+    'The agreement between you and Design Vortex when you commission art. Plain English. Last updated May 1, 2026.',
   alternates: { canonical: '/terms' },
 }
 
-const BODY = `These terms govern your use of the Design Vortek website and any commission you place with us. By submitting a commission brief or purchasing a service, you agree to them. They're written in plain English. If anything is unclear, email us — we'll explain.
+const BODY = `These terms govern your use of the Design Vortex website and any commission you place with us. By submitting a commission brief or purchasing a service, you agree to them. They're written in plain English. If anything is unclear, email us — we'll explain.
 
 ## 1. The service
 
-Design Vortek is a small art studio producing custom illustrations, character art, VTT tokens, party portraits, and related work. We offer **fixed-price commissions** on a fixed-slot, monthly basis. We are a human-only studio: **no AI generation** is used in any part of our production process.
+Design Vortex is a small art studio producing custom illustrations, character art, VTT tokens, party portraits, and related work. We offer **fixed-price commissions** on a fixed-slot, monthly basis. We are a human-only studio: **no AI generation** is used in any part of our production process.
 
 ## 2. Brief, quote, and approval
 
@@ -79,7 +79,7 @@ These terms are governed by the laws of the **State of New York**, United States
 
 We may update these terms occasionally. The version in effect when you submit your brief is the one that applies to your commission. The "Last updated" date at the top of this page is always current.
 
-Questions? [hello@designvortek.com](mailto:hello@designvortek.com).`
+Questions? [hello@designvortex.co](mailto:hello@designvortex.co).`
 
 export default function TermsPage() {
   return (

@@ -46,7 +46,7 @@ export default async function AvailabilityAdminPage() {
   const {
     data: { user },
   } = await supabase.auth.getUser()
-  const email = user?.email ?? 'admin@designvortek.com'
+  const email = user?.email ?? 'admin@designvortex.co'
   const initials = email.slice(0, 2).toUpperCase()
 
   // Three months starting at current month
