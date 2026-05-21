@@ -2,39 +2,58 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import {
-  Check, ArrowRight, ArrowLeft, Edit3, Clock, Star, Sparkles,
-  Users, Circle, Layers, Wand2,
-} from 'lucide-react'
 import { cn } from '@/lib/utils'
-import Markdown from '@/components/ui/Markdown'
 
-/* ============================================================
-   Static data
-   ============================================================ */
+/* =====================================================================
+   ORDER FORM — literal port of Order Form.html.
+
+   4-step brief: Service → Project → Details → Review.
+   Progress indicator lives in the hero block above the form card.
+   Form card is parchment-100 with bottom-border step heads.
+   Sidebar has 3 cards: next-steps timeline, recent-client quote (dark
+   tome), trust list.
+
+   Logic preserved from the previous version:
+     - Submits to /api/order with the same payload shape
+     - Validates each step before allowing next
+     - Restores draft from query string (`?month=June` deep-links the
+       notes field from /availability)
+     - Multi-style checkboxes, budget radio cards, service radio cards
+   ===================================================================== */
+
+/* ---------- Static data ---------- */
 const SERVICES = [
-  { value: 'character-art',  label: 'Character Art', price: 'From $180',  desc: 'Single-character painterly portrait — your hero, brought to life.',          Icon: Star },
-  { value: 'vtt-token',      label: 'VTT Tokens',    price: 'From $80',   desc: 'Roll20 & Foundry-ready circular tokens. 512px and 1024px exports.',           Icon: Circle },
-  { value: 'party-portrait', label: 'Party Portrait',price: 'From $400',  desc: 'Adventuring party, wedding, gift — 3 to 8 figures in matching style.',        Icon: Users },
-  { value: 'npc-pack',       label: 'NPC Pack',      price: 'From $300',  desc: '5+ NPCs in matching style. Schedule-friendly for long campaigns.',            Icon: Layers },
-  { value: 'custom',         label: 'Custom',        price: 'Quote',      desc: 'Book covers, game assets, merch, concept art — we will scope a quote.',       Icon: Wand2 },
+  { value: 'character-art',  label: 'Character Art', price: 'From $180', desc: 'Single-character painterly portrait. Your hero, brought to life.' },
+  { value: 'vtt-token',      label: 'VTT Tokens',    price: 'From $80',  desc: 'Roll20 & Foundry-ready circular tokens. 512px & 1024px.' },
+  { value: 'party-portrait', label: 'Party Portrait',price: 'From $400', desc: 'Adventuring party, wedding, gift. 3 to 8 figures.' },
+  { value: 'npc-pack',       label: 'NPC Pack',      price: 'From $300', desc: '5+ NPCs in matching style. Schedule-friendly for DMs.' },
+  { value: 'custom',         label: 'Custom',        price: 'Quote',     desc: "Book covers, game assets, merch, concept art. We'll quote." },
 ] as const
 
 const STYLES = [
-  'Painterly · warm',
-  'Anime · cell-shaded',
-  'Lineart · clean',
-  'Chibi',
-  'Semi-realistic',
-  'Open to suggestion',
+  { value: 'painterly',  label: 'Painterly · warm' },
+  { value: 'anime',      label: 'Anime · cell-shaded' },
+  { value: 'lineart',    label: 'Lineart · clean' },
+  { value: 'chibi',      label: 'Chibi' },
+  { value: 'realistic',  label: 'Semi-realistic' },
+  { value: 'open',       label: 'Open to suggestion' },
+] as const
+
+const QUANTITIES = [
+  { value: '1',     label: '1 piece' },
+  { value: '2',     label: '2 pieces' },
+  { value: '3-5',   label: '3 – 5 pieces' },
+  { value: '6-10',  label: '6 – 10 pieces' },
+  { value: '10+',   label: '10+ pieces (bulk)' },
 ] as const
 
 const BUDGETS = [
-  { value: 'under-200',  label: 'Under $200', note: 'Token or simple piece' },
-  { value: '200-500',    label: '$200 – $500', note: 'Standard character art' },
-  { value: '500-1k',     label: '$500 – $1k',  note: 'Party portraits, packs' },
-  { value: '1k-plus',    label: '$1k+',        note: 'Large commissions' },
+  { value: 'under-200', range: 'Under $200',  note: 'Token or simple piece' },
+  { value: '200-400',   range: '$200 – $400', note: 'Standard character art' },
+  { value: '400-800',   range: '$400 – $800', note: 'Party portraits, packs' },
+  { value: '800-plus',  range: '$800+',       note: 'Large commissions' },
 ] as const
 
 const SOURCES = [
@@ -47,17 +66,108 @@ const SOURCES = [
   'Other',
 ] as const
 
-const TOTAL_STEPS = 3
-const STEP_LABELS = ['What?', 'Tell us about it', 'Your details']
+const STEP_LABELS = [
+  { num: 'Step 01', text: 'What you need' },
+  { num: 'Step 02', text: 'Tell us about it' },
+  { num: 'Step 03', text: 'Your details' },
+  { num: 'Step 04', text: 'Review' },
+]
+const TOTAL = 4
 
-/* ============================================================
-   Component
-   ============================================================ */
+/* ---------- Service icons (custom SVGs from the design) ---------- */
+const ServiceIcon = ({ kind }: { kind: typeof SERVICES[number]['value'] }) => {
+  const cls = 'w-5 h-5'
+  if (kind === 'character-art') return (
+    <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z" />
+    </svg>
+  )
+  if (kind === 'vtt-token') return (
+    <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+    </svg>
+  )
+  if (kind === 'party-portrait') return (
+    <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="9" cy="8" r="3" />
+      <circle cx="15" cy="8" r="3" />
+      <path d="M4 20c0-3 2-5 5-5s5 2 5 5M15 20c0-2 1-4 3-4s2 1 2 4" />
+    </svg>
+  )
+  if (kind === 'npc-pack') return (
+    <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="4" width="18" height="6" rx="1" />
+      <rect x="3" y="14" width="18" height="6" rx="1" />
+      <path d="M7 7h.01M7 17h.01" />
+    </svg>
+  )
+  return (
+    <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M12 20l9-9-3-3-9 9v3z" />
+      <path d="M16 8l-3-3" />
+    </svg>
+  )
+}
+
+const CheckSm = ({ className = 'w-3 h-3' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" aria-hidden="true">
+    <path d="M5 12l5 5L20 7" />
+  </svg>
+)
+
+const ArrowRightSm = () => (
+  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+    <path d="M5 12h14M13 6l6 6-6 6" />
+  </svg>
+)
+
+const ArrowLeftSm = () => (
+  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+    <path d="M19 12H5M11 18l-6-6 6-6" />
+  </svg>
+)
+
+const EditIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M12 20l9-9-3-3-9 9v3z" />
+    <path d="M16 8l-3-3" />
+  </svg>
+)
+
+const PlusSm = () => (
+  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+    <path d="M12 5v14M5 12h14" />
+  </svg>
+)
+
+const XSm = () => (
+  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+    <path d="M6 6l12 12M18 6l-12 12" />
+  </svg>
+)
+
+const LinkIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-4 h-4 text-ink-500" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7L11 7" />
+    <path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7L13 17" />
+  </svg>
+)
+
+const ClockIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-700" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 3" />
+  </svg>
+)
+
+/* ---------- State ---------- */
 type FormState = {
   service: string
   styles: string[]
   description: string
-  references: string
+  references: string[]
   deadline: string
   quantity: string
   notes: string
@@ -66,13 +176,14 @@ type FormState = {
   phone: string
   source: string
   budget: string
+  termsAccepted: boolean
 }
 
 const initialState: FormState = {
   service: 'character-art',
-  styles: ['Painterly · warm'],
+  styles: ['painterly'],
   description: '',
-  references: '',
+  references: ['', ''],
   deadline: '',
   quantity: '1',
   notes: '',
@@ -80,7 +191,8 @@ const initialState: FormState = {
   email: '',
   phone: '',
   source: '',
-  budget: '200-500',
+  budget: '200-400',
+  termsAccepted: false,
 }
 
 export default function OrderForm() {
@@ -94,12 +206,13 @@ export default function OrderForm() {
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
 
-  // Pre-fill notes if arriving from /availability?month=X
+  /* Pre-fill notes when arriving from /availability?month=June etc. */
   useEffect(() => {
     if (monthParam) {
+      const m = monthParam.charAt(0).toUpperCase() + monthParam.slice(1)
       setData((d) => ({
         ...d,
-        notes: d.notes || `I'd like to reserve a ${monthParam.charAt(0).toUpperCase()}${monthParam.slice(1)} slot.`,
+        notes: d.notes || `I'd like to reserve a ${m} slot.`,
       }))
     }
   }, [monthParam])
@@ -112,40 +225,53 @@ export default function OrderForm() {
   const toggleStyle = (style: string) => {
     setData((d) => ({
       ...d,
-      styles: d.styles.includes(style)
-        ? d.styles.filter((s) => s !== style)
-        : [...d.styles, style],
+      styles: d.styles.includes(style) ? d.styles.filter((s) => s !== style) : [...d.styles, style],
     }))
   }
 
-  /* ----- validation ----- */
+  const setReference = (i: number, value: string) => {
+    setData((d) => ({ ...d, references: d.references.map((r, idx) => (idx === i ? value : r)) }))
+  }
+
+  const addReference = () => {
+    if (data.references.length >= 5) return
+    setData((d) => ({ ...d, references: [...d.references, ''] }))
+  }
+
+  const removeReference = (i: number) => {
+    if (data.references.length <= 1) {
+      setData((d) => ({ ...d, references: [''] }))
+      return
+    }
+    setData((d) => ({ ...d, references: d.references.filter((_, idx) => idx !== i) }))
+  }
+
+  /* ---------- Validation ---------- */
   const validateStep = (n: number): boolean => {
     const e: Record<string, string> = {}
-    if (n === 1) {
-      if (!data.service) e.service = 'Pick a service'
-    }
-    if (n === 2) {
-      if (!data.description.trim() || data.description.trim().length < 10) {
-        e.description = 'Tell us a bit about the project (at least a sentence)'
-      }
+    if (n === 1 && !data.service) e.service = 'Pick a service'
+    if (n === 2 && (!data.description.trim() || data.description.trim().length < 10)) {
+      e.description = 'Tell us a bit about the project (at least a sentence)'
     }
     if (n === 3) {
       if (!data.name.trim()) e.name = 'Your name is required'
       if (!data.email.trim()) e.email = 'Email is required'
       else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) e.email = 'Invalid email'
     }
+    if (n === 4 && !data.termsAccepted) e.termsAccepted = 'Please accept the brief terms to send'
     setErrors(e)
     return Object.keys(e).length === 0
   }
 
+  /* ---------- Navigation ---------- */
   const goNext = async () => {
     if (!validateStep(step)) return
-    if (step < TOTAL_STEPS) {
+    if (step < TOTAL) {
       setStep(step + 1)
       window.scrollTo({ top: 0, behavior: 'smooth' })
       return
     }
-    // submit
+    /* Final submit */
     setSubmitting(true)
     setSubmitError(null)
     try {
@@ -157,22 +283,24 @@ export default function OrderForm() {
           customer_email: data.email,
           customer_phone: data.phone || undefined,
           service_type: data.service,
-          style: data.styles.join(', ') || undefined,
+          style: data.styles.length ? data.styles.join(', ') : undefined,
           description: data.description,
-          reference_links: data.references || undefined,
+          reference_links: data.references.filter(Boolean).join('\n') || undefined,
           budget: data.budget || undefined,
           deadline: data.deadline || undefined,
+          quantity: data.quantity || undefined,
+          notes: data.notes || undefined,
+          source: data.source || undefined,
         }),
       })
-      const body = await res.json()
+      const body = await res.json().catch(() => ({}))
       if (!res.ok) {
-        setSubmitError(body.error || 'Something went wrong.')
+        setSubmitError(body.error || 'Something went wrong. Please try again.')
         setSubmitting(false)
         return
       }
       router.push('/order/success')
-    } catch (err) {
-      console.error(err)
+    } catch {
       setSubmitError('Network error. Please try again.')
       setSubmitting(false)
     }
@@ -185,526 +313,723 @@ export default function OrderForm() {
     }
   }
 
+  const jumpTo = (n: number) => {
+    setStep(n)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  /* ---------- Derived ---------- */
   const selectedService = SERVICES.find((s) => s.value === data.service)
   const selectedBudget = BUDGETS.find((b) => b.value === data.budget)
+  const selectedStyles = data.styles.map((v) => STYLES.find((s) => s.value === v)?.label).filter(Boolean) as string[]
+  const formattedDeadline = data.deadline
+    ? new Date(data.deadline).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+    : ''
+  const nonEmptyRefs = data.references.filter(Boolean)
+  const quantityLabel = QUANTITIES.find((q) => q.value === data.quantity)?.label
 
-  /* ============================================================
-     Render
-     ============================================================ */
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-10 lg:gap-12 max-w-[1200px] mx-auto px-6 md:px-12">
+    <>
+      {/* ============== HERO + PROGRESS ============== */}
+      <section className="px-6 lg:px-12 pt-12 pb-10 text-center max-w-[1200px] mx-auto">
+        <span className="inline-block font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-gold-700 mb-4">
+          Commission brief
+        </span>
+        <h1
+          className="font-display font-semibold text-ink-900 leading-[1.05] tracking-tight mb-4 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700"
+          style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}
+        >
+          Tell us about your <em>commission</em>
+        </h1>
+        <p className="text-lg text-ink-500 leading-[1.65] mx-auto max-w-[60ch] mb-12">
+          Four short steps. Takes about 3 minutes. We respond within 48 hours with a fixed quote, no commitment until you&rsquo;re ready.
+        </p>
 
-      {/* ============== FORM CARD ============== */}
-      <div className="bg-parchment-50 border border-border-light rounded-2xl p-6 md:p-10 shadow-sm">
-
-        {/* Progress bar */}
-        <div className="mb-8" aria-label="Form progress">
-          <div className="flex items-center justify-between gap-2 mb-3">
+        {/* Progress indicator — 4 numbered dots with connecting lines */}
+        <nav aria-label="Form progress" className="mx-auto max-w-[760px]">
+          <div className="flex items-start justify-between gap-2">
             {STEP_LABELS.map((label, i) => {
               const n = i + 1
-              const active = n === step
-              const done = n < step
+              const isActive = n === step
+              const isDone = n < step
               return (
-                <div key={label} className="flex-1 flex items-center">
-                  <div className="flex items-center gap-2">
+                <div key={label.num} className="flex items-start flex-1 min-w-0">
+                  {/* Step block */}
+                  <div className="flex flex-col items-center gap-2 flex-shrink-0">
                     <div
                       className={cn(
-                        'w-7 h-7 rounded-full flex items-center justify-center text-[0.7rem] font-semibold transition-colors',
-                        done && 'bg-burgundy-700 text-cream-50',
-                        active && 'bg-gold-500 text-ink-900',
-                        !done && !active && 'bg-parchment-200 text-ink-500'
+                        'w-9 h-9 rounded-full inline-flex items-center justify-center font-display text-sm font-semibold transition-all',
+                        isDone && 'bg-burgundy-700 text-cream-50',
+                        isActive && 'bg-burgundy-700 text-cream-50 ring-4 ring-burgundy-700/20',
+                        !isDone && !isActive && 'bg-parchment-50 border-[1.5px] border-border-light text-ink-500',
                       )}
                     >
-                      {done ? <Check size={14} strokeWidth={2.4} /> : n}
+                      {isDone ? <CheckSm className="w-4 h-4" /> : n}
                     </div>
-                    <span
-                      className={cn(
-                        'hidden md:inline text-[0.7rem] uppercase tracking-[0.15em] font-semibold',
-                        (active || done) ? 'text-ink-900' : 'text-ink-400'
-                      )}
-                    >
-                      {label}
-                    </span>
+                    <div className="hidden sm:flex flex-col items-center gap-0.5">
+                      <span className="font-body text-[0.6875rem] font-bold tracking-[0.15em] uppercase text-ink-500">
+                        {label.num}
+                      </span>
+                      <span
+                        className={cn(
+                          'font-body text-[0.8125rem] font-medium',
+                          (isActive || isDone) ? 'text-burgundy-700 font-semibold' : 'text-ink-500',
+                        )}
+                      >
+                        {label.text}
+                      </span>
+                    </div>
                   </div>
-                  {n < STEP_LABELS.length && (
-                    <div className={cn(
-                      'flex-1 h-px mx-2 md:mx-3 transition-colors',
-                      done ? 'bg-burgundy-700' : 'bg-border-light'
-                    )} />
+                  {/* Connecting line */}
+                  {i < STEP_LABELS.length - 1 && (
+                    <div
+                      className={cn(
+                        'flex-1 h-[2px] mt-[18px] mx-2 sm:mx-3 transition-colors',
+                        isDone ? 'bg-burgundy-700' : 'bg-border-light',
+                      )}
+                    />
                   )}
                 </div>
               )
             })}
           </div>
-          <div className="text-[0.7rem] uppercase tracking-[0.15em] text-ink-500">
-            Step {step} of {TOTAL_STEPS} · {STEP_LABELS[step - 1]}
-          </div>
-        </div>
+        </nav>
+      </section>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={step}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-          >
+      {/* ============== MAIN: form + sidebar ============== */}
+      <section className="px-6 lg:px-12 pb-24 max-w-[1200px] mx-auto">
+        <div className="grid lg:grid-cols-[1fr_360px] gap-8 lg:gap-14 items-start">
 
-            {/* ============== STEP 1 ============== */}
-            {step === 1 && (
-              <div>
-                <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink-900 leading-tight mb-2">
-                  What do you <em className="italic font-medium text-burgundy-700">need</em>?
-                </h2>
-                <p className="text-ink-500 mb-8">
-                  Pick the service that fits. Not sure? Start with Character Art — we&rsquo;ll talk through the rest.
-                </p>
+          {/* FORM CARD — .of-form-card */}
+          <div className="bg-parchment-100 border border-border-light rounded-2xl p-6 md:p-12 shadow-sm">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={step}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -4 }}
+                transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              >
 
-                <fieldset className="mb-8">
-                  <legend className="block text-sm font-semibold text-ink-900 mb-1">Service type</legend>
-                  <p className="text-xs text-ink-500 mb-4">Choose one. You can refine details in the next step.</p>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {SERVICES.map(({ value, label, price, desc, Icon }) => {
-                      const checked = data.service === value
-                      return (
-                        <label
-                          key={value}
-                          className={cn(
-                            'relative flex flex-col gap-1 p-4 rounded-xl border-2 cursor-pointer transition-all',
-                            checked
-                              ? 'border-burgundy-700 bg-burgundy-100/40'
-                              : 'border-border-light bg-parchment-50 hover:border-border-medium'
-                          )}
-                        >
-                          <input
-                            type="radio"
-                            name="service"
-                            value={value}
-                            checked={checked}
-                            onChange={() => set('service', value)}
-                            className="sr-only"
-                          />
-                          <div className="flex items-start gap-3">
-                            <span className={cn(
-                              'inline-flex w-9 h-9 rounded-md items-center justify-center shrink-0',
-                              checked ? 'bg-burgundy-700 text-cream-50' : 'bg-parchment-200 text-ink-700'
-                            )}>
-                              <Icon size={18} strokeWidth={1.5} />
-                            </span>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-baseline justify-between gap-2">
-                                <span className="font-display text-lg font-semibold text-ink-900">{label}</span>
-                                <span className="text-[0.7rem] uppercase tracking-wider text-gold-700 font-semibold">{price}</span>
+                {/* ============== STEP 1 ============== */}
+                {step === 1 && (
+                  <>
+                    <div className="pb-5 mb-9 border-b border-border-light">
+                      <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-gold-700 mb-2">
+                        Step 01 of 04
+                      </div>
+                      <h2 className="font-display text-[2rem] font-semibold text-ink-900 leading-[1.15] tracking-tight mb-2 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700">
+                        What do you <em>need</em>?
+                      </h2>
+                      <p className="text-[1.0625rem] text-ink-500 leading-[1.6] max-w-[56ch]">
+                        Pick the service that fits. Not sure? Start with Character Art, we&rsquo;ll talk through the rest.
+                      </p>
+                    </div>
+
+                    {/* Service grid — 3 col desktop, 2 col tablet, 1 col mobile */}
+                    <div className="mb-9">
+                      <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-1">
+                        Service type
+                      </div>
+                      <p className="text-sm text-ink-500 mb-4">
+                        Choose one. You can refine details in the next step.
+                      </p>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        {SERVICES.map((s) => {
+                          const checked = data.service === s.value
+                          return (
+                            <label
+                              key={s.value}
+                              className={cn(
+                                'relative cursor-pointer rounded-lg p-5 transition-all bg-parchment-50',
+                                checked
+                                  ? 'border-[1.5px] border-burgundy-700 shadow-[0_4px_16px_rgba(107,31,42,0.12)]'
+                                  : 'border-[1.5px] border-border-light hover:border-border-medium hover:shadow-sm',
+                              )}
+                            >
+                              <input
+                                type="radio"
+                                name="service"
+                                value={s.value}
+                                checked={checked}
+                                onChange={() => set('service', s.value)}
+                                className="sr-only"
+                              />
+                              {/* Check chip top-right */}
+                              <span
+                                className={cn(
+                                  'absolute top-3 right-3 w-5 h-5 rounded-full inline-flex items-center justify-center transition-all',
+                                  checked ? 'bg-burgundy-700 text-cream-50 opacity-100 scale-100' : 'opacity-0 scale-75',
+                                )}
+                                aria-hidden="true"
+                              >
+                                <CheckSm />
+                              </span>
+                              {/* Icon */}
+                              <span className="inline-flex w-10 h-10 rounded-md bg-gold-100 text-gold-700 items-center justify-center mb-3">
+                                <ServiceIcon kind={s.value} />
+                              </span>
+                              <div className="font-display text-[1.0625rem] font-semibold text-ink-900 leading-tight">
+                                {s.label}
                               </div>
-                              <p className="text-sm text-ink-500 mt-0.5 leading-snug">{desc}</p>
-                            </div>
-                          </div>
-                          {checked && (
-                            <span className="absolute top-3 right-3 w-5 h-5 rounded-full bg-burgundy-700 text-cream-50 inline-flex items-center justify-center">
-                              <Check size={12} strokeWidth={3} />
-                            </span>
-                          )}
-                        </label>
-                      )
-                    })}
-                  </div>
-                  {errors.service && <p className="text-error text-sm mt-2">{errors.service}</p>}
-                </fieldset>
+                              <div className="font-body text-[0.6875rem] font-bold tracking-[0.15em] uppercase text-gold-700 mt-1 mb-2">
+                                {s.price}
+                              </div>
+                              <p className="text-[0.8125rem] text-ink-500 leading-[1.5]">
+                                {s.desc}
+                              </p>
+                            </label>
+                          )
+                        })}
+                      </div>
+                      {errors.service && (
+                        <p className="text-sm text-burgundy-700 mt-3">{errors.service}</p>
+                      )}
+                    </div>
 
-                <fieldset className="mb-2">
-                  <legend className="block text-sm font-semibold text-ink-900 mb-1">Style preference</legend>
-                  <p className="text-xs text-ink-500 mb-4">Optional — we&rsquo;ll discuss style in detail before starting.</p>
-                  <div className="flex flex-wrap gap-2">
-                    {STYLES.map((style) => {
-                      const checked = data.styles.includes(style)
-                      return (
+                    {/* Style chips */}
+                    <div>
+                      <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-1">
+                        Style preference
+                      </div>
+                      <p className="text-sm text-ink-500 mb-4">
+                        Optional. We&rsquo;ll discuss style in detail before starting. Skip if undecided.
+                      </p>
+                      <div className="flex flex-wrap gap-2">
+                        {STYLES.map((s) => {
+                          const checked = data.styles.includes(s.value)
+                          return (
+                            <button
+                              key={s.value}
+                              type="button"
+                              onClick={() => toggleStyle(s.value)}
+                              className={cn(
+                                'inline-flex items-center gap-2 px-4 py-2 rounded-full border-[1.5px] font-body text-[0.8125rem] font-medium transition-all',
+                                checked
+                                  ? 'bg-burgundy-700 border-burgundy-700 text-cream-50'
+                                  : 'bg-parchment-50 border-border-light text-ink-700 hover:border-border-medium',
+                              )}
+                            >
+                              {checked && <CheckSm />}
+                              {s.label}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {/* ============== STEP 2 ============== */}
+                {step === 2 && (
+                  <>
+                    <div className="pb-5 mb-9 border-b border-border-light">
+                      <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-gold-700 mb-2">
+                        Step 02 of 04
+                      </div>
+                      <h2 className="font-display text-[2rem] font-semibold text-ink-900 leading-[1.15] tracking-tight mb-2 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700">
+                        Tell us about <em>it</em>
+                      </h2>
+                      <p className="text-[1.0625rem] text-ink-500 leading-[1.6] max-w-[56ch]">
+                        The more specific, the better the brief. Include species, class, vibe, key features, whatever makes them theirs.
+                      </p>
+                    </div>
+
+                    {/* Description with counter */}
+                    <div className="mb-9">
+                      <label htmlFor="of-desc" className="block font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-2">
+                        Project description
+                      </label>
+                      <div className="relative">
+                        <textarea
+                          id="of-desc"
+                          value={data.description}
+                          onChange={(e) => set('description', e.target.value)}
+                          maxLength={1500}
+                          placeholder="e.g. Lyra Vexweaver — tiefling sorceress, level 9. Tall, lean, soft purple skin with darker freckles, gold horns swept back. Wears a tattered violet robe with constellations stitched in silver thread. Painterly style, warm dramatic lighting, dark mossy forest in the background. Vibe: melancholy but powerful — she's just lost her familiar."
+                          className={cn(
+                            'w-full bg-parchment-50 border-[1.5px] rounded-md px-4 py-3 pr-24 font-body text-[1rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors min-h-[180px] resize-y',
+                            errors.description ? 'border-burgundy-500' : 'border-border-light',
+                          )}
+                        />
+                        <div className="absolute bottom-3 right-4 font-body text-xs text-ink-400 tabular-nums">
+                          {data.description.length} / 1500
+                        </div>
+                      </div>
+                      {errors.description && <p className="text-sm text-burgundy-700 mt-2">{errors.description}</p>}
+                    </div>
+
+                    {/* References list with add/remove */}
+                    <div className="mb-9">
+                      <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-1">
+                        References (up to 5)
+                      </div>
+                      <p className="text-sm text-ink-500 mb-4">
+                        Pinterest boards, ArtStation, mood images, or other character portraits you love. Helps us nail the vibe faster.
+                      </p>
+                      <div className="flex flex-col gap-2.5">
+                        {data.references.map((ref, i) => (
+                          <div key={i} className="flex items-center gap-2">
+                            <span className="flex-shrink-0 inline-flex w-10 h-10 rounded-md bg-parchment-50 border border-border-light items-center justify-center">
+                              <LinkIcon />
+                            </span>
+                            <input
+                              type="url"
+                              value={ref}
+                              onChange={(e) => setReference(i, e.target.value)}
+                              placeholder="https://"
+                              className="flex-1 bg-parchment-50 border-[1.5px] border-border-light rounded-md px-4 py-2.5 font-body text-[0.9375rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => removeReference(i)}
+                              aria-label="Remove reference"
+                              className="flex-shrink-0 inline-flex w-9 h-9 rounded-md text-ink-500 hover:text-burgundy-700 hover:bg-parchment-50 items-center justify-center transition-colors"
+                            >
+                              <XSm />
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                      {data.references.length < 5 && (
                         <button
                           type="button"
-                          key={style}
-                          onClick={() => toggleStyle(style)}
-                          className={cn(
-                            'px-4 py-2 rounded-full text-sm border-2 transition-all',
-                            checked
-                              ? 'border-burgundy-700 bg-burgundy-700 text-cream-50'
-                              : 'border-border-light bg-parchment-50 text-ink-700 hover:border-border-medium'
-                          )}
+                          onClick={addReference}
+                          className="inline-flex items-center gap-2 mt-3 font-body text-[0.8125rem] font-semibold text-burgundy-700 hover:text-burgundy-500 transition-colors"
                         >
-                          {style}
+                          <PlusSm /> Add another reference
                         </button>
-                      )
-                    })}
-                  </div>
-                </fieldset>
-              </div>
-            )}
-
-            {/* ============== STEP 2 ============== */}
-            {step === 2 && (
-              <div>
-                <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink-900 leading-tight mb-2">
-                  Tell us about <em className="italic font-medium text-burgundy-700">it</em>
-                </h2>
-                <p className="text-ink-500 mb-8">
-                  The more specific, the better the brief. Include species, class, vibe — whatever makes them theirs.
-                </p>
-
-                <div className="mb-6">
-                  <label htmlFor="description" className="block text-sm font-semibold text-ink-900 mb-2">
-                    Project description <span className="text-error">*</span>
-                  </label>
-                  <textarea
-                    id="description"
-                    value={data.description}
-                    onChange={(e) => set('description', e.target.value)}
-                    rows={6}
-                    maxLength={1500}
-                    placeholder="e.g. Lyra Vexweaver — tiefling sorceress, level 9. Tall, lean, soft purple skin with darker freckles, gold horns swept back. Painterly style, warm dramatic lighting, dark mossy forest background. Vibe: melancholy but powerful."
-                    className={cn(
-                      'w-full bg-parchment-50 border rounded-md px-4 py-3 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors min-h-[140px] resize-y',
-                      errors.description ? 'border-error' : 'border-border-light'
-                    )}
-                  />
-                  <div className="flex justify-between mt-1.5">
-                    {errors.description ? (
-                      <p className="text-error text-xs">{errors.description}</p>
-                    ) : <span />}
-                    <span className="text-xs text-ink-400">{data.description.length} / 1500</span>
-                  </div>
-                </div>
-
-                <div className="mb-6">
-                  <label htmlFor="references" className="block text-sm font-semibold text-ink-900 mb-1">
-                    Reference links <span className="text-ink-400 font-normal text-xs">optional</span>
-                  </label>
-                  <p className="text-xs text-ink-500 mb-2">Pinterest boards, ArtStation, mood images — paste one or many.</p>
-                  <input
-                    id="references"
-                    type="text"
-                    value={data.references}
-                    onChange={(e) => set('references', e.target.value)}
-                    placeholder="https://pinterest.com/board/… https://artstation.com/…"
-                    className="w-full bg-parchment-50 border border-border-light rounded-md px-4 py-3 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                  <div>
-                    <label htmlFor="deadline" className="block text-sm font-semibold text-ink-900 mb-2">
-                      Preferred deadline <span className="text-ink-400 font-normal text-xs">optional</span>
-                    </label>
-                    <input
-                      id="deadline"
-                      type="date"
-                      value={data.deadline}
-                      onChange={(e) => set('deadline', e.target.value)}
-                      className="w-full bg-parchment-50 border border-border-light rounded-md px-4 py-3 text-sm text-ink-900 focus:outline-none focus:border-burgundy-500 transition-colors"
-                    />
-                  </div>
-                  {(data.service === 'party-portrait' || data.service === 'npc-pack') && (
-                    <div>
-                      <label htmlFor="quantity" className="block text-sm font-semibold text-ink-900 mb-2">
-                        Figure count
-                      </label>
-                      <select
-                        id="quantity"
-                        value={data.quantity}
-                        onChange={(e) => set('quantity', e.target.value)}
-                        className="w-full bg-parchment-50 border border-border-light rounded-md px-4 py-3 text-sm text-ink-900 focus:outline-none focus:border-burgundy-500 transition-colors"
-                      >
-                        <option value="1">1 figure</option>
-                        <option value="2-3">2 – 3 figures</option>
-                        <option value="4-5">4 – 5 figures</option>
-                        <option value="6-8">6 – 8 figures</option>
-                        <option value="9+">9+ figures (bulk)</option>
-                      </select>
+                      )}
                     </div>
-                  )}
-                </div>
 
-                <div>
-                  <label htmlFor="notes" className="block text-sm font-semibold text-ink-900 mb-2">
-                    Anything else? <span className="text-ink-400 font-normal text-xs">optional</span>
-                  </label>
-                  <textarea
-                    id="notes"
-                    value={data.notes}
-                    onChange={(e) => set('notes', e.target.value)}
-                    rows={3}
-                    placeholder="Surprise gift? Specific delivery date? Layered PSD needed?"
-                    className="w-full bg-parchment-50 border border-border-light rounded-md px-4 py-3 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors min-h-[80px] resize-y"
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* ============== STEP 3 ============== */}
-            {step === 3 && (
-              <div>
-                <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink-900 leading-tight mb-2">
-                  Your <em className="italic font-medium text-burgundy-700">details</em>
-                </h2>
-                <p className="text-ink-500 mb-8">
-                  So we can send the quote. We never share your details — ever.
-                </p>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
-                  <div>
-                    <label htmlFor="name" className="block text-sm font-semibold text-ink-900 mb-2">
-                      Your name <span className="text-error">*</span>
-                    </label>
-                    <input
-                      id="name"
-                      type="text"
-                      value={data.name}
-                      onChange={(e) => set('name', e.target.value)}
-                      placeholder="Aria Mendel"
-                      autoComplete="name"
-                      className={cn(
-                        'w-full bg-parchment-50 border rounded-md px-4 py-3 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors',
-                        errors.name ? 'border-error' : 'border-border-light'
-                      )}
-                    />
-                    {errors.name && <p className="text-error text-xs mt-1">{errors.name}</p>}
-                  </div>
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-semibold text-ink-900 mb-2">
-                      Email <span className="text-error">*</span>
-                    </label>
-                    <input
-                      id="email"
-                      type="email"
-                      value={data.email}
-                      onChange={(e) => set('email', e.target.value)}
-                      placeholder="aria@example.com"
-                      autoComplete="email"
-                      className={cn(
-                        'w-full bg-parchment-50 border rounded-md px-4 py-3 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors',
-                        errors.email ? 'border-error' : 'border-border-light'
-                      )}
-                    />
-                    {errors.email && <p className="text-error text-xs mt-1">{errors.email}</p>}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-semibold text-ink-900 mb-2">
-                      Phone <span className="text-ink-400 font-normal text-xs">optional</span>
-                    </label>
-                    <input
-                      id="phone"
-                      type="tel"
-                      value={data.phone}
-                      onChange={(e) => set('phone', e.target.value)}
-                      placeholder="+1 (555) 123-4567"
-                      autoComplete="tel"
-                      className="w-full bg-parchment-50 border border-border-light rounded-md px-4 py-3 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="source" className="block text-sm font-semibold text-ink-900 mb-2">
-                      How did you find us?
-                    </label>
-                    <select
-                      id="source"
-                      value={data.source}
-                      onChange={(e) => set('source', e.target.value)}
-                      className="w-full bg-parchment-50 border border-border-light rounded-md px-4 py-3 text-sm text-ink-900 focus:outline-none focus:border-burgundy-500 transition-colors"
-                    >
-                      <option value="">Choose one…</option>
-                      {SOURCES.map((s) => <option key={s} value={s}>{s}</option>)}
-                    </select>
-                  </div>
-                </div>
-
-                <fieldset>
-                  <legend className="block text-sm font-semibold text-ink-900 mb-1">Preferred budget</legend>
-                  <p className="text-xs text-ink-500 mb-4">Helps us match scope to investment. We&rsquo;ll confirm in the quote.</p>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
-                    {BUDGETS.map(({ value, label, note }) => {
-                      const checked = data.budget === value
-                      return (
-                        <label
-                          key={value}
-                          className={cn(
-                            'p-3 rounded-lg border-2 text-center cursor-pointer transition-all',
-                            checked
-                              ? 'border-burgundy-700 bg-burgundy-100/40'
-                              : 'border-border-light bg-parchment-50 hover:border-border-medium'
-                          )}
-                        >
-                          <input
-                            type="radio"
-                            name="budget"
-                            value={value}
-                            checked={checked}
-                            onChange={() => set('budget', value)}
-                            className="sr-only"
-                          />
-                          <div className="font-display text-base font-semibold text-ink-900">{label}</div>
-                          <div className="text-[0.7rem] text-ink-500 mt-0.5">{note}</div>
+                    {/* Deadline + Quantity row */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-9">
+                      <div>
+                        <label htmlFor="of-deadline" className="block font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-2">
+                          Preferred deadline <span className="font-normal text-ink-400 normal-case tracking-normal">optional</span>
                         </label>
-                      )
-                    })}
-                  </div>
-                </fieldset>
+                        <input
+                          id="of-deadline"
+                          type="date"
+                          value={data.deadline}
+                          onChange={(e) => set('deadline', e.target.value)}
+                          className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md px-4 py-2.5 font-body text-[0.9375rem] text-ink-900 focus:outline-none focus:border-burgundy-500 transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="of-qty" className="block font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-2">
+                          Quantity
+                        </label>
+                        <div className="relative">
+                          <select
+                            id="of-qty"
+                            value={data.quantity}
+                            onChange={(e) => set('quantity', e.target.value)}
+                            className="w-full appearance-none bg-parchment-50 border-[1.5px] border-border-light rounded-md pl-4 pr-10 py-2.5 font-body text-[0.9375rem] text-ink-900 cursor-pointer focus:outline-none focus:border-burgundy-500 transition-colors"
+                          >
+                            {QUANTITIES.map((q) => (
+                              <option key={q.value} value={q.value}>{q.label}</option>
+                            ))}
+                          </select>
+                          <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-500 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                            <path d="M6 9l6 6 6-6" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
 
-                {submitError && (
-                  <div className="mt-6 px-4 py-3 rounded-md bg-error/10 border border-error/30 text-error text-sm">
-                    {submitError}
-                  </div>
+                    {/* Notes textarea */}
+                    <div>
+                      <label htmlFor="of-notes" className="block font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-2">
+                        Anything else? <span className="font-normal text-ink-400 normal-case tracking-normal">optional</span>
+                      </label>
+                      <textarea
+                        id="of-notes"
+                        value={data.notes}
+                        onChange={(e) => set('notes', e.target.value)}
+                        placeholder="Surprise gift? Specific delivery date? Layered PSD needed? Tell us here."
+                        className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md px-4 py-3 font-body text-[1rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors min-h-[100px] resize-y"
+                      />
+                    </div>
+                  </>
                 )}
+
+                {/* ============== STEP 3 ============== */}
+                {step === 3 && (
+                  <>
+                    <div className="pb-5 mb-9 border-b border-border-light">
+                      <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-gold-700 mb-2">
+                        Step 03 of 04
+                      </div>
+                      <h2 className="font-display text-[2rem] font-semibold text-ink-900 leading-[1.15] tracking-tight mb-2 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700">
+                        Your <em>details</em>
+                      </h2>
+                      <p className="text-[1.0625rem] text-ink-500 leading-[1.6] max-w-[56ch]">
+                        So we can send the quote. We never share your details, ever. See our{' '}
+                        <Link href="/privacy" className="text-burgundy-700 border-b border-gold-500 hover:text-burgundy-500">privacy policy</Link>.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+                      <div>
+                        <label htmlFor="of-name" className="block font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-2">
+                          Your name
+                        </label>
+                        <input
+                          id="of-name"
+                          type="text"
+                          value={data.name}
+                          onChange={(e) => set('name', e.target.value)}
+                          placeholder="Aria Mendel"
+                          autoComplete="name"
+                          required
+                          className={cn(
+                            'w-full bg-parchment-50 border-[1.5px] rounded-md px-4 py-2.5 font-body text-[0.9375rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors',
+                            errors.name ? 'border-burgundy-500' : 'border-border-light',
+                          )}
+                        />
+                        {errors.name && <p className="text-sm text-burgundy-700 mt-1.5">{errors.name}</p>}
+                      </div>
+                      <div>
+                        <label htmlFor="of-email" className="block font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-2">
+                          Email
+                        </label>
+                        <input
+                          id="of-email"
+                          type="email"
+                          value={data.email}
+                          onChange={(e) => set('email', e.target.value)}
+                          placeholder="aria@example.com"
+                          autoComplete="email"
+                          required
+                          className={cn(
+                            'w-full bg-parchment-50 border-[1.5px] rounded-md px-4 py-2.5 font-body text-[0.9375rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors',
+                            errors.email ? 'border-burgundy-500' : 'border-border-light',
+                          )}
+                        />
+                        {errors.email && <p className="text-sm text-burgundy-700 mt-1.5">{errors.email}</p>}
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-9">
+                      <div>
+                        <label htmlFor="of-phone" className="block font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-2">
+                          Phone <span className="font-normal text-ink-400 normal-case tracking-normal">optional</span>
+                        </label>
+                        <input
+                          id="of-phone"
+                          type="tel"
+                          value={data.phone}
+                          onChange={(e) => set('phone', e.target.value)}
+                          placeholder="+1 (555) 123-4567"
+                          autoComplete="tel"
+                          className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md px-4 py-2.5 font-body text-[0.9375rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="of-source" className="block font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-2">
+                          How did you find us?
+                        </label>
+                        <div className="relative">
+                          <select
+                            id="of-source"
+                            value={data.source}
+                            onChange={(e) => set('source', e.target.value)}
+                            className="w-full appearance-none bg-parchment-50 border-[1.5px] border-border-light rounded-md pl-4 pr-10 py-2.5 font-body text-[0.9375rem] text-ink-900 cursor-pointer focus:outline-none focus:border-burgundy-500 transition-colors"
+                          >
+                            <option value="">Choose one…</option>
+                            {SOURCES.map((s) => (
+                              <option key={s} value={s}>{s}</option>
+                            ))}
+                          </select>
+                          <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-500 pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
+                            <path d="M6 9l6 6 6-6" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Budget cards */}
+                    <div>
+                      <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-1">
+                        Budget range
+                      </div>
+                      <p className="text-sm text-ink-500 mb-4">
+                        Helps us match scope to what you&rsquo;d like to invest. We&rsquo;ll confirm in the quote.
+                      </p>
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        {BUDGETS.map((b) => {
+                          const checked = data.budget === b.value
+                          return (
+                            <label
+                              key={b.value}
+                              className={cn(
+                                'cursor-pointer rounded-lg p-4 text-center bg-parchment-50 transition-all',
+                                checked
+                                  ? 'border-[1.5px] border-burgundy-700 shadow-[0_4px_16px_rgba(107,31,42,0.12)]'
+                                  : 'border-[1.5px] border-border-light hover:border-border-medium',
+                              )}
+                            >
+                              <input
+                                type="radio"
+                                name="budget"
+                                value={b.value}
+                                checked={checked}
+                                onChange={() => set('budget', b.value)}
+                                className="sr-only"
+                              />
+                              <div className="font-display text-[1rem] font-semibold text-ink-900">{b.range}</div>
+                              <div className="text-xs text-ink-500 mt-1">{b.note}</div>
+                            </label>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  </>
+                )}
+
+                {/* ============== STEP 4 — REVIEW ============== */}
+                {step === 4 && (
+                  <>
+                    <div className="pb-5 mb-9 border-b border-border-light">
+                      <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-gold-700 mb-2">
+                        Step 04 of 04
+                      </div>
+                      <h2 className="font-display text-[2rem] font-semibold text-ink-900 leading-[1.15] tracking-tight mb-2 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700">
+                        Review &amp; <em>send</em>
+                      </h2>
+                      <p className="text-[1.0625rem] text-ink-500 leading-[1.6] max-w-[56ch]">
+                        Quick check, everything look right? Edit any section if not.
+                      </p>
+                    </div>
+
+                    {/* Review cards */}
+                    <div className="flex flex-col gap-4 mb-7">
+                      {/* Card 1: What you need */}
+                      <ReviewCard title="What you need" onEdit={() => jumpTo(1)}>
+                        <Row dt="Service" dd={selectedService ? `${selectedService.label} · ${selectedService.price}` : '—'} />
+                        <Row dt="Style" dd={selectedStyles.length ? selectedStyles.join(' · ') : '—'} empty={!selectedStyles.length} />
+                      </ReviewCard>
+
+                      {/* Card 2: Project details */}
+                      <ReviewCard title="Project details" onEdit={() => jumpTo(2)}>
+                        <Row dt="Description" dd={data.description} empty={!data.description} emptyText="No description yet" />
+                        <Row
+                          dt="References"
+                          dd={nonEmptyRefs.length ? nonEmptyRefs.join('\n') : ''}
+                          empty={!nonEmptyRefs.length}
+                          emptyText="None added"
+                        />
+                        <Row
+                          dt="Deadline"
+                          dd={formattedDeadline}
+                          empty={!formattedDeadline}
+                          emptyText="No deadline set"
+                        />
+                        <Row dt="Quantity" dd={quantityLabel || '—'} />
+                        <Row dt="Notes" dd={data.notes} empty={!data.notes} emptyText="None" />
+                      </ReviewCard>
+
+                      {/* Card 3: Your details */}
+                      <ReviewCard title="Your details" onEdit={() => jumpTo(3)}>
+                        <Row dt="Name" dd={data.name} empty={!data.name} emptyText="—" />
+                        <Row dt="Email" dd={data.email} empty={!data.email} emptyText="—" />
+                        <Row dt="Phone" dd={data.phone} empty={!data.phone} emptyText="Not provided" />
+                        <Row dt="Budget" dd={selectedBudget?.range || '—'} />
+                        <Row dt="How found" dd={data.source} empty={!data.source} emptyText="—" />
+                      </ReviewCard>
+                    </div>
+
+                    {/* Terms checkbox */}
+                    <label className="flex items-start gap-3 px-5 py-4 bg-gold-100 border-l-[3px] border-gold-500 rounded-md cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={data.termsAccepted}
+                        onChange={(e) => set('termsAccepted', e.target.checked)}
+                        required
+                        className="mt-0.5 w-4 h-4 accent-burgundy-700 cursor-pointer flex-shrink-0"
+                      />
+                      <span className="text-[0.9375rem] text-ink-700 leading-[1.5]">
+                        I understand this is a brief, not a contract. We&rsquo;ll send a fixed quote within 48 hours and nothing is charged until I approve. I&rsquo;ve read the{' '}
+                        <Link href="/terms" className="text-burgundy-700 border-b border-gold-500 hover:text-burgundy-500">terms</Link>
+                        {' '}and{' '}
+                        <Link href="/refunds" className="text-burgundy-700 border-b border-gold-500 hover:text-burgundy-500">refund policy</Link>.
+                      </span>
+                    </label>
+                    {errors.termsAccepted && <p className="text-sm text-burgundy-700 mt-2">{errors.termsAccepted}</p>}
+
+                    {submitError && (
+                      <div className="mt-6 px-4 py-3 rounded-md bg-burgundy-100 border border-burgundy-500/30 text-burgundy-700 text-sm">
+                        {submitError}
+                      </div>
+                    )}
+                  </>
+                )}
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Footer nav */}
+            <div className="flex items-center justify-between gap-4 pt-7 mt-9 border-t border-border-light">
+              <div className="flex items-center gap-4">
+                <button
+                  type="button"
+                  onClick={goBack}
+                  disabled={step === 1 || submitting}
+                  className={cn(
+                    'inline-flex items-center gap-2 px-5 py-3 rounded-full font-body text-[0.75rem] font-semibold uppercase tracking-[0.12em] transition-colors',
+                    'disabled:opacity-40 disabled:cursor-not-allowed',
+                    'text-ink-700 hover:bg-parchment-200',
+                  )}
+                >
+                  <ArrowLeftSm /> Back
+                </button>
+                <span className="hidden sm:inline-block font-body text-xs text-ink-500">
+                  Step <strong className="font-display text-ink-900 font-semibold">{step}</strong> of {TOTAL}
+                </span>
               </div>
-            )}
+              <button
+                type="button"
+                onClick={goNext}
+                disabled={submitting}
+                className={cn(
+                  'inline-flex items-center gap-2 px-7 py-[14px] rounded-full font-body text-xs font-semibold uppercase tracking-[0.12em]',
+                  'bg-burgundy-700 text-cream-50 transition-all',
+                  'hover:bg-burgundy-500 hover:-translate-y-px hover:shadow-md',
+                  'disabled:bg-ink-300 disabled:text-ink-400 disabled:cursor-not-allowed disabled:translate-y-0 disabled:shadow-none',
+                )}
+              >
+                {submitting ? 'Sending…' : (step === TOTAL ? 'Send commission brief' : 'Continue')}
+                {!submitting && <ArrowRightSm />}
+              </button>
+            </div>
+          </div>
 
-          </motion.div>
-        </AnimatePresence>
+          {/* ============== SIDEBAR ============== */}
+          <aside className="flex flex-col gap-4 lg:sticky lg:top-24">
 
-        {/* Footer nav */}
-        <div className="flex items-center justify-between gap-4 pt-8 mt-8 border-t border-border-light">
-          <button
-            type="button"
-            onClick={goBack}
-            disabled={step === 1 || submitting}
-            className={cn(
-              'inline-flex items-center gap-2 px-5 py-3 rounded-full text-xs font-semibold uppercase tracking-[0.12em] transition-colors',
-              'disabled:opacity-40 disabled:cursor-not-allowed',
-              'text-ink-700 hover:bg-parchment-100'
-            )}
-          >
-            <ArrowLeft size={14} strokeWidth={1.8} /> Back
-          </button>
+            {/* Card 1: What happens next */}
+            <div className="bg-parchment-100 border border-border-light rounded-xl p-7">
+              <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-gold-700 mb-2">
+                What happens next
+              </div>
+              <div className="font-display text-[1.25rem] font-semibold text-ink-900 leading-[1.2] mb-5">
+                A clear, honest process, no chasing.
+              </div>
+              <ol className="flex flex-col gap-4 mb-6">
+                {[
+                  { strong: 'Within 48 hours', body: 'We review and send a fixed quote with timeline.' },
+                  { strong: 'You approve & deposit', body: '25% to hold your slot. Refundable until first sketch.' },
+                  { strong: 'Work begins', body: 'Sketches, color blocks, final paint. Updates every 3 days.' },
+                ].map((s, i) => (
+                  <li key={i} className="flex gap-3 items-start">
+                    <span className="flex-shrink-0 inline-flex w-7 h-7 rounded-full bg-burgundy-700 text-cream-50 font-display text-sm font-semibold items-center justify-center">
+                      {i + 1}
+                    </span>
+                    <span className="flex-1">
+                      <strong className="block font-display text-[0.9375rem] font-semibold text-ink-900 leading-tight">{s.strong}</strong>
+                      <span className="block text-[0.875rem] text-ink-500 leading-[1.5] mt-0.5">{s.body}</span>
+                    </span>
+                  </li>
+                ))}
+              </ol>
+              <div className="flex items-center gap-3 pt-5 border-t border-border-light">
+                <ClockIcon />
+                <div>
+                  <div className="font-display text-[1.0625rem] font-semibold text-ink-900 leading-tight">48 hours</div>
+                  <div className="text-xs text-ink-500">average response time</div>
+                </div>
+              </div>
+            </div>
 
-          <button
-            type="button"
-            onClick={goNext}
-            disabled={submitting}
-            className={cn(
-              'inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-xs font-semibold uppercase tracking-[0.12em]',
-              'bg-burgundy-700 text-cream-50 hover:bg-burgundy-500 transition-colors',
-              'disabled:opacity-60 disabled:cursor-not-allowed'
-            )}
-          >
-            {submitting ? 'Sending…' : (step === TOTAL_STEPS ? 'Send brief' : 'Continue')}
-            {!submitting && <ArrowRight size={14} strokeWidth={1.8} />}
-          </button>
+            {/* Card 2: Recent client (dark tome variant) */}
+            <div className="relative bg-tome-950 text-cream-50 border border-tome-950 rounded-xl p-7 overflow-hidden">
+              <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-gold-glow mb-3">
+                Recent client
+              </div>
+              <blockquote className="font-display italic text-[1.0625rem] leading-[1.45] text-cream-50 mb-5">
+                &ldquo;The communication was thoughtful, every revision sharpened the piece. This isn&rsquo;t a transaction, it&rsquo;s a collaboration.&rdquo;
+              </blockquote>
+              <div className="flex items-center gap-3">
+                <span className="flex-shrink-0 inline-flex w-10 h-10 rounded-full bg-gold-500 text-ink-900 font-display text-sm font-semibold items-center justify-center">
+                  AM
+                </span>
+                <div>
+                  <div className="font-display text-[0.9375rem] font-semibold text-cream-50 leading-tight">Aria Mendel</div>
+                  <div className="text-xs text-cream-200 mt-0.5">Character commission · March 2026</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3: Trust list */}
+            <div className="bg-parchment-100 border border-border-light rounded-xl p-7">
+              <ul className="flex flex-col gap-3">
+                {[
+                  'No commitment until you approve',
+                  'Refundable deposit until first sketch',
+                  'Secure payments via Stripe',
+                  '2 revisions baked into every piece',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-[0.9375rem] text-ink-700">
+                    <span className="flex-shrink-0 inline-flex w-5 h-5 rounded-full bg-forest-700/20 text-forest-700 items-center justify-center mt-0.5">
+                      <CheckSm />
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </aside>
         </div>
+      </section>
+    </>
+  )
+}
+
+/* ---------- Review card sub-components ---------- */
+function ReviewCard({
+  title,
+  onEdit,
+  children,
+}: {
+  title: string
+  onEdit: () => void
+  children: React.ReactNode
+}) {
+  return (
+    <div className="bg-parchment-50 border border-border-light rounded-xl px-6 py-5">
+      <div className="flex items-center justify-between gap-4 mb-3 pb-3 border-b border-border-light">
+        <div className="font-display text-[1.0625rem] font-semibold text-ink-900">{title}</div>
+        <button
+          type="button"
+          onClick={onEdit}
+          className="inline-flex items-center gap-1.5 font-body text-[0.75rem] font-semibold uppercase tracking-[0.12em] text-burgundy-700 hover:text-burgundy-500 transition-colors"
+        >
+          Edit <EditIcon />
+        </button>
       </div>
+      <dl className="flex flex-col gap-2">{children}</dl>
+    </div>
+  )
+}
 
-      {/* ============== SUMMARY SIDEBAR ============== */}
-      <aside className="hidden lg:block">
-        <div className="sticky top-24 space-y-5">
-
-          {/* Summary card */}
-          <div className="bg-parchment-50 border border-border-light rounded-2xl p-6 shadow-sm">
-            <div className="text-[0.7rem] uppercase tracking-[0.15em] font-semibold text-burgundy-700 mb-3">
-              Your brief so far
-            </div>
-
-            <dl className="space-y-3 text-sm">
-              <div>
-                <dt className="text-ink-500 text-xs uppercase tracking-wider mb-0.5">Service</dt>
-                <dd className="text-ink-900 font-medium">
-                  {selectedService ? `${selectedService.label} · ${selectedService.price}` : '—'}
-                </dd>
-              </div>
-
-              {data.styles.length > 0 && step >= 1 && (
-                <div>
-                  <dt className="text-ink-500 text-xs uppercase tracking-wider mb-0.5">Style</dt>
-                  <dd className="text-ink-900">{data.styles.join(' · ')}</dd>
-                </div>
-              )}
-
-              {data.description && step >= 2 && (
-                <div>
-                  <dt className="text-ink-500 text-xs uppercase tracking-wider mb-0.5">Description</dt>
-                  <dd className="text-ink-700 text-sm line-clamp-3">{data.description}</dd>
-                </div>
-              )}
-
-              {data.deadline && step >= 2 && (
-                <div>
-                  <dt className="text-ink-500 text-xs uppercase tracking-wider mb-0.5">Deadline</dt>
-                  <dd className="text-ink-900">{data.deadline}</dd>
-                </div>
-              )}
-
-              {step >= 3 && (
-                <div>
-                  <dt className="text-ink-500 text-xs uppercase tracking-wider mb-0.5">Budget</dt>
-                  <dd className="text-ink-900">{selectedBudget?.label || '—'}</dd>
-                </div>
-              )}
-
-              {data.name && step >= 3 && (
-                <div>
-                  <dt className="text-ink-500 text-xs uppercase tracking-wider mb-0.5">Contact</dt>
-                  <dd className="text-ink-900">
-                    {data.name}
-                    {data.email && <span className="text-ink-500 block text-xs">{data.email}</span>}
-                  </dd>
-                </div>
-              )}
-            </dl>
-
-            <button
-              type="button"
-              onClick={() => setStep(1)}
-              className="mt-4 inline-flex items-center gap-1.5 text-xs text-burgundy-700 hover:text-burgundy-500 transition-colors"
-            >
-              <Edit3 size={12} strokeWidth={1.8} /> Edit from step 1
-            </button>
-          </div>
-
-          {/* Next steps mini-timeline */}
-          <div className="bg-parchment-50 border border-border-light rounded-2xl p-6 shadow-sm">
-            <div className="text-[0.7rem] uppercase tracking-[0.15em] font-semibold text-burgundy-700 mb-4">
-              What happens next
-            </div>
-            <ol className="space-y-4">
-              {[
-                { strong: 'Within 48 hours', body: 'We review and send a fixed quote with timeline.' },
-                { strong: 'You approve & deposit', body: '25% holds your slot. Refundable until first sketch.' },
-                { strong: 'Work begins', body: 'Sketches, color blocks, paint. Updates every 3 days.' },
-              ].map((s, i) => (
-                <li key={i} className="flex gap-3">
-                  <span className="shrink-0 w-7 h-7 rounded-full bg-gold-100 text-gold-700 font-display font-semibold text-sm flex items-center justify-center">
-                    {i + 1}
-                  </span>
-                  <div className="text-sm">
-                    <div className="font-semibold text-ink-900">{s.strong}</div>
-                    <div className="text-ink-500 leading-snug">{s.body}</div>
-                  </div>
-                </li>
-              ))}
-            </ol>
-            <div className="mt-5 pt-4 border-t border-border-light flex items-center gap-2 text-xs text-ink-500">
-              <Clock size={14} strokeWidth={1.5} className="text-gold-700" />
-              <span><span className="font-semibold text-ink-900">48 hours</span> · average response time</span>
-            </div>
-          </div>
-
-          {/* Testimonial — quote rendered via Markdown so the *emphasized* word
-              and any inline links survive the data layer. We override strong's
-              default ink-900 to cream-50 here because we're on a dark tome bg. */}
-          <div className="bg-tome-900 text-cream-50 rounded-2xl p-6 relative overflow-hidden">
-            <Sparkles size={20} strokeWidth={1.5} className="text-gold-glow mb-3" />
-            <blockquote className="font-display italic text-base leading-relaxed mb-4 [&_strong]:text-cream-50">
-              <Markdown>{`"Every revision *sharpened* the piece. This isn't a transaction — it's a **collaboration**."`}</Markdown>
-            </blockquote>
-            <div className="flex items-center gap-3">
-              <span className="w-9 h-9 rounded-full bg-gold-500 text-ink-900 inline-flex items-center justify-center font-display font-semibold text-sm">
-                AM
-              </span>
-              <div className="text-xs">
-                <div className="text-cream-50 font-semibold">Aria Mendel</div>
-                <div className="text-cream-200">Character commission</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </aside>
+function Row({
+  dt,
+  dd,
+  empty,
+  emptyText,
+}: {
+  dt: string
+  dd: string
+  empty?: boolean
+  emptyText?: string
+}) {
+  return (
+    <div className="grid grid-cols-[110px_1fr] gap-3 items-baseline">
+      <dt className="font-body text-[0.75rem] font-semibold uppercase tracking-[0.12em] text-ink-500">{dt}</dt>
+      <dd className={cn('text-[0.9375rem]', empty ? 'text-ink-400 italic' : 'text-ink-900 whitespace-pre-line break-words')}>
+        {empty ? (emptyText ?? '—') : dd}
+      </dd>
     </div>
   )
 }
