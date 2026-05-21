@@ -119,9 +119,31 @@ export const FEATURED_SERVICES = [
 /* =====================================================================
    PERSONAS (SEO content blocks)
    ===================================================================== */
-export const PERSONAS = [
+
+/** Persona row entry. `image` / `imageFit` / `alt` are optional — set
+ *  them on the entries that have real artwork; entries without them fall
+ *  back to the gradient placeholder defined by `bg`. */
+export interface Persona {
+  tag: string
+  num: string
+  title: string
+  titleEm: string
+  titleAfter?: string
+  sub: string
+  body: string
+  tags: readonly string[]
+  cta: string
+  href: string
+  bg: string
+  reverse: boolean
+  image?: string
+  imageFit?: 'cover' | 'contain'
+  alt?: string
+}
+
+export const PERSONAS: readonly Persona[] = [
   {
-    tag: 'D&D PLAYER · LYRA · 5:4',
+    tag: 'D&D PLAYER · CLOSE-UP · 5:4',
     num: '01 · The Player',
     title: 'For your weekly',
     titleEm: 'D&D character',
@@ -131,6 +153,11 @@ export const PERSONAS = [
     cta: 'See character portraits',
     href: '/portfolio',
     bg: 'persona-player',
+    /* Portrait close-up source pre-cropped to 5:4 with top anchor so the
+     * face stays in frame; uses object-cover to fill the slot edge-to-edge. */
+    image: '/images/portfolio/player-closeup.webp',
+    imageFit: 'cover' as const,
+    alt: 'A hand-painted close-up D&D character portrait — intimate framing, painterly rendering, dramatic warm light.',
     reverse: false,
   },
   {
@@ -168,7 +195,7 @@ export const PERSONAS = [
     alt: 'The Adventurers — a hand-painted party portrait in a 19th-century family-portrait composition: central oval cameo of the main party with supporting NPCs in smaller medallions, framed in gilded borders.',
     reverse: false,
   },
-] as const
+]
 
 /* =====================================================================
    PORTFOLIO STRIP
