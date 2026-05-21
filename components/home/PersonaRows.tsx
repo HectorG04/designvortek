@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
+import ProtectedImage from '@/components/ui/ProtectedImage'
 import { motion } from 'framer-motion'
 import { ArrowRight, Check } from 'lucide-react'
 import Container from '@/components/ui/Container'
@@ -68,7 +68,7 @@ export default function PersonaRows() {
                 style={{ background: personaBackgrounds[p.bg] }}
               >
                 {'image' in p && p.image ? (
-                  <Image
+                  <ProtectedImage
                     src={p.image}
                     alt={('alt' in p && p.alt) ? p.alt : p.tag}
                     fill

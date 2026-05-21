@@ -1,8 +1,8 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
+import ProtectedImage from '@/components/ui/ProtectedImage'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import Container from '@/components/ui/Container'
@@ -96,9 +96,10 @@ export default function PortfolioStrip() {
                     piece.gradient
                   )}
                 >
-                  {/* Real artwork via next/image. object-cover so the 4:5
-                      card stays edge-to-edge even for wider source pieces. */}
-                  <Image
+                  {/* Real artwork via ProtectedImage (next/image + right-click +
+                      drag deterrents). object-cover so the 4:5 card stays
+                      edge-to-edge even for wider source pieces. */}
+                  <ProtectedImage
                     src={piece.heroImage}
                     alt={piece.title}
                     fill

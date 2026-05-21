@@ -1,9 +1,9 @@
 'use client'
 
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
 import PaperTexture from '@/components/decor/PaperTexture'
+import ProtectedImage from '@/components/ui/ProtectedImage'
 import { HERO_THUMBS } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 
@@ -234,7 +234,7 @@ export default function Hero() {
                     {/* Real artwork overlay — fills the thumb, gradient
                         stays behind for any transparent edges */}
                     {thumb.image ? (
-                      <Image
+                      <ProtectedImage
                         src={thumb.image}
                         alt={thumb.alt ?? thumb.label}
                         fill

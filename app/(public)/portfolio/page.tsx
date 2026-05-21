@@ -1,8 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
+import ProtectedImage from '@/components/ui/ProtectedImage'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import PageHero from '@/components/layout/PageHero'
@@ -270,7 +270,7 @@ export default function PortfolioPage() {
                 <div
                   className={cn('relative block w-full bg-gradient-to-br', ASPECT_CLASSES[piece.aspect], piece.gradient)}
                 >
-                  <Image
+                  <ProtectedImage
                     src={piece.heroImage}
                     alt={piece.title}
                     fill

@@ -1,5 +1,5 @@
 ﻿import type { Metadata } from 'next'
-import Image from 'next/image'
+import ProtectedImage from '@/components/ui/ProtectedImage'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { ArrowRight, ChevronRight, ZoomIn } from 'lucide-react'
@@ -52,12 +52,12 @@ export async function generateMetadata(
   const { slug } = await params
   const piece = getPieceBySlug(slug)
   if (!piece) {
-    return { title: 'Portfolio piece not found Â· Design Vortek' }
+    return { title: 'Portfolio piece not found Â· Design Vortex' }
   }
   const first = stripMarkdown(piece.description[0])
   const desc = first.length > 160 ? first.slice(0, 157) + '...' : first
   return {
-    title: `${piece.title} Â· ${piece.category} Â· Design Vortek`,
+    title: `${piece.title} Â· ${piece.category} Â· Design Vortex`,
     description: desc,
     alternates: { canonical: `/portfolio/${piece.slug}` },
     openGraph: {
@@ -93,7 +93,7 @@ export default async function PortfolioDetailPage({
     genre: piece.category,
     description: piece.description.map(stripMarkdown).join(' '),
     keywords: piece.tags.join(', '),
-    creator: { '@type': 'Organization', name: 'Design Vortek' },
+    creator: { '@type': 'Organization', name: 'Design Vortex' },
     dateCreated: piece.delivered,
     inLanguage: 'en',
   }
@@ -147,7 +147,7 @@ export default async function PortfolioDetailPage({
                   )}
                 >
                   {piece.heroImage ? (
-                    <Image
+                    <ProtectedImage
                       src={piece.heroImage}
                       alt={`${piece.title} â€” hand-painted portrait`}
                       fill
@@ -185,7 +185,7 @@ export default async function PortfolioDetailPage({
                             : 'border-border-light opacity-90 hover:opacity-100',
                         )}
                       >
-                        <Image
+                        <ProtectedImage
                           src={thumb.src}
                           alt={`${piece.title} â€” ${thumb.label.toLowerCase()} stage`}
                           fill
