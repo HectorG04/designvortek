@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   ShoppingBag,
   MessageSquare,
+  Bell,
   ImageIcon,
   Pencil,
   Briefcase,
@@ -36,6 +37,7 @@ const NAV_GROUPS: { label: string; items: NavItem[] }[] = [
       { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
       { href: '/admin/orders', label: 'Orders', icon: ShoppingBag, badge: 3 },
       { href: '/admin/inquiries', label: 'Inquiries', icon: MessageSquare, badge: 7 },
+      { href: '/admin/waitlist', label: 'Waitlist', icon: Bell },
     ],
   },
   {

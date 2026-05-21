@@ -6,6 +6,7 @@ import { Resend } from 'resend'
 
 const FROM = process.env.FROM_EMAIL || 'hello@designvortex.co'
 const ADMIN = process.env.ADMIN_NOTIFY_EMAIL || ''
+const SITE = process.env.NEXT_PUBLIC_SITE_URL || 'https://designvortex.co'
 
 let _client: Resend | null = null
 
@@ -90,7 +91,7 @@ export function adminOrderNotifyHTML(p: {
   </table>
   <h3 style="margin: 24px 0 8px; color: #1E1408;">Brief</h3>
   <div style="background: #F5EBD3; padding: 16px; border-radius: 8px; white-space: pre-wrap; font-size: 14px; line-height: 1.6;">${escapeHtml(p.description)}</div>
-  <p style="margin-top: 24px;"><a href="https://designvortex.co/admin/orders/${p.id}" style="background: #6B1F2A; color: #F4EAD3; padding: 12px 24px; border-radius: 24px; text-decoration: none; font-weight: 600;">Open in admin →</a></p>
+  <p style="margin-top: 24px;"><a href="${SITE}/admin/orders/${p.id}" style="background: #6B1F2A; color: #F4EAD3; padding: 12px 24px; border-radius: 24px; text-decoration: none; font-weight: 600;">Open in admin →</a></p>
 </body></html>`
 }
 
@@ -105,7 +106,38 @@ export function adminInquiryNotifyHTML(p: {
   <h2 style="color: #6B1F2A; margin: 0 0 16px;">New inquiry · #${p.id}</h2>
   <p><strong>${p.name}</strong> · <a href="mailto:${p.email}">${p.email}</a></p>
   <div style="background: #F5EBD3; padding: 16px; border-radius: 8px; white-space: pre-wrap; font-size: 14px; line-height: 1.6; margin-top: 16px;">${escapeHtml(p.message)}</div>
-  <p style="margin-top: 24px;"><a href="https://designvortex.co/admin/inquiries" style="background: #6B1F2A; color: #F4EAD3; padding: 12px 24px; border-radius: 24px; text-decoration: none; font-weight: 600;">Open in admin →</a></p>
+  <p style="margin-top: 24px;"><a href="${SITE}/admin/inquiries" style="background: #6B1F2A; color: #F4EAD3; padding: 12px 24px; border-radius: 24px; text-decoration: none; font-weight: 600;">Open in admin →</a></p>
+</body></html>`
+}
+
+/* Customer-facing inquiry acknowledgement — sent on /api/inquiry. */
+export function inquiryConfirmationHTML(p: { name: string }) {
+  return `<!DOCTYPE html>
+<html><body style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #FBF6E9; color: #1E1408; padding: 40px 20px; max-width: 600px; margin: 0 auto;">
+  <h1 style="font-family: Georgia, serif; color: #6B1F2A; font-size: 26px; margin: 0 0 16px;">Thanks for reaching out, ${p.name}.</h1>
+  <p style="font-size: 16px; line-height: 1.65; color: #3A2A1C;">We got your message and we'll reply within 48 hours on weekdays.</p>
+  <p style="font-size: 16px; line-height: 1.65; color: #3A2A1C;">If your note is about starting a commission, you can also fill out the brief form for a faster quote: <a href="${SITE}/order" style="color: #6B1F2A;">${SITE}/order</a></p>
+  <p style="font-size: 12px; color: #9A8870; margin-top: 40px; padding-top: 20px; border-top: 1px solid #E8DBBE;">Design Vortex · Premium TTRPG art commissions · <a href="${SITE}" style="color: #6B1F2A;">designvortex.co</a></p>
+</body></html>`
+}
+
+/* Admin-facing waitlist notification — sent on /api/waitlist. */
+export function adminWaitlistNotifyHTML(p: {
+  email: string
+  name: string | null
+  source: string | null
+  interestedIn: string | null
+}) {
+  return `<!DOCTYPE html>
+<html><body style="font-family: -apple-system, BlinkMacSystemFont, sans-serif; padding: 40px 20px; max-width: 600px; margin: 0 auto;">
+  <h2 style="color: #6B1F2A; margin: 0 0 16px;">New waitlist signup</h2>
+  <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+    <tr><td style="padding: 6px 0; color: #6B5A48; width: 120px;">Email</td><td style="padding: 6px 0;"><a href="mailto:${p.email}">${p.email}</a></td></tr>
+    <tr><td style="padding: 6px 0; color: #6B5A48;">Name</td><td style="padding: 6px 0;">${p.name ?? '—'}</td></tr>
+    <tr><td style="padding: 6px 0; color: #6B5A48;">Interested in</td><td style="padding: 6px 0;">${p.interestedIn ?? '—'}</td></tr>
+    <tr><td style="padding: 6px 0; color: #6B5A48;">Source</td><td style="padding: 6px 0;">${p.source ?? '—'}</td></tr>
+  </table>
+  <p style="margin-top: 24px;"><a href="${SITE}/admin/waitlist" style="background: #6B1F2A; color: #F4EAD3; padding: 12px 24px; border-radius: 24px; text-decoration: none; font-weight: 600;">Open waitlist →</a></p>
 </body></html>`
 }
 

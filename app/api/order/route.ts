@@ -21,6 +21,11 @@ export async function POST(request: NextRequest) {
       reference_links,
       budget,
       deadline,
+      // Form sends these too, but the table doesn't have dedicated columns
+      // for them yet. Fold them into internal_notes below so they're saved.
+      quantity,
+      notes,
+      source,
     } = body
 
     // Required-field validation
@@ -46,6 +51,14 @@ export async function POST(request: NextRequest) {
 
     const supabase = createAdminClient()
 
+    /* Stash extra form fields in internal_notes so nothing posted from the
+     * form is silently dropped. Once the schema adds dedicated columns for
+     * quantity/notes/source, move them out. */
+    const internalParts: string[] = []
+    if (quantity)            internalParts.push(`Quantity: ${String(quantity).trim()}`)
+    if (notes?.trim())       internalParts.push(`Client notes:\n${notes.trim()}`)
+    if (source?.trim())      internalParts.push(`How they found us: ${source.trim()}`)
+
     const { data: inserted, error } = await supabase
       .from('commission_orders')
       .insert([
@@ -60,6 +73,7 @@ export async function POST(request: NextRequest) {
           budget: budget?.trim() || null,
           deadline: deadline?.trim() || null,
           status: 'pending',
+          internal_notes: internalParts.length ? internalParts.join('\n\n') : null,
         },
       ])
       .select('id')
