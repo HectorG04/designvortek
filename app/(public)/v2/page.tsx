@@ -5,6 +5,7 @@ import Hero from '@/components/home/Hero'
 import ServicesPreview from '@/components/home/ServicesPreview'
 import PersonaRows from '@/components/home/PersonaRows'
 import PortfolioStrip from '@/components/home/PortfolioStrip'
+import { fetchFeaturedPieces } from '@/lib/portfolio-pieces-server'
 import ProcessSteps from '@/components/home/ProcessSteps'
 import Testimonials from '@/components/home/Testimonials'
 import BlogPreview from '@/components/home/BlogPreview'
@@ -37,7 +38,8 @@ export const metadata: Metadata = {
  *
  * Compass dividers separate major thematic blocks.
  */
-export default function HomePreviewPage() {
+export default async function HomePreviewPage() {
+  const featuredPieces = await fetchFeaturedPieces(8)
   return (
     <>
       <SiteHeader transparent />
@@ -50,7 +52,7 @@ export default function HomePreviewPage() {
         </div>
 
         <PersonaRows />
-        <PortfolioStrip />
+        <PortfolioStrip pieces={featuredPieces} />
         <ProcessSteps />
         <Testimonials />
         <BlogPreview />

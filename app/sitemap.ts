@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next'
-import { getAllSlugs } from '@/lib/portfolio-pieces'
+import { fetchAllSlugs } from '@/lib/portfolio-pieces-server'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://designvortex.co'
 
@@ -12,7 +12,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://designvortex.co'
  *   - portfolio_pieces (where is_published)
  *   - blog_posts       (where is_published)
  */
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const lastModified = new Date()
 
   // Top-level pages
@@ -45,7 +45,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // Portfolio detail pages — slugs come from the centralized portfolio
   // data so adding/removing pieces auto-updates the sitemap.
-  const portfolioRoutes: MetadataRoute.Sitemap = getAllSlugs().map((slug) => ({
+  const portfolioSlugs = await fetchAllSlugs()
+  const portfolioRoutes: MetadataRoute.Sitemap = portfolioSlugs.map((slug) => ({
     url: `${SITE_URL}/portfolio/${slug}`,
     lastModified,
     changeFrequency: 'monthly',

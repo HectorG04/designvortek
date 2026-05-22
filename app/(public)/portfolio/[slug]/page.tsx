@@ -24,7 +24,11 @@ import { cn } from '@/lib/utils'
  * + JSON-LD + the detail render. When the Supabase CMS lands, the
  * library file gets replaced with a Supabase query and this file
  * needs no changes. */
-import { getAllSlugs, getPieceBySlug } from '@/lib/portfolio-pieces'
+import { fetchAllSlugs, fetchPieceBySlug } from '@/lib/portfolio-pieces-server'
+
+/* ISR — rebuild this page at most every 60s. Admin edits in the
+ * portfolio_pieces table become visible within a minute without a deploy. */
+export const revalidate = 60
 
 /* Related-pieces lookup (kept lean â€” three siblings per piece) */
 const RELATED: Array<{ slug: string; title: string; category: string; gradient: string; meta: string }> = [
@@ -37,8 +41,9 @@ const RELATED: Array<{ slug: string; title: string; category: string; gradient: 
    STATIC PARAMS + METADATA
    ===================================================================== */
 
-export function generateStaticParams() {
-  return getAllSlugs().map((slug) => ({ slug }))
+export async function generateStaticParams() {
+  const slugs = await fetchAllSlugs()
+  return slugs.map((slug) => ({ slug }))
 }
 
 /** Strip markdown emphasis tokens for SEO meta description (plain text). */
@@ -50,7 +55,7 @@ export async function generateMetadata(
   { params }: { params: Promise<{ slug: string }> },
 ): Promise<Metadata> {
   const { slug } = await params
-  const piece = getPieceBySlug(slug)
+  const piece = await fetchPieceBySlug(slug)
   if (!piece) {
     return { title: 'Portfolio piece not found Â· Design Vortex' }
   }
@@ -78,7 +83,7 @@ export default async function PortfolioDetailPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const piece = getPieceBySlug(slug)
+  const piece = await fetchPieceBySlug(slug)
 
   if (!piece) {
     notFound()

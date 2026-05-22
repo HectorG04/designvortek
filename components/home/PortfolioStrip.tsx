@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import ProtectedImage from '@/components/ui/ProtectedImage'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -9,7 +9,7 @@ import Container from '@/components/ui/Container'
 import SectionHead from '@/components/ui/SectionHead'
 import Button from '@/components/ui/Button'
 import { PORTFOLIO_CATEGORIES } from '@/lib/constants'
-import { getFeaturedPieces } from '@/lib/portfolio-pieces'
+import type { PortfolioPiece } from '@/lib/portfolio-pieces'
 import { cn } from '@/lib/utils'
 
 /* =====================================================================
@@ -22,14 +22,14 @@ import { cn } from '@/lib/utils'
    and the masonry is the full archive.
    ===================================================================== */
 
-const FEATURED_LIMIT = 8
+export interface PortfolioStripProps {
+  /** Featured pieces fetched by the parent server component. Already
+   *  filtered to featured=true and capped at the desired limit. */
+  pieces: PortfolioPiece[]
+}
 
-export default function PortfolioStrip() {
+export default function PortfolioStrip({ pieces }: PortfolioStripProps) {
   const [active, setActive] = useState<string>('All')
-
-  /* Featured-only pieces, capped at FEATURED_LIMIT. Memoized so the
-   * filter chip toggle doesn't re-sort the whole list each click. */
-  const pieces = useMemo(() => getFeaturedPieces(FEATURED_LIMIT), [])
 
   const filtered =
     active === 'All' ? pieces : pieces.filter((p) => p.category === active)

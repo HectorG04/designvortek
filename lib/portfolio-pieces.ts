@@ -1,18 +1,39 @@
-/* =====================================================================
-   PORTFOLIO PIECES — centralized data source for all 24 real client
-   commissions ingested in the May 2026 batch.
+﻿/* =====================================================================
+   PORTFOLIO PIECES â€” Supabase-backed with in-memory fallback.
 
-   This file is the single source of truth for:
-   - /portfolio (masonry index)
-   - /portfolio/[slug] (detail pages — generateStaticParams + generateMetadata)
-   - homepage <PortfolioStrip> (filtered subset where featured === true)
-   - sitemap.ts (when wired)
+   Single source of truth for:
+     - /portfolio (masonry index)
+     - /portfolio/[slug] (detail pages â€” generateStaticParams + generateMetadata)
+     - homepage <PortfolioStrip> (filtered subset where featured === true)
+     - sitemap.ts
 
-   When the Supabase CMS integration lands, this file gets replaced by a
-   Supabase query — the consumer surfaces don't need to change because
-   they all import getAllPieces / getFeaturedPieces / PORTFOLIO_PIECES
-   from here.
+   Data flow:
+     1. Async helpers (fetchAllPieces, fetchPieceBySlug, ...) try Supabase
+        portfolio_pieces table first via createAdminClient (service role,
+        bypasses RLS so we read both published and unpublished if needed â€”
+        but the public fetchers filter to is_published = true).
+     2. If Supabase is empty (table not seeded yet) or errors, helpers fall
+        back to PORTFOLIO_PIECES below â€” the snapshot data that shipped
+        with this file.
+     3. The sync helpers (getAllPieces, getPieceBySlug, ...) always return
+        the in-memory snapshot; they exist for client components or
+        module-level access that can't be async.
+
+   To make admin edits show on the public site you need two one-time steps:
+     1. Apply migration: supabase/migrations/0002_portfolio_meta.sql in
+        Supabase Dashboard â†’ SQL Editor (adds the `meta jsonb` column).
+     2. Seed the table: `node scripts/seed-portfolio.mjs` (upserts the 24
+        pieces below into Supabase).
+   After that, consumers using the async helpers read from Supabase. The
+   in-memory data stays as a fallback so the site keeps working even if
+   the DB goes down. ISR (revalidate=60) on the public pages picks up new
+   admin edits within a minute.
    ===================================================================== */
+
+/* Server-only fetchers (fetchAllPieces, fetchPieceBySlug, etc.) live in
+ * lib/portfolio-pieces-server.ts since they pull in next/headers via the
+ * supabase server client. Import THIS file from anywhere; import the
+ * server module only from server components / route handlers. */
 
 /* ---------- Type ---------- */
 export interface PortfolioPiece {
@@ -46,7 +67,7 @@ export interface PortfolioPiece {
   artistNote: string
 }
 
-/* ---------- Slug → filter-key map (for the masonry's filter chips) ---------- */
+/* ---------- Slug â†’ filter-key map (for the masonry's filter chips) ---------- */
 export const CATEGORY_FILTER_KEYS: Record<PortfolioPiece['category'], string> = {
   'Character Art': 'character-art',
   'Tokens':        'vtt-tokens',
@@ -63,13 +84,13 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
     category: 'Character Art',
     client: 'commissioned by Tess R.',
     description: [
-      "A **female wizard with feral, sharp-toothed features** and golden talons — noble pomp on the outside, primal predator underneath. The brief called for stoic and guarded with the air of someone who knows exactly which spell she'd cast if you asked the wrong question.",
+      "A **female wizard with feral, sharp-toothed features** and golden talons â€” noble pomp on the outside, primal predator underneath. The brief called for stoic and guarded with the air of someone who knows exactly which spell she'd cast if you asked the wrong question.",
       "Tess had been playing this character through a long D&D campaign and the brief showed it. The reference doc came in heavy: mood boards, pose annotations, the position of every toe ring spelled out. For the background she asked for something close to a Skyrim loading screen, soft and unfocused, so Vesper held the frame herself.",
     ],
-    tools: 'Procreate · Photoshop · Clip Studio Paint',
+    tools: 'Procreate Â· Photoshop Â· Clip Studio Paint',
     hours: '16h across 12 days',
-    style: 'Painterly · stoic noble',
-    resolution: '4096 × 5120 px',
+    style: 'Painterly Â· stoic noble',
+    resolution: '4096 Ã— 5120 px',
     revisions: '3 of 5 used',
     delivered: 'February 06, 2026',
     tags: ['Wizard', 'D&D 5e', 'Painterly', 'Feral features', 'Stoic noble', 'Gold talons'],
@@ -94,10 +115,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A **soft-featured human sorceress** with a fuller build, painted from the waist up against a quiet wash of color. The face does most of the work here, half-lidded eyes and a small private smile that suggests she knows something the rest of the room does not.",
       "Marcus came in with a sparse brief and a single request: a chubbier build than he usually managed in his own sketches. Everything else was open. With that much room on a D&D character piece, the choice was to lean into warmth, paint the cheeks and forearms with weight that read as comfortable rather than soft, and let the rest fall out of the silhouette.",
     ],
-    tools: 'Procreate · Photoshop · Krita',
+    tools: 'Procreate Â· Photoshop Â· Krita',
     hours: '10h across 7 days',
-    style: 'Painterly · warm portrait',
-    resolution: '4096 × 5120 px',
+    style: 'Painterly Â· warm portrait',
+    resolution: '4096 Ã— 5120 px',
     revisions: '1 of 3 used',
     delivered: 'February 13, 2026',
     tags: ['Sorceress', 'D&D 5e', 'Half-body', 'Warm tones', 'Soft features', 'Portrait'],
@@ -120,10 +141,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A **full-body revenant paladin** in heavy plate, sword in his right hand, the red fabric on his armor and cape glowing like it's holding back a fire from the inside. The eyes sit deep in shadow, the mouth set tight. It's the kind of face that reads as simmering rather than shouting.",
       "Davin's character had a long backstory: cursed with undeath by a lich, then freed by a paladin oath that left the dark knight benefits intact. The earlier passes weren't landing the intimidation factor, so this round pushed the shadow around the face harder, deepened the red glow into the new noble cape, and added more fretwork to the plate. The package included four deliverables for his D&D 5e table: helmet on and off, each with the simple background and without.",
     ],
-    tools: 'Procreate · Photoshop · Clip Studio Paint',
+    tools: 'Procreate Â· Photoshop Â· Clip Studio Paint',
     hours: '22h across 16 days',
-    style: 'Painterly · cursed knight',
-    resolution: '4096 × 5120 px',
+    style: 'Painterly Â· cursed knight',
+    resolution: '4096 Ã— 5120 px',
     revisions: '3 of 5 used',
     delivered: 'January 25, 2026',
     tags: ['Paladin', 'Revenant', 'D&D 5e', 'Dark knight', 'Full body', 'Red glow'],
@@ -148,10 +169,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A **half-body black dragonborn** built somewhere between a ranger and a death cleric, with a small wolf motif carved into the pauldron and a curl of green energy looping around one hand. The scales catch a cold light. The necrotic glow sits low and quiet so it reads as held in, not flashed around.",
       "Elena wanted the two halves of her D&D 5e character to share a body without one swallowing the other. The wolf detail on the shoulder armor was the brief's anchor for the ranger side, and the green swirls did the work for the cleric side. Most of the time went into balancing those two greens so the necro glow didn't fight the natural color of the scales.",
     ],
-    tools: 'Procreate · Krita · Affinity Photo',
+    tools: 'Procreate Â· Krita Â· Affinity Photo',
     hours: '14h across 10 days',
-    style: 'Painterly · half-cleric, half-ranger',
-    resolution: '4096 × 5120 px',
+    style: 'Painterly Â· half-cleric, half-ranger',
+    resolution: '4096 Ã— 5120 px',
     revisions: '2 of 4 used',
     delivered: 'April 07, 2026',
     tags: ['Dragonborn', 'D&D 5e', 'Ranger', 'Death cleric', 'Necrotic', 'Half body'],
@@ -175,10 +196,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A **full-body action shot** of a hammer-wielding warrior mid-jump, flaming side of the weapon coming down to shatter a larger warhammer pushing in from offscreen. Mouth open in a war cry. Behind him, a fantasy city of cobblestone streets and stacked windows, with a tagged-up wall reading **THE IRONHAND PROTECTS!** as the visual anchor of the whole composition.",
       "Sarah's D&D 5e brief was specific about the graffiti and loose about everything else, which meant the camera had to be picked carefully to keep the wall readable behind the action. The lineart went through three rounds before the pose felt like it was actually mid-swing instead of frozen, and once the silhouette was locked the color came together quickly. The graffiti is the kind of detail that makes a piece feel like it belongs to a campaign.",
     ],
-    tools: 'Procreate · Clip Studio Paint · Photoshop',
+    tools: 'Procreate Â· Clip Studio Paint Â· Photoshop',
     hours: '24h across 18 days',
-    style: 'Painterly · action panel',
-    resolution: '4096 × 5120 px',
+    style: 'Painterly Â· action panel',
+    resolution: '4096 Ã— 5120 px',
     revisions: '4 of 5 used',
     delivered: 'December 10, 2025',
     tags: ['Action pose', 'D&D 5e', 'Flaming hammer', 'Cityscape', 'Graffiti', 'War cry'],
@@ -203,10 +224,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A **multi-pose reference sheet** for a small, wiry high elf in well-worn drab armor and a patchwork fur cloak topped by a bear-head hood. The long bear-claw scar runs from her ear down to the cleft of her chin, with smaller scars peppering her forearms. The crude hand-painted symbol of Malar sits flat on the chest plate, deliberately ugly, deliberately personal.",
       "Mira's brief for her D&D 5e ranger was almost a character sheet on its own: 5'0\", under a hundred pounds, smudged with dirt, kind of greasy, the look of someone who has spent every year of her life outside. The reference sheet format meant building her front and back, working out how the fur cloak sat across the shoulders from each angle, and keeping the scar pattern consistent across views. The bear-claw scar was the one detail that had to read correctly in every pose.",
     ],
-    tools: 'Procreate · Photoshop · Affinity Photo',
+    tools: 'Procreate Â· Photoshop Â· Affinity Photo',
     hours: '28h across 21 days',
-    style: 'Painterly · ranger ref sheet',
-    resolution: '6144 × 4096 px',
+    style: 'Painterly Â· ranger ref sheet',
+    resolution: '6144 Ã— 4096 px',
     revisions: '2 of 5 used',
     delivered: 'February 18, 2026',
     tags: ['High elf', 'D&D 5e', 'Ranger', 'Reference sheet', 'Scars', 'Fur cloak'],
@@ -230,10 +251,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A **full-body scene** of a ranger moving low through the woods with his longbow drawn, dark brown leather under a green cloak, the hood half up. Dark brown hair, brown eyes, the kind of face that goes quiet when the bow comes up. The forest stays loose in the background so the silhouette holds the frame.",
       "This was the sixth commission in a running series for Bren's D&D table, and at that point the character feels like a regular at the studio. The brief was short because it didn't need to be long anymore. The work this time was getting the cloak to read as moving with him rather than draped on him, and finding a green that sat against the pines without disappearing into them.",
     ],
-    tools: 'Krita · Clip Studio Paint · Photoshop',
+    tools: 'Krita Â· Clip Studio Paint Â· Photoshop',
     hours: '15h across 11 days',
-    style: 'Painterly · woodland ranger',
-    resolution: '4096 × 6144 px',
+    style: 'Painterly Â· woodland ranger',
+    resolution: '4096 Ã— 6144 px',
     revisions: '1 of 4 used',
     delivered: 'March 31, 2026',
     tags: ['Ranger', 'D&D 5e', 'Longbow', 'Forest scene', 'Full body', 'Green cloak'],
@@ -256,10 +277,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A **full-body anthropomorphic rabbit ranger** at 4'11\", leaning on a mirror-polished sword with a grin that's pure performance. Black fur shot through with pink streaks that shimmer when he moves, ruby necklace at the throat, light ranger armor cut for speed over weight. The twilight forest behind him glows faintly from pink moss on the trunks.",
       "Tova's D&D 5e brief came with a lot of character voice already written in: the sword is for posing more than fighting, the pink streaks in his fur are something younger rabbits insist are magical, his Blink ability leaves behind a puff of pink mist and a playing card stamped with a smiling rabbit. The whole job was making sure the pose read as welcoming and a little smug without tipping into cartoon. The polished sword had to reflect just enough of the mossy light to feel like part of the same scene.",
     ],
-    tools: 'Procreate · Clip Studio Paint · Affinity Photo',
+    tools: 'Procreate Â· Clip Studio Paint Â· Affinity Photo',
     hours: '20h across 15 days',
-    style: 'Painterly · charming trickster',
-    resolution: '4096 × 6144 px',
+    style: 'Painterly Â· charming trickster',
+    resolution: '4096 Ã— 6144 px',
     revisions: '3 of 5 used',
     delivered: 'December 02, 2025',
     tags: ['Rabbit-folk', 'D&D 5e', 'Ranger', 'Full body', 'Twilight forest', 'Pink moss'],
@@ -284,10 +305,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A pale-skinned chaos warrior in heavy black-and-gold ornate armor, sitting on a throne with a curved alien blade across his knee. Two side-arms strapped to his thighs with red sashes, and a wolf-head trophy on his right shoulder wearing a small grin that the client requested by name. The pose had to read as composure first and threat second, the kind of stillness that means the fight already ended somewhere offscreen.",
       "Magnus had been writing this character for years in a warhammer-style grimdark sci-fi homebrew and the brief came in with footnoted lore for the wolf head alone. The trophy belonged to a ginger beast named Gwyn the Pale, and the daemon nested inside it spent its afterlife playing two truths and a lie with anyone close enough to hear. We rendered the grin small. Just enough for the second viewing to catch it.",
     ],
-    tools: 'Procreate · Photoshop · Affinity Photo',
+    tools: 'Procreate Â· Photoshop Â· Affinity Photo',
     hours: '22h across 14 days',
-    style: 'Painterly · grimdark stillness',
-    resolution: '4096 × 5120 px',
+    style: 'Painterly Â· grimdark stillness',
+    resolution: '4096 Ã— 5120 px',
     revisions: '4 of 5 used',
     delivered: 'December 10, 2025',
     tags: ['Grimdark', 'Chaos warrior', 'Throne pose', 'Black and gold', 'Wolf trophy', 'Sci-fi'],
@@ -311,10 +332,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A 16x9 banner of a ritual interior with robed figures arranged around an altar, pillars rising past the frame, and torchlight doing most of the storytelling. The brief was four lines long and that was on purpose. Hayden wanted atmosphere as a header image for a campaign hub, not a portrait, so the figures stay anonymous and the eye keeps moving across the composition.",
       "We pitched two altar treatments before settling on the low stone block with a single offering bowl, since busier altars kept pulling focus from the silhouettes. The torches were placed last and went through three rounds of warming up the palette, because the first pass looked more haunted house than fantasy temple. The final read is calm but watched, which was the note Hayden kept circling back to.",
     ],
-    tools: 'Procreate · Photoshop · Krita',
+    tools: 'Procreate Â· Photoshop Â· Krita',
     hours: '14h across 8 days',
-    style: 'Atmospheric · cinematic banner',
-    resolution: '7680 × 4320 px',
+    style: 'Atmospheric Â· cinematic banner',
+    resolution: '7680 Ã— 4320 px',
     revisions: '2 of 4 used',
     delivered: 'April 20, 2026',
     tags: ['Banner', 'Temple', 'Robed figures', 'Atmospheric', 'Torchlight', 'Campaign header'],
@@ -337,10 +358,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A jotunborn monk built like a circus strongman, pale grey skin lit from inside by a purple weave that runs the length of his forearms and creeps up the side of his neck. The pose lands halfway between stoic mountain-style stance and one of those old vaudeville strongman posters, which was exactly the contradiction Petra asked for. Student of the mountain, aspiring stone brawler, currently moonlighting under a striped tent.",
       "Petra plays him in a long-running Pathfinder game and sent the Paizo jotunborn iconic as her opening reference. From there the brief got specific about the glow: not magical lightning, more like cracks in a geode that happen to be alive. We tested three saturations of purple before the final settled on something closer to amethyst than neon. The strongman moustache was a late add and it stayed.",
     ],
-    tools: 'Clip Studio Paint · Photoshop · Krita',
+    tools: 'Clip Studio Paint Â· Photoshop Â· Krita',
     hours: '18h across 11 days',
-    style: 'Painterly · vaudeville strongman',
-    resolution: '4096 × 5120 px',
+    style: 'Painterly Â· vaudeville strongman',
+    resolution: '4096 Ã— 5120 px',
     revisions: '2 of 5 used',
     delivered: 'May 08, 2026',
     tags: ['Pathfinder', 'Jotunborn', 'Monk', 'Strongman', 'Glowing weave', 'Stone brawler'],
@@ -365,10 +386,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A profile-picture crop of a half-drow rogue named Lexia, body turned away from the camera, head swung back to look directly at it. Purple eyes, light grey skin, silvery-dark hair pulled tight. The expression is cold assessment, the kind of look that means she has already counted the exits and your coin purse. Background is an unfocused alley, dark enough to keep Lexia as the only light source in the frame.",
       "Reyn runs her in a D&D 5e campaign about a runaway from the Underdark who got outed for half-blood heritage and now scavenges and lifts on busy streets. He wanted the avatar to read as twenty-eight years old, not the usual ageless elf default, so we aged the skin around the eyes by maybe two degrees and let it sit there. The token ships at print resolution and a web crop so it works as both a PFP and a printable mini face.",
     ],
-    tools: 'Procreate · Affinity Photo · Photoshop',
+    tools: 'Procreate Â· Affinity Photo Â· Photoshop',
     hours: '9h across 6 days',
-    style: 'Painterly · cold assessment',
-    resolution: '2048 × 2048 px master + 512 × 512 px web',
+    style: 'Painterly Â· cold assessment',
+    resolution: '2048 Ã— 2048 px master + 512 Ã— 512 px web',
     revisions: '1 of 3 used',
     delivered: 'April 01, 2026',
     tags: ['D&D 5e', 'Half-drow', 'Rogue', 'Token', 'PFP', 'Alley'],
@@ -393,10 +414,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A five-character party group for a weird west campaign, staged in plain Arizona desert under a thin moon. Jaw stands partially turned away with arms crossed and that 'dragged into this' tilt, mouth shredded open on both sides by intent rather than accident. Maud poses, smug, in front of a board cross with 'Kingsley' scratched into the wood. Xander Khaine leans on a rock with his black duster open and rattlesnake-band hat low, easy as a Doc Holliday line read. Tara stances up in front of him with both guns crossed, smiling the nervous smile of someone trying too hard next to someone who never has. Ciel stands a pace out from the group with a doctor's bag and a smile she is barely managing to hide.",
       "Wynn sent the brief as five separate documents stapled together, and the hardest part was getting the personalities to sit next to each other without flattening any of them. The Kingsley gravesite is an in-joke the table has been running for a year, so it had to be readable as a real headstone first and a punchline second. The night palette went through two passes before the desert stopped looking blue and started looking the right kind of cold.",
     ],
-    tools: 'Procreate · Photoshop · Clip Studio Paint',
+    tools: 'Procreate Â· Photoshop Â· Clip Studio Paint',
     hours: '38h across 21 days',
-    style: 'Painterly · weird west tableau',
-    resolution: '6144 × 4096 px',
+    style: 'Painterly Â· weird west tableau',
+    resolution: '6144 Ã— 4096 px',
     revisions: '3 of 5 used',
     delivered: 'May 11, 2026',
     tags: ['Weird west', 'Group portrait', 'Five characters', 'Arizona night', 'Gunslingers', 'Party art'],
@@ -420,10 +441,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A were-creature whose skeleton turned without bringing the fur along for the trip. Werewolf bones under human skin, knuckle-walking, head tilted, primate teeth bared in a way that reads territorial and embarrassed at the same time. Wolf jaws push out of the human mouth where the muzzle would be, top and bottom just gums and teeth with no skin connecting them. In the right hand, a crumpled tie dragging in the dirt. The character was a public defender before this happened, and Idris wanted the tie to look intentionally taken off, not torn.",
       "The concept Idris pitched was wolf into the bones of a human, with the body and spirit working out of phase. We held the hunch through every revision, kept the ears off, and went with chimplike feet instead of digitigrade after the first sketch made him read too clean. The face cast was a specific real-person reference the client described as not conventionally attractive, which is the kind of note that actually helps because it gives you a direction instead of a vibe.",
     ],
-    tools: 'Krita · Photoshop · Affinity Photo',
+    tools: 'Krita Â· Photoshop Â· Affinity Photo',
     hours: '20h across 13 days',
-    style: 'Painterly · body horror uncanny',
-    resolution: '4096 × 5120 px',
+    style: 'Painterly Â· body horror uncanny',
+    resolution: '4096 Ã— 5120 px',
     revisions: '4 of 5 used',
     delivered: 'April 03, 2026',
     tags: ['Werewolf', 'Body horror', 'Uncanny', 'D&D', 'Knuckle walk', 'Skin-wolf'],
@@ -447,10 +468,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "Three black-and-white character illustrations for a space-opera sci-fi RPG, drawn at print resolution and built to stay legible on a home laser printer. A space-mystic with an energy blade in a tactical cloak, grounded and meditative. A personality-driven droid with expressive optics and segmented plating. A rogue pilot with the kind of jacket that has been re-stitched more than once. The brief came in with a long list of things the art could not look like, and that list ran most of the design decisions.",
       "Corwin is building a printer-friendly ttrpg sci-fi RPG inspired by a certain galaxy and a certain cyberpunk module, so the legal guardrails were strict from the first call. No lightsabers, no recognizable robes, no recognizable species, no logos, no terminology. We pulled the mystic toward something closer to a desert pilgrim, gave the droid optics that read as personality rather than franchise, and let the pilot live in the gritty negative-space tradition the cyberpunk reference came from.",
     ],
-    tools: 'Clip Studio Paint · Photoshop · Krita',
+    tools: 'Clip Studio Paint Â· Photoshop Â· Krita',
     hours: '32h across 18 days',
-    style: 'Ink linework · print-ready B&W',
-    resolution: '3300 × 5100 px each at 300 DPI',
+    style: 'Ink linework Â· print-ready B&W',
+    resolution: '3300 Ã— 5100 px each at 300 DPI',
     revisions: '2 of 5 used',
     delivered: 'May 21, 2026',
     tags: ['Sci-fi', 'Black and white', 'Trio', 'Print-ready', 'TTRPG', 'Ink'],
@@ -475,10 +496,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A close-crop token of a hobgoblin investigator with her crossbow half-raised in a ready stance. Head and upper torso fill the frame, with just enough background to suggest the alley or stairwell she has decided to clear before anyone else gets a turn. Sharp orange skin, sharper expression, and the kind of pose that reads ready rather than aggressive.",
       "Wren plays her as a first-level investigator in a Pathfinder game and wanted the token to age well as she retrains into a gunslinger build later. We built the crossbow grip with that in mind, so when the weapon swap happens the hand position still works. Artist freedom on the rest, which mostly went toward the slight forward lean and the one stray strand of hair the helmet did not catch.",
     ],
-    tools: 'Procreate · Affinity Photo · Clip Studio Paint',
+    tools: 'Procreate Â· Affinity Photo Â· Clip Studio Paint',
     hours: '7h across 5 days',
-    style: 'Painterly · ready stance token',
-    resolution: '1024 × 1024 px + 512 × 512 px',
+    style: 'Painterly Â· ready stance token',
+    resolution: '1024 Ã— 1024 px + 512 Ã— 512 px',
     revisions: '1 of 4 used',
     delivered: 'April 05, 2026',
     tags: ['Hobgoblin', 'Investigator', 'Token', 'Crossbow', 'Pathfinder', 'PFP'],
@@ -501,10 +522,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A **full-body fantasy swordsman** built from a sparse brief and a thick stack of mood boards. Palmer reads as a wandering blade with quiet menace, the kind of character a party picks up in a tavern and learns to fear by the third session. The reference pack carried most of the design weight, leaving the pose and framing for us to dial in until he held his own ground in the composition.",
       "Jordan came in with two sentences and a folder of pictures, which is honestly a comfortable way to work for D&D party portraits. We ran the clean linear pipeline on this one. Sketch first, base color second, render third, final pass last, with a check-in at every stage so nothing surprised him on delivery.",
     ],
-    tools: 'Procreate · Photoshop · Affinity Photo',
+    tools: 'Procreate Â· Photoshop Â· Affinity Photo',
     hours: '14h across 10 days',
-    style: 'Painterly · wandering blade',
-    resolution: '3840 × 5760 px',
+    style: 'Painterly Â· wandering blade',
+    resolution: '3840 Ã— 5760 px',
     revisions: '2 of 4 used',
     delivered: 'March 06, 2026',
     tags: ['Swordsman', 'D&D 5e', 'Full body', 'Painterly', 'Wanderer', 'Character portrait'],
@@ -529,10 +550,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A **full-body fantasy rogue mid-sprint down a back alley**, skirts gathered in both fists, pink mohawk catching the lantern light. The brief opened with a line from the table: \"there is no question when the old lady lifts her skirts she can run.\" That sentence did most of the design work. Everything else came out of holding the energy of an older woman with bad knees and worse intentions moving faster than she has any right to.",
       "Bram played her as a D&D character whose joke kept paying off, and the art had to land the joke without flattening the danger. Two lineart passes locked the silhouette of the sprint, then the alley dropped in behind her with the lighting kept low so the mohawk and the lifted hem read first.",
     ],
-    tools: 'Procreate · Clip Studio Paint · Photoshop',
+    tools: 'Procreate Â· Clip Studio Paint Â· Photoshop',
     hours: '11h across 8 days',
-    style: 'Painterly · punk-noir runner',
-    resolution: '3840 × 5120 px',
+    style: 'Painterly Â· punk-noir runner',
+    resolution: '3840 Ã— 5120 px',
     revisions: '1 of 3 used',
     delivered: 'May 04, 2026',
     tags: ['Rogue', 'D&D 5e', 'Punk', 'Full body', 'Mohawk', 'Alley scene'],
@@ -556,10 +577,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "**Three chibi avatars for a wedding website navigation bar**: Tharriq solo, Laura solo, and a couple piece for the landing page. Transparent backgrounds throughout, eyes open, closed-mouth expressions on both. Tharriq is a longtime MTG player and the head shape stayed flattering but recognizable. Laura wears her armor, which had to read correctly after a GPT mock-up the couple tested came out wrong in the shoulders.",
       "This is the rare commission that has nothing to do with TTRPGs. The use case set the constraints. Small avatars on a navigation bar mean clean silhouettes, no fiddly detail that would die at 64 pixels, and warm enough colors to survive whatever site background the couple picked later. We sketched Tharriq first to lock the face read, did his color pass, then ran Laura's color from the approved sketch in parallel.",
     ],
-    tools: 'Procreate · Photoshop · Krita',
+    tools: 'Procreate Â· Photoshop Â· Krita',
     hours: '9h across 6 days',
-    style: 'Chibi · warm portrait',
-    resolution: '2560 × 2560 px',
+    style: 'Chibi Â· warm portrait',
+    resolution: '2560 Ã— 2560 px',
     revisions: '2 of 3 used',
     delivered: 'March 18, 2026',
     tags: ['Chibi', 'Wedding', 'Avatars', 'Couple portrait', 'Transparent BG', 'Web use'],
@@ -584,10 +605,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A **cyberpunk runner with tech-hair and chemskin**, leaning on a wall with an e-pen between two fingers and zero patience for whoever's about to talk to him. LED ribbons run along a flashier jacket, the kind that pulls more attention than the wearer probably wants. Butterfly swords sit at the hips as a quiet promise. EMP threading runs along one side of his face in fine circuit-like lines.",
       "Reyes wanted cynicism to read before anything else, so the pose did the heavy lifting and the palette followed. The first color pass came in warmer, then the revision pulled everything toward purple, which is what landed for cyberpunk in the way Reyes was running his table.",
     ],
-    tools: 'Photoshop · Clip Studio Paint · Affinity Photo',
+    tools: 'Photoshop Â· Clip Studio Paint Â· Affinity Photo',
     hours: '18h across 14 days',
-    style: 'Neon-noir · cynical runner',
-    resolution: '4096 × 6144 px',
+    style: 'Neon-noir Â· cynical runner',
+    resolution: '4096 Ã— 6144 px',
     revisions: '4 of 5 used',
     delivered: 'February 02, 2026',
     tags: ['Cyberpunk', 'Neon', 'Half body', 'Tech-hair', 'Butterfly swords', 'Purple palette'],
@@ -611,10 +632,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A **shark-folk moon sorcerer mid-performance under a crescent moon**, peace signs out, blue scales catching the stage light, yellow eyes too bright for the rest of her face. Red clothes against the blue sharkskin, teeth a beat too sharp for the smile. The brief from the table called her \"sailor moon with teeth,\" which is the kind of note that does a lot of the design work before you even open the canvas.",
       "Mira plays her in D&D 5e as a manic-pixie front with a quieter sadness underneath. Her party found Coral exiled in another province, still performing every night because the only thing worse than the grief is sitting still with it. The art had to hold both readings at once, the perky stage presence and the thing behind the eyes, without letting either flatten the other.",
     ],
-    tools: 'Procreate · Krita · Photoshop',
+    tools: 'Procreate Â· Krita Â· Photoshop',
     hours: '15h across 11 days',
-    style: 'Stage-lit · manic-pixie horror',
-    resolution: '3840 × 4800 px',
+    style: 'Stage-lit Â· manic-pixie horror',
+    resolution: '3840 Ã— 4800 px',
     revisions: '3 of 5 used',
     delivered: 'May 11, 2026',
     tags: ['Sorcerer', 'D&D 5e', 'Shark-folk', 'Moon magic', 'Half body', 'Stage scene'],
@@ -639,10 +660,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "A **bordeaux-red glaive with forest-green striping, drawn across three escalating stages** for a D&D / Pathfinder item card. Stage 1 is the base weapon, fully rendered, with the blade already producing enough light to blind on a successful strike. Stage 2 stacks daylight on top, with bloom turned up and engraving glow brought forward along the haft. Stage 3 lifts to dawn, with stronger light rays, particle work, and a hotter core inside the blade itself.",
       "Aldric wanted the same silhouette across all three stages so the card would read at a glance, with only the intensity climbing as the player burned through charges. Solar motifs sit etched along the blade and only fully reveal at stage 3 when the engraving lights up. The stages were built as duplicates of the base render rather than separate paintings, which keeps continuity tight and lets the escalation feel like one weapon waking up.",
     ],
-    tools: 'Photoshop · Affinity Photo · Procreate',
+    tools: 'Photoshop Â· Affinity Photo Â· Procreate',
     hours: '13h across 9 days',
-    style: 'Item card · escalating bloom',
-    resolution: '3000 × 4500 px',
+    style: 'Item card Â· escalating bloom',
+    resolution: '3000 Ã— 4500 px',
     revisions: '1 of 4 used',
     delivered: 'March 22, 2026',
     tags: ['Magic item', 'Weapon design', 'Glaive', 'D&D 5e', 'Pathfinder', 'Item card', 'Bordeaux'],
@@ -651,9 +672,9 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
     featured: true,
     heroImage: '/images/portfolio/tyrannosaurus-glaive/hero.webp',
     processImages: [
-      { src: '/images/portfolio/tyrannosaurus-glaive/hero.webp',      label: 'STAGE 3 · DAWN' },
-      { src: '/images/portfolio/tyrannosaurus-glaive/process-1.webp', label: 'STAGE 1 · BASE' },
-      { src: '/images/portfolio/tyrannosaurus-glaive/process-2.webp', label: 'STAGE 2 · DAYLIGHT' },
+      { src: '/images/portfolio/tyrannosaurus-glaive/hero.webp',      label: 'STAGE 3 Â· DAWN' },
+      { src: '/images/portfolio/tyrannosaurus-glaive/process-1.webp', label: 'STAGE 1 Â· BASE' },
+      { src: '/images/portfolio/tyrannosaurus-glaive/process-2.webp', label: 'STAGE 2 Â· DAYLIGHT' },
       { src: '/images/portfolio/tyrannosaurus-glaive/process-3.webp', label: 'COLOR V1.1' },
     ],
     artistNote: "Same blade, three temperatures of light. The engraving only earns its glow at dawn.",
@@ -667,10 +688,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       "An **aging hunter in 19th-century gothic-romantic dress**, half body, long coat falling open at the shoulders, wide-brimmed hat shadowing the upper face, a scythe-style weapon held at rest. Pose matched to the client's reference image down to the angle of the head. The palette stayed muted, mostly cold greys and bone, with the warmest value reserved for the skin of the hands.",
       "Cassian sent this in as souls-style gothic horror fan art, which gave the brief its own visual vocabulary before a single line went down. The age in the face had to feel earned, not just lined, so the underpainting carried more structural shadow than usual before any color sat on top. The coat was rendered with cloth weight in mind, since a younger hunter wouldn't wear it the same way.",
     ],
-    tools: 'Photoshop · Clip Studio Paint · Krita',
+    tools: 'Photoshop Â· Clip Studio Paint Â· Krita',
     hours: '17h across 12 days',
-    style: 'Gothic horror · aging hunter',
-    resolution: '3840 × 4800 px',
+    style: 'Gothic horror Â· aging hunter',
+    resolution: '3840 Ã— 4800 px',
     revisions: '2 of 5 used',
     delivered: 'April 18, 2026',
     tags: ['Hunter', 'Gothic horror', 'Souls-style', 'Half body', 'Fan art', 'Scythe'],
@@ -691,16 +712,16 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
     category: 'Anime',
     client: 'commissioned by Wolf B.',
     description: [
-      "A **young shōnen-anime martial artist**, half body, spiked hair, glasses, blue kimono layered over a purple training gi. One hand held out in a guard stance, weight settled, eyes forward. The reference pack the client sent ran heavy with embedded images, which made matching the silhouette and the gi proportions straightforward once lineart locked.",
+      "A **young shÅnen-anime martial artist**, half body, spiked hair, glasses, blue kimono layered over a purple training gi. One hand held out in a guard stance, weight settled, eyes forward. The reference pack the client sent ran heavy with embedded images, which made matching the silhouette and the gi proportions straightforward once lineart locked.",
       "Wolf commissioned this as cover art for an indie hip-hop release dropping in March, which gave the piece a different center of gravity than a typical portrait commission. The art had to hold up at album-cover scale and read cleanly when cropped for streaming thumbnails, so the lineart stayed bold and the color blocks landed flat before the soft rendering came in on top.",
     ],
-    tools: 'Clip Studio Paint · Photoshop · Procreate',
+    tools: 'Clip Studio Paint Â· Photoshop Â· Procreate',
     hours: '12h across 9 days',
-    style: 'Shōnen anime · cover art',
-    resolution: '4000 × 4000 px',
+    style: 'ShÅnen anime Â· cover art',
+    resolution: '4000 Ã— 4000 px',
     revisions: '2 of 3 used',
     delivered: 'March 18, 2026',
-    tags: ['Anime', 'Shōnen', 'Half body', 'Fan art', 'Cover art', 'Martial artist'],
+    tags: ['Anime', 'ShÅnen', 'Half body', 'Fan art', 'Cover art', 'Martial artist'],
     gradient: 'from-blue-900 via-indigo-700 to-purple-500',
     aspect: '4/5',
     featured: true,
@@ -715,7 +736,10 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
   },
 }
 
-/* ---------- Helpers ---------- */
+/* =====================================================================
+   SYNC HELPERS â€” always return the in-memory snapshot.
+   Use these in client components or anywhere that can't be async.
+   ===================================================================== */
 
 /** All pieces as an array, sorted newest-first by delivered date. */
 export function getAllPieces(): PortfolioPiece[] {
@@ -735,9 +759,12 @@ export function getAllSlugs(): string[] {
   return Object.keys(PORTFOLIO_PIECES)
 }
 
-/** Lookup by slug (returns undefined when missing — caller handles 404). */
+/** Lookup by slug (returns undefined when missing â€” caller handles 404). */
 export function getPieceBySlug(slug: string): PortfolioPiece | undefined {
   return PORTFOLIO_PIECES[slug]
+}
+
+/* =====================================================================
 }
 
 /** Live counts per category (for the masonry filter chips). */

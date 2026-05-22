@@ -13,6 +13,11 @@ import FAQ from '@/components/home/FAQ'
 import CTACloser from '@/components/home/CTACloser'
 import CompassDivider from '@/components/decor/CompassDivider'
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from '@/lib/constants'
+import { fetchFeaturedPieces } from '@/lib/portfolio-pieces-server'
+
+/* ISR — homepage rebuilds at most every 60 seconds so admin portfolio
+ * edits show up in the strip without a redeploy. */
+export const revalidate = 60
 
 export const metadata: Metadata = {
   title: 'Design Vortex — Premium TTRPG, Character Art & VTT Token Commissions',
@@ -43,7 +48,10 @@ export const metadata: Metadata = {
  *   9. FAQ             (6-item accordion + FAQPage JSON-LD)
  *  10. CTA closer      (dark tome bookend)
  */
-export default function HomePage() {
+export default async function HomePage() {
+  /* Featured pieces for the portfolio strip — fetched server-side so the
+   * strip stays a static SSG snapshot that updates with ISR. */
+  const featuredPieces = await fetchFeaturedPieces(8)
   // Organization JSON-LD — Google understands this as the canonical brand entity
   const orgSchema = {
     '@context': 'https://schema.org',
@@ -94,7 +102,7 @@ export default function HomePage() {
         </div>
 
         <PersonaRows />
-        <PortfolioStrip />
+        <PortfolioStrip pieces={featuredPieces} />
         <ProcessSteps />
         <Testimonials />
         <BlogPreview />
