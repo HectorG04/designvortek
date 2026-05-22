@@ -1,9 +1,10 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
 import { revalidatePath } from 'next/cache'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 import AdminShell from '@/components/admin/AdminShell'
 import Markdown from '@/components/ui/Markdown'
-import { Star, Check, X, Trash2, MessageSquare } from 'lucide-react'
+import { Star, Check, X, Trash2, MessageSquare, Pencil, Plus } from 'lucide-react'
 
 export const metadata: Metadata = { title: 'Reviews' }
 
@@ -77,7 +78,20 @@ export default async function ReviewsAdminPage({
   const subtitle = `${total} total · ${pendingCount} pending · ${approvedCount} approved`
 
   return (
-    <AdminShell user={{ email, initials }} title="Reviews" subtitle={subtitle}>
+    <AdminShell
+      user={{ email, initials }}
+      title="Reviews"
+      subtitle={subtitle}
+      actions={
+        <Link
+          href="/admin/reviews/new"
+          className="hidden sm:inline-flex items-center gap-1.5 bg-gold-500 text-ink-900 hover:bg-gold-300 hover:shadow-[0_8px_24px_rgba(201,160,74,0.32)] transition-all px-4 py-2 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em]"
+        >
+          <Plus size={14} strokeWidth={2} />
+          New review
+        </Link>
+      }
+    >
       {/* Filter chips */}
       <div className="flex flex-wrap items-center gap-2 mb-5 px-4 py-3 bg-parchment-100 border border-border-light rounded-xl">
         {FILTERS.map((f) => {
@@ -143,6 +157,7 @@ async function approveReview(id: number) {
   const admin = createAdminClient()
   await admin.from('reviews').update({ is_approved: true }).eq('id', id)
   revalidatePath('/admin/reviews')
+  revalidatePath('/reviews')
 }
 
 async function unapproveReview(id: number) {
@@ -153,6 +168,7 @@ async function unapproveReview(id: number) {
     .update({ is_approved: false, is_featured: false })
     .eq('id', id)
   revalidatePath('/admin/reviews')
+  revalidatePath('/reviews')
 }
 
 async function toggleFeatured(id: number, current: boolean) {
@@ -163,6 +179,7 @@ async function toggleFeatured(id: number, current: boolean) {
     : { is_featured: true, is_approved: true }
   await admin.from('reviews').update(update).eq('id', id)
   revalidatePath('/admin/reviews')
+  revalidatePath('/reviews')
 }
 
 async function deleteReview(id: number) {
@@ -170,6 +187,7 @@ async function deleteReview(id: number) {
   const admin = createAdminClient()
   await admin.from('reviews').delete().eq('id', id)
   revalidatePath('/admin/reviews')
+  revalidatePath('/reviews')
 }
 
 /* ---------- Card ---------- */
@@ -311,10 +329,17 @@ function ReviewCard({ review }: { review: ReviewRow }) {
           </button>
         </form>
 
-        <form
-          action={deleteReview.bind(null, review.id)}
-          className="ml-auto"
+        <Link
+          href={`/admin/reviews/${review.id}/edit`}
+          aria-label="Edit review"
+          title="Edit"
+          className="ml-auto inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md border-[1.5px] border-border-light bg-parchment-50 text-ink-700 hover:border-burgundy-700 hover:text-burgundy-700 transition-colors text-[0.6875rem] font-semibold uppercase tracking-[0.1em]"
         >
+          <Pencil size={12} strokeWidth={1.8} />
+          Edit
+        </Link>
+
+        <form action={deleteReview.bind(null, review.id)}>
           <button
             type="submit"
             aria-label="Delete review"
