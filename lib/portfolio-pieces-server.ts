@@ -40,6 +40,7 @@ type PortfolioRow = {
   tags: string[] | null
   commissioned_by: string | null
   tools_used: string | null
+  hours_spent: number | null
   style: string | null
   is_featured: boolean
   is_published: boolean
@@ -49,23 +50,50 @@ type PortfolioRow = {
 function rowToPiece(row: PortfolioRow): PortfolioPiece | null {
   if (!row.slug || !row.title || !row.image_url) return null
   const meta = (row.meta ?? {}) as Record<string, unknown>
+  const metaProcess = Array.isArray(meta.processImages)
+    ? (meta.processImages as { src: string; label: string }[])
+    : []
 
-  /* meta.paragraphs is the canonical 2-paragraph description; fall back to
-   * splitting the single description column on blank lines if absent. */
+  /* PRIORITY RULE: editable row fields win over seeded meta fields. So
+   * when admin updates the form, the public site reflects the change.
+   * meta values are kept as fallbacks for fields the admin form doesn't
+   * yet expose (artistNote, gradient, aspect, resolution, revisions,
+   * delivered) and as a graceful default when a row field is empty. */
+
+  /* Description: prefer the row.description text (split on blank lines
+   * into the 2-paragraph shape the public uses). Fall back to the seeded
+   * meta.paragraphs if admin hasn't typed anything yet. */
+  const rowParagraphs = (row.description ?? '').split(/\n\s*\n/).map((s) => s.trim()).filter(Boolean)
   const paragraphs =
-    Array.isArray(meta.paragraphs) && meta.paragraphs.every((s) => typeof s === 'string')
-      ? (meta.paragraphs as string[])
-      : (row.description ?? '').split(/\n\s*\n/).filter(Boolean)
+    rowParagraphs.length > 0
+      ? rowParagraphs
+      : Array.isArray(meta.paragraphs) && meta.paragraphs.every((s) => typeof s === 'string')
+        ? (meta.paragraphs as string[])
+        : []
 
-  /* processImages may live in meta (preferred — preserves labels) or in
-   * additional_images as a flat array (labels lost). */
+  /* processImages: prefer the row.additional_images URL list (one URL
+   * per line in the admin form). For each URL, try to match it against
+   * the seeded meta.processImages to preserve its label; otherwise fall
+   * back to a positional or generic label. When the admin clears the
+   * field entirely, fall back to the seeded meta list. */
+  const additionalUrls = row.additional_images ?? []
   const processImages =
-    Array.isArray(meta.processImages)
-      ? (meta.processImages as { src: string; label: string }[])
-      : (row.additional_images ?? []).map((src, i) => ({
-          src,
-          label: i === 0 ? 'FINAL' : `STAGE ${i + 1}`,
-        }))
+    additionalUrls.length > 0
+      ? additionalUrls.map((src, i) => {
+          const matchedByUrl = metaProcess.find((m) => m.src === src)
+          if (matchedByUrl) return { src, label: matchedByUrl.label }
+          const positional = metaProcess[i]?.label
+          return { src, label: positional ?? (i === 0 ? 'FINAL' : `STAGE ${i + 1}`) }
+        })
+      : metaProcess
+
+  /* Hours: admin form writes an integer to row.hours_spent. If they've
+   * set it, render a clean "Nh" string. Otherwise show the seeded
+   * meta.hoursText ("16h across 12 days"). */
+  const hours =
+    row.hours_spent != null && row.hours_spent > 0
+      ? `${row.hours_spent}h`
+      : ((meta.hoursText as string) ?? '')
 
   const VALID_CATEGORIES = ['Character Art', 'Tokens', 'Portraits', 'Anime', 'Custom'] as const
   const category = (VALID_CATEGORIES.includes(row.category as PortfolioPiece['category'])
@@ -81,11 +109,13 @@ function rowToPiece(row: PortfolioRow): PortfolioPiece | null {
     slug: row.slug,
     title: row.title,
     category,
-    client: (meta.client as string) ?? row.commissioned_by ?? '',
+    /* Row first, meta as fallback for every admin-editable field below. */
+    client: row.commissioned_by ?? (meta.client as string) ?? '',
     description: paragraphs,
-    tools: (meta.toolsText as string) ?? row.tools_used ?? '',
-    hours: (meta.hoursText as string) ?? '',
-    style: (meta.styleText as string) ?? row.style ?? '',
+    tools: row.tools_used ?? (meta.toolsText as string) ?? '',
+    hours,
+    style: row.style ?? (meta.styleText as string) ?? '',
+    /* Below: not yet in the admin form — meta-only for now. */
     resolution: (meta.resolution as string) ?? '',
     revisions: (meta.revisions as string) ?? '',
     delivered: (meta.delivered as string) ?? '',
@@ -100,7 +130,7 @@ function rowToPiece(row: PortfolioRow): PortfolioPiece | null {
 }
 
 const COLUMNS =
-  'slug,title,category,description,image_url,additional_images,tags,commissioned_by,tools_used,style,is_featured,is_published,meta'
+  'slug,title,category,description,image_url,additional_images,tags,commissioned_by,tools_used,hours_spent,style,is_featured,is_published,meta'
 
 /** All published pieces, sorted newest-first by meta.delivered. Falls back
  *  to the in-memory snapshot if Supabase returns 0 rows or errors. */
