@@ -25,7 +25,7 @@ export default function ServicesPreview() {
         <SectionHead
           eyebrow="What we create"
           title={<>Three signature <em>services</em></>}
-          description="Hand-painted character art, VTT tokens, and party illustrations. Each held to the same craft. Browse all buckets for NPC packs, maps, subscriptions, and commercial work."
+          description="Painterly portraits, virtual tokens, and group illustrations — each held to the same craft. Choose what fits, or commission something custom."
         />
 
         {/* Cards grid — .hp-services-grid: 3-col → 1-col under 900px */}
@@ -111,7 +111,7 @@ export default function ServicesPreview() {
             href="/services"
             className="inline-flex items-center gap-2 text-[0.75rem] uppercase tracking-[0.15em] font-semibold text-burgundy-700 hover:text-burgundy-500 hover:gap-3.5 transition-all duration-150"
           >
-            Browse every service bucket <ArrowRight size={14} strokeWidth={1.8} />
+            See all five services <ArrowRight size={14} strokeWidth={1.8} />
           </Link>
         </div>
       </Container>

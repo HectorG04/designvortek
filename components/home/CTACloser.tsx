@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { ArrowRight, Check } from 'lucide-react'
-import Button, { LinkButton } from '@/components/ui/Button'
+import { LinkButton } from '@/components/ui/Button'
 import PaperTexture from '@/components/decor/PaperTexture'
 
 const TRUST = [
@@ -82,9 +82,9 @@ export default function CTACloser() {
             Start commission
             <ArrowRight size={14} strokeWidth={1.8} />
           </LinkButton>
-          <Button variant="outline-cream" size="lg">
+          <LinkButton href="/contact" variant="outline-cream" size="lg">
             Ask a question
-          </Button>
+          </LinkButton>
         </motion.div>
 
         <motion.div

@@ -20,14 +20,14 @@ import { fetchFeaturedPieces } from '@/lib/portfolio-pieces-server'
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Design Vortex â€” Hand-painted Character Art, VTT Tokens & Commissions',
+  title: 'Design Vortex — Premium art commissions for tabletop, anime & beyond',
   description:
-    'Hand-painted TTRPG character portraits, VTT tokens, party illustrations, NPC packs, maps and bespoke art. Commissions from $25. Genre-agnostic, hand-drawn, never AI.',
+    'Painterly TTRPG portraits, VTT tokens, party illustrations and custom art — crafted by hand. Commissions from $60, monthly subscriptions from $30. 7–14 day turnaround.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Design Vortex â€” Hand-painted Character Art & Commissions',
+    title: 'Design Vortex — Premium art commissions for tabletop, anime & beyond',
     description:
-      'Hand-painted TTRPG character portraits, tokens, party illustrations, NPC packs and bespoke art. Never AI.',
+      'Painterly TTRPG portraits, VTT tokens, party illustrations and custom art — crafted by hand. Commissions from $60, monthly subscriptions from $30.',
     url: SITE_URL,
     type: 'website',
   },
@@ -102,6 +102,11 @@ export default async function HomePage() {
         </div>
 
         <PersonaRows />
+
+        <div className="bg-parchment-50">
+          <CompassDivider />
+        </div>
+
         <PortfolioStrip pieces={featuredPieces} />
         <ProcessSteps />
         <Testimonials />
