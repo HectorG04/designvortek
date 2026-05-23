@@ -105,7 +105,7 @@ export const FEATURED_SERVICES = [
     sub: 'your hero, painted',
     body: 'Full-figure portrait, head to toe. Painterly rendering, dramatic lighting, the character in their world.',
     features: ['Basic · Standard · Premium tiers', '7 to 14 day turnaround', '4K final delivery'],
-    price: 'From $120',
+    price: '$120',
     href: '/services/character-work',
   },
   {
@@ -114,7 +114,7 @@ export const FEATURED_SERVICES = [
     sub: 'table-ready',
     body: 'A single character token painted from scratch for the virtual tabletop. Built for the circle, not cropped.',
     features: ['512 + 1024 px exports', 'Transparent PNG ready for Roll20 & Foundry', 'Bulk + bundle discounts'],
-    price: 'From $40',
+    price: '$40',
     href: '/services/tokens',
   },
   {
@@ -123,7 +123,7 @@ export const FEATURED_SERVICES = [
     sub: 'the whole gang',
     body: 'Group illustration of an adventuring party, family, or wedding party. Up to 8 figures, consistent style.',
     features: ['Up to 4 figures included', '14 to 21 day turnaround', 'Print-ready files'],
-    price: 'From $350',
+    price: '$350',
     href: '/services/party-work',
   },
 ] as const
