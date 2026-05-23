@@ -1,30 +1,37 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import PageHero from '@/components/layout/PageHero'
 import Container from '@/components/ui/Container'
-import SectionHead from '@/components/ui/SectionHead'
 import SectionLabel from '@/components/ui/SectionLabel'
 import Markdown from '@/components/ui/Markdown'
 import PaperTexture from '@/components/decor/PaperTexture'
 import USDDisclaimer from '@/components/ui/USDDisclaimer'
+import { fetchAllProducts } from '@/lib/services-server'
+import { fetchAllAddons } from '@/lib/addons-server'
+import { formatTurnaround, type ServiceProduct } from '@/lib/services'
 import {
-  BUCKETS,
-  bucketLabel,
-  fetchBucketProducts,
-  formatTurnaround,
-  type ServiceBucket,
-  type ServiceProduct,
-} from '@/lib/services-server'
-import { cn } from '@/lib/utils'
+  Zap,
+  Layers,
+  Globe,
+  RefreshCcw,
+  Circle as CircleIcon,
+  Image as ImageIcon,
+} from 'lucide-react'
 
 /* =====================================================================
-   PRICING â€” CMS-backed, restructured into 6 per-bucket sections.
+   PRICING — canonical Pricing.html (Latest 23 may 2026) port.
 
-   Each section lists every product in the bucket with a price card
-   shaped by the product's pricing_mode. Six pricing-mode renderers
-   below cover the cheatsheet from the Services Restructure Brief.
+   Layout:
+     01  Hero
+     02  USD disclaimer
+     03  "At a glance" index strip (8 jump-link cards)
+     04  Bucket 1 — One-off commissions (7 curated products)
+     05  Bucket 2 — Monthly subscription (2 tiers, parchment-100 bg)
+     06  Add-ons grid (6 cards from `addons` table)
+     07  "Something bigger?" custom quote block
+     08  Pricing FAQ (side card + accordion)
 
    ISR keeps the page fresh against admin edits at most every 60s.
    ===================================================================== */
@@ -32,26 +39,47 @@ import { cn } from '@/lib/utils'
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Pricing Â· Design Vortex',
+  title: 'Pricing · Design Vortex',
   description:
-    'Transparent USD pricing across 5 buckets: character work, party work, GM/world-building, tokens, and subscriptions. Commercial license is +40% of base. Flat-rate quotes, 2 revisions, 30% deposit.',
+    'Transparent flat-rate pricing across every service. Character portraits from $60, full-body from $120, reference sheets $250–$450, NPC packs from $220, monthly subscriptions from $30. No surprises.',
   alternates: { canonical: '/pricing' },
 }
 
-const ArrowRightMd = () => (
-  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
-    <path d="M5 12h14M13 6l6 6-6 6" />
-  </svg>
-)
+/* The 7 curated products surfaced on the pricing page (canonical). The
+ * remaining 10 products live in /services/[bucket] detail pages. */
+const ONE_OFF_SLUGS = [
+  'character-portrait-bust',
+  'character-art-full-body',
+  'character-reference-sheet',
+  'vtt-token-single',
+  'party-portrait',
+  'npc-pack',
+  'battle-map',
+] as const
+
+const INDEX_CARDS = [
+  { label: 'Character work', name: 'Portrait',        price: 'From $60',      anchor: 'character-portrait-bust' },
+  { label: 'Character work', name: 'Full-body',       price: 'From $120',     anchor: 'character-art-full-body' },
+  { label: 'Character work', name: 'Reference sheet', price: '$250 – $450',   anchor: 'character-reference-sheet' },
+  { label: 'Tabletop',       name: 'VTT tokens',      price: 'From $25',      anchor: 'vtt-token-single' },
+  { label: 'Group work',     name: 'Party portrait',  price: 'From $350',     anchor: 'party-portrait' },
+  { label: 'Campaign',       name: 'NPC pack',        price: 'From $220',     anchor: 'npc-pack' },
+  { label: 'Campaign',       name: 'Battle map',      price: 'From $150',     anchor: 'battle-map' },
+  { label: 'Monthly',        name: 'Subscription',    price: 'From $30 / mo', anchor: 'subscription' },
+]
 
 const FAQ: { q: string; a: string }[] = [
   {
     q: 'Why flat-rate instead of hourly?',
-    a: 'Because you deserve to know the price before we start. Hourly billing punishes care, the artist who polishes for an extra two hours should not cost you more. Fixed scope, fixed price, every time.',
+    a: "Because you deserve to know the price before we start. Hourly billing punishes care, the artist who polishes for an extra two hours should not cost you more. Fixed scope, fixed price, every time.",
   },
   {
-    q: 'How does payment work?',
-    a: 'A **30% deposit** holds your slot. The deposit becomes non-refundable once we send the first sketch. The remaining balance is due on delivery. All payments through Stripe, including cards, Apple Pay, and Google Pay.',
+    q: 'How does payment work on a one-off commission?',
+    a: 'A **30% deposit** holds your slot (refundable until first sketch). The remaining 70% on delivery. All payments through Stripe — cards, Apple Pay, Google Pay, all common methods.',
+  },
+  {
+    q: 'How does a subscription bill?',
+    a: 'Subscriptions bill the full month upfront on signup — no deposit, no separate delivery charge. Each cycle is billed on the same day. Pause any time; the next cycle skips and you are not charged for it.',
   },
   {
     q: 'What if I need to cancel?',
@@ -67,15 +95,57 @@ const FAQ: { q: string; a: string }[] = [
   },
 ]
 
+const ArrowRightMd = () => (
+  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+    <path d="M5 12h14M13 6l6 6-6 6" />
+  </svg>
+)
+
+const ClockSvg = () => (
+  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" /><path d="M12 7v5l3 3" />
+  </svg>
+)
+
+const CheckSvg = () => (
+  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 flex-shrink-0 text-gold-700" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+    <path d="M5 12l5 5L20 7" />
+  </svg>
+)
+
+const ADDON_ICONS: Record<string, React.ComponentType<{ className?: string; size?: number; strokeWidth?: number }>> = {
+  rush:       Zap,
+  psd:        Layers,
+  commercial: Globe,
+  revision:   RefreshCcw,
+  token:      CircleIcon,
+  print:      ImageIcon,
+}
+
+/* =====================================================================
+   Page
+   ===================================================================== */
 export default async function PricingPage() {
-  const bucketProducts = await fetchBucketProducts()
-  const visibleBuckets = BUCKETS.filter((b) => (bucketProducts[b.slug]?.length ?? 0) > 0)
+  const [allProducts, addons] = await Promise.all([
+    fetchAllProducts(),
+    fetchAllAddons(),
+  ])
+
+  const productBySlug = new Map(allProducts.map((p) => [p.slug, p]))
+  const oneOffProducts = ONE_OFF_SLUGS
+    .map((slug) => productBySlug.get(slug))
+    .filter((p): p is ServiceProduct => p != null)
+  const subscriptionProducts = allProducts
+    .filter((p) => p.bucket === 'subscription')
+    .sort((a, b) => a.sortOrder - b.sortOrder)
+  const tokenBundle = productBySlug.get('character-token-bundle')
 
   return (
     <>
       <SiteHeader />
       <main id="main" className="bg-parchment-50">
 
+        {/* 01 — Hero */}
         <PageHero
           eyebrow="Pricing"
           title={
@@ -84,11 +154,11 @@ export default async function PricingPage() {
               <em className="font-display italic font-medium text-burgundy-700">No surprises.</em>
             </>
           }
-          description="Flat-rate quotes, fixed scopes, no hourly games. Every price below is what you'll actually pay. The quote you approve is the price we charge."
+          description="Flat-rate quotes on one-off commissions, predictable monthly bundles on subscriptions. The quote you approve is the price we charge — no hourly games, no scope creep, no sneaking surcharges onto delivery."
         />
 
-        {/* USD disclaimer just below the hero */}
-        <section className="pb-10">
+        {/* 02 — USD disclaimer */}
+        <section className="pb-8">
           <Container>
             <div className="flex justify-center">
               <USDDisclaimer variant="block" />
@@ -96,27 +166,156 @@ export default async function PricingPage() {
           </Container>
         </section>
 
-        {/* Per-bucket sections */}
+        {/* 03 — Index strip "At a glance" */}
+        <section className="pb-12 md:pb-16">
+          <Container>
+            <div className="mb-7">
+              <div className="mb-2">
+                <SectionLabel>Jump to a price</SectionLabel>
+              </div>
+              <h2 className="font-display font-semibold text-ink-900 leading-[1.15] tracking-tight [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700"
+                  style={{ fontSize: 'clamp(1.5rem, 2.4vw, 1.875rem)' }}>
+                At a <em>glance</em>
+              </h2>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5">
+              {INDEX_CARDS.map((card) => (
+                <a
+                  key={card.anchor}
+                  href={`#${card.anchor}`}
+                  className="flex flex-col gap-1.5 px-5 py-[18px] bg-parchment-100 border border-border-light rounded-md no-underline text-ink-900 hover:-translate-y-0.5 hover:border-gold-500 hover:shadow-[0_6px_18px_rgba(0,0,0,0.06)] transition-[transform,border-color,box-shadow] duration-150"
+                >
+                  <span className="font-body text-[0.6875rem] font-bold uppercase tracking-[0.08em] text-ink-500">
+                    {card.label}
+                  </span>
+                  <span className="font-display text-xl leading-[1.2]">{card.name}</span>
+                  <span className="font-display text-burgundy-700 text-base mt-1">{card.price}</span>
+                </a>
+              ))}
+            </div>
+          </Container>
+        </section>
+
+        {/* 04 — Bucket 1: One-off commissions */}
         <section className="pb-16 md:pb-24">
           <Container>
-            <div className="flex flex-col gap-20">
-              {visibleBuckets.map((bucket) => {
-                const products = bucketProducts[bucket.slug] ?? []
+            <BucketHead
+              eyebrow="One-off commissions"
+              titleStart="Pay "
+              titleEm="once"
+              titleEnd=", own forever"
+              description="Fixed-price commissions for the pieces you'll commission once and live with for years. Two revisions on every character tier, 30% deposit to hold the slot, balance due on delivery."
+            />
+            <div className="flex flex-col gap-16">
+              {oneOffProducts.map((product) => (
+                <ProductBlock
+                  key={product.slug}
+                  product={product}
+                  tokenBundle={product.slug === 'vtt-token-single' ? tokenBundle : undefined}
+                />
+              ))}
+            </div>
+          </Container>
+        </section>
+
+        {/* 05 — Bucket 2: Monthly subscription (parchment-100 bg) */}
+        <section id="subscription" className="bg-parchment-100 py-16 md:py-24">
+          <Container>
+            <BucketHead
+              eyebrow="Monthly subscription"
+              titleStart="Your campaign's "
+              titleEm="steady supply"
+              description="For active GMs who burn through tokens and NPCs faster than the party burns through hit points. Hand-painted, delivered the 15th of every month, pause whenever the table goes on hiatus."
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-[780px] mx-auto">
+              {subscriptionProducts.map((p, i) => (
+                <SubscriptionTierCard key={p.slug} product={p} featured={i === 1} />
+              ))}
+            </div>
+            <p className="text-center max-w-[60ch] mx-auto mt-8 text-ink-500 text-[0.9375rem] leading-[1.6]">
+              Cycles ship the 15th of each month. Subscriptions bill the full month upfront on signup — no deposit. See the{' '}
+              <Link href="/subscription" className="text-burgundy-700 underline underline-offset-4 hover:text-burgundy-500">
+                full subscription page
+              </Link>{' '}
+              for cadence, swap rules, and what&apos;s intentionally outside the plan.
+            </p>
+          </Container>
+        </section>
+
+        {/* 06 — Add-ons */}
+        <section className="pb-16 md:pb-24 pt-16 md:pt-24">
+          <Container>
+            <div className="text-center max-w-[640px] mx-auto mb-12">
+              <div className="mb-3 inline-flex"><SectionLabel>Add-ons</SectionLabel></div>
+              <h2 className="font-display font-semibold text-ink-900 leading-[1.1] tracking-tight mb-3 [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700"
+                  style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+                Optional <em>extras</em>
+              </h2>
+              <p className="text-ink-500 leading-[1.65]">Tweaks and upgrades available on any one-off commission.</p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-[1080px] mx-auto">
+              {addons.map((addon) => {
+                const Icon = ADDON_ICONS[addon.slug] ?? Zap
                 return (
-                  <BucketSection
-                    key={bucket.slug}
-                    slug={bucket.slug}
-                    label={bucket.label}
-                    tagline={bucket.tagline}
-                    products={products}
-                  />
+                  <div
+                    key={addon.slug}
+                    className="bg-parchment-50 border border-border-light rounded-xl p-6 flex gap-4 items-start"
+                  >
+                    <span className="w-10 h-10 rounded-md bg-gold-100 text-gold-700 inline-flex items-center justify-center flex-shrink-0">
+                      <Icon size={18} strokeWidth={1.5} />
+                    </span>
+                    <div className="flex-1">
+                      <div className="font-display text-[1.125rem] font-semibold text-ink-900 leading-snug">{addon.name}</div>
+                      <p className="text-[0.875rem] text-ink-700 leading-[1.55] mt-1">{addon.description}</p>
+                      <div className="font-display text-burgundy-700 text-[1rem] font-semibold mt-2">
+                        {addon.displayText}
+                      </div>
+                    </div>
+                  </div>
                 )
               })}
             </div>
           </Container>
         </section>
 
-        {/* Pricing FAQ */}
+        {/* 07 — "Something bigger?" custom quote block */}
+        <section className="pb-16 md:pb-24">
+          <Container>
+            <div className="relative overflow-hidden bg-tome-950 text-cream-50 rounded-3xl px-8 py-10 md:px-14 md:py-12">
+              <PaperTexture variant="cream" opacity={0.35} />
+              <div className="relative grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 items-center">
+                <div>
+                  <div className="text-[0.75rem] uppercase tracking-[0.14em] text-gold-glow font-semibold mb-3">
+                    Custom projects
+                  </div>
+                  <h3 className="font-display font-semibold leading-[1.15] mb-3 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-gold-glow"
+                      style={{ fontSize: 'clamp(1.75rem, 3vw, 2.25rem)' }}>
+                    Something <em>bigger</em>?
+                  </h3>
+                  <p className="text-cream-200 leading-[1.65] max-w-[58ch]">
+                    Book covers, indie game asset packs, merch design, concept art, or commissions over $1,000 — let&apos;s talk. Custom scopes get custom quotes, and frequent collaborators get retainer arrangements.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-3 lg:items-end">
+                  <Link
+                    href="/order"
+                    className="inline-flex items-center justify-center gap-2 bg-gold-500 text-ink-900 hover:bg-gold-300 transition-colors px-7 py-3.5 rounded-full text-[0.8125rem] font-semibold uppercase tracking-[0.12em] whitespace-nowrap"
+                  >
+                    Request a custom quote <ArrowRightMd />
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="inline-flex items-center justify-center gap-2 border border-cream-200 text-cream-50 hover:bg-cream-50 hover:text-ink-900 transition-colors px-6 py-3 rounded-full text-[0.75rem] font-semibold uppercase tracking-[0.12em] whitespace-nowrap"
+                  >
+                    Email hello@designvortek.com
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </Container>
+        </section>
+
+        {/* 08 — Pricing FAQ */}
         <section className="pb-16 md:pb-24">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-12 lg:gap-16 max-w-[1080px] mx-auto">
@@ -131,7 +330,7 @@ export default async function PricingPage() {
                   The fine <em>print</em>
                 </h2>
                 <p className="text-ink-500 leading-[1.65] mb-5">
-                  Common questions about payment, refunds, and what&rsquo;s covered.
+                  Common questions about payment, refunds, subscriptions, and what&rsquo;s covered.
                 </p>
                 <Link
                   href="/faq"
@@ -168,30 +367,6 @@ export default async function PricingPage() {
           </Container>
         </section>
 
-        {/* CTA closer */}
-        <section className="relative bg-tome-950 text-cream-50 py-16 md:py-20 text-center overflow-hidden">
-          <PaperTexture variant="cream" opacity={0.5} />
-          <div className="relative">
-            <Container>
-              <h2
-                className="font-display font-semibold text-cream-50 leading-[1.15] tracking-tight mb-4 mx-auto max-w-[28ch] [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-gold-glow"
-                style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)' }}
-              >
-                Send a <em>brief</em>, get a fixed quote.
-              </h2>
-              <p className="text-base text-cream-200 leading-relaxed max-w-[52ch] mx-auto mb-7">
-                48 hours to a quote. 30% deposit holds your slot. Refundable until first sketch.
-              </p>
-              <Link
-                href="/order"
-                className="inline-flex items-center justify-center gap-2 bg-gold-500 text-ink-900 px-9 py-[18px] rounded-full font-body text-[0.8125rem] font-semibold uppercase tracking-[0.12em] hover:bg-gold-300 hover:-translate-y-px transition-all"
-              >
-                Start commission <ArrowRightMd />
-              </Link>
-            </Container>
-          </div>
-        </section>
-
       </main>
       <SiteFooter />
     </>
@@ -199,109 +374,124 @@ export default async function PricingPage() {
 }
 
 /* =====================================================================
-   BucketSection â€” one bucket with all its products laid out beneath.
+   BucketHead — the two big section headers (.pr-bucket-head)
    ===================================================================== */
-function BucketSection({
-  slug,
-  label,
-  tagline,
-  products,
+function BucketHead({
+  eyebrow,
+  titleStart,
+  titleEm,
+  titleEnd,
+  description,
 }: {
-  slug: ServiceBucket
-  label: string
-  tagline: string
-  products: ServiceProduct[]
+  eyebrow: string
+  titleStart: string
+  titleEm: string
+  titleEnd?: string
+  description: string
 }) {
-  const sectionHref =
-    slug === 'subscription' ? '/subscription' :
-    `/services/${slug}`
-
   return (
-    <div>
-      <div className="flex flex-wrap justify-between items-end gap-4 pb-4 mb-7 border-b border-border-light">
-        <div>
-          <div className="font-display text-[2rem] font-semibold text-ink-900 leading-[1.1]">
-            {label}
-          </div>
-          <div className="font-accent text-[1.25rem] text-burgundy-700">{tagline}</div>
-        </div>
-        <Link
-          href={sectionHref}
-          className="inline-flex items-center gap-1.5 text-[0.75rem] font-semibold uppercase tracking-[0.12em] text-burgundy-700 hover:gap-2.5 transition-all"
-        >
-          See full {label.toLowerCase()} <ArrowRightMd />
-        </Link>
-      </div>
-
-      <div className="flex flex-col gap-10">
-        {products.map((product) => (
-          <ProductRow key={product.slug} product={product} />
-        ))}
-      </div>
+    <div className="flex flex-col gap-2 pb-7 border-b border-border-light mb-12">
+      <div className="inline-flex"><SectionLabel>{eyebrow}</SectionLabel></div>
+      <h2 className="font-display font-semibold leading-[1.1] text-ink-900 [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700"
+          style={{ fontSize: 'clamp(2rem, 3.2vw, 2.5rem)' }}>
+        {titleStart}<em>{titleEm}</em>{titleEnd ?? ''}
+      </h2>
+      <p className="text-ink-700 max-w-[60ch] leading-[1.6]">{description}</p>
     </div>
   )
 }
 
 /* =====================================================================
-   ProductRow â€” name + pricing card per product.
+   ProductBlock — one product, matching .bd-product layout.
+   Includes the optional token-bundle callout for VTT Tokens.
    ===================================================================== */
-function ProductRow({ product }: { product: ServiceProduct }) {
+function ProductBlock({
+  product,
+  tokenBundle,
+}: {
+  product: ServiceProduct
+  tokenBundle?: ServiceProduct
+}) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr] gap-6 items-start">
-      <div>
-        <h3 className="font-display text-xl font-semibold text-ink-900 leading-snug">
-          {product.name}
-        </h3>
-        {product.eyebrow && (
-          <div className="font-accent text-base text-burgundy-700 mt-0.5">
-            {product.eyebrow}
-          </div>
-        )}
-        <p className="text-[0.875rem] text-ink-500 mt-2 leading-[1.6]">
-          {product.lede}
-        </p>
-        <div className="mt-3 text-[0.75rem] text-ink-500 font-mono">
-          Turnaround:{' '}
-          <strong className="font-display text-ink-700 font-semibold">
-            {formatTurnaround(product)}
-          </strong>
-          {product.revisionsIncluded != null && (
-            <>
-              {' Â· '}
-              {product.revisionsIncluded} {product.revisionsIncluded === 1 ? 'revision' : 'revisions'} included
-            </>
+    <div id={product.slug} className="scroll-mt-28">
+      {/* Head: H2 + best-for + turnaround pill */}
+      <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
+        <div>
+          <h2 className="font-display text-[1.75rem] sm:text-[2rem] font-semibold text-ink-900 leading-[1.15]">
+            {product.name}
+          </h2>
+          {product.eyebrow && (
+            <div className="font-accent text-burgundy-700 text-[1.125rem] mt-0.5">
+              {product.eyebrow}
+            </div>
           )}
         </div>
+        <div className="inline-flex items-center gap-1.5 text-[0.8125rem] text-ink-500 bg-parchment-100 border border-border-light rounded-full px-3 py-1.5">
+          <ClockSvg />
+          Turnaround <strong className="text-ink-900 font-semibold ml-1">{formatTurnaround(product)}</strong>
+        </div>
       </div>
 
+      {/* Lede */}
+      {product.lede && (
+        <p className="text-ink-700 leading-[1.65] max-w-[68ch] mb-6">{product.lede}</p>
+      )}
+
+      {/* Token-bundle callout — only for vtt-token-single block */}
+      {tokenBundle && (
+        <div className="bg-tome-950 text-cream-50 rounded-2xl px-6 py-5 md:px-8 md:py-6 flex flex-wrap items-center justify-between gap-4 mb-5">
+          <div>
+            <h4 className="font-display text-[1.25rem] font-semibold leading-snug [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-gold-glow">
+              Bundle: add a matching <em>token</em> to any portrait
+            </h4>
+            <p className="text-cream-200 text-[0.9375rem] leading-[1.5] mt-1 max-w-[60ch]">
+              One flat price on top of any portrait tier. Circular crop, VTT-scaled, transparent PNG. Same character, same painting, ready the day the portrait ships.
+            </p>
+          </div>
+          <div className="font-display text-[1.75rem] font-semibold text-gold-glow whitespace-nowrap">
+            + ${tokenBundleUplift(tokenBundle)}
+          </div>
+        </div>
+      )}
+
+      {/* Pricing display by mode */}
       <PricingDisplay product={product} />
+
+      {/* Party portrait per-extra footnote */}
+      {product.slug === 'party-portrait' && (
+        <div className="bg-parchment-100 border-l-[3px] border-gold-500 px-5 py-3.5 rounded-r-md text-[0.9375rem] text-ink-700 leading-[1.5] mt-5">
+          <strong className="font-display text-[1.0625rem] text-burgundy-700">5th+ figure:</strong>{' '}
+          each additional party member adds <strong>+$80 to $120</strong> depending on tier complexity. Quoted exactly before paint begins.
+        </div>
+      )}
     </div>
   )
 }
 
+function tokenBundleUplift(bundle: ServiceProduct): number {
+  if (bundle.pricing.mode === 'flat') return bundle.pricing.flat.price
+  if (bundle.bundleUpliftCents != null) return Math.round(bundle.bundleUpliftCents / 100)
+  return 25
+}
+
 /* =====================================================================
-   PricingDisplay â€” same per-mode renderer used by /services/[slug],
-   stripped down for the pricing page (no examples, no FAQ inline).
+   PricingDisplay — pricing card per mode
    ===================================================================== */
 function PricingDisplay({ product }: { product: ServiceProduct }) {
   const p = product.pricing
-
   switch (p.mode) {
     case 'tiered': {
       return (
-        <div className={cn(
-          'grid gap-4',
-          p.tiers.length === 2 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-3',
-        )}>
+        <div className={`grid gap-4 ${p.tiers.length === 2 ? 'grid-cols-1 sm:grid-cols-2 max-w-[720px]' : 'grid-cols-1 sm:grid-cols-3'}`}>
           {p.tiers.map((tier) => (
             <div
               key={tier.name}
-              className={cn(
-                'relative rounded-2xl px-7 py-8 flex flex-col gap-4',
-                tier.featured
+              className={
+                'relative rounded-2xl px-7 py-8 flex flex-col gap-4 ' +
+                (tier.featured
                   ? 'bg-parchment-50 border border-gold-500 shadow-[0_8px_24px_rgba(201,160,74,0.18)]'
-                  : 'bg-parchment-100 border border-border-light',
-              )}
+                  : 'bg-parchment-100 border border-border-light')
+              }
             >
               {tier.flag && (
                 <span className="absolute -top-2.5 right-6 bg-gold-500 text-ink-900 font-body text-[0.625rem] font-bold uppercase tracking-[0.15em] px-2.5 py-1 rounded-full">
@@ -309,24 +499,18 @@ function PricingDisplay({ product }: { product: ServiceProduct }) {
                 </span>
               )}
               <div>
-                <div className="font-display text-2xl font-semibold text-ink-900">
-                  {tier.name}
-                </div>
-                {tier.note && (
-                  <div className="font-accent text-base text-burgundy-700 -mt-1">
-                    {tier.note}
-                  </div>
-                )}
+                <div className="font-display text-2xl font-semibold text-ink-900">{tier.name}</div>
+                {tier.note && <div className="font-accent text-base text-burgundy-700 -mt-1">{tier.note}</div>}
               </div>
               <div className="flex items-baseline gap-2 py-3 border-y border-dashed border-border-light">
-                <span className="font-display text-[2.75rem] font-semibold text-ink-900 leading-none tracking-[-0.02em]">
+                <span className="font-display text-[2.75rem] font-semibold text-ink-900 leading-none -tracking-[0.02em]">
                   ${tier.price}
                 </span>
               </div>
               <ul className="flex flex-col gap-2.5 list-none p-0 m-0 flex-1">
                 {tier.features.slice(0, 4).map((f) => (
                   <li key={f} className="flex gap-2.5 items-start text-[0.9375rem] text-ink-700 leading-[1.4]">
-                    <span className="text-gold-700 flex-shrink-0">âœ“</span>
+                    <CheckSvg />
                     <span>{f}</span>
                   </li>
                 ))}
@@ -338,127 +522,200 @@ function PricingDisplay({ product }: { product: ServiceProduct }) {
     }
     case 'range': {
       return (
-        <CompactPrice
-          primary={`From $${p.range.low}`}
-          secondary={`to $${p.range.high}`}
-          note="Quoted inside this range per brief."
-        />
-      )
-    }
-    case 'per_extra': {
-      return (
-        <CompactPrice
-          primary={`From $${p.per_extra.base}`}
-          secondary={`+$${p.per_extra.extra_low}â€“${p.per_extra.extra_high} per extra`}
-          note={p.per_extra.extra_label}
+        <BdCard
+          heading={product.name}
+          body={product.included[0]?.body ?? 'Quoted inside this range per brief.'}
+          bullets={[
+            'Base: 3 views, single outfit, neutral expressions ($250)',
+            'Upper end: 4 views, alt outfit, expression studies, detail call-outs ($450)',
+          ]}
+          priceNum={`$${p.range.low} – $${p.range.high}`}
+          priceNote="scoped per brief"
+          ctaLabel="Request a quote"
+          ctaHref="/order"
         />
       )
     }
     case 'pack_with_qty': {
       return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {p.pack.packs.map((pk) => (
-            <div
-              key={pk.qty}
-              className="bg-parchment-100 border border-border-light rounded-2xl px-7 py-8 flex flex-col gap-3"
-            >
-              <div className="font-display text-2xl font-semibold text-ink-900">
-                {pk.qty}-pack
-              </div>
-              <div className="flex items-baseline gap-2 py-3 border-y border-dashed border-border-light">
-                <span className="font-display text-[2.75rem] font-semibold text-ink-900 leading-none tracking-[-0.02em]">
-                  ${pk.price}
-                </span>
-                <span className="text-[0.875rem] text-ink-500">
-                  Â· ${Math.round(pk.price / pk.qty)}/piece
-                </span>
-              </div>
-              {pk.label && <p className="text-[0.875rem] text-ink-500">{pk.label}</p>}
-            </div>
-          ))}
-        </div>
-      )
-    }
-    case 'pct_uplift': {
-      return (
-        <CompactPrice
-          primary={`+${p.uplift.percent}%`}
-          secondary={p.uplift.label ?? 'of base job price'}
-          note="Applied on top of the standard quote for commercially-used pieces."
+        <BdCard
+          heading={product.name}
+          body="Pick the volume that fits the campaign. Each piece delivered with matching color treatment and border style across the set."
+          stack={p.pack.packs.map((pk) => ({
+            label: pk.label ?? `${pk.qty} ${product.name.toLowerCase()}`,
+            price: `$${pk.price}`,
+          }))}
+          priceNum={p.pack.packs.map((pk) => `$${pk.price}`).join(' / ')}
+          priceNote={`${p.pack.packs.length} quantities`}
+          ctaLabel="Start a pack"
+          ctaHref="/order"
         />
       )
     }
-    case 'monthly_recurring': {
-      return (
-        <div className="bg-parchment-100 border border-border-light rounded-2xl px-7 py-8 flex flex-col gap-4">
-          <div className="flex items-baseline gap-2 pb-3 border-b border-dashed border-border-light">
-            <span className="font-display text-[2.5rem] font-semibold text-ink-900 leading-none tracking-[-0.02em]">
-              ${p.monthly.monthly_price}
-            </span>
-            <span className="text-[0.875rem] text-ink-500">/ month</span>
-          </div>
-          <ul className="flex flex-col gap-2.5 list-none p-0 m-0">
-            {p.monthly.included.map((i) => (
-              <li key={i} className="flex gap-2.5 items-start text-[0.9375rem] text-ink-700 leading-[1.4]">
-                <span className="text-gold-700 flex-shrink-0">âœ“</span>
-                <span>{i}</span>
-              </li>
-            ))}
-          </ul>
-          {p.monthly.cadence && (
-            <p className="text-[0.875rem] text-ink-500 italic">{p.monthly.cadence}</p>
-          )}
-        </div>
-      )
-    }
     case 'quote_only': {
-      const fromLine = p.quote.from_price != null ? `From $${p.quote.from_price}` : 'Custom quote'
       return (
-        <div className="bg-parchment-100 border border-border-light rounded-2xl px-7 py-8 flex flex-col gap-4">
-          <div className="font-display text-2xl font-semibold text-ink-900">{fromLine}</div>
-          <p className="text-[0.9375rem] text-ink-700 leading-[1.55]">
-            Pricing varies per brief. Send the details and we send a fixed quote within 48 hours.
-          </p>
-          {p.quote.cta_label && p.quote.cta_href && (
-            <Link
-              href={p.quote.cta_href}
-              className="inline-flex items-center gap-2 self-start mt-1 bg-burgundy-700 text-cream-50 px-5 py-2.5 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em] hover:bg-burgundy-500 transition-all"
-            >
-              {p.quote.cta_label}
-            </Link>
-          )}
-        </div>
+        <BdCard
+          heading={product.name}
+          body="Quote-based pricing because the scope varies wildly with size, detail, and label count. Send a brief and the studio will quote within 48 hours."
+          bullets={[
+            'Most small encounter maps land $150 – $300',
+            'Multi-room dungeons or overworlds: $400+',
+          ]}
+          priceNum={p.quote.from_price != null ? `From $${p.quote.from_price}` : 'Custom quote'}
+          priceNote="request a quote"
+          ctaLabel={p.quote.cta_label ?? 'Send a brief'}
+          ctaHref={p.quote.cta_href ?? '/order'}
+        />
       )
     }
     case 'flat': {
       return (
-        <CompactPrice
-          primary={`$${p.flat.price}`}
-          secondary={p.flat.label ?? ''}
+        <BdCard
+          heading={product.name}
+          body={product.lede ?? ''}
+          priceNum={`$${p.flat.price}`}
+          priceNote={p.flat.label ?? 'flat price'}
+          ctaLabel="Order"
+          ctaHref="/order"
         />
       )
     }
+    case 'per_extra': {
+      return (
+        <BdCard
+          heading={product.name}
+          body={`Base price includes the first figure. Each extra adds $${p.per_extra.extra_low}–$${p.per_extra.extra_high}.`}
+          priceNum={`From $${p.per_extra.base}`}
+          priceNote={`+$${p.per_extra.extra_low}–${p.per_extra.extra_high} per extra`}
+          ctaLabel="Request a quote"
+          ctaHref="/order"
+        />
+      )
+    }
+    case 'pct_uplift':
+    case 'monthly_recurring':
+    default:
+      return null
   }
 }
 
-function CompactPrice({
-  primary,
-  secondary,
-  note,
+/* =====================================================================
+   BdCard — single-row pricing card (.bd-card)
+   ===================================================================== */
+function BdCard({
+  heading,
+  body,
+  bullets,
+  stack,
+  priceNum,
+  priceNote,
+  ctaLabel,
+  ctaHref,
 }: {
-  primary: string
-  secondary?: string
-  note?: string | null
+  heading: string
+  body: string
+  bullets?: string[]
+  stack?: { label: string; price: string }[]
+  priceNum: string
+  priceNote: string
+  ctaLabel: string
+  ctaHref: string
 }) {
   return (
-    <div className="bg-parchment-100 border border-border-light rounded-2xl px-7 py-8 flex flex-col gap-4">
-      <div className="flex items-baseline gap-2 pb-3 border-b border-dashed border-border-light">
-        <span className="font-display text-[2.75rem] font-semibold text-ink-900 leading-none tracking-[-0.02em]">
-          {primary}
-        </span>
-        {secondary && <span className="text-[0.875rem] text-ink-500">{secondary}</span>}
+    <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6 bg-parchment-100 border border-border-light rounded-2xl px-6 py-7 md:px-8 md:py-9">
+      <div>
+        <h4 className="font-display text-[1.25rem] font-semibold text-ink-900 leading-snug mb-2">{heading}</h4>
+        <p className="text-[0.9375rem] text-ink-700 leading-[1.55] mb-3">{body}</p>
+        {bullets && bullets.length > 0 && (
+          <ul className="flex flex-col gap-2 list-none p-0 m-0 mt-3">
+            {bullets.map((b) => (
+              <li key={b} className="flex gap-2.5 items-start text-[0.9375rem] text-ink-700 leading-[1.4]">
+                <CheckSvg />
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {stack && stack.length > 0 && (
+          <div className="flex flex-col gap-2 mt-3">
+            {stack.map((row) => (
+              <div key={row.label} className="flex items-center justify-between gap-3 bg-parchment-50 border border-border-light rounded-md px-4 py-2.5">
+                <span className="text-[0.9375rem] text-ink-700">{row.label}</span>
+                <strong className="font-display text-burgundy-700 text-[1.0625rem]">{row.price}</strong>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
-      {note && <p className="text-[0.875rem] text-ink-700 leading-[1.5]">{note}</p>}
+      <div className="lg:border-l lg:border-border-light lg:pl-6 flex flex-col justify-center gap-2">
+        <span className="font-display text-[2rem] font-semibold text-burgundy-700 leading-none -tracking-[0.015em]">
+          {priceNum}
+        </span>
+        <span className="text-[0.8125rem] text-ink-500">{priceNote}</span>
+        <Link
+          href={ctaHref}
+          className="self-start mt-3 inline-flex items-center gap-2 bg-burgundy-700 text-cream-50 hover:bg-burgundy-500 transition-colors px-5 py-2.5 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em]"
+        >
+          {ctaLabel}
+        </Link>
+      </div>
+    </div>
+  )
+}
+
+/* =====================================================================
+   SubscriptionTierCard — Companion / GM tier
+   ===================================================================== */
+function SubscriptionTierCard({ product, featured }: { product: ServiceProduct; featured: boolean }) {
+  if (product.pricing.mode !== 'monthly_recurring') return null
+  const m = product.pricing.monthly
+  return (
+    <div
+      className={
+        'relative rounded-2xl px-7 py-8 flex flex-col gap-4 ' +
+        (featured
+          ? 'bg-parchment-50 border border-gold-500 shadow-[0_8px_24px_rgba(201,160,74,0.18)]'
+          : 'bg-parchment-50 border border-border-light')
+      }
+    >
+      {featured && (
+        <span className="absolute -top-2.5 right-6 bg-gold-500 text-ink-900 font-body text-[0.625rem] font-bold uppercase tracking-[0.15em] px-2.5 py-1 rounded-full">
+          Most picked
+        </span>
+      )}
+      <div>
+        <div className="font-display text-2xl font-semibold text-ink-900">
+          {product.name.replace(/^Campaign Companion.*?(·|\.)?\s*/, '') || product.name}
+        </div>
+        {product.eyebrow && (
+          <div className="font-accent text-base text-burgundy-700 -mt-1">{product.eyebrow}</div>
+        )}
+      </div>
+      <div className="flex items-baseline gap-2 py-3 border-y border-dashed border-border-light">
+        <span className="font-display text-[2.5rem] font-semibold text-ink-900 leading-none -tracking-[0.02em]">
+          ${m.monthly_price}
+        </span>
+        <span className="text-[0.875rem] text-ink-500">/ month</span>
+      </div>
+      <ul className="flex flex-col gap-2.5 list-none p-0 m-0 flex-1">
+        {m.included.map((i) => (
+          <li key={i} className="flex gap-2.5 items-start text-[0.9375rem] text-ink-700 leading-[1.4]">
+            <CheckSvg />
+            <span>{i}</span>
+          </li>
+        ))}
+      </ul>
+      <Link
+        href="/subscription"
+        className={
+          'inline-flex items-center justify-center px-5 py-2.5 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em] mt-1 ' +
+          (featured
+            ? 'bg-burgundy-700 text-cream-50 hover:bg-burgundy-500'
+            : 'border border-burgundy-700 text-burgundy-700 hover:bg-burgundy-700 hover:text-cream-50')
+        }
+      >
+        Start {product.name.includes('GM') ? 'GM tier' : 'Companion'}
+      </Link>
     </div>
   )
 }
