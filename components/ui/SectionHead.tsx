@@ -69,7 +69,7 @@ export default function SectionHead({
             ? 'text-[2.5rem] md:text-[clamp(2.5rem,5.5vw,4.5rem)]'
             : 'text-[2rem] md:text-[clamp(2rem,4vw,3rem)]',
           // Color: default ink-900; em italic burgundy-700 (or gold-glow on dark sections — handled via parent class override)
-          'text-ink-900 [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700',
+          'text-ink-900 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700',
         )}
       >
         {title}

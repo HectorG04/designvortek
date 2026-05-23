@@ -186,9 +186,9 @@ function FeaturedCard({ post }: { post: BlogPost }) {
       href={`/blog/${post.slug}`}
       className="group block bg-parchment-100 border border-border-light rounded-2xl overflow-hidden mb-14 transition-shadow hover:shadow-[0_16px_40px_-8px_rgba(30,20,8,0.18)] hover:border-border-medium"
     >
-      <div className="grid lg:grid-cols-[1.1fr_1fr] gap-0">
+      <div className="grid md:grid-cols-[1.1fr_1fr] gap-0">
         <div
-          className="relative aspect-[16/9] lg:aspect-[16/11]"
+          className="relative aspect-[16/9] md:aspect-[16/11]"
           style={
             post.featuredImage
               ? { backgroundImage: `url(${post.featuredImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }
@@ -203,9 +203,9 @@ function FeaturedCard({ post }: { post: BlogPost }) {
           </span>
         </div>
 
-        <div className="p-7 sm:p-10 lg:p-12 flex flex-col justify-center gap-4">
+        <div className="p-7 sm:p-12 flex flex-col justify-center gap-4">
           <h2
-            className="font-display font-semibold text-ink-900 leading-[1.15] tracking-tight"
+            className="font-display font-semibold text-ink-900 leading-[1.15] tracking-tight [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700"
             style={{ fontSize: 'clamp(1.875rem, 3.5vw, 2.5rem)' }}
           >
             {post.title}

@@ -91,7 +91,7 @@ export default function PortfolioStrip({ pieces }: PortfolioStripProps) {
                   href={`/portfolio/${piece.slug}`}
                   className={cn(
                     'group relative block rounded-lg overflow-hidden border border-border-light cursor-pointer aspect-[4/5]',
-                    'hover:shadow-lg transition-shadow duration-250',
+                    'hover:shadow-lg transition-shadow duration-[250ms]',
                     'bg-gradient-to-br',
                     piece.gradient
                   )}
@@ -109,7 +109,7 @@ export default function PortfolioStrip({ pieces }: PortfolioStripProps) {
 
                   {/* Hover overlay — linear-gradient transparent → tome 85% */}
                   <div
-                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-250 flex flex-col justify-end p-5"
+                    className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-[250ms] flex flex-col justify-end p-5"
                     style={{
                       background:
                         'linear-gradient(180deg, transparent 50%, rgba(26, 19, 12, 0.85) 100%)',

@@ -9,6 +9,7 @@ import PageHero from '@/components/layout/PageHero'
 import Container from '@/components/ui/Container'
 import Button from '@/components/ui/Button'
 import Markdown from '@/components/ui/Markdown'
+import PaperTexture from '@/components/decor/PaperTexture'
 import { cn } from '@/lib/utils'
 
 /* ============================================================
@@ -182,29 +183,29 @@ export default function FaqPage() {
           description="Pricing, process, revisions, licensing, refunds. If you've thought it, someone's asked it — and the answer's here."
         />
 
-        {/* Search bar */}
-        <section className="pb-12">
+        {/* Search bar — matches .fq-search: 560px max, 1.5px border, parchment-100 bg, 14px/50px padding */}
+        <section className="pb-14">
           <Container>
-            <div className="max-w-2xl mx-auto relative">
+            <div className="max-w-[560px] mx-auto relative">
               <Search
-                size={18}
+                size={20}
                 strokeWidth={1.8}
-                className="absolute left-5 top-1/2 -translate-y-1/2 text-ink-400 pointer-events-none"
+                className="absolute left-[18px] top-1/2 -translate-y-1/2 text-ink-500 pointer-events-none"
               />
               <input
                 type="search"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Search the FAQ&hellip;"
-                className="w-full bg-parchment-50 border border-border-light hover:border-border-medium focus:border-burgundy-700 focus:outline-none focus:ring-0 rounded-full pl-14 pr-6 py-4 text-base text-ink-900 placeholder:text-ink-400 transition-colors"
+                className="w-full bg-parchment-100 border-[1.5px] border-border-light hover:border-border-medium focus:border-burgundy-500 focus:bg-parchment-50 focus:outline-none focus:shadow-[0_0_0_3px_var(--color-burgundy-100)] rounded-full pl-[50px] pr-[18px] py-[14px] font-body text-base text-ink-900 placeholder:text-ink-400 transition-colors"
                 aria-label="Search FAQ"
               />
             </div>
           </Container>
         </section>
 
-        {/* FAQ layout */}
-        <section className="pb-20 md:pb-28">
+        {/* FAQ layout — sticky category nav + accordion list */}
+        <section className="pb-16 md:pb-24">
           <Container>
             <div className="grid lg:grid-cols-[220px_1fr] gap-12 lg:gap-16 max-w-5xl mx-auto">
               {/* Sticky category nav */}
@@ -246,7 +247,7 @@ export default function FaqPage() {
               {/* Accordion */}
               <div className="flex flex-col gap-3">
                 {filtered.length === 0 && (
-                  <div className="text-center py-12 text-ink-500 bg-parchment-50 border border-border-light rounded-xl">
+                  <div className="text-center py-12 text-ink-500 bg-parchment-50 border border-border-light rounded-lg">
                     No questions match your search.
                   </div>
                 )}
@@ -256,7 +257,7 @@ export default function FaqPage() {
                     <div
                       key={`${item.category}-${idx}`}
                       className={cn(
-                        'rounded-xl border transition-colors',
+                        'rounded-lg border overflow-hidden transition-colors',
                         isOpen
                           ? 'bg-parchment-50 border-border-medium shadow-sm'
                           : 'bg-parchment-100 border-border-light hover:border-border-medium'
@@ -268,7 +269,7 @@ export default function FaqPage() {
                         aria-expanded={isOpen}
                         className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 cursor-pointer"
                       >
-                        <span className="font-display text-lg md:text-xl font-semibold text-ink-900 leading-snug">
+                        <span className="font-display text-[1.25rem] font-semibold text-ink-900 leading-[1.3]">
                           {item.q}
                         </span>
                         <span
@@ -293,7 +294,7 @@ export default function FaqPage() {
                             style={{ overflow: 'hidden' }}
                           >
                             {/* Answer rendered through Markdown component — inline links and bold survive */}
-                            <div className="px-6 pb-5 text-ink-700 leading-[1.7] max-w-[64ch]">
+                            <div className="px-6 pb-[22px] text-base text-ink-700 leading-[1.7] max-w-[64ch]">
                               <Markdown>{item.a}</Markdown>
                             </div>
                           </motion.div>
@@ -307,27 +308,31 @@ export default function FaqPage() {
           </Container>
         </section>
 
-        {/* Still have questions */}
-        <section className="bg-parchment-100 py-20 border-t border-border-light">
+        {/* Still wondering — dark tome panel matches .pr-custom from design */}
+        <section className="pb-24 md:pb-28">
           <Container>
-            <div className="max-w-3xl mx-auto bg-parchment-50 border border-border-light rounded-2xl p-8 md:p-12 flex flex-col md:flex-row gap-8 items-start md:items-center justify-between">
-              <div>
-                <div className="text-[0.6875rem] uppercase tracking-[0.18em] font-semibold text-gold-700 mb-3">
+            <div className="relative bg-tome-950 text-cream-50 rounded-2xl overflow-hidden grid gap-8 items-center md:grid-cols-[1.4fr_1fr] p-8 md:p-12 lg:p-14">
+              <PaperTexture variant="cream" opacity={0.4} />
+              <div className="relative">
+                <div className="text-[0.6875rem] uppercase tracking-[0.18em] font-semibold text-gold-glow mb-3">
                   Still wondering?
                 </div>
-                <h3 className="font-display text-2xl md:text-3xl font-semibold text-ink-900 leading-snug mb-3">
-                  Have a question we <em className="font-display italic font-medium text-burgundy-700">missed</em>?
+                <h3
+                  className="font-display font-semibold text-cream-50 leading-[1.1] tracking-tight mb-3 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-gold-glow"
+                  style={{ fontSize: 'clamp(1.875rem, 3.5vw, 2.5rem)' }}
+                >
+                  Couldn&apos;t find <em>your answer</em>?
                 </h3>
-                <p className="text-ink-700 leading-relaxed max-w-[48ch]">
-                  Send a note — we usually reply within 48 hours, and the answer often becomes a new FAQ entry.
+                <p className="text-base text-cream-200 leading-[1.6] max-w-[48ch]">
+                  Send us a note. We usually reply within 48 hours, and the answer often becomes a new FAQ entry.
                 </p>
               </div>
-              <div className="flex flex-col sm:flex-row gap-3 flex-shrink-0">
-                <Button href="/contact" variant="primary" size="md">
+              <div className="relative flex flex-col gap-[10px] md:self-end">
+                <Button href="/contact" variant="gold" size="lg">
                   Send a message <ArrowRight size={14} strokeWidth={1.8} />
                 </Button>
-                <Button href="/order" variant="outline" size="md">
-                  Start a commission
+                <Button href="/order" variant="outline-cream" size="lg">
+                  Start a commission <ArrowRight size={14} strokeWidth={1.8} />
                 </Button>
               </div>
             </div>

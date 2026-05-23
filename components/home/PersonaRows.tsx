@@ -55,14 +55,14 @@ export default function PersonaRows() {
                   : 'lg:grid-cols-[1fr_1.1fr]'
               )}
             >
-              {/* Image — aspect 5/4, rounded-2xl, 1px border, padding 20px.
+              {/* Image — aspect 4/3, rounded-2xl, 1px border, padding 20px.
                  If `image` is set on the persona, an <Image> renders on top
                  of the gradient backdrop; gradient stays visible behind any
                  letter-boxed edges (object-contain) or absent in cover mode. */}
               <motion.div
                 variants={fadeUp}
                 className={cn(
-                  'relative rounded-2xl overflow-hidden aspect-[5/4] border border-border-light flex items-end p-5',
+                  'relative rounded-2xl overflow-hidden aspect-[4/3] max-h-[420px] border border-border-light flex items-end p-5',
                   p.reverse && 'lg:order-2'
                 )}
                 style={{ background: personaBackgrounds[p.bg] }}
@@ -101,16 +101,14 @@ export default function PersonaRows() {
                 </div>
 
                 {/* Title: 2.25rem font-display semibold ink-900, em italic burgundy-700 */}
-                <h3 className="font-display text-3xl md:text-4xl font-semibold text-ink-900 leading-[1.1] tracking-tight mb-2">
+                <h3 className="font-display text-[2.25rem] font-semibold text-ink-900 leading-[1.1] tracking-tight mb-2 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700">
                   {p.title}{' '}
-                  <em className="font-display italic font-medium text-burgundy-700">
-                    {p.titleEm}
-                  </em>
+                  <em>{p.titleEm}</em>
                   {'titleAfter' in p && p.titleAfter ? p.titleAfter : ''}
                 </h3>
 
                 {/* Sub: Caveat italic 1.375rem burgundy-700 */}
-                <p className="font-accent text-2xl text-burgundy-700 mb-4">
+                <p className="font-accent text-[1.375rem] text-burgundy-700 mb-4">
                   {p.sub}
                 </p>
 

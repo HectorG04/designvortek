@@ -47,7 +47,7 @@ export default function ServicesPreview() {
                 className="group bg-parchment-50 border border-border-light rounded-2xl p-8 flex flex-col gap-3.5 hover:border-border-medium hover:shadow-md transition-[box-shadow,border-color]"
               >
                 {/* Icon: 44×44 rounded-md bg-gold-100 color gold-700 */}
-                <div className="w-11 h-11 rounded-lg bg-gold-100 flex items-center justify-center text-gold-700 mb-1">
+                <div className="w-11 h-11 rounded-md bg-gold-100 flex items-center justify-center text-gold-700 mb-1">
                   <Icon size={22} strokeWidth={1.5} />
                 </div>
 
@@ -57,12 +57,12 @@ export default function ServicesPreview() {
                 </h4>
 
                 {/* Sub: Caveat italic 1.125rem burgundy-700, margin-top -4px */}
-                <p className="font-accent text-xl text-burgundy-700 -mt-1">
+                <p className="font-accent text-[1.125rem] text-burgundy-700 -mt-1">
                   {service.sub}
                 </p>
 
                 {/* Body: text-body-md ink-700 1.6 line-height */}
-                <p className="text-base text-ink-700 leading-relaxed">
+                <p className="text-base text-ink-700 leading-[1.6]">
                   {service.body}
                 </p>
 
@@ -84,9 +84,9 @@ export default function ServicesPreview() {
                 </ul>
 
                 {/* Footer: pt-4 border-t — price + Explore link */}
-                <div className="mt-auto pt-5 border-t border-border-light flex items-center justify-between gap-3 flex-nowrap">
+                <div className="mt-auto pt-4 border-t border-border-light flex items-center justify-between gap-3 flex-nowrap">
                   <div className="inline-flex items-baseline gap-2.5 min-w-0">
-                    <span className="font-body text-[0.625rem] font-bold uppercase tracking-[0.18em] text-ink-500 whitespace-nowrap">
+                    <span className="font-body text-[0.625rem] font-bold uppercase tracking-[0.15em] text-gold-700 whitespace-nowrap">
                       Starting at
                     </span>
                     <span className="font-display text-[1.625rem] font-semibold text-ink-900 leading-none -tracking-[0.01em]">

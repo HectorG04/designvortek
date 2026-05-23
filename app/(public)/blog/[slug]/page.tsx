@@ -121,13 +121,13 @@ export default async function BlogPostPage({ params }: PageProps) {
         <article>
           <header className="pt-6 pb-10">
             <Container>
-              <div className="max-w-3xl mx-auto text-center">
-                <span className="inline-block bg-burgundy-100 text-burgundy-700 text-[0.625rem] tracking-[0.18em] uppercase font-bold px-3 py-1.5 rounded-full mb-6">
+              <div className="max-w-[760px] mx-auto text-center">
+                <span className="inline-block bg-burgundy-100 text-burgundy-700 text-[0.75rem] tracking-[0.15em] uppercase font-semibold px-3 py-1 rounded-full mb-6">
                   {post.category}
                 </span>
                 <h1
-                  className="font-display font-semibold text-ink-900 leading-[1.1] tracking-tight mb-6"
-                  style={{ fontSize: 'clamp(2rem, 4.5vw, 3.5rem)' }}
+                  className="font-display font-semibold text-ink-900 leading-[1.1] tracking-tight mb-6 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700"
+                  style={{ fontSize: 'clamp(2.25rem, 5vw, 3.75rem)' }}
                 >
                   {post.title}
                 </h1>
@@ -148,7 +148,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           {/* Featured image */}
           <Container>
             <div
-              className="max-w-4xl mx-auto aspect-[16/9] rounded-2xl overflow-hidden mb-12 md:mb-16"
+              className="max-w-[960px] mx-auto aspect-[16/9] rounded-xl border border-border-light overflow-hidden mb-12 md:mb-16"
               style={
                 post.featuredImage
                   ? { backgroundImage: `url(${post.featuredImage})`, backgroundSize: 'cover', backgroundPosition: 'center' }
@@ -164,11 +164,11 @@ export default async function BlogPostPage({ params }: PageProps) {
                 className={cn(
                   'max-w-prose mx-auto font-body text-ink-700 leading-[1.8] text-[1.0625rem]',
                   '[&_p]:mb-5',
-                  '[&_h2]:font-display [&_h2]:text-3xl md:[&_h2]:text-[2rem] [&_h2]:font-semibold [&_h2]:text-ink-900 [&_h2]:leading-tight [&_h2]:mt-12 [&_h2]:mb-5 [&_h2]:tracking-tight',
-                  '[&_h3]:font-display [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:text-ink-900 [&_h3]:leading-snug [&_h3]:mt-10 [&_h3]:mb-4 [&_h3]:tracking-tight',
-                  '[&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-6 [&_ul]:space-y-2.5 [&_ul]:marker:text-burgundy-700',
-                  '[&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-6 [&_ol]:space-y-2.5 [&_ol]:marker:text-burgundy-700',
-                  '[&_blockquote]:my-10 [&_blockquote]:pl-6 [&_blockquote]:border-l-2 [&_blockquote]:border-gold-500 [&_blockquote]:font-display [&_blockquote]:italic [&_blockquote]:text-2xl md:[&_blockquote]:text-[1.75rem] [&_blockquote]:leading-snug [&_blockquote]:text-ink-900',
+                  '[&_h2]:font-display [&_h2]:text-[2rem] [&_h2]:font-semibold [&_h2]:text-ink-900 [&_h2]:leading-[1.2] [&_h2]:mt-[2em] [&_h2]:mb-[0.5em] [&_h2]:tracking-tight',
+                  '[&_h3]:font-display [&_h3]:text-2xl [&_h3]:font-semibold [&_h3]:text-ink-900 [&_h3]:leading-snug [&_h3]:mt-[1.75em] [&_h3]:mb-4 [&_h3]:tracking-tight',
+                  '[&_ul]:list-disc [&_ul]:pl-6 [&_ul]:mb-6 [&_ul]:space-y-2 [&_ul]:marker:text-burgundy-700',
+                  '[&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:mb-6 [&_ol]:space-y-2 [&_ol]:marker:text-burgundy-700',
+                  '[&_blockquote]:my-[2em] [&_blockquote]:px-10 [&_blockquote]:py-8 [&_blockquote]:bg-gold-100 [&_blockquote]:border-l-[3px] [&_blockquote]:border-gold-500 [&_blockquote]:rounded-md [&_blockquote]:font-display [&_blockquote]:italic [&_blockquote]:text-2xl [&_blockquote]:leading-[1.45] [&_blockquote]:text-ink-900',
                 )}
               >
                 <Markdown>{post.body}</Markdown>
@@ -179,15 +179,14 @@ export default async function BlogPostPage({ params }: PageProps) {
           {/* Author bio */}
           <div className="pb-16">
             <Container>
-              <div className="max-w-3xl mx-auto">
-                <div className="h-px bg-border-light mb-10" />
-                <aside className="flex flex-col sm:flex-row gap-5 items-start bg-parchment-50 border border-border-light rounded-2xl p-6 md:p-8">
+              <div className="max-w-[680px] mx-auto">
+                <aside className="flex flex-col sm:flex-row gap-5 items-start bg-parchment-100 border border-border-light rounded-xl p-8">
                   <div className="flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br from-burgundy-700 to-gold-700 text-cream-50 font-display text-2xl font-semibold inline-flex items-center justify-center">
                     {STUDIO_AUTHOR.initials}
                   </div>
                   <div>
-                    <h4 className="font-display text-xl font-semibold text-ink-900 mb-2">{post.authorName}</h4>
-                    <p className="text-sm text-ink-700 leading-relaxed">{STUDIO_AUTHOR.bio}</p>
+                    <h4 className="font-display text-xl font-semibold text-ink-900 mb-1">{post.authorName}</h4>
+                    <p className="text-[0.9375rem] text-ink-500 leading-[1.55]">{STUDIO_AUTHOR.bio}</p>
                   </div>
                 </aside>
               </div>

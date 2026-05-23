@@ -41,7 +41,7 @@ export default function FAQ() {
             <div className="mb-3">
               <SectionLabel>Common questions</SectionLabel>
             </div>
-            <h2 className="font-display text-[2rem] md:text-[clamp(2rem,4vw,3rem)] font-semibold text-ink-900 leading-[1.1] tracking-tight mb-4 [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700">
+            <h2 className="font-display text-[2rem] md:text-[clamp(2rem,4vw,3rem)] font-semibold text-ink-900 leading-[1.1] tracking-tight mb-4 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700">
               Quick answers, no <em>fluff</em>
             </h2>
             <p className="text-base text-ink-500 leading-[1.65] mb-5">
@@ -98,7 +98,7 @@ export default function FAQ() {
                         transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
                         style={{ overflow: 'hidden' }}
                       >
-                        <div className="px-6 pb-5 text-base text-ink-700 leading-[1.7] max-w-[64ch]">
+                        <div className="px-6 pb-[22px] text-base text-ink-700 leading-[1.7] max-w-[64ch]">
                           <Markdown>{item.a}</Markdown>
                         </div>
                       </motion.div>

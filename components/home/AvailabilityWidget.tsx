@@ -92,7 +92,7 @@ export default function AvailabilityWidget() {
           </div>
 
           {/* Footer line */}
-          <div className="text-center text-base text-ink-500 px-3 pt-3 pb-6">
+          <div className="text-center text-[0.875rem] text-ink-500 px-3 pt-3 pb-6">
             <strong className="text-ink-700 font-semibold">{bookedCount} of {CURRENT_AVAILABILITY.total}</strong> {CURRENT_AVAILABILITY.month.split(' ')[0]} slots booked &middot; {remaining} remaining &middot; June waitlist now open
           </div>
 

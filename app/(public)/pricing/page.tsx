@@ -291,38 +291,42 @@ function PricingDisplay({ product }: { product: ServiceProduct }) {
     case 'tiered': {
       return (
         <div className={cn(
-          'grid gap-3',
+          'grid gap-4',
           p.tiers.length === 2 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-3',
         )}>
           {p.tiers.map((tier) => (
             <div
               key={tier.name}
               className={cn(
-                'relative rounded-2xl p-5 flex flex-col gap-2.5',
+                'relative rounded-2xl px-7 py-8 flex flex-col gap-4',
                 tier.featured
                   ? 'bg-parchment-50 border border-gold-500 shadow-[0_8px_24px_rgba(201,160,74,0.18)]'
                   : 'bg-parchment-100 border border-border-light',
               )}
             >
               {tier.flag && (
-                <span className="absolute -top-2.5 right-4 bg-gold-500 text-ink-900 font-body text-[0.625rem] font-bold uppercase tracking-[0.15em] px-2.5 py-1 rounded-full">
+                <span className="absolute -top-2.5 right-6 bg-gold-500 text-ink-900 font-body text-[0.625rem] font-bold uppercase tracking-[0.15em] px-2.5 py-1 rounded-full">
                   {tier.flag}
                 </span>
               )}
               <div>
-                <div className="font-display text-[1.0625rem] font-semibold text-ink-900">
+                <div className="font-display text-2xl font-semibold text-ink-900">
                   {tier.name}
                 </div>
-                {tier.note && <div className="text-[0.75rem] text-burgundy-700">{tier.note}</div>}
+                {tier.note && (
+                  <div className="font-accent text-base text-burgundy-700 -mt-1">
+                    {tier.note}
+                  </div>
+                )}
               </div>
-              <div className="flex items-baseline gap-1.5 py-2 border-y border-dashed border-border-light">
-                <span className="font-display text-[1.75rem] font-semibold text-ink-900 leading-none tracking-[-0.02em]">
+              <div className="flex items-baseline gap-2 py-3 border-y border-dashed border-border-light">
+                <span className="font-display text-[2.75rem] font-semibold text-ink-900 leading-none tracking-[-0.02em]">
                   ${tier.price}
                 </span>
               </div>
-              <ul className="flex flex-col gap-1.5 list-none p-0 m-0">
+              <ul className="flex flex-col gap-2.5 list-none p-0 m-0 flex-1">
                 {tier.features.slice(0, 4).map((f) => (
-                  <li key={f} className="flex gap-2 items-start text-[0.8125rem] text-ink-700 leading-[1.4]">
+                  <li key={f} className="flex gap-2.5 items-start text-[0.9375rem] text-ink-700 leading-[1.4]">
                     <span className="text-gold-700 flex-shrink-0">✓</span>
                     <span>{f}</span>
                   </li>
@@ -353,24 +357,24 @@ function PricingDisplay({ product }: { product: ServiceProduct }) {
     }
     case 'pack_with_qty': {
       return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {p.pack.packs.map((pk) => (
             <div
               key={pk.qty}
-              className="bg-parchment-100 border border-border-light rounded-2xl p-5 flex flex-col gap-1.5"
+              className="bg-parchment-100 border border-border-light rounded-2xl px-7 py-8 flex flex-col gap-3"
             >
-              <div className="font-display text-[1.0625rem] font-semibold text-ink-900">
+              <div className="font-display text-2xl font-semibold text-ink-900">
                 {pk.qty}-pack
               </div>
-              <div className="flex items-baseline gap-2 py-2 border-y border-dashed border-border-light">
-                <span className="font-display text-[1.75rem] font-semibold text-ink-900 leading-none tracking-[-0.02em]">
+              <div className="flex items-baseline gap-2 py-3 border-y border-dashed border-border-light">
+                <span className="font-display text-[2.75rem] font-semibold text-ink-900 leading-none tracking-[-0.02em]">
                   ${pk.price}
                 </span>
-                <span className="text-xs text-ink-500">
+                <span className="text-[0.875rem] text-ink-500">
                   · ${Math.round(pk.price / pk.qty)}/piece
                 </span>
               </div>
-              {pk.label && <p className="text-[0.75rem] text-ink-500">{pk.label}</p>}
+              {pk.label && <p className="text-[0.875rem] text-ink-500">{pk.label}</p>}
             </div>
           ))}
         </div>
@@ -387,23 +391,23 @@ function PricingDisplay({ product }: { product: ServiceProduct }) {
     }
     case 'monthly_recurring': {
       return (
-        <div className="bg-parchment-100 border border-border-light rounded-2xl p-5 flex flex-col gap-3">
-          <div className="flex items-baseline gap-2 pb-2 border-b border-dashed border-border-light">
-            <span className="font-display text-[2rem] font-semibold text-ink-900 leading-none tracking-[-0.02em]">
+        <div className="bg-parchment-100 border border-border-light rounded-2xl px-7 py-8 flex flex-col gap-4">
+          <div className="flex items-baseline gap-2 pb-3 border-b border-dashed border-border-light">
+            <span className="font-display text-[2.5rem] font-semibold text-ink-900 leading-none tracking-[-0.02em]">
               ${p.monthly.monthly_price}
             </span>
-            <span className="text-sm text-ink-500">/ month</span>
+            <span className="text-[0.875rem] text-ink-500">/ month</span>
           </div>
-          <ul className="flex flex-col gap-1.5 list-none p-0 m-0">
+          <ul className="flex flex-col gap-2.5 list-none p-0 m-0">
             {p.monthly.included.map((i) => (
-              <li key={i} className="flex gap-2 items-start text-[0.875rem] text-ink-700">
+              <li key={i} className="flex gap-2.5 items-start text-[0.9375rem] text-ink-700 leading-[1.4]">
                 <span className="text-gold-700 flex-shrink-0">✓</span>
                 <span>{i}</span>
               </li>
             ))}
           </ul>
           {p.monthly.cadence && (
-            <p className="text-[0.75rem] text-ink-500 italic">{p.monthly.cadence}</p>
+            <p className="text-[0.875rem] text-ink-500 italic">{p.monthly.cadence}</p>
           )}
         </div>
       )
@@ -411,9 +415,9 @@ function PricingDisplay({ product }: { product: ServiceProduct }) {
     case 'quote_only': {
       const fromLine = p.quote.from_price != null ? `From $${p.quote.from_price}` : 'Custom quote'
       return (
-        <div className="bg-parchment-100 border border-border-light rounded-2xl p-5 flex flex-col gap-3">
-          <div className="font-display text-xl font-semibold text-ink-900">{fromLine}</div>
-          <p className="text-[0.875rem] text-ink-700 leading-[1.55]">
+        <div className="bg-parchment-100 border border-border-light rounded-2xl px-7 py-8 flex flex-col gap-4">
+          <div className="font-display text-2xl font-semibold text-ink-900">{fromLine}</div>
+          <p className="text-[0.9375rem] text-ink-700 leading-[1.55]">
             Pricing varies per brief. Send the details and we send a fixed quote within 48 hours.
           </p>
           {p.quote.cta_label && p.quote.cta_href && (
@@ -448,14 +452,14 @@ function CompactPrice({
   note?: string | null
 }) {
   return (
-    <div className="bg-parchment-100 border border-border-light rounded-2xl p-5 flex flex-col gap-2.5">
-      <div className="flex items-baseline gap-2 pb-2 border-b border-dashed border-border-light">
-        <span className="font-display text-[2rem] font-semibold text-ink-900 leading-none tracking-[-0.02em]">
+    <div className="bg-parchment-100 border border-border-light rounded-2xl px-7 py-8 flex flex-col gap-4">
+      <div className="flex items-baseline gap-2 pb-3 border-b border-dashed border-border-light">
+        <span className="font-display text-[2.75rem] font-semibold text-ink-900 leading-none tracking-[-0.02em]">
           {primary}
         </span>
-        {secondary && <span className="text-sm text-ink-500">{secondary}</span>}
+        {secondary && <span className="text-[0.875rem] text-ink-500">{secondary}</span>}
       </div>
-      {note && <p className="text-[0.8125rem] text-ink-700 leading-[1.5]">{note}</p>}
+      {note && <p className="text-[0.875rem] text-ink-700 leading-[1.5]">{note}</p>}
     </div>
   )
 }

@@ -55,7 +55,7 @@ export default function CTACloser() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-          className="font-display font-semibold text-cream-50 leading-[1.1] tracking-tight mb-5 [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-gold-glow"
+          className="font-display font-semibold text-cream-50 leading-[1.1] tracking-tight mb-5 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-gold-glow"
           style={{ fontSize: 'clamp(2.25rem, 5vw, 3.5rem)' }}
         >
           Ready to bring your <em>vision</em> to life?

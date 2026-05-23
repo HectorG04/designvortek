@@ -122,11 +122,11 @@ export default function Hero() {
             {/* Title — clamp(2.75rem, 6vw, 5rem) · -0.025em · 1.02 */}
             <motion.h1
               variants={fadeUp}
-              className="mb-6 font-display font-semibold leading-[1.02] text-cream-50"
+              className="mb-6 font-display font-semibold leading-[1.02] text-cream-50 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-gold-glow"
               style={{ fontSize: 'clamp(2.75rem, 6vw, 5rem)', letterSpacing: '-0.025em' }}
             >
               Bring your<br />
-              <em className="font-display font-medium italic text-gold-glow">character</em> to life.
+              <em>character</em> to life.
             </motion.h1>
 
             {/* Subtitle */}

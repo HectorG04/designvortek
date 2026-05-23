@@ -33,7 +33,7 @@ export default function Testimonials() {
               variants={fadeUp}
               whileHover={{ y: -4 }}
               transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-              className="relative rounded-2xl border border-border-light p-8 flex flex-col hover:border-border-medium hover:shadow-md transition-[box-shadow,border-color] duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+              className="relative rounded-xl border border-border-light p-8 flex flex-col hover:border-border-medium hover:shadow-md transition-[box-shadow,border-color] duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
               style={{
                 background:
                   'linear-gradient(155deg, var(--color-parchment-100), var(--color-parchment-50))',

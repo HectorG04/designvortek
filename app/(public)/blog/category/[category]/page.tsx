@@ -35,6 +35,13 @@ function hueForSlug(slug: string): number {
   return Math.abs(h) % 360
 }
 
+const ClockIcon = ({ className = 'w-3 h-3' }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 7v5l3 3" />
+  </svg>
+)
+
 interface PageProps {
   params: Promise<{ category: string }>
 }
@@ -162,7 +169,10 @@ function GridCard({ post }: { post: BlogPost }) {
             {post.dateLabel}
           </span>
           <span className="w-1 h-1 rounded-full bg-gold-500" aria-hidden="true" />
-          <span className="text-[0.8125rem] text-ink-500 tabular-nums">{post.readMin} min</span>
+          <span className="inline-flex items-center gap-1.5 text-[0.8125rem] text-ink-500 tabular-nums">
+            <ClockIcon className="w-3 h-3 text-ink-400" />
+            {post.readMin} min
+          </span>
         </div>
         <p className="text-[0.9375rem] text-ink-700 leading-[1.55]">{post.excerpt}</p>
       </div>

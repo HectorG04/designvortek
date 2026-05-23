@@ -37,7 +37,7 @@ export default function ProcessSteps() {
             whileInView="visible"
             viewport={{ once: true, margin: '-80px' }}
             variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-x-6 lg:gap-y-10 relative z-10"
+            className="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-6 sm:gap-y-10 lg:grid-cols-4 lg:gap-8 relative z-10"
           >
             {PROCESS_STEPS.map((step) => (
               <motion.div key={step.num} variants={fadeUp} className="relative text-center">
