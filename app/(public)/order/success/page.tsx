@@ -32,7 +32,7 @@ const NEXT_STEPS = [
   {
     when: 'Within 5 days',
     strong: 'Sketches begin',
-    body: `Once you approve and the **25% deposit** lands, first sketches usually arrive in under a week.`,
+    body: `Once you approve and the **30% deposit** lands, first sketches usually arrive in under a week.`,
     Icon: Sparkles,
   },
 ] as const
@@ -59,7 +59,7 @@ export default function OrderSuccessPage() {
           </h1>
           <p className="text-lg text-ink-500 leading-[1.65] mt-4 mx-auto max-w-[60ch]">
             Your commission brief is in our inbox. We&rsquo;ll review within 48 hours, send a quote with timeline,
-            and a 25% deposit holds your slot â€” refundable until the first sketch.
+            and a 30% deposit holds your slot — refundable until the first sketch.
           </p>
 
           {/* 3-step timeline â€” body copy via Markdown for bold time markers + email link */}
