@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import PageHero from '@/components/layout/PageHero'
@@ -9,30 +9,30 @@ import Markdown from '@/components/ui/Markdown'
 import PaperTexture from '@/components/decor/PaperTexture'
 
 /* =====================================================================
-   PROCESS — literal port of Process.html.
+   PROCESS â€” literal port of Process.html.
 
    Structure (matches design HTML exactly):
      1. Hero
      2. 4 steps stacked (80px circle + content article)
      3. Timeline callout box (parchment-100 card)
-     4. pg-cta-strip — dark tome closer
+     4. pg-cta-strip â€” dark tome closer
 
    NOTE: Earlier version had a 5-question FAQ + day-by-day timeline +
    average-turnaround card. None of those exist in the design. Removed.
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'Process · Design Vortex',
+  title: 'Process Â· Design Vortex',
   description:
-    "How we work, end to end. Discuss, quote, create, deliver — four steps. Predictable, communicative, no surprises.",
+    "How we work, end to end. Discuss, quote, create, deliver â€” four steps. Predictable, communicative, no surprises.",
 }
 
 interface Step {
   num: '01' | '02' | '03' | '04'
   title: string
-  /** Primary body paragraph — markdown so inline emphasis/links survive */
+  /** Primary body paragraph â€” markdown so inline emphasis/links survive */
   body: string
-  /** Smaller secondary line below — also markdown */
+  /** Smaller secondary line below â€” also markdown */
   note: string
 }
 
@@ -40,25 +40,25 @@ const STEPS: Step[] = [
   {
     num: '01',
     title: 'Discuss',
-    body: 'Send us a brief through the [commission form](/order) — or just an email. Tell us about the character, the campaign, the references that capture the vibe. We read carefully, ask the right follow-up questions, and only then start sketching ideas.',
-    note: '**Usually 24–48 hours** to get back to you with thoughts.',
+    body: 'Send us a brief through the [commission form](/order) â€” or just an email. Tell us about the character, the campaign, the references that capture the vibe. We read carefully, ask the right follow-up questions, and only then start sketching ideas.',
+    note: '**Usually 24â€“48 hours** to get back to you with thoughts.',
   },
   {
     num: '02',
     title: 'Quote',
-    body: 'Within 48 hours of your brief, you get a **fixed quote** — not an estimate. Scope, timeline, total. A 25% deposit holds your slot (fully refundable until first sketch). The remaining 75% lands on delivery.',
+    body: 'Within 48 hours of your brief, you get a **fixed quote** â€” not an estimate. Scope, timeline, total. A 25% deposit holds your slot (fully refundable until first sketch). The remaining 75% lands on delivery.',
     note: 'No hourly games. No surprises. The price you approve is the price you pay.',
   },
   {
     num: '03',
     title: 'Create',
-    body: 'Sketch first — we get the pose, composition, and likeness right before any paint touches the canvas. Sketch revisions are unlimited. From there: color blocks, then final paint. Two paint-stage revisions baked into every commission.',
+    body: 'Sketch first â€” we get the pose, composition, and likeness right before any paint touches the canvas. Sketch revisions are unlimited. From there: color blocks, then final paint. Two paint-stage revisions baked into every commission.',
     note: 'Updates every 3 days. You see the work as it grows.',
   },
   {
     num: '04',
     title: 'Deliver',
-    body: 'Final files at 4K resolution — PNG, JPG, and a transparent-background version. Layered PSD optional. Yours to print, frame, share, treasure. We follow up two weeks later to make sure you love it.',
+    body: 'Final files at 4K resolution â€” PNG, JPG, and a transparent-background version. Layered PSD optional. Yours to print, frame, share, treasure. We follow up two weeks later to make sure you love it.',
     note: 'Most clients hang it on a wall. Some have it tattooed.',
   },
 ]
@@ -73,7 +73,7 @@ export default function ProcessPage() {
   return (
     <>
       <SiteHeader />
-      <main className="bg-parchment-50">
+      <main id="main" className="bg-parchment-50">
 
         {/* Hero */}
         <PageHero
@@ -84,7 +84,7 @@ export default function ProcessPage() {
               <em className="font-display italic font-medium text-burgundy-700">four steps</em>
             </>
           }
-          description="Predictable, communicative, no surprises. You always know what's happening and when — here's exactly how each commission unfolds."
+          description="Predictable, communicative, no surprises. You always know what's happening and when â€” here's exactly how each commission unfolds."
         />
 
         {/* 4 steps in detail */}
@@ -97,7 +97,7 @@ export default function ProcessPage() {
                   key={step.num}
                   className="grid grid-cols-1 sm:grid-cols-[auto_1fr] gap-6 sm:gap-8 items-start"
                 >
-                  {/* Number circle: 80×80 rounded-full parchment-50 + 1.5px gold border + gold-700 text */}
+                  {/* Number circle: 80Ã—80 rounded-full parchment-50 + 1.5px gold border + gold-700 text */}
                   <div className="w-20 h-20 rounded-full bg-parchment-50 border-[1.5px] border-gold-500 text-gold-700 inline-flex items-center justify-center flex-shrink-0 font-display text-[2rem] font-semibold">
                     {step.num}
                   </div>
@@ -108,12 +108,12 @@ export default function ProcessPage() {
                       {step.title}
                     </h2>
 
-                    {/* Primary body — markdown for inline links + bold */}
+                    {/* Primary body â€” markdown for inline links + bold */}
                     <div className="text-[1.125rem] text-ink-700 leading-[1.7] mb-3 max-w-[55ch] [&_p]:mb-0">
                       <Markdown>{step.body}</Markdown>
                     </div>
 
-                    {/* Secondary note — markdown for inline bold */}
+                    {/* Secondary note â€” markdown for inline bold */}
                     <div className="text-base text-ink-500 leading-[1.6] max-w-[55ch] [&_p]:mb-0 [&_strong]:text-ink-700 [&_strong]:font-semibold">
                       <Markdown>{step.note}</Markdown>
                     </div>
@@ -137,7 +137,7 @@ export default function ProcessPage() {
           </div>
         </section>
 
-        {/* CTA strip — dark tome closer (matches .pg-cta-strip) */}
+        {/* CTA strip â€” dark tome closer (matches .pg-cta-strip) */}
         <section className="relative bg-tome-950 text-cream-50 py-20 text-center overflow-hidden">
           <PaperTexture variant="cream" opacity={0.5} />
           <div className="relative">

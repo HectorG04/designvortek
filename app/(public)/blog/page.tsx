@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
@@ -14,7 +14,7 @@ import {
 } from '@/lib/blog-server'
 
 /* =====================================================================
-   BLOG INDEX — CMS-backed.
+   BLOG INDEX â€” CMS-backed.
 
    Reads from Supabase via lib/blog-server.ts; falls back to the
    in-memory snapshot in lib/blog.ts when the table is empty. ISR
@@ -24,23 +24,23 @@ import {
    Structure ports Blog.html:
      1. Hero
      2. Featured post card
-     3. Category chips → /blog/category/[slug]
+     3. Category chips â†’ /blog/category/[slug]
      4. 3-column grid
      5. Newsletter card
-   The "Load 6 more" button is dropped until we add pagination — the
+   The "Load 6 more" button is dropped until we add pagination â€” the
    current archive is small enough to ship in one render.
    ===================================================================== */
 
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Studio Notes · Design Vortex Blog',
+  title: 'Studio Notes Â· Design Vortex Blog',
   description:
     'Guides on commissioning art, process walkthroughs, and thoughts on what makes a good character portrait. Updated regularly.',
   alternates: { canonical: '/blog' },
 }
 
-/* ds-ph-scene gradient — used as the fallback when a post has no
+/* ds-ph-scene gradient â€” used as the fallback when a post has no
  * featured_image. Per-card hue rotation gives variation across the grid. */
 const PH_SCENE_BG =
   'radial-gradient(ellipse at 50% 80%, rgba(232,200,128,0.4), transparent 60%), linear-gradient(180deg, #1F4D3A 0%, #6B1F2A 60%, #1a130c 100%)'
@@ -76,7 +76,7 @@ export default async function BlogIndexPage() {
   return (
     <>
       <SiteHeader />
-      <main className="bg-parchment-50">
+      <main id="main" className="bg-parchment-50">
 
         {/* Hero */}
         <PageHero
@@ -96,7 +96,7 @@ export default async function BlogIndexPage() {
             {/* Featured post */}
             {featured && <FeaturedCard post={featured} />}
 
-            {/* Category chips → /blog/category/[slug]. "All" links back
+            {/* Category chips â†’ /blog/category/[slug]. "All" links back
                 here. Counts come from the live data so they reflect the
                 published archive in real time. */}
             <div className="flex flex-wrap gap-2 justify-center mb-10">
@@ -113,7 +113,7 @@ export default async function BlogIndexPage() {
                         : 'px-4 py-2 rounded-full border border-border-light bg-parchment-100 text-ink-700 font-body text-[0.8125rem] font-medium hover:bg-parchment-200 hover:border-border-medium transition-colors'
                     }
                   >
-                    {cat.label} · {cat.count}
+                    {cat.label} Â· {cat.count}
                   </Link>
                 )
               })}

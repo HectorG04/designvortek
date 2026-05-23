@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import Hero from '@/components/home/Hero'
@@ -15,14 +15,14 @@ import CTACloser from '@/components/home/CTACloser'
 import CompassDivider from '@/components/decor/CompassDivider'
 
 export const metadata: Metadata = {
-  title: 'Design Vortex — Preview',
+  title: 'Design Vortex â€” Preview',
   description:
     'Internal preview of the homepage. Public site is at the root domain.',
   robots: { index: false, follow: false },
 }
 
 /**
- * MILESTONE 2 PREVIEW — Full homepage (all body sections).
+ * MILESTONE 2 PREVIEW â€” Full homepage (all body sections).
  *
  * Order matches the design brief:
  *   1. Hero            (dark tome, fold)
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
  *   5. Process         (4-step horizontal)
  *   6. Testimonials    (3-card row)
  *   7. Blog preview    (3 latest articles)
- *   8. Availability    (slot widget — signature feature)
+ *   8. Availability    (slot widget â€” signature feature)
  *   9. FAQ             (6-item accordion + FAQPage JSON-LD)
  *  10. CTA closer      (dark tome bookend)
  *
@@ -43,7 +43,7 @@ export default async function HomePreviewPage() {
   return (
     <>
       <SiteHeader transparent />
-      <main>
+      <main id="main">
         <Hero />
         <ServicesPreview />
 

@@ -64,8 +64,11 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
 
   const basePrice = Number(order.quoted_price ?? 0)
   const adjAmount = Number(order.adjustment_amount ?? 0)
+  const isCommercial = Boolean(order.commercial_uplift)
+  const commercialAmount = isCommercial ? Math.round(basePrice * 0.4) : 0
   const hasPricing = (order.quoted_price ?? null) !== null || (order.adjustment_amount ?? null) !== null
-  const totalQuote = basePrice + adjAmount
+  const totalQuote = basePrice + commercialAmount + adjAmount
+  const depositCents = order.deposit_cents ?? Math.round(totalQuote * 100 * 0.3)
 
   // Customer history: count prior orders by email (excluding this one).
   const { data: priorOrders } = await admin
@@ -405,6 +408,33 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
                 </div>
               </div>
 
+              {/* Commercial uplift toggle — checkbox row. When ticked, the quote
+                  builder server action adds base × 0.40 to the total and the
+                  customer email shows a "Commercial license (+40%)" line. */}
+              <label
+                htmlFor={`commercial_uplift_${order.id}`}
+                className="flex items-center gap-2.5 py-2.5 border-y border-dashed border-border-light cursor-pointer select-none"
+              >
+                <input
+                  id={`commercial_uplift_${order.id}`}
+                  type="checkbox"
+                  name="commercial_uplift"
+                  defaultChecked={order.commercial_uplift ?? false}
+                  className="w-4 h-4 accent-burgundy-700"
+                />
+                <span className="flex-1">
+                  <span className="text-[0.8125rem] font-semibold text-ink-900">
+                    Commercial license (+40%)
+                  </span>
+                  <span className="ml-2 text-[0.6875rem] text-ink-500">
+                    Books, merch, paid streaming, indie game assets
+                  </span>
+                </span>
+                <span className="font-mono text-[0.8125rem] text-ink-500">
+                  +40%
+                </span>
+              </label>
+
               {/* Custom adjustment block — gold dashed border per .adm-adjust */}
               <div className="bg-parchment-50 border border-dashed border-gold-500 rounded-md p-4 my-2.5 flex flex-col gap-2.5">
                 <div className="flex items-center gap-2 text-[0.8125rem] font-semibold text-ink-900 tracking-[0.01em]">
@@ -472,14 +502,23 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
                 appears on the customer&apos;s quote email; the internal note stays private.
               </p>
 
-              {/* Total quote bar — gold strip flush to the card bottom. */}
+              {/* Total quote bar — gold strip flush to the card bottom.
+                  Shows the deposit (30%) alongside the total so the studio
+                  can sanity-check the line at a glance. */}
               <div
                 className="flex items-center justify-between bg-gold-100 -mx-6 px-6 py-3.5 rounded-b-xl"
                 aria-label="Total quote"
               >
-                <span className="font-display text-base font-semibold text-ink-900">
-                  Total quote
-                </span>
+                <div className="flex flex-col">
+                  <span className="font-display text-base font-semibold text-ink-900">
+                    Total quote
+                  </span>
+                  {hasPricing && (
+                    <span className="text-[0.6875rem] text-ink-500 font-mono">
+                      30% deposit: ${(depositCents / 100).toFixed(0)}
+                    </span>
+                  )}
+                </div>
                 <span className="font-display text-[1.75rem] font-semibold text-burgundy-700 tracking-[-0.015em]">
                   {hasPricing ? `$${totalQuote}` : '—'}
                 </span>

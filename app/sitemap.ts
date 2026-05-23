@@ -42,11 +42,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/refunds`,          lastModified, changeFrequency: 'yearly',  priority: 0.3 },
   ]
 
-  // Bucket detail pages at /services/[bucket]. Commercial + Subscription
-  // sit at their own top-level paths (listed above), so they're excluded
-  // from the bucket-loop.
+  // Bucket detail pages at /services/[bucket]. Subscription sits at its
+  // own top-level path (/subscription, listed above), so it's excluded
+  // from the bucket-loop. Commercial is no longer a bucket — it lives at
+  // /commercial (listed above) and as the +40% addon row.
   const serviceRoutes: MetadataRoute.Sitemap = BUCKETS
-    .filter((b) => b.slug !== 'commercial' && b.slug !== 'subscription')
+    .filter((b) => b.slug !== 'subscription')
     .map((b) => ({
       url: `${SITE_URL}/services/${b.slug}`,
       lastModified,

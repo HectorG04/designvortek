@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -71,7 +71,7 @@ export default function ComingSoon() {
         }}
       />
 
-      <main className="relative z-10 w-full max-w-2xl mx-auto text-center">
+      <main id="main" className="relative z-10 w-full max-w-2xl mx-auto text-center">
 
         {/* Logo mark */}
         <motion.div
@@ -111,7 +111,7 @@ export default function ComingSoon() {
           <span className="h-px w-8 bg-gold-500/60" />
         </motion.div>
 
-        {/* Headline — staggered words */}
+        {/* Headline â€” staggered words */}
         <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl font-semibold text-ink-900 leading-[1.05] mb-6 overflow-hidden">
           {['A new home', 'is being'].map((line, i) => (
             <motion.span
@@ -197,7 +197,7 @@ export default function ComingSoon() {
             >
               <p className="font-display text-ink-900 text-xl mb-1">Be first to know.</p>
               <p className="text-ink-500 text-sm mb-6">
-                Get notified when we launch — plus first access to commission slots.
+                Get notified when we launch â€” plus first access to commission slots.
               </p>
 
               <div className="space-y-3">
@@ -273,7 +273,7 @@ export default function ComingSoon() {
             </a>
           </p>
           <p className="font-accent text-ink-500 text-lg mt-2">
-            See you soon — DV
+            See you soon â€” DV
           </p>
         </motion.div>
 

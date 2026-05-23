@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
-import { sendEmail, adminWaitlistNotifyHTML, ADMIN_EMAIL } from '@/lib/email'
+import { sendAdminWaitlistEmail } from '@/lib/email'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -45,21 +45,13 @@ export async function POST(request: NextRequest) {
     }
 
     /* Admin notify, fire-and-forget. No customer confirmation because the
-     * homepage waitlist signup is a one-field email-only flow; sending a
-     * "you joined the waitlist" email would feel heavier than the form. */
-    if (ADMIN_EMAIL) {
-      sendEmail({
-        to: ADMIN_EMAIL,
-        subject: `New waitlist signup — ${trimmedEmail}`,
-        replyTo: trimmedEmail,
-        html: adminWaitlistNotifyHTML({
-          email: trimmedEmail,
-          name: name?.trim() || null,
-          source: source || null,
-          interestedIn: interested_in || null,
-        }),
-      }).catch(() => {})
-    }
+     * homepage waitlist signup is a one-field email-only flow. */
+    sendAdminWaitlistEmail({
+      email: trimmedEmail,
+      name: name?.trim() || null,
+      source: source || null,
+      interestedIn: interested_in || null,
+    }).catch(() => {})
 
     return NextResponse.json({ success: true })
   } catch (err) {

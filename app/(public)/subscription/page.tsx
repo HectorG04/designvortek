@@ -1,17 +1,17 @@
-/* =====================================================================
-   /subscription — Campaign Companion landing.
+﻿/* =====================================================================
+   /subscription â€” Campaign Companion landing.
 
    Literal port of `Claude Design Final/Claude designs New Screens and
    flow V2/Subscription.html` into Next.js/Tailwind v4.
 
    Sections (mirrors the source HTML 1:1):
      01  Hero (PageHero) with reassurance pills
-     02  How it works — 4-step horizontal strip
-     03  Two tiers — $30 Companion / $75 GM (featured)
-     04  Cadence callout — dark tome card, ships 15th
-     05  What's NOT included — 3 honesty cards
-     06  FAQ — 6 items, side+list layout
-     07  CTA closer — dark tome strip with gold + outline-cream CTAs
+     02  How it works â€” 4-step horizontal strip
+     03  Two tiers â€” $30 Companion / $75 GM (featured)
+     04  Cadence callout â€” dark tome card, ships 15th
+     05  What's NOT included â€” 3 honesty cards
+     06  FAQ â€” 6 items, side+list layout
+     07  CTA closer â€” dark tome strip with gold + outline-cream CTAs
    ===================================================================== */
 
 import type { Metadata } from 'next'
@@ -24,9 +24,10 @@ import SectionHead from '@/components/ui/SectionHead'
 import SectionLabel from '@/components/ui/SectionLabel'
 import Button from '@/components/ui/Button'
 import PaperTexture from '@/components/decor/PaperTexture'
+import SubscribeButton from './_SubscribeButton'
 
 export const metadata: Metadata = {
-  title: 'Campaign Companion subscription · Design Vortek',
+  title: 'Campaign Companion subscription Â· Design Vortek',
   description:
     "Monthly tokens, NPCs, and maps for active D&D campaigns. Hand-painted by the studio, delivered the 15th of every month. Pause or cancel any time.",
   alternates: { canonical: '/subscription' },
@@ -168,11 +169,11 @@ export default function SubscriptionPage() {
   return (
     <>
       <SiteHeader />
-      <main className="bg-parchment-50">
+      <main id="main" className="bg-parchment-50">
 
-        {/* 01 — Hero */}
+        {/* 01 â€” Hero */}
         <PageHero
-          eyebrow="Campaign companion · Subscription"
+          eyebrow="Campaign companion Â· Subscription"
           title={
             <>
               Your campaign&apos;s{' '}
@@ -196,7 +197,7 @@ export default function SubscriptionPage() {
           </ul>
         </PageHero>
 
-        {/* 02 — How it works */}
+        {/* 02 â€” How it works */}
         <section className="py-16 md:py-24">
           <Container>
             <SectionHead
@@ -218,7 +219,7 @@ export default function SubscriptionPage() {
           </Container>
         </section>
 
-        {/* 03 — Tier cards */}
+        {/* 03 â€” Tier cards */}
         <section className="py-16 md:py-24 bg-parchment-100">
           <Container>
             <SectionHead
@@ -231,6 +232,7 @@ export default function SubscriptionPage() {
 
               {/* Companion */}
               <TierCard
+                tierSlug="subscription-companion"
                 name="Companion"
                 best="active GMs with a token-hungry table"
                 price="$30"
@@ -240,8 +242,9 @@ export default function SubscriptionPage() {
                 ctaVariant="outline"
               />
 
-              {/* GM tier — featured */}
+              {/* GM tier â€” featured */}
               <TierCard
+                tierSlug="subscription-gm"
                 featured
                 flag="Most picked"
                 name="GM tier"
@@ -257,7 +260,7 @@ export default function SubscriptionPage() {
           </Container>
         </section>
 
-        {/* 04 — Cadence callout */}
+        {/* 04 â€” Cadence callout */}
         <section className="pt-8 pb-16 md:pb-24">
           <Container>
             <div className="relative overflow-hidden rounded-2xl bg-tome-950 text-cream-50 px-6 py-6 md:px-9 md:py-7 flex flex-col md:flex-row items-start md:items-center gap-6">
@@ -291,7 +294,7 @@ export default function SubscriptionPage() {
           </Container>
         </section>
 
-        {/* 05 — What's NOT included */}
+        {/* 05 â€” What's NOT included */}
         <section className="py-16 md:py-24">
           <Container>
             <SectionHead
@@ -319,7 +322,7 @@ export default function SubscriptionPage() {
           </Container>
         </section>
 
-        {/* 06 — FAQ */}
+        {/* 06 â€” FAQ */}
         <section className="py-16 md:py-24 bg-parchment-100">
           <Container>
             <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.8fr] gap-8 lg:gap-16 max-w-[1080px] mx-auto">
@@ -371,7 +374,7 @@ export default function SubscriptionPage() {
           </Container>
         </section>
 
-        {/* 07 — CTA closer (dark tome) */}
+        {/* 07 â€” CTA closer (dark tome) */}
         <section className="relative bg-tome-950 text-cream-50 py-20 text-center overflow-hidden">
           <PaperTexture variant="cream" opacity={0.5} />
           <div className="relative">
@@ -406,7 +409,7 @@ export default function SubscriptionPage() {
                   }}
                 >
                   <DollarIcon className="w-[11px] h-[11px] text-gold-glow" />
-                  Billed in USD · international cards converted at current rate
+                  Billed in USD Â· international cards converted at current rate
                 </span>
               </div>
             </Container>
@@ -420,7 +423,7 @@ export default function SubscriptionPage() {
 }
 
 /* =====================================================================
-   TierCard — single subscription tier card matching `.sd-tier` /
+   TierCard â€” single subscription tier card matching `.sd-tier` /
    `.sd-tier.featured` from the source design.
    ===================================================================== */
 function TierCard({
@@ -433,6 +436,7 @@ function TierCard({
   features,
   ctaLabel,
   ctaVariant,
+  tierSlug,
 }: {
   featured?: boolean
   flag?: string
@@ -443,6 +447,9 @@ function TierCard({
   features: string[]
   ctaLabel: string
   ctaVariant: 'primary' | 'outline'
+  /** Canonical subscription tier slug â€” when present the CTA wires
+   *  through to Stripe Checkout via /api/subscriptions/checkout. */
+  tierSlug?: 'subscription-companion' | 'subscription-gm'
 }) {
   return (
     <div
@@ -480,14 +487,18 @@ function TierCard({
       </ul>
 
       <div className="mt-2">
-        <Button href="/order" variant={ctaVariant} size="md" className="w-full">
-          {ctaLabel}
-        </Button>
+        {tierSlug ? (
+          <SubscribeButton tier={tierSlug} label={ctaLabel} variant={ctaVariant} />
+        ) : (
+          <Button href="/order" variant={ctaVariant} size="md" className="w-full">
+            {ctaLabel}
+          </Button>
+        )}
       </div>
 
       <span className="mt-3 mx-auto flex w-fit items-center gap-1.5 rounded-full bg-parchment-200 border border-black/[0.04] px-3.5 py-1.5 text-xs font-medium tracking-[0.01em] text-ink-500 whitespace-nowrap leading-none">
         <DollarIcon className="w-[11px] h-[11px] text-gold-700" />
-        USD · international cards billed at current rate
+        USD Â· international cards billed at current rate
       </span>
     </div>
   )

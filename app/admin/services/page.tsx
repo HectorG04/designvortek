@@ -25,7 +25,6 @@ import {
   Users,
   Mountain,
   Coins,
-  BookOpen,
   CalendarDays,
 } from 'lucide-react'
 import { type ServiceBucket, type PricingPayload } from '@/lib/services'
@@ -77,7 +76,6 @@ const BUCKET_ICONS: Record<ServiceBucket, React.ComponentType<{ size?: number; s
   'party-work':        Users,
   'gm-world-building': Mountain,
   'tokens':            Coins,
-  'commercial':        BookOpen,
   'subscription':      CalendarDays,
 }
 
@@ -87,7 +85,6 @@ const BUCKET_ICON_BG: Record<ServiceBucket, string> = {
   'party-work':        'bg-gold-700',
   'gm-world-building': 'bg-forest-700',
   'tokens':            'bg-ink-700',
-  'commercial':        'bg-tome-950',
   'subscription':      'bg-burgundy-500',
 }
 
@@ -99,20 +96,17 @@ const BUCKET_DISPLAY_LABEL: Record<ServiceBucket, string> = {
   'party-work':        'Party work',
   'gm-world-building': 'GM & world-building',
   'tokens':            'Tokens (standalone)',
-  'commercial':        'Commercial / publisher',
   'subscription':      'Subscription',
 }
 
-/* Per-page bucket display order — the design HTML lists commercial as
-   Bucket 5 and subscription as Bucket 6, which is the reverse of the
-   public `BUCKETS` order (subscription first because commercial has its
-   own landing page on the public site). */
+/* Per-page bucket display order — matches the canonical HANDOFF v2
+   ordering. Commercial is no longer a bucket; it lives at the
+   /commercial landing page and as the +40% addon row. */
 const BUCKET_DISPLAY_ORDER: readonly ServiceBucket[] = [
   'character-work',
   'party-work',
   'gm-world-building',
   'tokens',
-  'commercial',
   'subscription',
 ]
 
@@ -419,9 +413,6 @@ function EmptyState() {
 function bucketSummary(bucket: ServiceBucket, productCount: number, minPrice: number | null): string {
   if (bucket === 'subscription') {
     return `${productCount} tier${productCount === 1 ? '' : 's'} · monthly recurring`
-  }
-  if (bucket === 'commercial') {
-    return `${productCount} product${productCount === 1 ? '' : 's'} · custom quote`
   }
   const priceLabel = minPrice != null ? ` · from $${minPrice}` : ''
   return `${productCount} product${productCount === 1 ? '' : 's'}${priceLabel}`

@@ -61,6 +61,30 @@ export type Database = {
           adjustment_label: string | null
           adjustment_amount: number | null
           adjustment_reason: string | null
+          // — migration 0006 additions —
+          order_number: string | null
+          customer_id: number | null
+          bucket_slug: string | null
+          product_slug: string | null
+          tier_slug: string | null
+          style_tags: string[] | null
+          reference_urls: string[] | null
+          quantity: string | null
+          budget_range: string | null
+          budget_context: string | null
+          extras_count: number | null
+          bundle_token: boolean | null
+          quote_base_cents: number | null
+          quote_addons: Json
+          commercial_uplift: boolean | null
+          quote_total_cents: number | null
+          stripe_session_id: string | null
+          stripe_payment_intent: string | null
+          stripe_balance_session_id: string | null
+          stripe_balance_payment_intent: string | null
+          deposit_cents: number | null
+          deposit_paid_at: string | null
+          balance_paid_at: string | null
         }
         Insert: {
           id?: number
@@ -81,6 +105,29 @@ export type Database = {
           adjustment_label?: string | null
           adjustment_amount?: number | null
           adjustment_reason?: string | null
+          order_number?: string | null
+          customer_id?: number | null
+          bucket_slug?: string | null
+          product_slug?: string | null
+          tier_slug?: string | null
+          style_tags?: string[] | null
+          reference_urls?: string[] | null
+          quantity?: string | null
+          budget_range?: string | null
+          budget_context?: string | null
+          extras_count?: number | null
+          bundle_token?: boolean | null
+          quote_base_cents?: number | null
+          quote_addons?: Json
+          commercial_uplift?: boolean | null
+          quote_total_cents?: number | null
+          stripe_session_id?: string | null
+          stripe_payment_intent?: string | null
+          stripe_balance_session_id?: string | null
+          stripe_balance_payment_intent?: string | null
+          deposit_cents?: number | null
+          deposit_paid_at?: string | null
+          balance_paid_at?: string | null
         }
         Update: {
           id?: number
@@ -101,6 +148,239 @@ export type Database = {
           adjustment_label?: string | null
           adjustment_amount?: number | null
           adjustment_reason?: string | null
+          order_number?: string | null
+          customer_id?: number | null
+          bucket_slug?: string | null
+          product_slug?: string | null
+          tier_slug?: string | null
+          style_tags?: string[] | null
+          reference_urls?: string[] | null
+          quantity?: string | null
+          budget_range?: string | null
+          budget_context?: string | null
+          extras_count?: number | null
+          bundle_token?: boolean | null
+          quote_base_cents?: number | null
+          quote_addons?: Json
+          commercial_uplift?: boolean | null
+          quote_total_cents?: number | null
+          stripe_session_id?: string | null
+          stripe_payment_intent?: string | null
+          stripe_balance_session_id?: string | null
+          stripe_balance_payment_intent?: string | null
+          deposit_cents?: number | null
+          deposit_paid_at?: string | null
+          balance_paid_at?: string | null
+        }
+        Relationships: []
+      }
+      customers: {
+        Row: {
+          id: number
+          email: string
+          name: string | null
+          phone: string | null
+          source: string | null
+          notes: string | null
+          first_seen_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: number
+          email: string
+          name?: string | null
+          phone?: string | null
+          source?: string | null
+          notes?: string | null
+          first_seen_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: number
+          email?: string
+          name?: string | null
+          phone?: string | null
+          source?: string | null
+          notes?: string | null
+          first_seen_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      order_status_log: {
+        Row: {
+          id: number
+          order_id: number
+          status: string
+          by_user: string | null
+          note: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: number
+          order_id: number
+          status: string
+          by_user?: string | null
+          note?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: number
+          order_id?: number
+          status?: string
+          by_user?: string | null
+          note?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      order_messages: {
+        Row: {
+          id: number
+          order_id: number
+          direction: 'inbound' | 'outbound'
+          channel: 'email' | 'admin_note' | 'system'
+          subject: string | null
+          body: string
+          created_at: string
+        }
+        Insert: {
+          id?: number
+          order_id: number
+          direction: 'inbound' | 'outbound'
+          channel: 'email' | 'admin_note' | 'system'
+          subject?: string | null
+          body: string
+          created_at?: string
+        }
+        Update: {
+          id?: number
+          order_id?: number
+          direction?: 'inbound' | 'outbound'
+          channel?: 'email' | 'admin_note' | 'system'
+          subject?: string | null
+          body?: string
+          created_at?: string
+        }
+        Relationships: []
+      }
+      subscriptions: {
+        Row: {
+          id: number
+          customer_id: number
+          tier_slug: 'subscription-companion' | 'subscription-gm'
+          stripe_subscription_id: string
+          stripe_customer_id: string | null
+          status: 'active' | 'paused' | 'cancelled'
+          next_bill_date: string | null
+          cycle_anchor_day: number
+          notes: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: number
+          customer_id: number
+          tier_slug: 'subscription-companion' | 'subscription-gm'
+          stripe_subscription_id: string
+          stripe_customer_id?: string | null
+          status?: 'active' | 'paused' | 'cancelled'
+          next_bill_date?: string | null
+          cycle_anchor_day?: number
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: number
+          customer_id?: number
+          tier_slug?: 'subscription-companion' | 'subscription-gm'
+          stripe_subscription_id?: string
+          stripe_customer_id?: string | null
+          status?: 'active' | 'paused' | 'cancelled'
+          next_bill_date?: string | null
+          cycle_anchor_day?: number
+          notes?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      subscription_cycles: {
+        Row: {
+          id: number
+          subscription_id: number
+          cycle_start: string
+          ships_on: string
+          items_planned: Json
+          items_delivered: Json
+          status: 'upcoming' | 'sketching' | 'painting' | 'shipped' | 'skipped'
+          notes: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: number
+          subscription_id: number
+          cycle_start: string
+          ships_on: string
+          items_planned?: Json
+          items_delivered?: Json
+          status?: 'upcoming' | 'sketching' | 'painting' | 'shipped' | 'skipped'
+          notes?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: number
+          subscription_id?: number
+          cycle_start?: string
+          ships_on?: string
+          items_planned?: Json
+          items_delivered?: Json
+          status?: 'upcoming' | 'sketching' | 'painting' | 'shipped' | 'skipped'
+          notes?: string | null
+          created_at?: string
+        }
+        Relationships: []
+      }
+      addons: {
+        Row: {
+          id: number
+          slug: string
+          name: string
+          description: string | null
+          flat_cents: number | null
+          percent_uplift: number | null
+          display_text: string
+          sort_order: number
+          is_active: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: number
+          slug: string
+          name: string
+          description?: string | null
+          flat_cents?: number | null
+          percent_uplift?: number | null
+          display_text: string
+          sort_order?: number
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: number
+          slug?: string
+          name?: string
+          description?: string | null
+          flat_cents?: number | null
+          percent_uplift?: number | null
+          display_text?: string
+          sort_order?: number
+          is_active?: boolean
+          created_at?: string
+          updated_at?: string
         }
         Relationships: []
       }

@@ -1,17 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
-import { sendEmail, adminInquiryNotifyHTML, inquiryConfirmationHTML, ADMIN_EMAIL } from '@/lib/email'
+import { sendInquiryAckEmail, sendAdminInquiryEmail } from '@/lib/email'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 /**
  * POST /api/inquiry
- * Contact-form submissions. Inserts into `inquiries` table.
+ * Contact-form submissions. Inserts into `inquiries` table, sends:
+ *   - customer ack (`Thanks for reaching out`)
+ *   - admin notification (`New inquiry from …`)
  */
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, email, message } = body
+    const { name, email, message, topic } = body
 
     if (!name || typeof name !== 'string' || !name.trim()) {
       return NextResponse.json({ error: 'Your name is required.' }, { status: 400 })
@@ -49,28 +51,19 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    /* Fire-and-forget notifications: customer acknowledgement + admin alert.
-     * Both no-op when RESEND_API_KEY is missing so dev/test works without
-     * email service configured. */
+    /* Fire-and-forget notifications. */
     Promise.allSettled([
-      sendEmail({
+      sendInquiryAckEmail({
         to: trimmedEmail,
-        subject: 'Thanks for reaching out — we will reply within 48 hours',
-        html: inquiryConfirmationHTML({ name: name.trim() }),
+        customerName: name.trim(),
       }),
-      ADMIN_EMAIL
-        ? sendEmail({
-            to: ADMIN_EMAIL,
-            subject: `New inquiry from ${name.trim()}`,
-            replyTo: trimmedEmail,
-            html: adminInquiryNotifyHTML({
-              id: inserted?.id ?? 0,
-              name: name.trim(),
-              email: trimmedEmail,
-              message: message.trim(),
-            }),
-          })
-        : Promise.resolve(false),
+      sendAdminInquiryEmail({
+        customerName: name.trim(),
+        customerEmail: trimmedEmail,
+        topic: typeof topic === 'string' && topic.trim() ? topic.trim() : 'General inquiry',
+        body: message.trim(),
+        inquiryId: inserted?.id ?? undefined,
+      }),
     ]).catch(() => {})
 
     return NextResponse.json({ success: true })

@@ -78,6 +78,15 @@ export default function SiteHeader({ transparent = false }: SiteHeaderProps) {
 
   return (
     <>
+      {/* Skip-to-content — sr-only by default, visible on focus.
+          Targets the main element each public page renders, so
+          keyboard users can bypass the sticky header chrome. */}
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-burgundy-700 focus:text-cream-50 focus:px-4 focus:py-2 focus:rounded-md focus:text-sm focus:font-semibold focus:shadow-lg"
+      >
+        Skip to content
+      </a>
       <motion.header
         initial={{ y: -20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}

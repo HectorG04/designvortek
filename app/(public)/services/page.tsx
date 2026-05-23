@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
@@ -16,7 +16,7 @@ import {
 } from '@/lib/services-server'
 
 /* =====================================================================
-   SERVICES INDEX — CMS-backed.
+   SERVICES INDEX â€” CMS-backed.
 
    Restructured from the old 5 flat services to the new 5 bucket layout
    (plus Subscription). Each bucket card lists the products inside it
@@ -29,7 +29,7 @@ import {
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Services · Design Vortex',
+  title: 'Services Â· Design Vortex',
   description:
     'Five buckets of hand-painted commission work: character portraits, party illustrations, GM/world-building, VTT tokens, and monthly subscriptions. Plus commercial and publisher arrangements.',
   alternates: { canonical: '/services' },
@@ -45,17 +45,15 @@ const BUCKET_GRADIENTS: Record<ServiceBucket, string> = {
     'radial-gradient(ellipse at 50% 80%, rgba(232,200,128,0.4), transparent 60%), linear-gradient(180deg, #1F4D3A 0%, #6B1F2A 60%, #1a130c 100%)',
   tokens:
     'radial-gradient(circle at 50% 50%, rgba(212,162,76,0.5), transparent 50%), radial-gradient(circle at 50% 50%, rgba(107,31,42,0.8), transparent 70%), linear-gradient(135deg, #1a130c, #251A10)',
-  commercial:
-    'radial-gradient(ellipse at 50% 30%, rgba(243,214,217,0.6), transparent 60%), radial-gradient(ellipse at 30% 80%, rgba(201,160,74,0.4), transparent 60%), linear-gradient(160deg, #6B1F2A, #8A2A35 70%, #3e1218)',
   subscription:
     'radial-gradient(ellipse at 50% 50%, rgba(232,200,128,0.5), transparent 55%), linear-gradient(140deg, #1F4D3A 0%, #2a1810 70%, #6B1F2A 100%)',
 }
 
-/* Bucket landing routes — most go to /services/[bucket-slug]; commercial
- * and subscription get dedicated pages designed in Phase 4. */
+/* Bucket landing routes â€” most go to /services/[bucket-slug]; subscription
+ * gets a dedicated landing at /subscription. Commercial is no longer a
+ * bucket â€” it lives at the /commercial landing and as the +40% addon. */
 function bucketHref(slug: ServiceBucket): string {
   if (slug === 'subscription') return '/subscription'
-  if (slug === 'commercial') return '/commercial'
   return `/services/${slug}`
 }
 
@@ -82,7 +80,7 @@ export default async function ServicesIndexPage() {
   return (
     <>
       <SiteHeader />
-      <main className="bg-parchment-50">
+      <main id="main" className="bg-parchment-50">
 
         <PageHero
           eyebrow="Services"
@@ -94,7 +92,7 @@ export default async function ServicesIndexPage() {
           description="Character portraits, party illustrations, GM and world-building, VTT tokens, and monthly subscriptions. Every bucket carries the same craft. Commercial and publisher arrangements live separately."
         />
 
-        {/* Bucket cards — 5 visible, 3-col on desktop, 2-col tablet, 1-col mobile */}
+        {/* Bucket cards â€” 5 visible, 3-col on desktop, 2-col tablet, 1-col mobile */}
         <section className="pb-12 md:pb-16">
           <Container>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -121,7 +119,7 @@ export default async function ServicesIndexPage() {
                     href={bucketHref(bucket.slug)}
                     className="group bg-parchment-50 border border-border-light rounded-3xl overflow-hidden flex flex-col transition-all duration-250 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-1 hover:border-border-medium hover:shadow-[0_8px_24px_rgba(201,160,74,0.18)]"
                   >
-                    {/* Image — aspect 4/3, gradient placeholder per design's .ds-ph-* */}
+                    {/* Image â€” aspect 4/3, gradient placeholder per design's .ds-ph-* */}
                     <div
                       className="aspect-[4/3] relative"
                       style={{ background: BUCKET_GRADIENTS[bucket.slug] }}
@@ -167,7 +165,7 @@ export default async function ServicesIndexPage() {
           </Container>
         </section>
 
-        {/* Commercial callout — sits between the bucket grid and the closer.
+        {/* Commercial callout â€” sits between the bucket grid and the closer.
             Commercial doesn't appear in the grid since it has its own
             landing page; this card surfaces it from the index. */}
         <section className="pt-4 pb-16 md:pb-24">
@@ -189,7 +187,7 @@ export default async function ServicesIndexPage() {
           </Container>
         </section>
 
-        {/* CTA closer — dark tome bg with cream grain overlay */}
+        {/* CTA closer â€” dark tome bg with cream grain overlay */}
         <section className="relative bg-tome-950 text-cream-50 py-20 text-center overflow-hidden">
           <PaperTexture variant="cream" opacity={0.5} />
           <div className="relative">

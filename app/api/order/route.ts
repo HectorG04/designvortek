@@ -1,12 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
-import { sendEmail, orderConfirmationHTML, adminOrderNotifyHTML, ADMIN_EMAIL } from '@/lib/email'
+import { sendBriefReceiptEmail, sendAdminBriefEmail } from '@/lib/email'
+import { fetchProductBySlug } from '@/lib/services-server'
+import { formatTurnaround } from '@/lib/services'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 /**
  * POST /api/order
  * Submits a commission brief. Inserts into `commission_orders` table.
+ *
+ * Side effects:
+ *  - Customer receives the canonical `brief-receipt` email (no-op if
+ *    RESEND_API_KEY missing).
+ *  - Admin receives the `admin-brief` notification (no-op if no
+ *    ADMIN_NOTIFY_EMAIL).
+ *  - Upserts a row into `customers` keyed on email so future orders /
+ *    subscriptions can FK in.
  */
 export async function POST(request: NextRequest) {
   try {
@@ -21,11 +31,21 @@ export async function POST(request: NextRequest) {
       reference_links,
       budget,
       deadline,
-      // Form sends these too, but the table doesn't have dedicated columns
-      // for them yet. Fold them into internal_notes below so they're saved.
+      // Form sends these too, but the legacy table didn't have dedicated columns
+      // for them. Migration 0006 added structured columns; we now persist what
+      // we can structurally and fold the rest into internal_notes for safety.
       quantity,
       notes,
       source,
+      // Canonical refs sent by the Order Form v2 picker. Optional — older
+      // versions of the form don't post these.
+      bucket_slug,
+      product_slug,
+      tier_slug,
+      style_tags,
+      reference_urls,
+      budget_range,
+      budget_context,
     } = body
 
     // Required-field validation
@@ -51,32 +71,62 @@ export async function POST(request: NextRequest) {
 
     const supabase = createAdminClient()
 
-    /* Stash extra form fields in internal_notes so nothing posted from the
-     * form is silently dropped. Once the schema adds dedicated columns for
-     * quantity/notes/source, move them out. */
+    /* Upsert into customers (keyed by email). The first-seen-at default fires
+     * on insert; subsequent upserts touch updated_at but preserve first_seen_at. */
+    const trimmedName = customer_name.trim()
+    const { data: customerRow } = await supabase
+      .from('customers')
+      .upsert(
+        {
+          email: trimmedEmail,
+          name: trimmedName,
+          phone: customer_phone?.trim() || null,
+          source: typeof source === 'string' && source.trim() ? source.trim() : null,
+        },
+        { onConflict: 'email' },
+      )
+      .select('id')
+      .maybeSingle()
+
+    /* Stash anything we don't yet have a column for in internal_notes so
+     * nothing posted from the form is silently dropped. */
     const internalParts: string[] = []
-    if (quantity)            internalParts.push(`Quantity: ${String(quantity).trim()}`)
-    if (notes?.trim())       internalParts.push(`Client notes:\n${notes.trim()}`)
-    if (source?.trim())      internalParts.push(`How they found us: ${source.trim()}`)
+    if (quantity)        internalParts.push(`Quantity: ${String(quantity).trim()}`)
+    if (notes?.trim())   internalParts.push(`Client notes:\n${notes.trim()}`)
+    if (source?.trim())  internalParts.push(`How they found us: ${source.trim()}`)
+
+    const styleTagsArr =
+      Array.isArray(style_tags) ? style_tags.filter((s): s is string => typeof s === 'string') : null
+    const refUrlsArr =
+      Array.isArray(reference_urls) ? reference_urls.filter((s): s is string => typeof s === 'string') : null
 
     const { data: inserted, error } = await supabase
       .from('commission_orders')
       .insert([
         {
-          customer_name: customer_name.trim(),
+          customer_id: customerRow?.id ?? null,
+          customer_name: trimmedName,
           customer_email: trimmedEmail,
           customer_phone: customer_phone?.trim() || null,
           service_type,
           style: style?.trim() || null,
           description: description.trim(),
           reference_links: reference_links?.trim() || null,
+          reference_urls: refUrlsArr,
+          style_tags: styleTagsArr,
           budget: budget?.trim() || null,
+          budget_range: typeof budget_range === 'string' ? budget_range : null,
+          budget_context: typeof budget_context === 'string' ? budget_context : null,
+          quantity: typeof quantity === 'string' ? quantity : null,
+          bucket_slug: typeof bucket_slug === 'string' ? bucket_slug : null,
+          product_slug: typeof product_slug === 'string' ? product_slug : null,
+          tier_slug: typeof tier_slug === 'string' ? tier_slug : null,
           deadline: deadline?.trim() || null,
           status: 'pending',
           internal_notes: internalParts.length ? internalParts.join('\n\n') : null,
         },
       ])
-      .select('id')
+      .select('id,order_number')
       .single()
 
     if (error) {
@@ -87,36 +137,50 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Fire-and-forget email notifications (no-op if RESEND_API_KEY missing).
-    // We don't await — but we use Promise.allSettled so failures don't crash the response.
+    /* Log the initial status transition. */
+    if (inserted?.id) {
+      await supabase
+        .from('order_status_log')
+        .insert({ order_id: inserted.id, status: 'pending', by_user: 'customer', note: 'Brief submitted via /order' })
+    }
+
+    /* Resolve a friendly turnaround estimate based on the product slug. */
+    let approxTurnaround: string | undefined
+    let serviceLabel = service_type
+    if (typeof product_slug === 'string') {
+      const product = await fetchProductBySlug(product_slug)
+      if (product) {
+        serviceLabel = tier_slug ? `${product.name} · ${tier_slug}` : product.name
+        approxTurnaround = formatTurnaround(product)
+      }
+    }
+
+    /* Fire-and-forget email notifications. */
     Promise.allSettled([
-      sendEmail({
+      sendBriefReceiptEmail({
         to: trimmedEmail,
-        subject: `Brief received — we'll be in touch within 48 hours`,
-        html: orderConfirmationHTML({
-          customerName: customer_name.trim(),
-          serviceType: service_type,
-          description: description.trim(),
-        }),
+        customerName: trimmedName,
+        orderNumber: inserted?.order_number ?? `#${inserted?.id ?? 'pending'}`,
+        serviceLabel,
+        description: description.trim(),
+        approxTurnaround,
       }),
-      ADMIN_EMAIL
-        ? sendEmail({
-            to: ADMIN_EMAIL,
-            subject: `New commission brief #${inserted?.id} — ${customer_name.trim()}`,
-            replyTo: trimmedEmail,
-            html: adminOrderNotifyHTML({
-              id: inserted?.id ?? 0,
-              customerName: customer_name.trim(),
-              customerEmail: trimmedEmail,
-              serviceType: service_type,
-              budget: budget?.trim() || null,
-              description: description.trim(),
-            }),
-          })
-        : Promise.resolve(false),
+      sendAdminBriefEmail({
+        orderId: inserted?.id ?? 0,
+        orderNumber: inserted?.order_number ?? `#${inserted?.id ?? 'pending'}`,
+        customerName: trimmedName,
+        customerEmail: trimmedEmail,
+        serviceLabel,
+        budgetLabel: budget?.trim() || budget_range || undefined,
+        description: description.trim(),
+      }),
     ]).catch(() => {})
 
-    return NextResponse.json({ success: true, id: inserted?.id })
+    return NextResponse.json({
+      success: true,
+      id: inserted?.id,
+      order_number: inserted?.order_number ?? null,
+    })
   } catch (err) {
     console.error('Order API error:', err)
     return NextResponse.json({ error: 'Internal server error.' }, { status: 500 })

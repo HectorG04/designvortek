@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -13,7 +13,7 @@ import PaperTexture from '@/components/decor/PaperTexture'
 import { cn } from '@/lib/utils'
 
 /* ============================================================
-   FAQ data — answers stored as MARKDOWN STRINGS so inline
+   FAQ data â€” answers stored as MARKDOWN STRINGS so inline
    emphasis (**bold** + [links](/url)) survives the data layer
    and renders through the branded Markdown component.
    ============================================================ */
@@ -30,7 +30,7 @@ type CategoryId = typeof FAQ_CATEGORIES[number]['id']
 
 interface FaqItem {
   q: string
-  /** Markdown string — use `**bold**`, `*italic*`, `[text](/url)`. */
+  /** Markdown string â€” use `**bold**`, `*italic*`, `[text](/url)`. */
   a: string
   category: CategoryId
 }
@@ -56,7 +56,7 @@ All prices are USD. Every quote is fixed up front. See the full [pricing breakdo
   {
     category: 'pricing',
     q: 'Do you offer bulk discounts?',
-    a: `Yes. **NPC packs** drop to **$40 each** at 10 NPCs vs **$44** at 5. **Token Pack (5)** at $180 works out to **$36 per token** vs $40–60 individually. **Item / Artifact 6-pack** is $150 ($25 per item) vs $30 single. For volume above these tiers, see the [commercial retainer](/commercial).`,
+    a: `Yes. **NPC packs** drop to **$40 each** at 10 NPCs vs **$44** at 5. **Token Pack (5)** at $180 works out to **$36 per token** vs $40â€“60 individually. **Item / Artifact 6-pack** is $150 ($25 per item) vs $30 single. For volume above these tiers, see the [commercial retainer](/commercial).`,
   },
   {
     category: 'pricing',
@@ -141,7 +141,7 @@ function stripMarkdown(md: string): string {
     .replace(/\*\*([^*]+)\*\*/g, '$1')          // **bold**
     .replace(/\*([^*]+)\*/g, '$1')              // *italic*
     .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')    // [text](url)
-    .replace(/\n+/g, ' ')                       // newlines → space
+    .replace(/\n+/g, ' ')                       // newlines â†’ space
     .trim()
 }
 
@@ -171,7 +171,7 @@ export default function FaqPage() {
   return (
     <>
       <SiteHeader />
-      <main>
+      <main id="main">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
@@ -180,10 +180,10 @@ export default function FaqPage() {
         <PageHero
           eyebrow="Frequently asked"
           title={<>Quick answers, no <em className="font-display italic font-medium text-burgundy-700">fluff</em></>}
-          description="Pricing, process, revisions, licensing, refunds. If you've thought it, someone's asked it — and the answer's here."
+          description="Pricing, process, revisions, licensing, refunds. If you've thought it, someone's asked it â€” and the answer's here."
         />
 
-        {/* Search bar — matches .fq-search: 560px max, 1.5px border, parchment-100 bg, 14px/50px padding */}
+        {/* Search bar â€” matches .fq-search: 560px max, 1.5px border, parchment-100 bg, 14px/50px padding */}
         <section className="pb-14">
           <Container>
             <div className="max-w-[560px] mx-auto relative">
@@ -204,7 +204,7 @@ export default function FaqPage() {
           </Container>
         </section>
 
-        {/* FAQ layout — sticky category nav + accordion list */}
+        {/* FAQ layout â€” sticky category nav + accordion list */}
         <section className="pb-16 md:pb-24">
           <Container>
             <div className="grid lg:grid-cols-[220px_1fr] gap-12 lg:gap-16 max-w-5xl mx-auto">
@@ -293,7 +293,7 @@ export default function FaqPage() {
                             transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
                             style={{ overflow: 'hidden' }}
                           >
-                            {/* Answer rendered through Markdown component — inline links and bold survive */}
+                            {/* Answer rendered through Markdown component â€” inline links and bold survive */}
                             <div className="px-6 pb-[22px] text-base text-ink-700 leading-[1.7] max-w-[64ch]">
                               <Markdown>{item.a}</Markdown>
                             </div>
@@ -308,7 +308,7 @@ export default function FaqPage() {
           </Container>
         </section>
 
-        {/* Still wondering — dark tome panel matches .pr-custom from design */}
+        {/* Still wondering â€” dark tome panel matches .pr-custom from design */}
         <section className="pb-24 md:pb-28">
           <Container>
             <div className="relative bg-tome-950 text-cream-50 rounded-2xl overflow-hidden grid gap-8 items-center md:grid-cols-[1.4fr_1fr] p-8 md:p-12 lg:p-14">

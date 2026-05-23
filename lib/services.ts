@@ -26,16 +26,16 @@ export type ServiceBucket =
   | 'party-work'
   | 'gm-world-building'
   | 'tokens'
-  | 'commercial'
   | 'subscription'
 
 export interface BucketMeta {
   slug: ServiceBucket
   label: string
   tagline: string
-  /** Whether this bucket appears in the public /services index. The
-   *  Commercial bucket lives at its own landing page (/commercial)
-   *  rather than the services index, so it's excluded from the grid. */
+  /** Whether this bucket appears in the public /services index. All 5
+   *  buckets show on the index now that Commercial has been moved to a
+   *  +40% add-on (seeded into `addons`) and a standalone /commercial
+   *  landing page, per canonical HANDOFF v2. */
   showOnIndex: boolean
   /** Default order in nav menus / footer / index grid. */
   order: number
@@ -47,7 +47,6 @@ export const BUCKETS: readonly BucketMeta[] = [
   { slug: 'gm-world-building',  label: 'GM & world-building', tagline: 'for the campaign',       showOnIndex: true,  order: 3 },
   { slug: 'tokens',             label: 'Tokens',             tagline: 'tabletop-ready',          showOnIndex: true,  order: 4 },
   { slug: 'subscription',       label: 'Subscription',       tagline: 'campaign companion',      showOnIndex: true,  order: 5 },
-  { slug: 'commercial',         label: 'Commercial',         tagline: 'for the work that ships', showOnIndex: false, order: 6 },
 ]
 
 export function bucketLabel(slug: ServiceBucket): string {
@@ -153,13 +152,14 @@ export interface ServiceProduct {
 }
 
 /* --------------------------------------------------------------------
-   Snapshot — 19 products across 6 buckets.
+   Snapshot — 17 products across 5 buckets (canonical HANDOFF v2).
 
    Pricing, turnaround, and policy values reflect the locked decisions
    from `Services Brief/Character-Art-Services-Brief.pdf` plus user
    amendments:
      - Convert client art to token = $25 (was $15)
-     - Commercial licensing = +40% flat (was +75–100%)
+     - Commercial licensing = +40% flat (now seeded as an addon row,
+       not as a product; see migration 0006 and /commercial landing)
      - 30% deposit, non-refundable after sketches
      - USD only
 
@@ -739,77 +739,9 @@ export const SERVICES: readonly ServiceProduct[] = [
   },
 
   /* =====================================================================
-     Bucket 5 — COMMERCIAL / PUBLISHER
-     ===================================================================== */
-  {
-    slug: 'commercial-licensing',
-    name: 'Commercial Licensing Uplift',
-    bucket: 'commercial',
-    eyebrow: 'for the work that ships',
-    lede: 'When a commission is going to be published, sold, streamed, or used commercially in any form, the licensing uplift covers that scope. Flat 40% of the base job price.',
-    pricingMode: 'pct_uplift',
-    pricing: { mode: 'pct_uplift', uplift: { percent: 40, label: 'of base job price' } },
-    revisionsIncluded: 2,
-    resolution: 'Same as base job',
-    included: [
-      { name: 'Broad commercial use',      body: 'Books, paid streaming, merchandise, paid Patreon, indie game assets. One uplift covers everything in scope.' },
-      { name: 'Layered PSDs included',     body: 'Source files delivered with every commercially-licensed piece.' },
-      { name: 'Written scope agreement',   body: 'We agree the use scope in writing before paint starts.' },
-    ],
-    examples: [
-      { title: 'Indie game cover · The Hollow', meta: 'Mar 2026', gradient: 'from-amber-700 via-burgundy-700 to-tome-900' },
-      { title: 'Novel cover · Saltbound',       meta: 'Feb 2026', gradient: 'from-emerald-900 via-teal-700 to-cyan-600' },
-      { title: 'Merch line · 5 designs',        meta: 'Jan 2026', gradient: 'from-amber-950 via-orange-800 to-yellow-700' },
-    ],
-    faq: [
-      { q: 'What does the 40% cover?', a: 'Commercial use of the piece in the scope we agreed at the start. If scope expands later, we re-quote.' },
-      { q: "What's NOT included?",     a: 'Exclusive worldwide perpetual rights are a separate negotiation. Standard 40% gets you broad commercial use for your project.' },
-      { q: 'Do you sign NDAs?',        a: 'Yes, mutually. No charge for the standard mutual NDA. Send your template or use ours.' },
-    ],
-    bundleWithSlugs: [],
-    genreTags: [],
-    isPublished: true,
-    isFeaturedHomepage: false,
-    sortOrder: 1,
-  },
-
-  {
-    slug: 'publisher-retainer',
-    name: 'Publisher / Kickstarter Retainer',
-    bucket: 'commercial',
-    eyebrow: 'ongoing collaboration',
-    lede: 'Monthly retainer for publishers, indie studios, and Kickstarter campaigns that ship a steady stream of art. Dedicated capacity, priority queue, best per-piece rates.',
-    pricingMode: 'quote_only',
-    pricing: {
-      mode: 'quote_only',
-      quote: { cta_label: 'Discuss a retainer', cta_href: '/commercial' },
-    },
-    revisionsIncluded: 2,
-    resolution: 'By scope',
-    included: [
-      { name: 'Dedicated monthly slots', body: 'Reserved capacity each month, not first-come-first-served like single commissions.' },
-      { name: 'Best per-piece rate',     body: 'Retainers buy our lowest per-asset cost, scaled to volume.' },
-      { name: 'Direct artist access',    body: 'Skype or Discord with the artist on file. Faster decisions, fewer email rounds.' },
-    ],
-    examples: [
-      { title: 'Hexcrown publisher · 6mo retainer', meta: 'Active 2026',    gradient: 'from-burgundy-900 via-red-800 to-rose-700' },
-      { title: 'Saltbound studios · ongoing',       meta: 'Active 2026',    gradient: 'from-emerald-900 via-teal-700 to-cyan-600' },
-      { title: 'Stormwatch Kickstarter ramp',       meta: 'Q4 2025 · Q1 2026', gradient: 'from-amber-950 via-orange-800 to-yellow-700' },
-    ],
-    faq: [
-      { q: "What's the minimum retainer term?",          a: 'Three months. We will do single-month pilots case by case.' },
-      { q: 'Is licensing included in the retainer?',     a: 'Yes, by default. Scope is negotiated up front, no per-piece 40% uplift on top.' },
-      { q: 'Can the retainer cover NDAs and exclusivity?', a: 'Yes. Both are part of the retainer agreement we draft together.' },
-    ],
-    bundleWithSlugs: [],
-    genreTags: [],
-    isPublished: true,
-    isFeaturedHomepage: false,
-    sortOrder: 2,
-  },
-
-  /* =====================================================================
-     Bucket 6 — SUBSCRIPTION
+     Bucket 5 — SUBSCRIPTION
+     (Commercial is no longer a bucket: see /commercial landing page and
+     the +40% addon row seeded in migration 0006.)
      ===================================================================== */
   {
     slug: 'subscription-companion',

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import PageHero from '@/components/layout/PageHero'
@@ -59,7 +59,7 @@ We will acknowledge within 48 hours and process eligible refunds within **7 busi
 
 ## 5. Disputes
 
-If you're dissatisfied with our refund decision, please reply to our refund email and explain — most disputes resolve in a single back-and-forth. If we can't reach agreement, the matter is governed by the dispute clause in our [Terms of Service](/terms).
+If you're dissatisfied with our refund decision, please reply to our refund email and explain â€” most disputes resolve in a single back-and-forth. If we can't reach agreement, the matter is governed by the dispute clause in our [Terms of Service](/terms).
 
 We've had to invoke this policy formally **twice in 500+ commissions** over four years. We mention it not because it happens often, but because clear rules make for honest conversations.
 
@@ -77,7 +77,7 @@ export default function RefundsPage() {
   return (
     <>
       <SiteHeader />
-      <main>
+      <main id="main">
         <PageHero eyebrow="Legal" title="Refund Policy" />
 
         <section className="pb-24">

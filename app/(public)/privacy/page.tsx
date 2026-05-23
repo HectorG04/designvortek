@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import PageHero from '@/components/layout/PageHero'
@@ -16,17 +16,17 @@ export const metadata: Metadata = {
    terms, inline links, and headings survive the data layer. The
    Markdown component renders headings, lists, and inline emphasis
    through branded element selectors below. */
-const BODY = `Design Vortex ("we", "us", "the studio") is a small art commission practice. We collect the minimum information we need to deliver your commission and run the studio. **We don't sell your data, ever.** This page explains exactly what we collect and why — in plain English.
+const BODY = `Design Vortex ("we", "us", "the studio") is a small art commission practice. We collect the minimum information we need to deliver your commission and run the studio. **We don't sell your data, ever.** This page explains exactly what we collect and why â€” in plain English.
 
 ## 1. What we collect
 
 When you submit a commission brief or contact form, we collect:
 
-- **Your name and email address** — so we can reply and deliver files.
-- **Phone number** (optional) — only if you provide one.
-- **Project details and references** — what you wrote in the brief, links you shared.
-- **Payment information** — processed by Stripe; we never see your card number.
-- **Communication history** — emails, messages, revisions exchanged during your commission.
+- **Your name and email address** â€” so we can reply and deliver files.
+- **Phone number** (optional) â€” only if you provide one.
+- **Project details and references** â€” what you wrote in the brief, links you shared.
+- **Payment information** â€” processed by Stripe; we never see your card number.
+- **Communication history** â€” emails, messages, revisions exchanged during your commission.
 
 ## 2. How we use it
 
@@ -34,7 +34,7 @@ Exclusively for these purposes:
 
 - Replying to your inquiry and delivering your commission.
 - Sending revision updates and the final files.
-- **Tax compliance** — required by law (US: invoices retained 7 years).
+- **Tax compliance** â€” required by law (US: invoices retained 7 years).
 - The occasional studio dispatch newsletter, only if you've opted in. Unsubscribe link in every email.
 
 ## 3. What we don't do
@@ -50,11 +50,11 @@ This list is deliberately short and absolute:
 
 To operate the studio, we use these services. Each handles only what's required:
 
-- **Stripe** — payment processing. Sees your card details, not your project info.
-- **Resend** — transactional email. Sees your email address and message contents (encrypted in transit).
-- **Vercel** — hosting. May log IP addresses for security purposes (retained 30 days).
-- **Supabase** — secure database for your brief and contact submissions.
-- **Plausible Analytics** — privacy-respecting site analytics. No cookies, no personal data, no tracking across sites.
+- **Stripe** â€” payment processing. Sees your card details, not your project info.
+- **Resend** â€” transactional email. Sees your email address and message contents (encrypted in transit).
+- **Vercel** â€” hosting. May log IP addresses for security purposes (retained 30 days).
+- **Supabase** â€” secure database for your brief and contact submissions.
+- **Plausible Analytics** â€” privacy-respecting site analytics. No cookies, no personal data, no tracking across sites.
 
 All of the above are GDPR-compliant. We don't use any other third-party services that process your data.
 
@@ -84,15 +84,15 @@ Design Vortex doesn't knowingly collect information from anyone under 13. If you
 
 ## 8. Changes & contact
 
-We may update this policy occasionally — usually because we've added a new tool or simplified a process. Material changes will be announced via the studio dispatch and updated on this page. The "Last updated" date at the top of this page is always current.
+We may update this policy occasionally â€” usually because we've added a new tool or simplified a process. Material changes will be announced via the studio dispatch and updated on this page. The "Last updated" date at the top of this page is always current.
 
-Questions, requests, concerns — email [hello@designvortex.co](mailto:hello@designvortex.co). A real human will reply within 48 hours.`
+Questions, requests, concerns â€” email [hello@designvortex.co](mailto:hello@designvortex.co). A real human will reply within 48 hours.`
 
 export default function PrivacyPage() {
   return (
     <>
       <SiteHeader />
-      <main>
+      <main id="main">
         <PageHero eyebrow="Legal" title="Privacy Policy" />
 
         <section className="pb-24">

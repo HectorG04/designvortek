@@ -50,7 +50,21 @@ const supabase = createClient(SUPABASE_URL, SERVICE_KEY, {
 const snapshotPath = resolve(__dirname, 'services-snapshot.json')
 const SNAPSHOT = JSON.parse(readFileSync(snapshotPath, 'utf-8'))
 
-console.log(`Seeding ${SNAPSHOT.length} services across 6 buckets...\n`)
+console.log(`Seeding ${SNAPSHOT.length} services across 5 buckets...\n`)
+
+/* Canonical-v2 cleanup: drop products from earlier 6-bucket layout that
+ * are no longer in the snapshot. Safe because these slugs were never
+ * exposed to admin editing surfaces. */
+const DEPRECATED_SLUGS = ['commercial-licensing', 'publisher-retainer']
+const { error: cleanupErr } = await supabase
+  .from('services')
+  .delete()
+  .in('slug', DEPRECATED_SLUGS)
+if (cleanupErr) {
+  console.error(`Cleanup failed: ${cleanupErr.message}`)
+} else {
+  console.log(`Cleanup: removed any deprecated rows ${DEPRECATED_SLUGS.join(', ')}\n`)
+}
 
 let ok = 0
 let err = 0

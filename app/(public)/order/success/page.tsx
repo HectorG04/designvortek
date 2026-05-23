@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { Check, Clock, Mail, Sparkles } from 'lucide-react'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
@@ -20,7 +20,7 @@ const NEXT_STEPS = [
   {
     when: 'Within 24 hours',
     strong: 'Check your inbox',
-    body: `A confirmation just landed. If you don't see it in **ten minutes**, peek in spam — or email us directly at [hello@designvortex.co](mailto:hello@designvortex.co).`,
+    body: `A confirmation just landed. If you don't see it in **ten minutes**, peek in spam â€” or email us directly at [hello@designvortex.co](mailto:hello@designvortex.co).`,
     Icon: Mail,
   },
   {
@@ -41,7 +41,7 @@ export default function OrderSuccessPage() {
   return (
     <>
       <SiteHeader />
-      <main className="min-h-[calc(100vh-200px)] flex items-center pt-[140px] pb-24 bg-parchment-50">
+      <main id="main" className="min-h-[calc(100vh-200px)] flex items-center pt-[140px] pb-24 bg-parchment-50">
         <Container className="text-center">
           {/* Big check mark in green circle */}
           <div className="mx-auto mb-8 w-24 h-24 rounded-full bg-success/15 border-2 border-success flex items-center justify-center">
@@ -59,10 +59,10 @@ export default function OrderSuccessPage() {
           </h1>
           <p className="text-lg text-ink-500 leading-[1.65] mt-4 mx-auto max-w-[60ch]">
             Your commission brief is in our inbox. We&rsquo;ll review within 48 hours, send a quote with timeline,
-            and a 25% deposit holds your slot — refundable until the first sketch.
+            and a 25% deposit holds your slot â€” refundable until the first sketch.
           </p>
 
-          {/* 3-step timeline — body copy via Markdown for bold time markers + email link */}
+          {/* 3-step timeline â€” body copy via Markdown for bold time markers + email link */}
           <div className="mt-14 max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
             {NEXT_STEPS.map(({ when, strong, body, Icon }, i) => (
               <div

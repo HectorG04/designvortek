@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import Link from 'next/link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
@@ -20,7 +20,7 @@ import {
 import { cn } from '@/lib/utils'
 
 /* =====================================================================
-   PRICING — CMS-backed, restructured into 6 per-bucket sections.
+   PRICING â€” CMS-backed, restructured into 6 per-bucket sections.
 
    Each section lists every product in the bucket with a price card
    shaped by the product's pricing_mode. Six pricing-mode renderers
@@ -32,9 +32,9 @@ import { cn } from '@/lib/utils'
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Pricing · Design Vortex',
+  title: 'Pricing Â· Design Vortex',
   description:
-    'Transparent USD pricing across 6 buckets: character work, party work, GM/world-building, tokens, subscriptions, and commercial. Flat-rate quotes, 2 revisions, 30% deposit.',
+    'Transparent USD pricing across 5 buckets: character work, party work, GM/world-building, tokens, and subscriptions. Commercial license is +40% of base. Flat-rate quotes, 2 revisions, 30% deposit.',
   alternates: { canonical: '/pricing' },
 }
 
@@ -74,7 +74,7 @@ export default async function PricingPage() {
   return (
     <>
       <SiteHeader />
-      <main className="bg-parchment-50">
+      <main id="main" className="bg-parchment-50">
 
         <PageHero
           eyebrow="Pricing"
@@ -199,7 +199,7 @@ export default async function PricingPage() {
 }
 
 /* =====================================================================
-   BucketSection — one bucket with all its products laid out beneath.
+   BucketSection â€” one bucket with all its products laid out beneath.
    ===================================================================== */
 function BucketSection({
   slug,
@@ -214,7 +214,6 @@ function BucketSection({
 }) {
   const sectionHref =
     slug === 'subscription' ? '/subscription' :
-    slug === 'commercial'   ? '/commercial'   :
     `/services/${slug}`
 
   return (
@@ -244,7 +243,7 @@ function BucketSection({
 }
 
 /* =====================================================================
-   ProductRow — name + pricing card per product.
+   ProductRow â€” name + pricing card per product.
    ===================================================================== */
 function ProductRow({ product }: { product: ServiceProduct }) {
   return (
@@ -268,7 +267,7 @@ function ProductRow({ product }: { product: ServiceProduct }) {
           </strong>
           {product.revisionsIncluded != null && (
             <>
-              {' · '}
+              {' Â· '}
               {product.revisionsIncluded} {product.revisionsIncluded === 1 ? 'revision' : 'revisions'} included
             </>
           )}
@@ -281,7 +280,7 @@ function ProductRow({ product }: { product: ServiceProduct }) {
 }
 
 /* =====================================================================
-   PricingDisplay — same per-mode renderer used by /services/[slug],
+   PricingDisplay â€” same per-mode renderer used by /services/[slug],
    stripped down for the pricing page (no examples, no FAQ inline).
    ===================================================================== */
 function PricingDisplay({ product }: { product: ServiceProduct }) {
@@ -327,7 +326,7 @@ function PricingDisplay({ product }: { product: ServiceProduct }) {
               <ul className="flex flex-col gap-2.5 list-none p-0 m-0 flex-1">
                 {tier.features.slice(0, 4).map((f) => (
                   <li key={f} className="flex gap-2.5 items-start text-[0.9375rem] text-ink-700 leading-[1.4]">
-                    <span className="text-gold-700 flex-shrink-0">✓</span>
+                    <span className="text-gold-700 flex-shrink-0">âœ“</span>
                     <span>{f}</span>
                   </li>
                 ))}
@@ -350,7 +349,7 @@ function PricingDisplay({ product }: { product: ServiceProduct }) {
       return (
         <CompactPrice
           primary={`From $${p.per_extra.base}`}
-          secondary={`+$${p.per_extra.extra_low}–${p.per_extra.extra_high} per extra`}
+          secondary={`+$${p.per_extra.extra_low}â€“${p.per_extra.extra_high} per extra`}
           note={p.per_extra.extra_label}
         />
       )
@@ -371,7 +370,7 @@ function PricingDisplay({ product }: { product: ServiceProduct }) {
                   ${pk.price}
                 </span>
                 <span className="text-[0.875rem] text-ink-500">
-                  · ${Math.round(pk.price / pk.qty)}/piece
+                  Â· ${Math.round(pk.price / pk.qty)}/piece
                 </span>
               </div>
               {pk.label && <p className="text-[0.875rem] text-ink-500">{pk.label}</p>}
@@ -401,7 +400,7 @@ function PricingDisplay({ product }: { product: ServiceProduct }) {
           <ul className="flex flex-col gap-2.5 list-none p-0 m-0">
             {p.monthly.included.map((i) => (
               <li key={i} className="flex gap-2.5 items-start text-[0.9375rem] text-ink-700 leading-[1.4]">
-                <span className="text-gold-700 flex-shrink-0">✓</span>
+                <span className="text-gold-700 flex-shrink-0">âœ“</span>
                 <span>{i}</span>
               </li>
             ))}

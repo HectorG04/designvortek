@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import { Star, Quote, ArrowRight } from 'lucide-react'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
@@ -10,19 +10,19 @@ import { fetchAllReviews, fetchAggregateRating } from '@/lib/reviews-server'
 import { formatReviewDate } from '@/lib/reviews'
 
 /* =====================================================================
-   REVIEWS PAGE — Supabase-backed (with in-memory fallback).
+   REVIEWS PAGE â€” Supabase-backed (with in-memory fallback).
 
    Reads approved reviews from the `reviews` table via the server-only
    fetcher. Aggregate rating (average + breakdown bars) is computed from
    whatever set of reviews is returned, so the JSON-LD AggregateRating
    matches the actual reviews on the page.
 
-   ISR rebuilds at most every 60 seconds — admin approval / unapproval /
+   ISR rebuilds at most every 60 seconds â€” admin approval / unapproval /
    feature toggles propagate without a deploy.
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'Reviews · Design Vortex',
+  title: 'Reviews Â· Design Vortex',
   description:
     'Real words from the clients who have worked with the studio since 2022. D&D players, dungeon masters, gift givers, and the occasional musician.',
   alternates: { canonical: '/reviews' },
@@ -64,7 +64,7 @@ export default async function ReviewsPage() {
   return (
     <>
       <SiteHeader />
-      <main>
+      <main id="main">
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ld) }}
@@ -182,7 +182,7 @@ export default async function ReviewsPage() {
                           {r.customerName}
                         </div>
                         <div className="text-xs text-ink-500 mt-0.5">
-                          {r.role} · {formatReviewDate(r.date)}
+                          {r.role} Â· {formatReviewDate(r.date)}
                         </div>
                       </div>
                     </div>
