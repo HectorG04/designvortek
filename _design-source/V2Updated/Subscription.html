@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<!--
+  ROUTES THIS DESIGN MAPS TO
+  ──────────────────────────
+  Public: /subscription
+  Source-of-truth brief: Design-Requirements-Handoff.md §4.1
+  Pattern reuse: hero (.pg-hero), tier cards (.sd-tier), dark tome (.pr-custom),
+  FAQ accordion (.hp-faq-*), CTA strip (.pg-cta-strip).
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Campaign Companion subscription · Design Vortek</title>
+<meta name="description" content="Monthly tokens, NPCs, and maps for active D&amp;D campaigns. Hand-painted by the studio, delivered the 15th of every month. Pause or cancel any time." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="pages.css" />
+</head>
+<body>
+
+<!-- Header -->
+<header class="pg-header" id="pg-header" data-screen-label="00 Header">
+  <a class="pg-header-brand" href="Homepage.html" style="text-decoration:none">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+    <span>Design Vortek</span>
+  </a>
+  <nav class="pg-header-nav">
+    <a href="Portfolio.html">Portfolio</a>
+    <a href="Services.html">Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg></a>
+    <a href="Process.html">Process</a>
+    <a href="Pricing.html">Pricing</a>
+    <a href="About.html">About</a>
+    <a href="Blog.html">Blog</a>
+  </nav>
+  <a class="dv-btn dv-btn-primary" href="Order Form.html">Start commission</a>
+</header>
+
+<!-- Hero -->
+<section class="pg-hero" data-screen-label="01 Hero">
+  <div class="pg-container">
+    <span class="ds-eyebrow">Campaign companion · Subscription</span>
+    <h1>Your campaign's <em>steady supply</em>.</h1>
+    <p>For active GMs who burn through tokens and NPCs faster than the players burn through hit points. Hand-painted, delivered the 15th of every month, pause whenever the table goes on hiatus.</p>
+    <div class="dv-reassure">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Cancel any time</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Pause for a month</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Every piece by hand</span>
+    </div>
+  </div>
+</section>
+
+<!-- How it works -->
+<section class="pg-section" data-screen-label="02 How it works">
+  <div class="pg-container">
+    <div class="pg-section-head">
+      <span class="ds-eyebrow">How it works</span>
+      <h2>Four steps, <em>then we paint</em></h2>
+    </div>
+
+    <div class="sub-howto">
+      <div class="sub-howto-step">
+        <div class="sub-howto-num">1</div>
+        <h4>Pick a tier</h4>
+        <p>Companion if your table mostly needs tokens. GM tier if you're running a long-form campaign with worlds to draw.</p>
+      </div>
+      <div class="sub-howto-step">
+        <div class="sub-howto-num">2</div>
+        <h4>Send your campaign brief</h4>
+        <p>One quick form. Setting, tone, who's at the table, what's coming up. Less than ten minutes.</p>
+      </div>
+      <div class="sub-howto-step">
+        <div class="sub-howto-num">3</div>
+        <h4>Receive every 15th</h4>
+        <p>Your allotment lands as a downloadable bundle on the 15th of each month. Sketches shared mid-cycle.</p>
+      </div>
+      <div class="sub-howto-step">
+        <div class="sub-howto-num">4</div>
+        <h4>Pause or cancel</h4>
+        <p>Hit pause before the next cycle and skip a month, or cancel outright. No phone trees, no questions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tier cards -->
+<section class="pg-section" style="background:var(--parchment-100);" data-screen-label="03 Tiers">
+  <div class="pg-container">
+    <div class="pg-section-head">
+      <span class="ds-eyebrow">Two tiers</span>
+      <h2>Pick the <em>cadence</em> that fits</h2>
+      <p>Same hand-painted craft, two volumes. Switch tiers between cycles if your campaign changes shape.</p>
+    </div>
+
+    <div class="sub-tiers">
+
+      <!-- Companion -->
+      <div class="sd-tier">
+        <div class="sd-tier-name">Companion</div>
+        <div class="sd-tier-best">active GMs with a token-hungry table</div>
+        <div class="sd-tier-price">
+          <span class="sub-price-monthly">
+            <span class="sd-tier-price-num">$30</span>
+            <span class="sub-price-suffix">/ month</span>
+          </span>
+          <span class="sd-tier-price-note">10 tokens + 2 NPCs</span>
+        </div>
+        <ul class="sd-tier-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 10 hand-painted tokens</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 2 NPC portraits, simpler render</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> VTT-ready 512 + 1024 exports</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Cancel or pause any cycle</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Swap items mid-cycle if your plan changes</li>
+        </ul>
+        <a class="dv-btn dv-btn-outline sd-tier-cta" href="Order Form.html">Start Companion</a>
+        <span class="dv-usd block"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg> USD · international cards billed at current rate</span>
+      </div>
+
+      <!-- GM tier -->
+      <div class="sd-tier featured">
+        <span class="sd-tier-flag">Most picked</span>
+        <div class="sd-tier-name">GM tier</div>
+        <div class="sd-tier-best">long-form campaigns that need a steady drip</div>
+        <div class="sd-tier-price">
+          <span class="sub-price-monthly">
+            <span class="sd-tier-price-num">$75</span>
+            <span class="sub-price-suffix">/ month</span>
+          </span>
+          <span class="sd-tier-price-note">tokens + NPCs + 1 map</span>
+        </div>
+        <ul class="sd-tier-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 15 hand-painted tokens</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 4 NPC portraits</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 1 battle map (standard size, gridded)</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Style continuity across the campaign</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Priority response on briefs</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Cancel, pause, or swap any cycle</li>
+        </ul>
+        <a class="dv-btn dv-btn-primary sd-tier-cta" href="Order Form.html">Start GM tier</a>
+        <span class="dv-usd block"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg> USD · international cards billed at current rate</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Delivery cadence callout -->
+<section class="pg-section" style="padding-top:32px" data-screen-label="04 Cadence">
+  <div class="pg-container">
+    <div class="sub-cadence">
+      <div class="sub-cadence-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 11h18M12 15l2 2 4-4"/></svg>
+      </div>
+      <div class="sub-cadence-text">
+        <div class="sub-cadence-eyebrow">Cadence</div>
+        <h3>Every cycle ships the <em>15th of the month</em></h3>
+        <p>New subscriptions started after the 10th roll over to the next cycle, so your first bundle never lands rushed or thin. Sketches go out mid-cycle so you can flag changes before paint begins.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What's NOT included -->
+<section class="pg-section" data-screen-label="05 Not included">
+  <div class="pg-container">
+    <div class="pg-section-head">
+      <span class="ds-eyebrow">Honest scope</span>
+      <h2>What a subscription <em>doesn't cover</em></h2>
+      <p>Three things we keep outside the monthly plan so quality stays where it should.</p>
+    </div>
+
+    <div class="sub-not">
+      <div class="sub-not-card">
+        <div class="sub-not-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="15" cy="8" r="3"/><path d="M4 20c0-3 2-5 5-5s5 2 5 5M15 20c0-2 1-4 3-4s2 1 2 4"/></svg>
+        </div>
+        <h4>Full party portraits</h4>
+        <p>Group compositions live as their own piece, not a monthly slot. Commission a party portrait separately when the table's ready to sit for one.</p>
+      </div>
+      <div class="sub-not-card">
+        <div class="sub-not-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 3v18"/></svg>
+        </div>
+        <h4>Oversize battle maps</h4>
+        <p>The included battle map is standard size. Bigger spreads, multi-floor dungeons, or world-scale layouts get quoted separately so the time is real.</p>
+      </div>
+      <div class="sub-not-card">
+        <div class="sub-not-card-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+        </div>
+        <h4>Commercial licensing</h4>
+        <p>Subscriptions cover personal campaign use. Streaming, paid Patreon tiers, or merch get licensed per piece. See the <a href="Commercial.html">commercial page</a>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="pg-section" style="background:var(--parchment-100);" data-screen-label="06 FAQ">
+  <div class="pg-container">
+    <div class="hp-faq-layout">
+      <div class="hp-faq-side">
+        <span class="ds-eyebrow">Subscription FAQ</span>
+        <h2>The fine <em>print</em></h2>
+        <p>Common questions about pausing, swapping, and what happens when life gets busy mid-cycle.</p>
+        <a class="hp-faq-side-cta" href="FAQ.html">Full FAQ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="hp-faq-list">
+        <details class="hp-faq-item" open>
+          <summary>Can I pause my subscription?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>Yes. Pause from your account before the next billing date and we skip the cycle. Your slot stays held for up to two months. Beyond that you can resume any time, you'll just go back in the queue.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>What if I don't use my monthly allotment?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>Subscription pieces don't roll over. The studio reserves time for your cycle each month and that time gets spent on your bundle. If you anticipate a quiet month, pause instead so the value isn't lost.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>Can I swap a token for an NPC?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>Within the same tier of complexity, yes. NPC portraits and tokens are interchangeable on a roughly 2-to-1 basis (one NPC counts as two tokens of equivalent effort). Flag it in your monthly brief.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>What happens if I have a complex month?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>Send the brief anyway. If a request is more involved than the standard allotment covers, we'll quote the overflow separately and let you choose whether to add it to the cycle or punt to next month.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>How do I cancel?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>One button in your account, or one email to the studio. Cancellations made before the next billing date take effect immediately, no last cycle owed. Your delivered art stays yours forever.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>Is there a deposit on subscriptions?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>No. The 30% deposit applies to one-off commissions. Subscriptions bill the full month upfront on signup, and the studio commits the time to your cycle. After that it's monthly recurring until you pause or cancel.</p></div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="pg-cta-strip" data-screen-label="07 CTA">
+  <div class="pg-container">
+    <h2>Start your <em>campaign companion</em></h2>
+    <p>Pick a tier, send a short brief, get the first bundle on the next cycle.</p>
+    <div class="pg-cta-strip-actions">
+      <a class="dv-btn dv-btn-gold lg" href="Order Form.html">Start the subscription <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="dv-btn dv-btn-outline-cream lg" href="Contact.html">Ask a question first</a>
+    </div>
+    <div style="margin-top: 18px; display: flex; justify-content: center;">
+      <span class="dv-usd tome"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg> Billed in USD · international cards converted at current rate</span>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="pg-footer" data-screen-label="08 Footer">
+  <div class="pg-container">
+    <div class="pg-footer-grid">
+      <div class="pg-footer-col">
+        <a class="pg-footer-brand" href="Homepage.html" style="text-decoration:none">
+          <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+          <span>Design Vortek</span>
+        </a>
+        <p class="pg-footer-tag">Premium art commissions, since 2022. Every piece, by hand, by humans.</p>
+      </div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Studio</div><a href="About.html">About</a><a href="Process.html">Process</a><a href="Pricing.html">Pricing</a><a href="Availability.html">Availability</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Services</div><a href="Service Detail.html">Character Art</a><a href="Services.html">VTT Tokens</a><a href="Services.html">Party Portraits</a><a href="Services.html">NPC Packs</a><a href="Subscription.html">Subscription</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Resources</div><a href="Blog.html">Blog</a><a href="FAQ.html">FAQ</a><a href="Reviews.html">Reviews</a><a href="Order Form.html">Order Form</a><a href="Contact.html">Contact</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Stay in touch</div><a href="Contact.html">hello@designvortek.com</a></div>
+    </div>
+    <div class="pg-footer-bottom"><span>© 2026 Design Vortek Studio.</span><span class="pg-footer-bottom-links"><a href="Privacy.html">Privacy</a><a href="Privacy.html">Terms</a><a href="Privacy.html">Refunds</a></span></div>
+  </div>
+</footer>
+
+<script>(function(){const h=document.getElementById('pg-header');const f=()=>h.classList.toggle('scrolled',window.scrollY>20);f();window.addEventListener('scroll',f,{passive:true});})();</script>
+</body>
+</html>

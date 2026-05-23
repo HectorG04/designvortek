@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brand Book · DesignVortek</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,500;1,500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --parchment: #F4ECD8;
+  --cream: #FAF4E2;
+  --surface: #FFFFFF;
+  --border-light: #E5DCC5;
+  --ink: #16110D;
+  --ink-mid: #2A1F18;
+  --ink-line: #3A2D24;
+  --smoke: #1F1813;
+  --gold: #D4A24C;
+  --gold-deep: #B58835;
+  --gold-soft: #F0DCAA;
+  --crimson: #B23A2A;
+  --crimson-deep: #962E22;
+  --indigo: #2C3E5C;
+  --cream-text: #F0E6D0;
+  --font-display: "Cinzel", Georgia, serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-accent: "Lora", Georgia, serif;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--parchment);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--crimson); text-decoration: none; }
+a:hover { color: var(--crimson-deep); }
+
+/* ============== Layout ============== */
+.bb-layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+.bb-side {
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  padding: 32px 24px;
+  border-right: 1px solid var(--border-light);
+  background: var(--cream);
+}
+.bb-side-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
+.bb-side-brand-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.bb-side h4 {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(22, 17, 13, 0.5);
+  margin: 24px 0 8px;
+}
+.bb-side a {
+  display: block;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  color: var(--ink-mid);
+}
+.bb-side a:hover { background: var(--gold-soft); color: var(--ink); }
+
+.bb-main { padding: 64px 64px 120px; max-width: 1180px; }
+@media (max-width: 900px) {
+  .bb-layout { grid-template-columns: 1fr; }
+  .bb-side { position: relative; height: auto; border-right: 0; border-bottom: 1px solid var(--border-light); }
+  .bb-main { padding: 40px 24px 80px; }
+}
+
+section { margin-bottom: 96px; scroll-margin-top: 32px; }
+.bb-eyebrow {
+  display: inline-block;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin-bottom: 12px;
+}
+section h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0 0 8px;
+  line-height: 1.1;
+}
+section h3 {
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 32px 0 16px;
+}
+.bb-lede {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.125rem;
+  color: var(--ink-mid);
+  max-width: 56ch;
+  margin: 0 0 32px;
+  line-height: 1.5;
+}
+.bb-note {
+  font-size: 0.875rem;
+  color: var(--ink-mid);
+  line-height: 1.6;
+  max-width: 60ch;
+}
+
+/* ============== Cover ============== */
+.bb-cover {
+  background: var(--ink);
+  color: var(--cream-text);
+  margin: -64px -64px 64px;
+  padding: 96px 64px 80px;
+  position: relative;
+  overflow: hidden;
+}
+@media (max-width: 900px) { .bb-cover { margin: -40px -24px 40px; padding: 64px 24px 48px; } }
+.bb-cover::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% 30%, rgba(212, 162, 76, 0.10), transparent 50%),
+              radial-gradient(circle at 80% 70%, rgba(178, 58, 42, 0.08), transparent 55%);
+}
+.bb-cover-inner { position: relative; max-width: 720px; }
+.bb-cover .bb-eyebrow { color: var(--gold); }
+.bb-cover h1 {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 5rem);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.05;
+  color: var(--cream-text);
+}
+.bb-cover-tagline {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 1.5rem;
+  color: var(--crimson);
+  margin-top: 20px;
+  display: flex; align-items: center; gap: 16px;
+}
+.bb-cover-tagline::before {
+  content: ""; display: inline-block; width: 40px; height: 1px; background: var(--gold);
+}
+.bb-cover-body {
+  margin-top: 32px;
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  max-width: 56ch;
+  color: rgba(240, 230, 208, 0.85);
+}
+
+/* ============== Logo display ============== */
+.bb-stage {
+  background: var(--parchment);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 64px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 240px;
+  position: relative;
+}
+.bb-stage.dark { background: var(--ink); border-color: var(--ink-line); }
+.bb-stage.cream { background: var(--cream); }
+.bb-stage.surface { background: var(--surface); border-color: var(--border-light); }
+.bb-stage-label {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.625rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(22, 17, 13, 0.35);
+}
+.bb-stage.dark .bb-stage-label { color: rgba(240, 230, 208, 0.4); }
+
+/* ============== Grid layouts ============== */
+.bb-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.bb-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.bb-row-6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media (max-width: 800px) {
+  .bb-row-2, .bb-row-3, .bb-row-6 { grid-template-columns: 1fr; }
+}
+
+/* ============== Logo marks (CSS hooks) ============== */
+.lockup { display: inline-flex; align-items: center; gap: 16px; }
+.lockup .wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 28px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: inherit;
+  white-space: nowrap;
+}
+.lockup.lg .wordmark { font-size: 44px; }
+.lockup.sm .wordmark { font-size: 20px; }
+.lockup.xs .wordmark { font-size: 14px; }
+.lockup .icon { width: 48px; height: 48px; flex-shrink: 0; }
+.lockup.lg .icon { width: 80px; height: 80px; }
+.lockup.sm .icon { width: 32px; height: 32px; }
+.lockup.xs .icon { width: 20px; height: 20px; }
+
+.stacked { display: inline-flex; flex-direction: column; align-items: center; gap: 14px; color: inherit; }
+.stacked .wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 28px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.stacked .icon { width: 64px; height: 64px; }
+.stacked.lg .wordmark { font-size: 44px; }
+.stacked.lg .icon { width: 100px; height: 100px; }
+
+.tagline {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.125rem;
+  color: var(--crimson);
+}
+.tagline-divider {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  margin: 12px 0;
+}
+.tagline-divider .rule { width: 28px; height: 1px; background: var(--gold); }
+.tagline-divider .diamond { color: var(--gold); font-size: 0.625rem; transform: rotate(45deg); width: 6px; height: 6px; background: var(--gold); display: inline-block; }
+.full-lockup .tagline { color: var(--crimson); margin-top: 4px; }
+.full-lockup.on-dark .tagline { color: #E04A38; }
+
+/* Color mode classes — color the inherited stroke / text */
+.mode-light-icon { color: var(--gold); }
+.mode-light-word { color: var(--ink); }
+.mode-dark-icon { color: var(--gold); }
+.mode-dark-word { color: var(--cream-text); }
+.mode-mono-gold { color: var(--gold); }
+.mode-mono-crimson { color: var(--crimson); }
+.mode-mono-ink { color: var(--ink); }
+.mode-knockout { color: #FFFFFF; }
+
+/* ============== Color swatches ============== */
+.bb-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 16px; }
+.bb-swatch { border-radius: 6px; overflow: hidden; border: 1px solid var(--border-light); background: var(--cream); }
+.bb-swatch-chip { height: 96px; display: flex; align-items: flex-end; padding: 12px; }
+.bb-swatch-meta { padding: 12px; font-size: 0.8125rem; }
+.bb-swatch-name { font-weight: 600; color: var(--ink); font-family: var(--font-display); font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.bb-swatch-hex { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.75rem; color: var(--ink-mid); margin-top: 2px; }
+.bb-swatch-note { font-size: 0.6875rem; color: rgba(22,17,13,0.55); margin-top: 4px; }
+
+/* ============== Type specimens ============== */
+.bb-type-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 32px;
+  padding: 24px 0;
+  border-bottom: 1px solid var(--border-light);
+  align-items: baseline;
+}
+.bb-type-row:last-child { border-bottom: 0; }
+.bb-type-meta {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.75rem;
+  color: rgba(22,17,13,0.55);
+}
+.bb-type-meta strong {
+  display: block;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.8125rem;
+  margin-bottom: 4px;
+}
+.bb-cinzel { font-family: var(--font-display); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink); }
+.bb-inter { font-family: var(--font-body); color: var(--ink-mid); }
+.bb-lora { font-family: var(--font-accent); font-style: italic; color: var(--crimson); }
+
+/* ============== Construction grid ============== */
+.bb-construction { display: grid; grid-template-columns: 320px 1fr; gap: 32px; align-items: center; }
+@media (max-width: 800px) { .bb-construction { grid-template-columns: 1fr; } }
+.bb-construction-grid {
+  position: relative;
+  width: 320px;
+  height: 320px;
+  background: var(--cream);
+  border: 1px solid var(--border-light);
+  background-image:
+    linear-gradient(rgba(212, 162, 76, 0.15) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 162, 76, 0.15) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+.bb-construction-grid .icon { position: absolute; top: 50%; left: 50%; width: 280px; height: 280px; transform: translate(-50%, -50%); color: var(--gold); }
+.bb-construction-safe {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 280px; height: 280px;
+  border: 1px dashed var(--crimson);
+  opacity: 0.4;
+}
+.bb-construction-bounds {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 320px; height: 320px;
+  border: 1px dashed var(--ink-line);
+  opacity: 0.3;
+}
+
+/* ============== Minimum sizes ============== */
+.bb-minimums { display: flex; gap: 24px; align-items: flex-end; flex-wrap: wrap; }
+.bb-minimum {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 24px 16px 16px;
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  background: var(--cream);
+  min-width: 110px;
+}
+.bb-minimum .label {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.6875rem;
+  color: var(--ink-mid);
+  text-align: center;
+}
+
+/* ============== Don'ts grid ============== */
+.bb-donts { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+.bb-dont {
+  border: 1px solid #E3C5C1;
+  background: #FBEEEC;
+  border-radius: 6px;
+  padding: 24px 16px;
+  text-align: center;
+  display: flex; flex-direction: column; gap: 12px; align-items: center;
+}
+.bb-dont-tag {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--crimson);
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.bb-dont-tag::before { content: "✕"; font-weight: 700; }
+.bb-dont-desc { font-size: 0.75rem; color: var(--ink-mid); }
+
+/* ============== Application examples ============== */
+.bb-card-app {
+  background: var(--cream);
+  border: 1px solid var(--border-light);
+  border-radius: 8px;
+  padding: 32px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+.bb-card-app h4 {
+  font-family: var(--font-display);
+  font-size: 0.8125rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold-deep);
+  margin: 0;
+}
+
+/* Business card */
+.bb-bizcard {
+  width: 100%;
+  aspect-ratio: 1.75 / 1;
+  background: var(--parchment);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 20px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(22, 17, 13, 0.08);
+}
+.bb-bizcard.back {
+  align-items: center; justify-content: center;
+  background: var(--cream);
+}
+.bb-bizcard-corner-tl,
+.bb-bizcard-corner-br {
+  position: absolute;
+  width: 18px; height: 18px;
+  color: var(--gold);
+}
+.bb-bizcard-corner-tl { top: 12px; left: 12px; }
+.bb-bizcard-corner-br { bottom: 12px; right: 12px; transform: rotate(180deg); }
+.bb-bizcard-tagline {
+  font-family: var(--font-accent);
+  font-style: italic;
+  font-size: 0.8125rem;
+  color: var(--crimson);
+}
+
+/* Favicon previews */
+.bb-favicon-row { display: flex; gap: 16px; align-items: flex-end; padding: 24px 16px; background: #DCDCDC; border-radius: 6px; }
+.bb-favicon-tab {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px 6px 8px;
+  background: var(--surface);
+  border-radius: 6px 6px 0 0;
+  font-size: 0.75rem;
+  color: var(--ink-mid);
+  min-width: 140px;
+  position: relative;
+  top: 12px;
+}
+.bb-favicon-tab .ico { width: 16px; height: 16px; }
+.bb-favicon-tab.lg .ico { width: 32px; height: 32px; }
+
+/* SVG export-style preview */
+.bb-export-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
+.bb-export {
+  border: 1px solid var(--border-light);
+  background: var(--cream);
+  border-radius: 6px;
+  padding: 24px 16px 12px;
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.bb-export-name {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.6875rem;
+  color: var(--ink-mid);
+  text-align: center;
+  word-break: break-all;
+}
+
+/* Section divider */
+.bb-divider {
+  display: flex; align-items: center; gap: 16px;
+  margin: 24px 0;
+  color: var(--gold);
+}
+.bb-divider .rule { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, currentColor, transparent); }
+.bb-divider .diamond { display: inline-block; width: 8px; height: 8px; background: currentColor; transform: rotate(45deg); }
+
+/* OG preview */
+.bb-og {
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 1200 / 630;
+  background: var(--parchment);
+  border: 8px solid var(--gold);
+  border-radius: 4px;
+  padding: 48px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px;
+}
+
+/* Email signature preview */
+.bb-email-signature {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 24px;
+  max-width: 520px;
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: var(--ink-mid);
+}
+
+/* Misc */
+code.k {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 0.875em;
+  background: var(--cream);
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: var(--ink);
+  border: 1px solid var(--border-light);
+}
+</style>
+</head>
+<body>
+
+<!-- =========================================================
+     MASTER SVG SYMBOLS — referenced via <use href="#id">
+     ========================================================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+
+  <!-- ICON MARK · LINE variant (the default / canonical) -->
+  <symbol id="dv-icon-line" viewBox="0 0 64 64">
+    <!-- Outer compass circle -->
+    <circle cx="32" cy="32" r="26" fill="none" stroke="currentColor" stroke-width="3.2"/>
+    <!-- Cardinal tick marks (compass rose nod, inside the circle) -->
+    <line x1="32" y1="6" x2="32" y2="11" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    <line x1="58" y1="32" x2="53" y2="32" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    <line x1="32" y1="58" x2="32" y2="53" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    <line x1="6"  y1="32" x2="11" y2="32" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    <!-- The Vortek — a logarithmic spiral terminating in a quill stroke -->
+    <path d="M 32 32
+             C 33.5 30.5, 35.5 30.5, 37 32
+             C 38.8 34, 37.5 37, 34.5 37.6
+             C 30 38.5, 26.5 35, 26.5 31
+             C 26.5 25.5, 31 22, 36.5 22.5
+             C 43 23, 47 28, 47 34
+             C 47 42, 40 47.5, 32 47.5
+             C 21.5 47.5, 14.5 40, 15 30.5
+             C 15.5 21, 24 14.5, 33.5 14.5
+             C 43 14.5, 50 19.5, 50 27"
+          fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- The eye of the storm — central pivot -->
+    <circle cx="32" cy="32" r="1.4" fill="currentColor"/>
+  </symbol>
+
+  <!-- ICON MARK · SOLID variant (favicon-friendly, single-fill silhouette) -->
+  <symbol id="dv-icon-solid" viewBox="0 0 64 64">
+    <!-- Solid disc with the spiral cut as negative space -->
+    <path fill="currentColor" fill-rule="evenodd"
+          d="M 32 4 A 28 28 0 1 1 32 60 A 28 28 0 1 1 32 4 Z
+             M 32 12 C 41 12 49 18 50 27 C 50.5 33 47 38 43 38 C 39 38 36 35.5 37 32 C 38 28.5 41 28 41 30.5
+             L 41 31 C 41 33 39 35 36 35 C 31 35 28 31 28.5 26.5 C 29 21 33.5 17.5 39 18 C 45.5 18.5 50 23 50 27
+             L 50 28 C 50 19 41 12 32 12 Z"/>
+  </symbol>
+
+  <!-- ICON MARK · DETAILED variant (for hero / large sizes) -->
+  <symbol id="dv-icon-detailed" viewBox="0 0 64 64">
+    <!-- Outer compass circle -->
+    <circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    <!-- Inner concentric ring -->
+    <circle cx="32" cy="32" r="24" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.5"/>
+    <!-- Cardinal tick marks (larger) -->
+    <line x1="32" y1="3" x2="32" y2="11" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+    <line x1="61" y1="32" x2="53" y2="32" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+    <line x1="32" y1="61" x2="32" y2="53" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+    <line x1="3"  y1="32" x2="11" y2="32" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>
+    <!-- Inter-cardinal tick marks (smaller, between cardinals) -->
+    <line x1="52.6" y1="11.4" x2="49.8" y2="14.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <line x1="52.6" y1="52.6" x2="49.8" y2="49.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <line x1="11.4" y1="52.6" x2="14.2" y2="49.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <line x1="11.4" y1="11.4" x2="14.2" y2="14.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    <!-- The Vortek spiral -->
+    <path d="M 32 32
+             C 33.5 30.5, 35.5 30.5, 37 32
+             C 38.8 34, 37.5 37, 34.5 37.6
+             C 30 38.5, 26.5 35, 26.5 31
+             C 26.5 25.5, 31 22, 36.5 22.5
+             C 43 23, 47 28, 47 34
+             C 47 42, 40 47.5, 32 47.5
+             C 21.5 47.5, 14.5 40, 15 30.5
+             C 15.5 21, 24 14.5, 33.5 14.5
+             C 43 14.5, 50 19.5, 50 27"
+          fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- Center -->
+    <circle cx="32" cy="32" r="1.4" fill="currentColor"/>
+  </symbol>
+
+  <!-- ICON MARK · MINI variant (Direction F — reductive, favicon-optimised) -->
+  <symbol id="dv-icon-mini" viewBox="0 0 64 64">
+    <!-- Compass frame -->
+    <circle cx="32" cy="32" r="26" fill="none" stroke="currentColor" stroke-width="3.6"/>
+    <!-- Single quill sweep — 3/4 revolution terminating inward -->
+    <path d="M 32 12 Q 50 12 50 32 Q 50 44 38 44 Q 30 44 30 36"
+          fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    <!-- The eye -->
+    <circle cx="30" cy="34" r="2.2" fill="currentColor"/>
+  </symbol>
+
+  <!-- MONOGRAM DV inscribed in circle -->
+  <symbol id="dv-monogram" viewBox="0 0 64 64">
+    <circle cx="32" cy="32" r="27" fill="none" stroke="currentColor" stroke-width="2.4"/>
+    <!-- Letters DV — using SVG text, Cinzel 700 -->
+    <text x="32" y="42"
+          text-anchor="middle"
+          font-family="Cinzel, Georgia, serif"
+          font-weight="700"
+          font-size="24"
+          letter-spacing="-0.5"
+          fill="currentColor">DV</text>
+  </symbol>
+
+  <!-- COMPASS DIVIDER GLYPH (small diamond + rule) used in lockup with tagline -->
+  <symbol id="dv-divider" viewBox="0 0 80 8">
+    <line x1="2"  y1="4" x2="34" y2="4" stroke="currentColor" stroke-width="1"/>
+    <path d="M 40 0 L 44 4 L 40 8 L 36 4 Z" fill="currentColor"/>
+    <line x1="46" y1="4" x2="78" y2="4" stroke="currentColor" stroke-width="1"/>
+  </symbol>
+
+</svg>
+
+<!-- =========================================================
+     LAYOUT
+     ========================================================= -->
+<div class="bb-layout">
+
+  <!-- ============== Sidebar TOC ============== -->
+  <aside class="bb-side">
+    <div class="bb-side-brand">
+      <svg width="32" height="32" viewBox="0 0 64 64" style="color:var(--gold);"><use href="#dv-icon-line"/></svg>
+      <span class="bb-side-brand-name">DesignVortek</span>
+    </div>
+
+    <h4>Foundations</h4>
+    <a href="#cover">Overview</a>
+    <a href="#palette">Color</a>
+    <a href="#type">Typography</a>
+
+    <h4>Logo system</h4>
+    <a href="#icon">01 · Icon mark</a>
+    <a href="#wordmark">02 · Wordmark</a>
+    <a href="#stacked">03 · Stacked</a>
+    <a href="#monogram">04 · Monogram</a>
+    <a href="#fulllockup">05 · Full lockup</a>
+
+    <h4>Modes &amp; geometry</h4>
+    <a href="#modes">Color modes</a>
+    <a href="#construction">Construction</a>
+    <a href="#clear-space">Clear space</a>
+    <a href="#minimums">Minimum sizes</a>
+    <a href="#donts">Don'ts</a>
+
+    <h4>Iconography</h4>
+    <a href="#icons-12">Secondary icons</a>
+
+    <h4>Applications</h4>
+    <a href="#favicon">Favicon</a>
+    <a href="#og">Open Graph</a>
+    <a href="#print">Print</a>
+    <a href="#email">Email signature</a>
+    <a href="#exports">Exports manifest</a>
+  </aside>
+
+  <!-- ============== Main ============== -->
+  <main class="bb-main">
+
+    <!-- ===================== COVER ===================== -->
+    <section class="bb-cover" id="cover">
+      <div class="bb-cover-inner">
+        <div class="bb-eyebrow">Brand Book · v1.0</div>
+        <h1>DesignVortek</h1>
+        <div class="bb-cover-tagline">Worlds, Painted.</div>
+        <p class="bb-cover-body">
+          A premium TTRPG art commission studio — six artists, 200+ commissions, hand-painted from candlelit study to virtual tabletop. This book defines the visual identity: an illuminated-manuscript icon mark, Cinzel wordmark, parchment-and-gold palette, and the system that holds them together.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===================== COLOR PALETTE ===================== -->
+    <section id="palette">
+      <div class="bb-eyebrow">Foundations · 01</div>
+      <h2>Color</h2>
+      <p class="bb-lede">Parchment grounds. Gold is the candlelight — primary accent, the icon mark itself, every CTA. Crimson is the illuminated red ink — secondary, used for tagline and links. Indigo is the lapis lazuli, used sparingly.</p>
+
+      <h3>Light surfaces</h3>
+      <div class="bb-swatches">
+        <div class="bb-swatch"><div class="bb-swatch-chip" style="background:var(--parchment)"></div><div class="bb-swatch-meta"><div class="bb-swatch-name">Parchment</div><div class="bb-swatch-hex">#F4ECD8</div><div class="bb-swatch-note">Main light background</div></div></div>
+        <div class="bb-swatch"><div class="bb-swatch-chip" style="background:var(--cream)"></div><div class="bb-swatch-meta"><div class="bb-swatch-name">Cream</div><div class="bb-swatch-hex">#FAF4E2</div><div class="bb-swatch-note">Alternating bands</div></div></div>
+        <div class="bb-swatch"><div class="bb-swatch-chip" style="background:var(--surface);border:1px solid var(--border-light)"></div><div class="bb-swatch-meta"><div class="bb-swatch-name">Surface</div><div class="bb-swatch-hex">#FFFFFF</div><div class="bb-swatch-note">Cards / modals only</div></div></div>
+        <div class="bb-swatch"><div class="bb-swatch-chip" style="background:var(--border-light)"></div><div class="bb-swatch-meta"><div class="bb-swatch-name">Border-light</div><div class="bb-swatch-hex">#E5DCC5</div><div class="bb-swatch-note">Hairlines on light</div></div></div>
+      </div>
+
+      <h3>Dark surfaces</h3>
+      <div class="bb-swatches">
+        <div class="bb-swatch"><div class="bb-swatch-chip" style="background:var(--ink)"></div><div class="bb-swatch-meta"><div class="bb-swatch-name">Ink</div><div class="bb-swatch-hex">#16110D</div><div class="bb-swatch-note">Body text · main dark</div></div></div>
+        <div class="bb-swatch"><div class="bb-swatch-chip" style="background:var(--ink-mid)"></div><div class="bb-swatch-meta"><div class="bb-swatch-name">Ink-mid</div><div class="bb-swatch-hex">#2A1F18</div><div class="bb-swatch-note">Dark cards</div></div></div>
+        <div class="bb-swatch"><div class="bb-swatch-chip" style="background:var(--ink-line)"></div><div class="bb-swatch-meta"><div class="bb-swatch-name">Ink-line</div><div class="bb-swatch-hex">#3A2D24</div><div class="bb-swatch-note">Borders on dark</div></div></div>
+        <div class="bb-swatch"><div class="bb-swatch-chip" style="background:var(--smoke)"></div><div class="bb-swatch-meta"><div class="bb-swatch-name">Smoke</div><div class="bb-swatch-hex">#1F1813</div><div class="bb-swatch-note">Secondary dark</div></div></div>
+      </div>
+
+      <h3>Gold — the candlelight</h3>
+      <div class="bb-swatches">
+        <div class="bb-swatch"><div class="bb-swatch-chip" style="background:var(--gold)"></div><div class="bb-swatch-meta"><div class="bb-swatch-name">Gold</div><div class="bb-swatch-hex">#D4A24C</div><div class="bb-swatch-note">Primary accent · icon mark · CTAs</div></div></div>
+        <div class="bb-swatch"><div class="bb-swatch-chip" style="background:var(--gold-deep)"></div><div class="bb-swatch-meta"><div class="bb-swatch-name">Gold-deep</div><div class="bb-swatch-hex">#B58835</div><div class="bb-swatch-note">Gold hover</div></div></div>
+        <div class="bb-swatch"><div class="bb-swatch-chip" style="background:var(--gold-soft)"></div><div class="bb-swatch-meta"><div class="bb-swatch-name">Gold-soft</div><div class="bb-swatch-hex">#F0DCAA</div><div class="bb-swatch-note">Soft tint</div></div></div>
+      </div>
+
+      <h3>Crimson — the illuminated red ink</h3>
+      <div class="bb-swatches">
+        <div class="bb-swatch"><div class="bb-swatch-chip" style="background:var(--crimson)"></div><div class="bb-swatch-meta"><div class="bb-swatch-name">Crimson</div><div class="bb-swatch-hex">#B23A2A</div><div class="bb-swatch-note">Secondary · tagline · links</div></div></div>
+        <div class="bb-swatch"><div class="bb-swatch-chip" style="background:var(--crimson-deep)"></div><div class="bb-swatch-meta"><div class="bb-swatch-name">Crimson-deep</div><div class="bb-swatch-hex">#962E22</div><div class="bb-swatch-note">Crimson hover</div></div></div>
+        <div class="bb-swatch"><div class="bb-swatch-chip" style="background:var(--indigo)"></div><div class="bb-swatch-meta"><div class="bb-swatch-name">Indigo</div><div class="bb-swatch-hex">#2C3E5C</div><div class="bb-swatch-note">Lapis lazuli · sparingly</div></div></div>
+      </div>
+
+      <div class="bb-divider"><span class="rule"></span><span class="diamond"></span><span class="rule"></span></div>
+      <p class="bb-note">
+        <strong style="color:var(--ink);">Rules.</strong> Never pure black <code class="k">#000</code> — use Ink. Never pure white as a page background — use Parchment. Never combine Gold and Crimson on the same mark element. The icon mark is always Gold in default treatment. The wordmark is always Ink (on light) or Cream-text (on dark).
+      </p>
+    </section>
+
+    <!-- ===================== TYPOGRAPHY ===================== -->
+    <section id="type">
+      <div class="bb-eyebrow">Foundations · 02</div>
+      <h2>Typography</h2>
+      <p class="bb-lede">Cinzel carries every wordmark and heading — Roman capitals, never italicised, never reweighted from 600. Inter handles body and UI. Lora italic is the rare flourish: tagline and pull quotes only.</p>
+
+      <div>
+        <div class="bb-type-row">
+          <div class="bb-type-meta"><strong>Wordmark</strong>Cinzel · 600 · ALL CAPS<br/>letter-spacing +0.06em</div>
+          <div class="bb-cinzel" style="font-size: 2.5rem;">DESIGNVORTEK</div>
+        </div>
+        <div class="bb-type-row">
+          <div class="bb-type-meta"><strong>Display heading</strong>Cinzel · 600 · 56px</div>
+          <div class="bb-cinzel" style="font-size: 3rem; line-height: 1.05;">Worlds Painted</div>
+        </div>
+        <div class="bb-type-row">
+          <div class="bb-type-meta"><strong>Section heading</strong>Cinzel · 600 · 28px</div>
+          <div class="bb-cinzel" style="font-size: 1.75rem;">The Cartographer's Hand</div>
+        </div>
+        <div class="bb-type-row">
+          <div class="bb-type-meta"><strong>Body large</strong>Inter · 400 · 18px / 1.7</div>
+          <div class="bb-inter" style="font-size: 1.125rem; line-height: 1.7; max-width: 60ch;">Every commission begins with a conversation. Tell us about your character — backstory, palette, the lighting you imagine. We take it from there.</div>
+        </div>
+        <div class="bb-type-row">
+          <div class="bb-type-meta"><strong>Body</strong>Inter · 400 · 16px / 1.65</div>
+          <div class="bb-inter" style="font-size: 1rem; line-height: 1.65; max-width: 65ch;">Six TTRPG-native artists. Two hundred commissions delivered. Tieflings, half-orcs, drow rangers, gnome wizards — every flavor of fantasy character welcome.</div>
+        </div>
+        <div class="bb-type-row">
+          <div class="bb-type-meta"><strong>Tagline italic</strong>Lora · 400 italic<br/>Crimson #B23A2A</div>
+          <div class="bb-lora" style="font-size: 1.75rem;">Worlds, Painted.</div>
+        </div>
+        <div class="bb-type-row">
+          <div class="bb-type-meta"><strong>Label / UI</strong>Inter · 600 · 12px · UPPERCASE · 0.2em tracking</div>
+          <div style="font-family: var(--font-body); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-deep);">PREMIUM ART COMMISSIONS · SINCE 2022</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== ICON MARK ===================== -->
+    <section id="icon">
+      <div class="bb-eyebrow">Logo system · 01</div>
+      <h2>Icon mark</h2>
+      <p class="bb-lede">The Vortek — a logarithmic spiral terminating in a quill stroke, inscribed in a compass circle. Three variants for three scales: solid for favicons, line for default, detailed for hero.</p>
+
+      <div class="bb-row-3">
+        <div class="bb-stage">
+          <span class="bb-stage-label">SOLID · ≤24px</span>
+          <svg width="120" height="120" viewBox="0 0 64 64" class="mode-light-icon"><use href="#dv-icon-solid"/></svg>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">LINE · default</span>
+          <svg width="120" height="120" viewBox="0 0 64 64" class="mode-light-icon"><use href="#dv-icon-line"/></svg>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">DETAILED · ≥96px</span>
+          <svg width="160" height="160" viewBox="0 0 64 64" class="mode-light-icon"><use href="#dv-icon-detailed"/></svg>
+        </div>
+      </div>
+
+      <p class="bb-note" style="margin-top:24px;">
+        <strong style="color:var(--ink);">Construction.</strong> 64×64 grid · 56×56 safe area · primary stroke 3.2px · secondary stroke 1.6–2.6px · rounded caps on spiral terminations · flat caps on frame · optical center sits ~0.5px above geometric center.
+      </p>
+
+      <div class="bb-divider" style="margin: 48px 0 24px;"><span class="rule"></span><span class="diamond"></span><span class="rule"></span></div>
+
+      <h3>Mini variant · favicon-only sub-mark</h3>
+      <p class="bb-note" style="margin-bottom:24px;">A second, reductive mark for sizes where the full spiral collapses into mush. Single 3/4-revolution sweep with an inward quill terminus + the eye. <strong style="color:var(--ink);">Use only at 16–24px favicon scale and inside the embroidery / pin masters.</strong> Everywhere else, ship the primary line variant.</p>
+
+      <div class="bb-row-3">
+        <div class="bb-stage">
+          <span class="bb-stage-label">PRIMARY (LINE) · 24px</span>
+          <svg width="24" height="24" viewBox="0 0 64 64" class="mode-light-icon"><use href="#dv-icon-line"/></svg>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">MINI · 24px (recommended favicon)</span>
+          <svg width="24" height="24" viewBox="0 0 64 64" class="mode-light-icon"><use href="#dv-icon-mini"/></svg>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">SOLID · 24px («app icon»)</span>
+          <svg width="24" height="24" viewBox="0 0 64 64" class="mode-light-icon"><use href="#dv-icon-solid"/></svg>
+        </div>
+      </div>
+
+      <div class="bb-row-3" style="margin-top: 12px;">
+        <div class="bb-stage">
+          <span class="bb-stage-label">PRIMARY · 16px (mush)</span>
+          <svg width="16" height="16" viewBox="0 0 64 64" class="mode-light-icon"><use href="#dv-icon-line"/></svg>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">MINI · 16px (legible)</span>
+          <svg width="16" height="16" viewBox="0 0 64 64" class="mode-light-icon"><use href="#dv-icon-mini"/></svg>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">MINI · 96px (still works larger)</span>
+          <svg width="96" height="96" viewBox="0 0 64 64" class="mode-light-icon"><use href="#dv-icon-mini"/></svg>
+        </div>
+      </div>
+
+      <div class="bb-row-3" style="margin-top: 12px;">
+        <div class="bb-stage dark">
+          <span class="bb-stage-label">MINI · DARK</span>
+          <svg width="80" height="80" viewBox="0 0 64 64" class="mode-dark-icon"><use href="#dv-icon-mini"/></svg>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">MINI · MONO GOLD</span>
+          <svg width="80" height="80" viewBox="0 0 64 64" class="mode-mono-gold"><use href="#dv-icon-mini"/></svg>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">MINI · MONO INK</span>
+          <svg width="80" height="80" viewBox="0 0 64 64" class="mode-mono-ink"><use href="#dv-icon-mini"/></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== WORDMARK ===================== -->
+    <section id="wordmark">
+      <div class="bb-eyebrow">Logo system · 02</div>
+      <h2>Wordmark</h2>
+      <p class="bb-lede">Cinzel 600, ALL CAPS, letter-spacing +0.06em. Both words same weight, same size, single space. The X never gets replaced with the icon mark.</p>
+
+      <div class="bb-stage">
+        <span class="bb-stage-label">PRIMARY WORDMARK · LIGHT</span>
+        <div class="bb-cinzel" style="font-size: 3.5rem; color: var(--ink);">DESIGNVORTEK</div>
+      </div>
+
+      <div class="bb-stage dark" style="margin-top: 16px;">
+        <span class="bb-stage-label">PRIMARY WORDMARK · DARK</span>
+        <div class="bb-cinzel" style="font-size: 3.5rem; color: var(--cream-text);">DESIGNVORTEK</div>
+      </div>
+    </section>
+
+    <!-- ===================== STACKED ===================== -->
+    <section id="stacked">
+      <div class="bb-eyebrow">Logo system · 03</div>
+      <h2>Stacked lockup</h2>
+      <p class="bb-lede">Icon mark above wordmark. Gap between them equals the cap-height of "D" in DESIGN. Both elements horizontally centered.</p>
+
+      <div class="bb-row-2">
+        <div class="bb-stage">
+          <span class="bb-stage-label">STACKED · LIGHT</span>
+          <div class="stacked" style="color:var(--ink);">
+            <svg viewBox="0 0 64 64" class="icon mode-light-icon"><use href="#dv-icon-line"/></svg>
+            <div class="wordmark">DESIGNVORTEK</div>
+          </div>
+        </div>
+        <div class="bb-stage dark">
+          <span class="bb-stage-label">STACKED · DARK</span>
+          <div class="stacked" style="color:var(--cream-text);">
+            <svg viewBox="0 0 64 64" class="icon mode-dark-icon"><use href="#dv-icon-line"/></svg>
+            <div class="wordmark">DESIGNVORTEK</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== MONOGRAM ===================== -->
+    <section id="monogram">
+      <div class="bb-eyebrow">Logo system · 04</div>
+      <h2>Monogram</h2>
+      <p class="bb-lede">DV inscribed in the system's circle frame, Cinzel 700. For avatars, artwork signing, embossed business-card backs. Must read at 32×32.</p>
+
+      <div class="bb-row-3">
+        <div class="bb-stage">
+          <span class="bb-stage-label">DEFAULT LIGHT</span>
+          <svg width="120" height="120" viewBox="0 0 64 64" class="mode-light-icon"><use href="#dv-monogram"/></svg>
+        </div>
+        <div class="bb-stage dark">
+          <span class="bb-stage-label">DEFAULT DARK</span>
+          <svg width="120" height="120" viewBox="0 0 64 64" class="mode-dark-icon"><use href="#dv-monogram"/></svg>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">CRIMSON</span>
+          <svg width="120" height="120" viewBox="0 0 64 64" class="mode-mono-crimson"><use href="#dv-monogram"/></svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FULL LOCKUP ===================== -->
+    <section id="fulllockup">
+      <div class="bb-eyebrow">Logo system · 05</div>
+      <h2>Lockup with tagline</h2>
+      <p class="bb-lede">Stacked lockup, gold hairline + diamond divider, Lora italic tagline in crimson. The signature mark — for hero placements and primary print.</p>
+
+      <div class="bb-stage" style="padding: 80px 32px;">
+        <span class="bb-stage-label">FULL LOCKUP · LIGHT</span>
+        <div class="full-lockup stacked lg" style="color:var(--ink);">
+          <svg viewBox="0 0 64 64" class="icon mode-light-icon"><use href="#dv-icon-line"/></svg>
+          <div class="wordmark">DESIGNVORTEK</div>
+          <div class="tagline-divider" style="margin-top:4px;">
+            <span class="rule"></span><span class="diamond"></span><span class="rule"></span>
+          </div>
+          <div class="tagline">Worlds, Painted.</div>
+        </div>
+      </div>
+
+      <div class="bb-stage dark" style="padding: 80px 32px; margin-top: 16px;">
+        <span class="bb-stage-label">FULL LOCKUP · DARK</span>
+        <div class="full-lockup stacked lg on-dark" style="color:var(--cream-text);">
+          <svg viewBox="0 0 64 64" class="icon mode-dark-icon"><use href="#dv-icon-line"/></svg>
+          <div class="wordmark">DESIGNVORTEK</div>
+          <div class="tagline-divider" style="margin-top:4px;">
+            <span class="rule"></span><span class="diamond"></span><span class="rule"></span>
+          </div>
+          <div class="tagline" style="color:#E04A38;">Worlds, Painted.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== COLOR MODES MATRIX ===================== -->
+    <section id="modes">
+      <div class="bb-eyebrow">Modes &amp; geometry</div>
+      <h2>Six color modes</h2>
+      <p class="bb-lede">Every member of the system exports in six modes. The matrix below is the deliverable cheat-sheet.</p>
+
+      <h3>Icon mark · six modes</h3>
+      <div class="bb-row-3">
+        <div class="bb-stage">
+          <span class="bb-stage-label">DEFAULT LIGHT</span>
+          <svg width="80" height="80" viewBox="0 0 64 64" class="mode-light-icon"><use href="#dv-icon-line"/></svg>
+        </div>
+        <div class="bb-stage dark">
+          <span class="bb-stage-label">DEFAULT DARK</span>
+          <svg width="80" height="80" viewBox="0 0 64 64" class="mode-dark-icon"><use href="#dv-icon-line"/></svg>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">MONO GOLD</span>
+          <svg width="80" height="80" viewBox="0 0 64 64" class="mode-mono-gold"><use href="#dv-icon-line"/></svg>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">MONO CRIMSON</span>
+          <svg width="80" height="80" viewBox="0 0 64 64" class="mode-mono-crimson"><use href="#dv-icon-line"/></svg>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">MONO INK</span>
+          <svg width="80" height="80" viewBox="0 0 64 64" class="mode-mono-ink"><use href="#dv-icon-line"/></svg>
+        </div>
+        <div class="bb-stage" style="background: linear-gradient(135deg, #3a2c1a, #1a130c);">
+          <span class="bb-stage-label" style="color:rgba(255,255,255,0.5)">KNOCKOUT WHITE</span>
+          <svg width="80" height="80" viewBox="0 0 64 64" style="color:#fff;"><use href="#dv-icon-line"/></svg>
+        </div>
+      </div>
+
+      <h3>Horizontal lockup · six modes</h3>
+      <div class="bb-row-2">
+        <div class="bb-stage">
+          <span class="bb-stage-label">DEFAULT LIGHT</span>
+          <div class="lockup" style="color:var(--ink);">
+            <svg viewBox="0 0 64 64" class="icon mode-light-icon"><use href="#dv-icon-line"/></svg>
+            <span class="wordmark">DESIGNVORTEK</span>
+          </div>
+        </div>
+        <div class="bb-stage dark">
+          <span class="bb-stage-label">DEFAULT DARK</span>
+          <div class="lockup" style="color:var(--cream-text);">
+            <svg viewBox="0 0 64 64" class="icon mode-dark-icon"><use href="#dv-icon-line"/></svg>
+            <span class="wordmark">DESIGNVORTEK</span>
+          </div>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">MONO GOLD</span>
+          <div class="lockup mode-mono-gold">
+            <svg viewBox="0 0 64 64" class="icon"><use href="#dv-icon-line"/></svg>
+            <span class="wordmark">DESIGNVORTEK</span>
+          </div>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">MONO CRIMSON</span>
+          <div class="lockup mode-mono-crimson">
+            <svg viewBox="0 0 64 64" class="icon"><use href="#dv-icon-line"/></svg>
+            <span class="wordmark">DESIGNVORTEK</span>
+          </div>
+        </div>
+        <div class="bb-stage">
+          <span class="bb-stage-label">MONO INK</span>
+          <div class="lockup mode-mono-ink">
+            <svg viewBox="0 0 64 64" class="icon"><use href="#dv-icon-line"/></svg>
+            <span class="wordmark">DESIGNVORTEK</span>
+          </div>
+        </div>
+        <div class="bb-stage" style="background: linear-gradient(135deg, #3a2c1a, #1a130c);">
+          <span class="bb-stage-label" style="color:rgba(255,255,255,0.5)">KNOCKOUT WHITE</span>
+          <div class="lockup" style="color:#fff;">
+            <svg viewBox="0 0 64 64" class="icon"><use href="#dv-icon-line"/></svg>
+            <span class="wordmark">DESIGNVORTEK</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CONSTRUCTION ===================== -->
+    <section id="construction">
+      <div class="bb-eyebrow">Modes &amp; geometry</div>
+      <h2>Construction</h2>
+      <p class="bb-lede">The icon mark is built on a 64×64 grid with a 56×56 safe area. Circle frame at radius 26. Spiral interior sits inside the safe area.</p>
+
+      <div class="bb-construction">
+        <div class="bb-construction-grid">
+          <div class="bb-construction-bounds"></div>
+          <div class="bb-construction-safe"></div>
+          <svg class="icon" viewBox="0 0 64 64"><use href="#dv-icon-detailed"/></svg>
+        </div>
+        <div>
+          <p class="bb-note">
+            <strong style="color:var(--ink);">Grid:</strong> 20px cells on a 320×320 preview (5px on 64-unit canvas).<br/>
+            <strong style="color:var(--ink);">Bounds:</strong> 64×64 viewBox (solid dashed).<br/>
+            <strong style="color:var(--ink);">Safe:</strong> 56×56 — no element exits this zone (red dashed).<br/>
+            <strong style="color:var(--ink);">Frame:</strong> circle r=26 stroke 2.4–3.2px.<br/>
+            <strong style="color:var(--ink);">Spiral:</strong> logarithmic, ~1.5 revolutions, stroke 2.8–3.2px, rounded terminus.<br/>
+            <strong style="color:var(--ink);">Center dot:</strong> r=1.4 filled, optical centering ~0.5px above geometric.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== CLEAR SPACE ===================== -->
+    <section id="clear-space">
+      <div class="bb-eyebrow">Modes &amp; geometry</div>
+      <h2>Clear space</h2>
+      <p class="bb-lede">X = cap-height of "D" in DESIGN. Minimum clear space on all four sides = 1X. Preferred = 2X. No element may enter this zone.</p>
+
+      <div class="bb-stage" style="background: repeating-linear-gradient(45deg, var(--parchment), var(--parchment) 8px, var(--cream) 8px, var(--cream) 16px); padding: 64px;">
+        <div style="padding: 28px; background: var(--parchment); border: 1px dashed var(--crimson); outline: 28px solid var(--parchment);">
+          <div class="lockup" style="color:var(--ink);">
+            <svg viewBox="0 0 64 64" class="icon mode-light-icon"><use href="#dv-icon-line"/></svg>
+            <span class="wordmark">DESIGNVORTEK</span>
+          </div>
+        </div>
+      </div>
+      <p class="bb-note" style="margin-top:16px;">The dashed boundary marks the 1X minimum. The outer parchment band shows the 2X preferred zone.</p>
+    </section>
+
+    <!-- ===================== MINIMUMS ===================== -->
+    <section id="minimums">
+      <div class="bb-eyebrow">Modes &amp; geometry</div>
+      <h2>Minimum sizes</h2>
+      <p class="bb-lede">Below these sizes the mark stops reading. Don't ship beneath them.</p>
+
+      <div class="bb-minimums">
+        <div class="bb-minimum">
+          <svg width="16" height="16" viewBox="0 0 64 64" class="mode-light-icon"><use href="#dv-icon-solid"/></svg>
+          <div class="label">Icon solid<br/>16×16 px</div>
+        </div>
+        <div class="bb-minimum">
+          <svg width="24" height="24" viewBox="0 0 64 64" class="mode-light-icon"><use href="#dv-icon-line"/></svg>
+          <div class="label">Icon line<br/>24×24 px</div>
+        </div>
+        <div class="bb-minimum">
+          <svg width="32" height="32" viewBox="0 0 64 64" class="mode-light-icon"><use href="#dv-monogram"/></svg>
+          <div class="label">Monogram<br/>32×32 px</div>
+        </div>
+        <div class="bb-minimum">
+          <div class="lockup xs" style="color:var(--ink);">
+            <svg viewBox="0 0 64 64" class="icon mode-light-icon"><use href="#dv-icon-line"/></svg>
+            <span class="wordmark">DESIGNVORTEK</span>
+          </div>
+          <div class="label">Horizontal<br/>120 px wide</div>
+        </div>
+        <div class="bb-minimum">
+          <div class="stacked" style="color:var(--ink); transform: scale(0.6); transform-origin: center;">
+            <svg viewBox="0 0 64 64" class="icon mode-light-icon" style="width:42px;height:42px;"><use href="#dv-icon-line"/></svg>
+            <div class="wordmark" style="font-size: 16px;">DESIGNVORTEK</div>
+          </div>
+          <div class="label">Stacked<br/>140 px wide</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== DON'TS ===================== -->
+    <section id="donts">
+      <div class="bb-eyebrow">Modes &amp; geometry</div>
+      <h2>Don't</h2>
+      <p class="bb-lede">Eight ways to break the mark. Avoid all of them.</p>
+
+      <div class="bb-donts">
+        <div class="bb-dont">
+          <svg width="64" height="64" viewBox="0 0 64 64" style="color:var(--gold); filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));"><use href="#dv-icon-line"/></svg>
+          <span class="bb-dont-tag">Drop shadows</span>
+          <p class="bb-dont-desc">Never apply shadow, glow, bevel, or 3D.</p>
+        </div>
+        <div class="bb-dont">
+          <svg width="64" height="64" viewBox="0 0 64 64" style="color:var(--gold); transform: rotate(15deg);"><use href="#dv-icon-line"/></svg>
+          <span class="bb-dont-tag">Rotate</span>
+          <p class="bb-dont-desc">Never tilt the mark (except loading spinner).</p>
+        </div>
+        <div class="bb-dont">
+          <svg width="64" height="64" viewBox="0 0 64 64" style="color:var(--gold); transform: scaleX(0.7);"><use href="#dv-icon-line"/></svg>
+          <span class="bb-dont-tag">Stretch</span>
+          <p class="bb-dont-desc">Never distort proportions.</p>
+        </div>
+        <div class="bb-dont">
+          <svg width="64" height="64" viewBox="0 0 64 64" style="color:#2C3E5C;"><use href="#dv-icon-line"/></svg>
+          <span class="bb-dont-tag">Off-palette</span>
+          <p class="bb-dont-desc">Never apply colours outside the palette.</p>
+        </div>
+        <div class="bb-dont">
+          <svg width="64" height="64" viewBox="0 0 64 64">
+            <defs>
+              <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+                <stop offset="0" stop-color="#D4A24C"/>
+                <stop offset="1" stop-color="#B23A2A"/>
+              </linearGradient>
+            </defs>
+            <use href="#dv-icon-line" style="color:url(#g)"/>
+          </svg>
+          <span class="bb-dont-tag">Gradients</span>
+          <p class="bb-dont-desc">The mark is single-colour. Never gradient.</p>
+        </div>
+        <div class="bb-dont">
+          <div class="lockup" style="color:var(--ink); transform: scale(0.7);">
+            <svg viewBox="0 0 64 64" class="icon" style="color:var(--gold)"><use href="#dv-icon-line"/></svg>
+            <span class="wordmark" style="font-size: 18px;">DESIGN<svg width="20" height="20" viewBox="0 0 64 64" style="color:var(--gold);display:inline-block;vertical-align:middle;"><use href="#dv-icon-line"/></svg>RTEK</span>
+          </div>
+          <span class="bb-dont-tag">Replace a letter</span>
+          <p class="bb-dont-desc">Never substitute the mark for a glyph.</p>
+        </div>
+        <div class="bb-dont">
+          <div class="lockup" style="color:var(--ink); transform: scale(0.7);">
+            <svg viewBox="0 0 64 64" class="icon" style="color:var(--gold)"><use href="#dv-icon-line"/></svg>
+            <span class="wordmark" style="font-family:'Times New Roman',serif;font-weight:700;font-style:italic;letter-spacing:0;text-transform:none;">designvortek</span>
+          </div>
+          <span class="bb-dont-tag">Reset the type</span>
+          <p class="bb-dont-desc">Wordmark stays Cinzel 600 ALL CAPS +0.06em.</p>
+        </div>
+        <div class="bb-dont">
+          <svg width="64" height="64" viewBox="0 0 64 64" style="color:var(--gold); outline: 2px solid #ccc; outline-offset: 4px; padding: 2px; background: #f8e0a0;"><use href="#dv-icon-line"/></svg>
+          <span class="bb-dont-tag">Container the mark</span>
+          <p class="bb-dont-desc">No box, no badge, no frame around the mark.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== SECONDARY ICONS ===================== -->
+    <section id="icons-12">
+      <div class="bb-eyebrow">Iconography</div>
+      <h2>Twelve service icons</h2>
+      <p class="bb-lede">Same DNA as the icon mark — 64×64 grid, 4px stroke, rounded caps. Crimson on light, Gold on dark.</p>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;">
+        <!-- 01 character-portrait -->
+        <div class="bb-stage" style="min-height:140px;padding:24px 16px;">
+          <span class="bb-stage-label">01 · CHARACTER</span>
+          <svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--crimson);fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;">
+            <path d="M 12 56 L 12 28 Q 12 12 32 12 Q 52 12 52 28 L 52 56"/>
+            <circle cx="32" cy="34" r="7"/>
+            <path d="M 21 56 Q 21 45 32 45 Q 43 45 43 56"/>
+          </svg>
+        </div>
+        <!-- 02 party-shot -->
+        <div class="bb-stage" style="min-height:140px;padding:24px 16px;">
+          <span class="bb-stage-label">02 · PARTY</span>
+          <svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--crimson);fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;">
+            <circle cx="16" cy="24" r="6"/>
+            <circle cx="32" cy="22" r="6"/>
+            <circle cx="48" cy="24" r="6"/>
+            <path d="M 6 52 Q 6 40 16 40 Q 26 40 26 52"/>
+            <path d="M 22 54 Q 22 38 32 38 Q 42 38 42 54"/>
+            <path d="M 38 52 Q 38 40 48 40 Q 58 40 58 52"/>
+          </svg>
+        </div>
+        <!-- 03 token -->
+        <div class="bb-stage" style="min-height:140px;padding:24px 16px;">
+          <span class="bb-stage-label">03 · TOKEN</span>
+          <svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--crimson);fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;">
+            <circle cx="32" cy="32" r="24"/>
+            <line x1="32" y1="8" x2="32" y2="56"/>
+            <line x1="8" y1="32" x2="56" y2="32"/>
+          </svg>
+        </div>
+        <!-- 04 dm-screen -->
+        <div class="bb-stage" style="min-height:140px;padding:24px 16px;">
+          <span class="bb-stage-label">04 · DM SCREEN</span>
+          <svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--crimson);fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;">
+            <path d="M 8 18 L 18 12 L 18 52 L 8 56 Z"/>
+            <path d="M 18 12 L 46 12 L 46 52 L 18 52 Z"/>
+            <path d="M 46 12 L 56 18 L 56 56 L 46 52 Z"/>
+          </svg>
+        </div>
+        <!-- 05 dragon -->
+        <div class="bb-stage" style="min-height:140px;padding:24px 16px;">
+          <span class="bb-stage-label">05 · DRAGON</span>
+          <svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--crimson);fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;">
+            <path d="M 8 40 Q 14 32 26 34 Q 36 36 44 28 Q 50 22 56 22 L 52 30 L 56 32 Q 50 36 44 38 Q 36 42 28 42 Q 18 44 12 50"/>
+            <circle cx="49" cy="26" r="1.4" fill="currentColor" stroke="none"/>
+          </svg>
+        </div>
+        <!-- 06 dice-d20 -->
+        <div class="bb-stage" style="min-height:140px;padding:24px 16px;">
+          <span class="bb-stage-label">06 · D20</span>
+          <svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--crimson);fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;">
+            <path d="M 32 8 L 56 22 L 56 42 L 32 56 L 8 42 L 8 22 Z"/>
+            <path d="M 32 8 L 32 26 M 32 26 L 56 22 M 32 26 L 8 22 M 32 26 L 32 56 M 32 26 L 56 42 M 32 26 L 8 42"/>
+          </svg>
+        </div>
+        <!-- 07 scroll -->
+        <div class="bb-stage" style="min-height:140px;padding:24px 16px;">
+          <span class="bb-stage-label">07 · SCROLL</span>
+          <svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--crimson);fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;">
+            <path d="M 14 12 L 50 12 Q 56 12 56 20 L 56 22 L 14 22 Z"/>
+            <path d="M 14 22 L 14 52 Q 14 56 18 56 L 46 56"/>
+            <path d="M 46 56 Q 50 56 50 52 L 50 22"/>
+            <line x1="22" y1="32" x2="42" y2="32"/>
+            <line x1="22" y1="40" x2="38" y2="40"/>
+          </svg>
+        </div>
+        <!-- 08 quill -->
+        <div class="bb-stage" style="min-height:140px;padding:24px 16px;">
+          <span class="bb-stage-label">08 · QUILL</span>
+          <svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--crimson);fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;">
+            <path d="M 54 10 Q 22 18 14 50 L 26 44 L 30 50 L 36 38 Q 46 28 54 10 Z"/>
+            <line x1="20" y1="50" x2="10" y2="60"/>
+          </svg>
+        </div>
+        <!-- 09 compass-rose -->
+        <div class="bb-stage" style="min-height:140px;padding:24px 16px;">
+          <span class="bb-stage-label">09 · COMPASS</span>
+          <svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--crimson);fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;">
+            <circle cx="32" cy="32" r="24"/>
+            <path d="M 32 12 L 36 32 L 32 52 L 28 32 Z" fill="currentColor"/>
+            <path d="M 12 32 L 32 28 L 52 32 L 32 36 Z" fill="currentColor"/>
+          </svg>
+        </div>
+        <!-- 10 tavern -->
+        <div class="bb-stage" style="min-height:140px;padding:24px 16px;">
+          <span class="bb-stage-label">10 · TAVERN</span>
+          <svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--crimson);fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;">
+            <path d="M 18 18 L 46 18 L 46 50 Q 46 56 40 56 L 24 56 Q 18 56 18 50 Z"/>
+            <path d="M 46 26 Q 56 26 56 36 Q 56 44 46 44"/>
+            <line x1="18" y1="14" x2="18" y2="18"/>
+            <line x1="46" y1="14" x2="46" y2="18"/>
+          </svg>
+        </div>
+        <!-- 11 shield -->
+        <div class="bb-stage" style="min-height:140px;padding:24px 16px;">
+          <span class="bb-stage-label">11 · SHIELD</span>
+          <svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--crimson);fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;">
+            <path d="M 32 8 L 54 16 L 54 32 Q 54 50 32 58 Q 10 50 10 32 L 10 16 Z"/>
+            <line x1="32" y1="20" x2="32" y2="42"/>
+            <line x1="20" y1="30" x2="44" y2="30"/>
+          </svg>
+        </div>
+        <!-- 12 spellbook -->
+        <div class="bb-stage" style="min-height:140px;padding:24px 16px;">
+          <span class="bb-stage-label">12 · SPELLBOOK</span>
+          <svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--crimson);fill:none;stroke:currentColor;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;">
+            <path d="M 10 14 L 32 18 L 54 14 L 54 50 L 32 54 L 10 50 Z"/>
+            <line x1="32" y1="18" x2="32" y2="54"/>
+            <circle cx="32" cy="34" r="4"/>
+            <line x1="32" y1="28" x2="32" y2="30"/>
+            <line x1="32" y1="38" x2="32" y2="40"/>
+            <line x1="26" y1="34" x2="28" y2="34"/>
+            <line x1="36" y1="34" x2="38" y2="34"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== FAVICON ===================== -->
+    <section id="favicon">
+      <div class="bb-eyebrow">Applications</div>
+      <h2>Favicon &amp; tab</h2>
+      <p class="bb-lede">At browser-tab scale the line variant disappears. The solid silhouette carries.</p>
+
+      <div class="bb-favicon-row">
+        <div class="bb-favicon-tab">
+          <svg class="ico" viewBox="0 0 64 64" style="color:var(--gold);"><use href="#dv-icon-mini"/></svg>
+          DesignVortek
+        </div>
+        <div class="bb-favicon-tab lg">
+          <svg class="ico" viewBox="0 0 64 64" style="color:var(--gold);"><use href="#dv-icon-mini"/></svg>
+          DesignVortek
+        </div>
+        <div class="bb-favicon-tab" style="background:var(--ink);color:var(--cream-text);">
+          <svg class="ico" viewBox="0 0 64 64" style="color:var(--gold);"><use href="#dv-icon-mini"/></svg>
+          DesignVortek
+        </div>
+      </div>
+      <p class="bb-note" style="margin-top:16px;">Favicon uses the <strong style="color:var(--ink);">Mini</strong> variant — single arc + eye + frame — because the full spiral collapses at 16px. The line variant takes over from 32px upward. Set includes <code class="k">favicon.ico</code> (16+32+48 bundle), <code class="k">favicon-16.png</code>, <code class="k">favicon-32.png</code>, <code class="k">apple-touch-icon.png</code> (180×180), <code class="k">android-chrome-192.png</code>, <code class="k">android-chrome-512.png</code>, <code class="k">safari-pinned-tab.svg</code>, plus <code class="k">site.webmanifest</code>.</p>
+    </section>
+
+    <!-- ===================== OG IMAGE ===================== -->
+    <section id="og">
+      <div class="bb-eyebrow">Applications</div>
+      <h2>Open Graph</h2>
+      <p class="bb-lede">Stacked lockup, centered on parchment, gold 8px hairline border 8px in from edge. 1200×630.</p>
+
+      <div class="bb-og">
+        <svg width="120" height="120" viewBox="0 0 64 64" style="color:var(--gold);"><use href="#dv-icon-detailed"/></svg>
+        <div class="bb-cinzel" style="font-size:2rem; color:var(--ink);">DESIGNVORTEK</div>
+        <div class="tagline-divider" style="margin:8px 0;">
+          <span class="rule" style="background:var(--gold);width:24px;height:1px;display:inline-block;"></span>
+          <span class="diamond" style="display:inline-block;width:6px;height:6px;background:var(--gold);transform:rotate(45deg);"></span>
+          <span class="rule" style="background:var(--gold);width:24px;height:1px;display:inline-block;"></span>
+        </div>
+        <div class="bb-lora" style="font-size:1.125rem;">Worlds, Painted.</div>
+      </div>
+      <p class="bb-note" style="margin-top:16px;">Same composition resizes to Twitter (1600×900), LinkedIn (1200×627), and Discord welcome (1920×1080).</p>
+    </section>
+
+    <!-- ===================== PRINT ===================== -->
+    <section id="print">
+      <div class="bb-eyebrow">Applications</div>
+      <h2>Print &amp; physical</h2>
+      <p class="bb-lede">Business cards on parchment 32lb cream. Gold-foil icon mark (Pantone 871 C). Ink wordmark via offset.</p>
+
+      <h3>Business card · front &amp; back</h3>
+      <div class="bb-row-2">
+        <div>
+          <div class="bb-bizcard">
+            <svg class="bb-bizcard-corner-tl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="M2 12V2H12 M2 2 Q8 4 12 8"/></svg>
+            <svg class="bb-bizcard-corner-br" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"><path d="M2 12V2H12 M2 2 Q8 4 12 8"/></svg>
+            <div>
+              <div class="lockup sm" style="color:var(--ink); gap: 10px;">
+                <svg viewBox="0 0 64 64" class="icon" style="color:var(--gold); width:32px; height:32px;"><use href="#dv-icon-line"/></svg>
+                <span class="wordmark" style="font-size: 14px;">DESIGNVORTEK</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-family:var(--font-display);font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink);font-weight:600;">Theo · Founder</div>
+              <div style="font-family:ui-monospace,Menlo,monospace;font-size:8px;color:var(--ink-mid);margin-top:2px;">designvortek.com · hello@designvortek.com</div>
+              <div class="bb-bizcard-tagline" style="margin-top:6px;font-size:9px;">Worlds, Painted.</div>
+            </div>
+          </div>
+          <p class="bb-note" style="margin-top:8px;font-size:0.75rem;">Front · 89×51mm · 4mm bleed · gold-foil icon · ink offset wordmark</p>
+        </div>
+        <div>
+          <div class="bb-bizcard back">
+            <svg width="48" height="48" viewBox="0 0 64 64" style="color:rgba(22,17,13,0.20);"><use href="#dv-monogram"/></svg>
+          </div>
+          <p class="bb-note" style="margin-top:8px;font-size:0.75rem;">Back · monogram centered · blind deboss (no ink)</p>
+        </div>
+      </div>
+
+      <h3>Sticker · letterhead · banner</h3>
+      <div class="bb-row-3">
+        <div class="bb-stage" style="min-height:160px;">
+          <div style="position:relative;width:120px;height:120px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid var(--parchment);">
+            <svg width="80" height="80" viewBox="0 0 64 64" style="color:var(--ink);"><use href="#dv-icon-solid"/></svg>
+          </div>
+          <span class="bb-stage-label">DIE-CUT STICKER · 75mm</span>
+        </div>
+        <div class="bb-stage" style="min-height:160px;align-items:flex-start;justify-content:flex-start;padding:20px;">
+          <span class="bb-stage-label">LETTERHEAD</span>
+          <div class="lockup xs" style="color:var(--ink);">
+            <svg viewBox="0 0 64 64" class="icon mode-light-icon"><use href="#dv-icon-line"/></svg>
+            <span class="wordmark">DESIGNVORTEK</span>
+          </div>
+          <div style="height:1px;background:var(--gold);width:100%;opacity:0.12;margin-top:14px;"></div>
+        </div>
+        <div class="bb-stage dark" style="min-height:160px;flex-direction:column;gap:16px;">
+          <span class="bb-stage-label">CONVENTION BANNER</span>
+          <svg width="80" height="80" viewBox="0 0 64 64" style="color:var(--gold);"><use href="#dv-icon-detailed"/></svg>
+          <div class="bb-cinzel" style="font-size:14px;color:var(--cream-text);">DESIGNVORTEK</div>
+          <div class="bb-lora" style="font-size:11px;color:#E04A38;">Worlds, Painted.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== EMAIL SIGNATURE ===================== -->
+    <section id="email">
+      <div class="bb-eyebrow">Applications</div>
+      <h2>Email signature</h2>
+      <p class="bb-lede">Table-based, Outlook-safe, hosted PNG (not base64). The exact HTML lives in <code class="k">brand-assets/email-signature/signature.html</code>.</p>
+
+      <div class="bb-email-signature">
+        <table cellpadding="0" cellspacing="0" border="0">
+          <tr>
+            <td valign="top" style="padding-right:16px;">
+              <svg width="48" height="48" viewBox="0 0 64 64" style="color:var(--gold);"><use href="#dv-icon-line"/></svg>
+            </td>
+            <td valign="top">
+              <div style="font-family:Cinzel,Georgia,serif;font-weight:600;font-size:14px;letter-spacing:0.06em;text-transform:uppercase;color:#16110D;">Theo</div>
+              <div style="font-family:Inter,sans-serif;font-size:12px;color:#3A2D24;margin-top:2px;">Founder · DesignVortek</div>
+              <div style="font-family:Inter,sans-serif;font-size:12px;color:#2A1F18;margin-top:4px;">designvortek.com · Discord: theodv#0001</div>
+              <div style="display:flex;align-items:center;gap:8px;margin:10px 0;">
+                <span style="width:24px;height:1px;background:#D4A24C;"></span>
+                <span style="width:6px;height:6px;background:#D4A24C;transform:rotate(45deg);display:inline-block;"></span>
+                <span style="width:24px;height:1px;background:#D4A24C;"></span>
+              </div>
+              <div style="font-family:Lora,Georgia,serif;font-style:italic;font-size:13px;color:#B23A2A;">Worlds, Painted.</div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- ===================== EXPORTS MANIFEST ===================== -->
+    <section id="exports">
+      <div class="bb-eyebrow">Deliverables</div>
+      <h2>Exports manifest</h2>
+      <p class="bb-lede">What's in the asset bundle, what's defer-to-designer. The naming convention is <code class="k">dv-logo-{member}-{mode}.{ext}</code>.</p>
+
+      <h3>In the bundle</h3>
+      <div class="bb-export-grid">
+        <div class="bb-export"><svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--gold);"><use href="#dv-icon-line"/></svg><div class="bb-export-name">logo-master.svg<br/>(all symbols)</div></div>
+        <div class="bb-export"><svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--gold);"><use href="#dv-icon-solid"/></svg><div class="bb-export-name">icon-solid<br/>6 modes · SVG</div></div>
+        <div class="bb-export"><svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--gold);"><use href="#dv-icon-line"/></svg><div class="bb-export-name">icon-line<br/>6 modes · SVG</div></div>
+        <div class="bb-export"><svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--gold);"><use href="#dv-icon-detailed"/></svg><div class="bb-export-name">icon-detailed<br/>6 modes · SVG</div></div>
+        <div class="bb-export"><div class="bb-cinzel" style="font-size:10px;color:var(--ink);text-align:center;">DESIGN<br/>VORTEK</div><div class="bb-export-name">wordmark<br/>6 modes · SVG</div></div>
+        <div class="bb-export"><svg width="56" height="56" viewBox="0 0 64 64" style="color:var(--gold);"><use href="#dv-monogram"/></svg><div class="bb-export-name">monogram<br/>6 modes · SVG</div></div>
+        <div class="bb-export"><div style="display:flex;flex-direction:column;align-items:center;gap:4px;"><svg width="32" height="32" viewBox="0 0 64 64" style="color:var(--gold);"><use href="#dv-icon-line"/></svg><div class="bb-cinzel" style="font-size:8px;color:var(--ink);">DESIGNVORTEK</div></div><div class="bb-export-name">stacked<br/>6 modes · SVG</div></div>
+        <div class="bb-export"><div style="display:flex;flex-direction:column;align-items:center;gap:2px;"><svg width="28" height="28" viewBox="0 0 64 64" style="color:var(--gold);"><use href="#dv-icon-line"/></svg><div class="bb-cinzel" style="font-size:7px;color:var(--ink);">DESIGNVORTEK</div><div style="font-family:Lora;font-style:italic;font-size:8px;color:var(--crimson);">Worlds, Painted.</div></div><div class="bb-export-name">full-lockup<br/>6 modes · SVG</div></div>
+      </div>
+
+      <h3>Defer to a designer (production-format conversion)</h3>
+      <p class="bb-note">From the SVG masters, an external designer can produce the remaining formats: <code class="k">.fig</code> / <code class="k">.ai</code> source files, <code class="k">.eps</code> for legacy print vendors, <code class="k">.dst</code> + <code class="k">.pes</code> embroidery (≤2 thread colors: Madeira Gold 1071 + Madeira Ink 1000), Pantone 871 C foil-stamp plates. The SVG is authoritative geometry.</p>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <div class="bb-divider" style="margin: 64px 0 24px;"><span class="rule"></span><span class="diamond"></span><span class="rule"></span></div>
+    <p style="text-align:center; font-family: var(--font-accent); font-style: italic; color: var(--ink-mid); font-size: 0.9375rem;">
+      DesignVortek Brand Book · v1.0 · Worlds, Painted.
+    </p>
+
+  </main>
+</div>
+
+</body>
+</html>

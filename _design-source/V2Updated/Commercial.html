@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<!--
+  ROUTES THIS DESIGN MAPS TO
+  ──────────────────────────
+  Public: /commercial
+  Source-of-truth brief: Design-Requirements-Handoff.md §4.2
+  Pattern reuse: hero (.pg-hero), dark tome (.pr-custom), FAQ accordion (.hp-faq-*),
+  example cards (.dv-portfolio-card + .ds-ph-scene).
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Commercial &amp; publisher commissions · Design Vortek</title>
+<meta name="description" content="Hand-painted illustration for tabletop publishers, indie games, Kickstarter campaigns, and merch. Commercial licensing handled transparently at +40% of the job price." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="pages.css" />
+</head>
+<body>
+
+<!-- Header -->
+<header class="pg-header" id="pg-header" data-screen-label="00 Header">
+  <a class="pg-header-brand" href="Homepage.html" style="text-decoration:none">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+    <span>Design Vortek</span>
+  </a>
+  <nav class="pg-header-nav">
+    <a href="Portfolio.html">Portfolio</a>
+    <a href="Services.html">Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg></a>
+    <a href="Process.html">Process</a>
+    <a href="Pricing.html">Pricing</a>
+    <a href="About.html">About</a>
+    <a href="Blog.html">Blog</a>
+  </nav>
+  <a class="dv-btn dv-btn-primary" href="Contact.html">Request a quote</a>
+</header>
+
+<!-- Hero -->
+<section class="pg-hero" data-screen-label="01 Hero">
+  <div class="pg-container">
+    <span class="ds-eyebrow">Commercial · Publisher · Studios</span>
+    <h1>For the work that <em>ships</em>.</h1>
+    <p>Hand-painted illustration for tabletop publishers, indie games, Kickstarter campaigns, and merch lines. Same studio, same craft, with commercial licensing priced honestly at a flat +40%.</p>
+    <div class="dv-reassure">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> NDAs at no charge</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Retainer arrangements</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Flat licensing math</span>
+    </div>
+  </div>
+</section>
+
+<!-- Who this is for -->
+<section class="pg-section" data-screen-label="02 Who">
+  <div class="pg-container">
+    <div class="pg-section-head">
+      <span class="ds-eyebrow">Who this is for</span>
+      <h2>Four kinds of <em>commercial brief</em></h2>
+      <p>If you're publishing, selling, or streaming the work, this is the right entry point. Personal commissions live on the rest of the site.</p>
+    </div>
+
+    <div class="com-who">
+      <div class="com-who-card">
+        <div class="com-who-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 012-2h11a3 3 0 013 3v14H7a3 3 0 01-3-3z"/><path d="M4 16h16"/></svg>
+        </div>
+        <h4>Indie tabletop publishers</h4>
+        <p>Cover art, interior illustration, faction iconography, and NPC galleries for printed and PDF rulebooks.</p>
+      </div>
+      <div class="com-who-card">
+        <div class="com-who-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6m0 0l-3 3m3-3l3 3M4 14l1 6h14l1-6"/><circle cx="12" cy="20" r="1.5" fill="currentColor"/></svg>
+        </div>
+        <h4>Kickstarter campaigns</h4>
+        <p>Hero art and stretch-goal pieces shaped to the campaign calendar. Tier reveal art and add-on illustrations welcome.</p>
+      </div>
+      <div class="com-who-card">
+        <div class="com-who-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="13" rx="2"/><path d="M8 21h8M12 18v3"/><path d="M10 9l5 3-5 3z" fill="currentColor"/></svg>
+        </div>
+        <h4>Indie games &amp; streaming</h4>
+        <p>Promo art, marketing splashes, channel banners, animated streamer overlays based on hand-painted character pieces.</p>
+      </div>
+      <div class="com-who-card">
+        <div class="com-who-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7H4l1 12h14z"/><path d="M9 7V5a3 3 0 016 0v2"/></svg>
+        </div>
+        <h4>Merch &amp; licensing</h4>
+        <p>Apparel, prints, enamel pins, posters. Print-ready vector exports and licensing terms scoped to the run size.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How commercial pricing works -->
+<section class="pg-section" style="background:var(--parchment-100);" data-screen-label="03 Pricing">
+  <div class="pg-container">
+    <div class="pg-section-head">
+      <span class="ds-eyebrow">How it's priced</span>
+      <h2>Three line items, <em>no surprises</em></h2>
+      <p>Commercial work prices in three honest layers. You see all of them in your quote.</p>
+    </div>
+
+    <div class="com-pricing">
+      <div class="com-pricing-row">
+        <div class="com-pricing-label">Base
+          <em>standard studio rates</em>
+        </div>
+        <div class="com-pricing-body">
+          The piece itself, quoted at the same rates you'd find on <a href="Pricing.html">our pricing page</a>. Character art, party portraits, maps, and packs all start from their published tiers.
+        </div>
+        <div class="com-pricing-value">Studio rate</div>
+      </div>
+      <div class="com-pricing-row">
+        <div class="com-pricing-label">License
+          <em>commercial use, scope agreed</em>
+        </div>
+        <div class="com-pricing-body">
+          A flat uplift on the base price that covers commercial use across the agreed scope: print run, region, format. No tiered upgrades, no surprise renegotiations halfway through the project.
+        </div>
+        <div class="com-pricing-value"><em>+40%</em></div>
+      </div>
+      <div class="com-pricing-row">
+        <div class="com-pricing-label">Retainer
+          <em>recurring, by inquiry</em>
+        </div>
+        <div class="com-pricing-body">
+          Monthly arrangement for ongoing collaborations. Priority queue, best per-piece rate, and scheduled briefing windows. Priced per studio capacity.
+        </div>
+        <div class="com-pricing-value">Custom quote</div>
+      </div>
+    </div>
+    <div style="text-align:center;"><span class="dv-usd block"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg> All prices in USD · international invoicing on request</span></div>
+  </div>
+</section>
+
+<!-- Retainer block -->
+<section class="pg-section" data-screen-label="04 Retainer">
+  <div class="pg-container">
+    <div class="pr-custom">
+      <div>
+        <span class="ds-eyebrow tome">Retainers</span>
+        <h3>Long-running <em>collaborations</em></h3>
+        <p>Most retainer clients come back monthly with a few pieces per cycle, sometimes more. The arrangement is a fixed monthly fee that buys priority queue, a standing briefing window, and the studio's best per-piece rate.</p>
+        <p style="margin-top:14px">Good fit if your project ships in waves, your team needs predictable turnaround, or you're going to need more than ten commercial pieces over the next year. Send a note describing the project and the cadence you're imagining.</p>
+      </div>
+      <div class="pr-custom-actions">
+        <a class="dv-btn dv-btn-gold lg" href="Contact.html">Discuss a retainer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a class="dv-btn dv-btn-outline-cream" href="mailto:designvortex04@gmail.com">Email the studio</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NDA + scope -->
+<section class="pg-section" style="padding-top:0" data-screen-label="05 NDA">
+  <div class="pg-container">
+    <div class="com-reassure">
+      <div class="com-reassure-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+      </div>
+      <div>
+        <h4>NDAs at no charge</h4>
+        <p>The studio signs mutual NDAs whenever a client asks, at no charge. Standard for pre-launch indie titles, unreleased IP, and competitive work. Send your form or use the studio template.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Recent commercial work -->
+<section class="pg-section" style="background:var(--parchment-100);" data-screen-label="06 Examples">
+  <div class="pg-container">
+    <div class="pg-section-head">
+      <span class="ds-eyebrow">Recent commercial work</span>
+      <h2>A few <em>shipped pieces</em></h2>
+      <p>Released titles below. A handful of current projects sit under NDA and aren't shown.</p>
+    </div>
+
+    <div class="pd-related-grid" style="grid-template-columns:repeat(3,1fr);">
+      <article class="dv-portfolio-card">
+        <div class="dv-portfolio-img ds-ph-scene"><span class="dv-portfolio-badge">Cover · indie RPG</span></div>
+        <div class="dv-portfolio-body">
+          <h4>Hollow Crowns &mdash; cover &amp; chapter art</h4>
+          <div class="dv-portfolio-meta">Greyhawk Press · 14 interior pieces · 2025</div>
+        </div>
+      </article>
+      <article class="dv-portfolio-card">
+        <div class="dv-portfolio-img ds-ph-scene" style="filter:hue-rotate(40deg)"><span class="dv-portfolio-badge">Kickstarter</span></div>
+        <div class="dv-portfolio-body">
+          <h4>Ironroot &mdash; stretch-goal illustrations</h4>
+          <div class="dv-portfolio-meta">Client name held under NDA · 2025</div>
+        </div>
+      </article>
+      <article class="dv-portfolio-card">
+        <div class="dv-portfolio-img ds-ph-scene" style="filter:hue-rotate(-50deg) saturate(1.1)"><span class="dv-portfolio-badge">Merch line</span></div>
+        <div class="dv-portfolio-body">
+          <h4>Twin Moons apparel run</h4>
+          <div class="dv-portfolio-meta">Riverpine Studio · 6 designs · 2024</div>
+        </div>
+      </article>
+    </div>
+
+    <div style="text-align:center; margin-top: 32px;">
+      <a href="Portfolio.html" class="dv-btn dv-btn-outline">See more from the studio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="pg-section" data-screen-label="07 FAQ">
+  <div class="pg-container">
+    <div class="hp-faq-layout">
+      <div class="hp-faq-side">
+        <span class="ds-eyebrow">Commercial FAQ</span>
+        <h2>The questions <em>publishers ask</em></h2>
+        <p>Quick answers on scope, IP, timelines, and exclusivity. Reach out for anything not covered.</p>
+        <a class="hp-faq-side-cta" href="Contact.html">Talk to the studio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="hp-faq-list">
+        <details class="hp-faq-item" open>
+          <summary>What's included in commercial licensing?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>The +40% uplift covers commercial use within the scope you agree to in writing. That typically means the named product, the named region, and the named print or digital run. Need a wider scope later, the license can be expanded without redoing the art.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>Can I commission work in someone else's IP?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>For commercial use of someone else's IP the studio needs written permission from the rights holder. Personal fan art is fine on the retail side of the studio. Licensed commercial work needs the paperwork.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>How long does a typical commercial project take?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>A single commercial piece runs roughly the same as a retail commission, 2 to 4 weeks depending on tier. Multi-piece projects scale: a 12-piece interior usually books 3 to 4 months end to end. Retainer arrangements move faster after the first cycle.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>Do you do exclusivity?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>Time-bound exclusivity within a market or product category is possible, scoped per project. Full perpetual exclusivity is rare and priced separately. Most clients find a scoped license covers what they actually need.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>Do you bill USD only?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>Yes. The studio bills in USD. International clients are welcome and most cards convert at the rate on the day of charge. For larger contracts we'll send a USD invoice that your finance team can wire.</p></div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="pg-cta-strip" data-screen-label="08 CTA">
+  <div class="pg-container">
+    <h2>Tell us about <em>the project</em></h2>
+    <p>Short brief, scope and timeline, what you'd like the license to cover. Quote back within 48 hours.</p>
+    <div class="pg-cta-strip-actions">
+      <a class="dv-btn dv-btn-gold lg" href="Contact.html">Request a commercial quote <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="dv-btn dv-btn-outline-cream lg" href="Pricing.html">See standard pricing</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="pg-footer" data-screen-label="09 Footer">
+  <div class="pg-container">
+    <div class="pg-footer-grid">
+      <div class="pg-footer-col">
+        <a class="pg-footer-brand" href="Homepage.html" style="text-decoration:none">
+          <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+          <span>Design Vortek</span>
+        </a>
+        <p class="pg-footer-tag">Premium art commissions, since 2022. Every piece, by hand, by humans.</p>
+      </div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Studio</div><a href="About.html">About</a><a href="Process.html">Process</a><a href="Pricing.html">Pricing</a><a href="Availability.html">Availability</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Services</div><a href="Service Detail.html">Character Art</a><a href="Services.html">VTT Tokens</a><a href="Commercial.html">Commercial</a><a href="Subscription.html">Subscription</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Resources</div><a href="Blog.html">Blog</a><a href="FAQ.html">FAQ</a><a href="Reviews.html">Reviews</a><a href="Order Form.html">Order Form</a><a href="Contact.html">Contact</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Stay in touch</div><a href="Contact.html">hello@designvortek.com</a></div>
+    </div>
+    <div class="pg-footer-bottom"><span>© 2026 Design Vortek Studio.</span><span class="pg-footer-bottom-links"><a href="Privacy.html">Privacy</a><a href="Privacy.html">Terms</a><a href="Privacy.html">Refunds</a></span></div>
+  </div>
+</footer>
+
+<script>(function(){const h=document.getElementById('pg-header');const f=()=>h.classList.toggle('scrolled',window.scrollY>20);f();window.addEventListener('scroll',f,{passive:true});})();</script>
+</body>
+</html>

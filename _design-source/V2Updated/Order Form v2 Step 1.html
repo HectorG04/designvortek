@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<!--
+  ROUTES THIS DESIGN MAPS TO
+  ──────────────────────────
+  Public: /order (Step 1 only)
+  Source-of-truth brief: Design-Requirements-Handoff.md §4.5
+  Steps 2/3/4 stay as currently designed in Order Form.html — only Step 1
+  changes to handle the bucket → product → tier progressive disclosure.
+  Pattern reuse: order-form chrome (.of-header, .of-progress, .of-form-card),
+  step transitions, draft persistence.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Step 1 · Start a commission · Design Vortek</title>
+<meta name="description" content="Pick a service bucket, choose the product that fits, pick a tier. We'll send a fixed quote within 48 hours." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="order-form.css" />
+</head>
+<body>
+
+<!-- Header -->
+<header class="of-header" data-screen-label="00 Header">
+  <a class="of-header-brand" href="Homepage.html" style="text-decoration:none">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/>
+    </svg>
+    <span>Design Vortek</span>
+  </a>
+  <a class="of-header-back" href="Homepage.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    Back to studio
+  </a>
+</header>
+
+<!-- Hero + progress (same shape as v1) -->
+<section class="of-hero" data-screen-label="01 Hero">
+  <div class="of-container">
+    <span class="ds-eyebrow">Commission brief</span>
+    <h1>Tell us about your <em>commission</em></h1>
+    <p>Four short steps. Takes about 3 minutes. We respond within 48 hours with a fixed quote and no commitment until you're ready.</p>
+  </div>
+
+  <div class="of-progress" aria-label="Form progress">
+    <div class="of-progress-track">
+      <div class="of-progress-step is-active" data-step="1">
+        <div class="of-progress-dot">1</div>
+        <div class="of-progress-label">
+          <span class="of-progress-num">Step 01</span>
+          <span class="of-progress-text">What you need</span>
+        </div>
+      </div>
+      <div class="of-progress-line" data-line="1"></div>
+      <div class="of-progress-step" data-step="2">
+        <div class="of-progress-dot">2</div>
+        <div class="of-progress-label">
+          <span class="of-progress-num">Step 02</span>
+          <span class="of-progress-text">Tell us about it</span>
+        </div>
+      </div>
+      <div class="of-progress-line" data-line="2"></div>
+      <div class="of-progress-step" data-step="3">
+        <div class="of-progress-dot">3</div>
+        <div class="of-progress-label">
+          <span class="of-progress-num">Step 03</span>
+          <span class="of-progress-text">Your details</span>
+        </div>
+      </div>
+      <div class="of-progress-line" data-line="3"></div>
+      <div class="of-progress-step" data-step="4">
+        <div class="of-progress-dot">4</div>
+        <div class="of-progress-label">
+          <span class="of-progress-num">Step 04</span>
+          <span class="of-progress-text">Review</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN: form card -->
+<section class="of-container of-main" data-screen-label="02 Form">
+
+  <form class="of-form-card" id="of-form" autocomplete="on" novalidate>
+
+    <!-- ====================================================
+         STEP 1 — v2 · Bucket → Product → Tier
+         ==================================================== -->
+    <fieldset class="of-step is-current" data-step="1">
+      <div class="of-step-head">
+        <div class="of-step-eyebrow">Step 01 of 04</div>
+        <h2 class="of-step-title">What do you <em>need</em>?</h2>
+        <p class="of-step-sub">Pick a service bucket. We'll narrow it down to the specific product in two clicks.</p>
+      </div>
+
+      <!-- Crumb trail showing progress through bucket → product → tier -->
+      <div class="of-step1-progress" id="of-crumbs">
+        <span class="crumb"><strong id="of-crumb-bucket">Pick a bucket</strong></span>
+        <span class="arrow">›</span>
+        <span class="crumb is-pending" id="of-crumb-product-wrap"><strong id="of-crumb-product">Pick a product</strong></span>
+        <span class="arrow">›</span>
+        <span class="crumb is-pending" id="of-crumb-tier-wrap"><strong id="of-crumb-tier">Pick a tier</strong></span>
+      </div>
+
+      <!-- ============ 1. BUCKET GRID ============ -->
+      <div class="of-field-group">
+        <label class="of-field-group-label">Service bucket</label>
+        <p class="of-field-group-hint">Five buckets, plus commercial which has its own landing page.</p>
+
+        <div class="of-bucket-grid" role="radiogroup" aria-labelledby="bucket-label">
+
+          <!-- Character -->
+          <label class="of-bucket-card" data-bucket="character">
+            <input type="radio" name="bucket" value="character" />
+            <span class="of-bucket-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></span>
+            <span class="of-bucket-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+            </span>
+            <span class="of-bucket-name">Character</span>
+            <span class="of-bucket-desc">Single-figure portraits, full-body art, reference sheets, character+token bundles.</span>
+            <span class="of-bucket-items"><strong>4 products</strong> · from $60</span>
+          </label>
+
+          <!-- Party -->
+          <label class="of-bucket-card" data-bucket="party">
+            <input type="radio" name="bucket" value="party" />
+            <span class="of-bucket-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></span>
+            <span class="of-bucket-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M3 20c0-3 2-5 6-5s6 2 6 5M14 20c0-2 2-4 5-4s3 1 3 4"/></svg>
+            </span>
+            <span class="of-bucket-name">Party</span>
+            <span class="of-bucket-desc">Group compositions, matched portrait sets, action scenes for the whole table.</span>
+            <span class="of-bucket-items"><strong>3 products</strong> · from $220</span>
+          </label>
+
+          <!-- GM -->
+          <label class="of-bucket-card" data-bucket="gm">
+            <input type="radio" name="bucket" value="gm" />
+            <span class="of-bucket-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></span>
+            <span class="of-bucket-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19l6-12 6 8 4-5 2 9z"/></svg>
+            </span>
+            <span class="of-bucket-name">GM &amp; world-building</span>
+            <span class="of-bucket-desc">NPC packs, monsters, items, battle maps, region maps. Anything behind the screen.</span>
+            <span class="of-bucket-items"><strong>5 products</strong> · from $30</span>
+          </label>
+
+          <!-- Tokens -->
+          <label class="of-bucket-card" data-bucket="tokens">
+            <input type="radio" name="bucket" value="tokens" />
+            <span class="of-bucket-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></span>
+            <span class="of-bucket-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+            </span>
+            <span class="of-bucket-name">Tokens (standalone)</span>
+            <span class="of-bucket-desc">Single tokens, token packs, or convert your existing art into VTT-ready tokens.</span>
+            <span class="of-bucket-items"><strong>3 products</strong> · from $25</span>
+          </label>
+
+          <!-- Subscription -->
+          <label class="of-bucket-card" data-bucket="subscription">
+            <input type="radio" name="bucket" value="subscription" />
+            <span class="of-bucket-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></span>
+            <span class="of-bucket-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg>
+            </span>
+            <span class="of-bucket-name">Subscription</span>
+            <span class="of-bucket-desc">Monthly tokens, NPCs, and maps. For active GMs running long-form campaigns.</span>
+            <span class="of-bucket-items"><strong>2 tiers</strong> · $30 or $75 / mo</span>
+          </label>
+
+        </div>
+
+        <div class="of-quote-note" style="margin-top: 18px;">
+          <strong>Doing commercial work?</strong> Publishers, indie game studios, and Kickstarter campaigns start at the <a href="Commercial.html">commercial landing page</a> instead.
+        </div>
+      </div>
+
+      <!-- ============ 2. REVEAL: PRODUCT PICKER + TIER PICKER ============ -->
+      <div class="of-reveal" id="of-reveal">
+
+        <div class="of-reveal-head">
+          <h3>Now pick a <em id="of-reveal-bucket-name">product</em></h3>
+          <span class="of-reveal-head-sub" id="of-reveal-helper">Each one has its own scope and pricing.</span>
+        </div>
+
+        <!-- Product picker — content swaps based on selected bucket -->
+        <div class="of-product-chips" id="of-product-chips"></div>
+
+        <!-- Tier picker (appears below product chips when a tiered product is selected) -->
+        <div class="of-tier-picker" id="of-tier-picker">
+          <div class="of-reveal-head">
+            <h3>And the <em>tier</em>?</h3>
+            <span class="of-reveal-head-sub">Same character, different finish.</span>
+          </div>
+          <div class="of-tier-grid" id="of-tier-grid"></div>
+        </div>
+
+        <!-- Quote-only / monthly-only product note (appears in place of tier picker for those products) -->
+        <div class="of-quote-note" id="of-quote-only-note" style="display:none; margin-top: 20px;"></div>
+
+      </div>
+
+      <!-- Style chips — unchanged from v1, still bucket-aware in production -->
+      <div class="of-field-group" style="margin-top: 36px;">
+        <label class="of-field-group-label">Style preference</label>
+        <p class="of-field-group-hint">Optional. The studio will discuss style in detail before starting.</p>
+        <div class="of-style-chips">
+          <label class="of-style-chip"><input type="checkbox" name="style" value="painterly" checked /> Painterly · warm</label>
+          <label class="of-style-chip"><input type="checkbox" name="style" value="anime" /> Anime · cell-shaded</label>
+          <label class="of-style-chip"><input type="checkbox" name="style" value="lineart" /> Lineart · clean</label>
+          <label class="of-style-chip"><input type="checkbox" name="style" value="chibi" /> Chibi</label>
+          <label class="of-style-chip"><input type="checkbox" name="style" value="realistic" /> Semi-realistic</label>
+          <label class="of-style-chip"><input type="checkbox" name="style" value="open" /> Open to suggestion</label>
+        </div>
+      </div>
+
+      <div class="of-designer-note">
+        <strong>Designer note for engineering:</strong> The bucket, product, and tier selections populate hidden form fields named <code>bucket</code>, <code>product</code>, and <code>tier</code>. Steps 2/3/4 from the existing Order Form.html template are unchanged. The reveal animation is opacity + 8px translate over 280ms. Quote-only products (maps) deep-link to the maps brief page instead of advancing the form.
+      </div>
+    </fieldset>
+
+    <!-- Footer nav (Back disabled on step 1) -->
+    <div class="of-form-foot">
+      <div class="of-form-foot-left">
+        <button type="button" class="dv-btn dv-btn-ghost" id="of-back" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+          Back
+        </button>
+        <span class="of-step-counter">Step <strong>1</strong> of 4</span>
+      </div>
+      <button type="button" class="dv-btn dv-btn-primary" id="of-next" disabled>
+        Continue to brief
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </form>
+
+  <!-- Sidebar (same as v1) -->
+  <aside class="of-sidebar">
+
+    <div class="of-side-card">
+      <div class="of-side-eyebrow">What happens next</div>
+      <div class="of-side-title">A clear, honest process. No chasing.</div>
+      <ol class="of-next-steps">
+        <li class="of-next-step">
+          <span class="of-next-step-num">1</span>
+          <span class="of-next-step-text">
+            <strong>Within 48 hours</strong>
+            We review and send a fixed quote with timeline.
+          </span>
+        </li>
+        <li class="of-next-step">
+          <span class="of-next-step-num">2</span>
+          <span class="of-next-step-text">
+            <strong>You approve &amp; deposit</strong>
+            30% to hold the slot. Refundable until first sketch.
+          </span>
+        </li>
+        <li class="of-next-step">
+          <span class="of-next-step-num">3</span>
+          <span class="of-next-step-text">
+            <strong>Work begins</strong>
+            Sketches, color blocks, final paint. Updates every 3 days.
+          </span>
+        </li>
+      </ol>
+      <div class="of-side-stat">
+        <span class="of-side-stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        </span>
+        <div class="of-side-stat-text">
+          <span class="of-side-stat-num">48 hours</span>
+          <span class="of-side-stat-label">average response time</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="of-side-card">
+      <ul class="of-side-trust">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> No commitment until you approve</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Refundable deposit until first sketch</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 2 revisions baked into every tier</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> USD pricing, international cards welcome</li>
+      </ul>
+    </div>
+
+  </aside>
+
+</section>
+
+<!-- ============================================================
+     PROGRESSIVE DISCLOSURE CONTROLLER
+     Reveals product picker on bucket selection, tier picker on product
+     selection. State stored in hidden fields, persisted to localStorage.
+     ============================================================ -->
+<script>
+(function() {
+
+  // Bucket → products mapping. Each product specifies its pricing mode.
+  // Modes: 'tiered' shows 3-card tier picker. 'range', 'flat', 'pack',
+  // 'per-extra', 'bundle', 'monthly' show price inline on the chip.
+  // 'quote' redirects to the brief flow for that product.
+  const CATALOG = {
+    character: {
+      label: 'Character work',
+      helper: 'Single-figure pieces, reference sheets, and the matching-token bundle.',
+      products: [
+        { id: 'portrait', name: 'Character Portrait', sub: 'bust', mode: 'tiered',
+          tiers: [
+            { id: 'basic',    name: 'Basic',    price: '$60',  note: 'line + flat color' },
+            { id: 'standard', name: 'Standard', price: '$90',  note: 'full render',         featured: true },
+            { id: 'premium',  name: 'Premium',  price: '$140', note: 'atmospheric' }
+          ]},
+        { id: 'fullbody', name: 'Full-body Character', sub: 'head to toe', mode: 'tiered',
+          tiers: [
+            { id: 'basic',    name: 'Basic',    price: '$120', note: 'line + flat color' },
+            { id: 'standard', name: 'Standard', price: '$180', note: 'full render',         featured: true },
+            { id: 'premium',  name: 'Premium',  price: '$280', note: 'cinematic' }
+          ]},
+        { id: 'refsheet', name: 'Reference Sheet', sub: 'from $250', mode: 'range',
+          rangeNote: '$250 to $450 · scoped per brief' },
+        { id: 'bundle', name: 'Portrait + Token Bundle', sub: '+$25', mode: 'bundle',
+          bundleNote: 'Adds a matching VTT token to any portrait tier for a flat $25. Pick a portrait tier above, then add this on.' }
+      ]
+    },
+    party: {
+      label: 'Party work',
+      helper: 'Group compositions and action scenes.',
+      products: [
+        { id: 'party-portrait', name: 'Party Portrait', sub: 'up to 4 in one piece', mode: 'tiered',
+          tiers: [
+            { id: 'standard', name: 'Standard', price: '$350', note: 'up to 4 figures' },
+            { id: 'premium',  name: 'Premium',  price: '$600', note: 'cinematic',     featured: true }
+          ],
+          footnote: 'Each extra member adds $80 to $120 depending on tier.' },
+        { id: 'matched-set', name: 'Matched Party Set', sub: 'separate portraits, unified style', mode: 'pack',
+          packNote: '4 portraits $220 · 6 portraits $320' },
+        { id: 'action', name: 'Action Scene', sub: 'from $400', mode: 'range',
+          rangeNote: '$400 to $900 · scoped per brief' }
+      ]
+    },
+    gm: {
+      label: 'GM &amp; world-building',
+      helper: 'Everything behind the screen.',
+      products: [
+        { id: 'npc-pack', name: 'NPC Pack', sub: '5 or 10 portraits', mode: 'pack',
+          packNote: '5 NPCs $220 · 10 NPCs $400' },
+        { id: 'monster', name: 'Monster / Creature', sub: 'from $90', mode: 'range',
+          rangeNote: '$90 to $250 · scoped by complexity' },
+        { id: 'item', name: 'Item / Artifact', sub: 'single or 6-pack', mode: 'pack',
+          packNote: 'Single $30 · 6-pack $150' },
+        { id: 'battle-map', name: 'Battle Map', sub: 'quote only', mode: 'quote', href: 'Maps.html',
+          quoteNote: 'Battle maps are quote-based. Send a brief on the dedicated maps page so we can scope properly.' },
+        { id: 'world-map', name: 'World / Region Map', sub: 'quote only', mode: 'quote', href: 'Maps.html',
+          quoteNote: 'World and region maps are quote-based. Brief them on the maps page.' }
+      ]
+    },
+    tokens: {
+      label: 'Tokens (standalone)',
+      helper: 'For VTT play. Personal use included.',
+      products: [
+        { id: 'single-token', name: 'Single Token', sub: 'from $40', mode: 'range',
+          rangeNote: '$40 to $60 · scoped per character' },
+        { id: 'token-pack', name: 'Token Pack', sub: '5 originals', mode: 'flat',
+          flatNote: '$180 · 5 original tokens in matching style' },
+        { id: 'convert', name: 'Convert client art to token', sub: 'flat fee', mode: 'flat',
+          flatNote: '$25 per token · works from art you already own' }
+      ]
+    },
+    subscription: {
+      label: 'Subscription',
+      helper: 'Monthly bundle, cancel any cycle.',
+      products: [
+        { id: 'companion', name: 'Companion', sub: '$30 / mo', mode: 'monthly',
+          monthlyNote: '$30 / month · 10 tokens + 2 NPCs · cancel or pause any cycle' },
+        { id: 'gm-tier', name: 'GM tier', sub: '$75 / mo', mode: 'monthly',
+          monthlyNote: '$75 / month · 15 tokens + 4 NPCs + 1 battle map · cancel or pause any cycle' }
+      ]
+    }
+  };
+
+  const reveal = document.getElementById('of-reveal');
+  const revealBucketName = document.getElementById('of-reveal-bucket-name');
+  const revealHelper = document.getElementById('of-reveal-helper');
+  const productChips = document.getElementById('of-product-chips');
+  const tierPicker = document.getElementById('of-tier-picker');
+  const tierGrid = document.getElementById('of-tier-grid');
+  const quoteOnlyNote = document.getElementById('of-quote-only-note');
+  const nextBtn = document.getElementById('of-next');
+
+  const crumbBucket = document.getElementById('of-crumb-bucket');
+  const crumbProduct = document.getElementById('of-crumb-product');
+  const crumbTier = document.getElementById('of-crumb-tier');
+  const crumbProductWrap = document.getElementById('of-crumb-product-wrap');
+  const crumbTierWrap = document.getElementById('of-crumb-tier-wrap');
+
+  let state = { bucket: null, product: null, tier: null };
+
+  // Hidden fields for the form to submit
+  const form = document.getElementById('of-form');
+  ['bucket', 'product', 'tier'].forEach(k => {
+    const h = document.createElement('input');
+    h.type = 'hidden'; h.name = k; h.id = 'of-hidden-' + k;
+    form.appendChild(h);
+  });
+  const setHidden = (k, v) => { document.getElementById('of-hidden-' + k).value = v || ''; };
+
+  // ---- Bucket selection ----
+  form.querySelectorAll('.of-bucket-card').forEach(card => {
+    card.addEventListener('change', () => {
+      const input = card.querySelector('input');
+      if (!input.checked) return;
+      // Visual checked state
+      form.querySelectorAll('.of-bucket-card').forEach(c => c.classList.remove('is-checked'));
+      card.classList.add('is-checked');
+
+      const bucketKey = input.value;
+      state.bucket = bucketKey;
+      state.product = null;
+      state.tier = null;
+      setHidden('bucket', bucketKey);
+      setHidden('product', '');
+      setHidden('tier', '');
+      renderProductsFor(bucketKey);
+      updateCrumbs();
+      updateNext();
+      saveDraft();
+
+      // Scroll the reveal into view (gentle)
+      setTimeout(() => {
+        const top = reveal.getBoundingClientRect().top + window.scrollY - 100;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }, 80);
+    });
+  });
+
+  // ---- Render product chips for a bucket ----
+  function renderProductsFor(bucketKey) {
+    const data = CATALOG[bucketKey];
+    revealBucketName.innerHTML = data.label;
+    revealHelper.textContent = data.helper;
+    productChips.innerHTML = '';
+    tierPicker.classList.remove('is-shown');
+    quoteOnlyNote.style.display = 'none';
+
+    data.products.forEach(p => {
+      const lbl = document.createElement('label');
+      lbl.className = 'of-product-chip';
+      lbl.dataset.product = p.id;
+      lbl.innerHTML = `
+        <input type="radio" name="product-pick" value="${p.id}" />
+        <span class="of-product-chip-inner">
+          <span>${p.name}</span>
+          <small>${p.sub}</small>
+        </span>
+      `;
+      lbl.querySelector('input').addEventListener('change', () => onProductPick(bucketKey, p));
+      productChips.appendChild(lbl);
+    });
+    reveal.classList.add('is-shown');
+  }
+
+  // ---- Product picked: branch on pricing mode ----
+  function onProductPick(bucketKey, product) {
+    state.product = product.id;
+    state.tier = null;
+    setHidden('product', product.id);
+    setHidden('tier', '');
+
+    // Reset visual state on chips (handled by :checked already, but...)
+    // Mode branching:
+    if (product.mode === 'tiered') {
+      renderTiers(product);
+      quoteOnlyNote.style.display = 'none';
+      tierPicker.classList.add('is-shown');
+    } else if (product.mode === 'quote') {
+      tierPicker.classList.remove('is-shown');
+      quoteOnlyNote.innerHTML = `${product.quoteNote} <a href="${product.href}">Go to the maps brief →</a>`;
+      quoteOnlyNote.style.display = 'block';
+    } else {
+      // range / flat / pack / bundle / monthly / per-extra — no tier picker, just confirm
+      tierPicker.classList.remove('is-shown');
+      const note = product.rangeNote || product.flatNote || product.packNote || product.monthlyNote || product.bundleNote;
+      const fn = product.footnote ? `<br/><em style="color:var(--ink-500);font-size:0.8125rem">${product.footnote}</em>` : '';
+      quoteOnlyNote.innerHTML = `<strong>${product.name}:</strong> ${note}${fn}`;
+      quoteOnlyNote.style.display = 'block';
+    }
+
+    updateCrumbs();
+    updateNext();
+    saveDraft();
+  }
+
+  // ---- Render tier grid for a tiered product ----
+  function renderTiers(product) {
+    tierGrid.innerHTML = '';
+    product.tiers.forEach(t => {
+      const lbl = document.createElement('label');
+      lbl.className = 'of-tier-pick' + (t.featured ? ' is-featured' : '');
+      lbl.dataset.tier = t.id;
+      lbl.innerHTML = `
+        ${t.featured ? '<span class="of-tier-pick-flag">Most picked</span>' : ''}
+        <input type="radio" name="tier-pick" value="${t.id}" />
+        <span class="of-tier-pick-name">${t.name}</span>
+        <span class="of-tier-pick-price">${t.price}</span>
+        <span class="of-tier-pick-note">${t.note}</span>
+      `;
+      lbl.querySelector('input').addEventListener('change', () => {
+        tierGrid.querySelectorAll('.of-tier-pick').forEach(el => el.classList.remove('is-checked'));
+        lbl.classList.add('is-checked');
+        state.tier = t.id;
+        setHidden('tier', t.id);
+        updateCrumbs();
+        updateNext();
+        saveDraft();
+      });
+      tierGrid.appendChild(lbl);
+    });
+  }
+
+  // ---- Crumb trail update ----
+  function updateCrumbs() {
+    const bucketLabel = state.bucket ? CATALOG[state.bucket].label : 'Pick a bucket';
+    crumbBucket.innerHTML = bucketLabel;
+
+    if (state.product && state.bucket) {
+      const p = CATALOG[state.bucket].products.find(p => p.id === state.product);
+      crumbProduct.textContent = p ? p.name : 'Pick a product';
+      crumbProductWrap.classList.remove('is-pending');
+    } else {
+      crumbProduct.textContent = 'Pick a product';
+      crumbProductWrap.classList.add('is-pending');
+    }
+
+    if (state.tier && state.bucket && state.product) {
+      const p = CATALOG[state.bucket].products.find(p => p.id === state.product);
+      const t = p && p.tiers && p.tiers.find(t => t.id === state.tier);
+      crumbTier.textContent = t ? (t.name + ' · ' + t.price) : 'Pick a tier';
+      crumbTierWrap.classList.remove('is-pending');
+    } else {
+      // Hide tier crumb for non-tiered products
+      if (state.bucket && state.product) {
+        const p = CATALOG[state.bucket].products.find(p => p.id === state.product);
+        if (p && p.mode !== 'tiered') {
+          crumbTier.textContent = 'Ready';
+          crumbTierWrap.classList.remove('is-pending');
+        } else {
+          crumbTier.textContent = 'Pick a tier';
+          crumbTierWrap.classList.add('is-pending');
+        }
+      } else {
+        crumbTier.textContent = 'Pick a tier';
+        crumbTierWrap.classList.add('is-pending');
+      }
+    }
+  }
+
+  // ---- Continue button enable/disable ----
+  function updateNext() {
+    if (!state.bucket || !state.product) {
+      nextBtn.disabled = true;
+      return;
+    }
+    const p = CATALOG[state.bucket].products.find(p => p.id === state.product);
+    if (!p) { nextBtn.disabled = true; return; }
+    if (p.mode === 'tiered' && !state.tier) {
+      nextBtn.disabled = true; return;
+    }
+    if (p.mode === 'quote') {
+      nextBtn.disabled = true; // user must go to brief link
+      return;
+    }
+    nextBtn.disabled = false;
+  }
+
+  // ---- Style chip visual state ----
+  function updateChecked() {
+    document.querySelectorAll('.of-style-chip').forEach(chip => {
+      const input = chip.querySelector('input');
+      chip.classList.toggle('is-checked', input.checked);
+    });
+  }
+  form.addEventListener('change', updateChecked);
+  updateChecked();
+
+  // ---- Draft persistence ----
+  const STORAGE_KEY = 'designvortek-order-draft-v2';
+  function saveDraft() {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+  function loadDraft() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const d = JSON.parse(raw);
+      if (d.bucket && CATALOG[d.bucket]) {
+        const card = form.querySelector(`.of-bucket-card[data-bucket="${d.bucket}"]`);
+        if (card) {
+          card.querySelector('input').checked = true;
+          card.classList.add('is-checked');
+          state.bucket = d.bucket;
+          setHidden('bucket', d.bucket);
+          renderProductsFor(d.bucket);
+          if (d.product) {
+            const chip = productChips.querySelector(`.of-product-chip[data-product="${d.product}"]`);
+            if (chip) {
+              chip.querySelector('input').checked = true;
+              const p = CATALOG[d.bucket].products.find(p => p.id === d.product);
+              if (p) {
+                onProductPick(d.bucket, p);
+                if (d.tier && p.mode === 'tiered') {
+                  const tEl = tierGrid.querySelector(`.of-tier-pick[data-tier="${d.tier}"]`);
+                  if (tEl) {
+                    tEl.querySelector('input').checked = true;
+                    tEl.classList.add('is-checked');
+                    state.tier = d.tier;
+                    setHidden('tier', d.tier);
+                    updateCrumbs();
+                    updateNext();
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    } catch (e) {}
+  }
+  loadDraft();
+
+  // ---- Continue handler (placeholder — in production, advance to Step 2) ----
+  nextBtn.addEventListener('click', () => {
+    if (nextBtn.disabled) return;
+    window.location.href = 'Order Form.html'; // for the mockup, hand off to the existing form
+  });
+
+})();
+</script>
+
+</body>
+</html>

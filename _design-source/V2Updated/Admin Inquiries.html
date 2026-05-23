@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Inquiries · DesignVortek Admin</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<div class="adm-app" data-screen-label="01 Inquiries">
+
+  <aside class="adm-sidebar">
+    <a class="adm-brand" href="Admin Dashboard.html">
+      <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+      <div><div class="adm-brand-name">DesignVortek</div><div class="adm-brand-meta">Admin</div></div>
+    </a>
+    <nav class="adm-nav">
+      <a href="Admin Dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Dashboard</a>
+      <a href="Admin Orders.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Orders<span class="adm-nav-badge">3</span></a>
+      <a href="Admin Portfolio.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Portfolio</a>
+      <a href="Admin Blog.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/></svg>Blog</a>
+      <a href="Admin Services.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>Services</a>
+      <a href="Admin Reviews.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>Reviews</a>
+      <a href="Admin Availability.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>Availability</a>
+      <a href="Admin Inquiries.html" class="is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Inquiries<span class="adm-nav-badge">7</span></a>
+      <a href="Admin Customers.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Customers</a>
+      <a href="Admin Media.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/></svg>Media</a>
+      <div class="adm-nav-group-label">Configure</div>
+      <a href="Admin Settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/></svg>Settings</a>
+    </nav>
+    <div class="adm-sidebar-foot"><div class="adm-user"><div class="adm-user-avatar">T</div><div class="adm-user-meta"><span class="adm-user-name">Theo</span><span class="adm-user-role">Owner</span></div></div></div>
+  </aside>
+
+  <main class="adm-main">
+    <header class="adm-header">
+      <div class="adm-header-title">
+        <h1>Inquiries</h1>
+        <div class="adm-header-meta">7 unread · 12 total this month</div>
+      </div>
+      <div class="adm-header-actions">
+        <div class="adm-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="search" placeholder="Search messages…" />
+        </div>
+      </div>
+    </header>
+
+    <div class="adm-content" style="padding-top:0;">
+
+      <div class="adm-toolbar" style="margin-top:24px;">
+        <div class="adm-toolbar-left">
+          <button class="adm-filter-chip is-active">Unread <span class="adm-filter-chip-count">7</span></button>
+          <button class="adm-filter-chip">All <span class="adm-filter-chip-count">128</span></button>
+          <button class="adm-filter-chip">Archived <span class="adm-filter-chip-count">94</span></button>
+        </div>
+      </div>
+
+      <div class="adm-inbox">
+
+        <!-- LIST -->
+        <div class="adm-inbox-list">
+          <div class="adm-inbox-item is-unread is-active">
+            <div class="adm-inbox-head"><span class="adm-inbox-name">Hannah Wu</span><span class="adm-inbox-time">2h</span></div>
+            <div class="adm-inbox-subject">Pricing for a wedding gift?</div>
+            <div class="adm-inbox-preview">Hi Theo — my brother gets married in October and his fiancée's a huge D&amp;D fan. I want to commission a party portrait of their wedding party as fantasy characters…</div>
+          </div>
+
+          <div class="adm-inbox-item is-unread">
+            <div class="adm-inbox-head"><span class="adm-inbox-name">Jordan Rey</span><span class="adm-inbox-time">5h</span></div>
+            <div class="adm-inbox-subject">Question about Hero Forge references</div>
+            <div class="adm-inbox-preview">Hey — I read your blog post about briefs but had a quick question. Is a Hero Forge mini enough as a reference or do I need to write something out too?</div>
+          </div>
+
+          <div class="adm-inbox-item is-unread">
+            <div class="adm-inbox-head"><span class="adm-inbox-name">Aaron Sweet</span><span class="adm-inbox-time">9h</span></div>
+            <div class="adm-inbox-subject">Commercial license for streaming?</div>
+            <div class="adm-inbox-preview">I run a small Twitch channel and was wondering if the $150 commercial license covers streaming overlays and emotes, or if those are separate.</div>
+          </div>
+
+          <div class="adm-inbox-item is-unread">
+            <div class="adm-inbox-head"><span class="adm-inbox-name">Mei Tanaka</span><span class="adm-inbox-time">1d</span></div>
+            <div class="adm-inbox-subject">Press inquiry · Polygon</div>
+            <div class="adm-inbox-preview">Hi! I'm writing a piece for Polygon on independent TTRPG artists and would love to feature DesignVortek. A few quick questions if you have time…</div>
+          </div>
+
+          <div class="adm-inbox-item is-unread">
+            <div class="adm-inbox-head"><span class="adm-inbox-name">Lena Caster</span><span class="adm-inbox-time">1d</span></div>
+            <div class="adm-inbox-subject">Rush commission?</div>
+            <div class="adm-inbox-preview">My birthday is in 9 days and I'd love to surprise my partner with a portrait of his D&amp;D character. Is a rush turnaround possible?</div>
+          </div>
+
+          <div class="adm-inbox-item">
+            <div class="adm-inbox-head"><span class="adm-inbox-name">Priya Rao</span><span class="adm-inbox-time">3d</span></div>
+            <div class="adm-inbox-subject">Thank you!</div>
+            <div class="adm-inbox-preview">Just wanted to say the painting arrived and we love it. Hung above the mantel as promised. I'll send a photo once it's framed properly.</div>
+          </div>
+
+          <div class="adm-inbox-item">
+            <div class="adm-inbox-head"><span class="adm-inbox-name">Marcus Kang</span><span class="adm-inbox-time">5d</span></div>
+            <div class="adm-inbox-subject">RE: NPC Pack schedule</div>
+            <div class="adm-inbox-preview">Works for me — I'll keep the player names handy and send descriptions next week. Looking forward to seeing the first sketches.</div>
+          </div>
+        </div>
+
+        <!-- VIEW -->
+        <div class="adm-inbox-view">
+          <div class="adm-inbox-view-head">
+            <div>
+              <div class="adm-inbox-view-subject">Pricing for a wedding gift?</div>
+              <div class="adm-inbox-view-from"><strong>Hannah Wu</strong> · hannah.wu@example.com · 2 hours ago</div>
+            </div>
+            <div style="display:flex;gap:6px;">
+              <button class="adm-icon-btn" style="border:1px solid var(--border-light);" title="Mark as read"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></button>
+              <button class="adm-icon-btn" style="border:1px solid var(--border-light);" title="Archive"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="3" width="18" height="4"/><path d="M5 7v13a1 1 0 001 1h12a1 1 0 001-1V7M10 12h4"/></svg></button>
+              <button class="adm-icon-btn danger" style="border:1px solid var(--border-light);" title="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button>
+            </div>
+          </div>
+
+          <div class="adm-inbox-view-body">
+            <p>Hi Theo,</p>
+            <p>My brother gets married in October and his fiancée's a huge D&amp;D fan. I want to commission a party portrait of their entire wedding party reimagined as fantasy characters — bridesmaids, groomsmen, the couple, six people total. I think your "Adventurers" tier might be the right fit but wanted to check a few things:</p>
+            <ul style="padding-left:20px;margin:0 0 1em;">
+              <li>Can you work from photos? Each person has their own vibe and I want it to be recognizably them.</li>
+              <li>What's the realistic timeline? I'd love to give it to them at the rehearsal dinner on October 12.</li>
+              <li>Print delivery option — they live in Vancouver, would that be possible?</li>
+            </ul>
+            <p>This is a surprise so I'd love to figure out the details quietly. Thanks!</p>
+            <p>— Hannah</p>
+          </div>
+
+          <div class="adm-card" style="margin:0;">
+            <div class="adm-card-eyebrow">Reply</div>
+            <textarea class="adm-textarea" placeholder="Reply to Hannah…" style="min-height:140px;"></textarea>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;">
+              <div style="font-size:0.75rem;color:var(--ink-500);">Sent from <strong>theo@designvortek.com</strong> · auto-CC'd to internal log</div>
+              <div style="display:flex;gap:8px;">
+                <button class="dv-btn dv-btn-outline sm">Save draft</button>
+                <button class="dv-btn dv-btn-primary sm">Send reply <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

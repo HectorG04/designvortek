@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Edit · Lyra Vexweaver · DesignVortek Admin</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<div class="adm-app" data-screen-label="01 Portfolio Editor">
+
+  <aside class="adm-sidebar">
+    <a class="adm-brand" href="Admin Dashboard.html">
+      <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+      <div><div class="adm-brand-name">DesignVortek</div><div class="adm-brand-meta">Admin</div></div>
+    </a>
+    <nav class="adm-nav">
+      <a href="Admin Dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Dashboard</a>
+      <a href="Admin Orders.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Orders<span class="adm-nav-badge">3</span></a>
+      <a href="Admin Portfolio.html" class="is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Portfolio</a>
+      <a href="Admin Blog.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/></svg>Blog</a>
+      <a href="Admin Services.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>Services</a>
+      <a href="Admin Reviews.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>Reviews</a>
+      <a href="Admin Availability.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>Availability</a>
+      <a href="Admin Inquiries.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Inquiries<span class="adm-nav-badge">7</span></a>
+      <a href="Admin Customers.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Customers</a>
+      <a href="Admin Media.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>Media</a>
+      <div class="adm-nav-group-label">Configure</div>
+      <a href="Admin Settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/></svg>Settings</a>
+    </nav>
+    <div class="adm-sidebar-foot"><div class="adm-user"><div class="adm-user-avatar">T</div><div class="adm-user-meta"><span class="adm-user-name">Theo</span><span class="adm-user-role">Owner</span></div></div></div>
+  </aside>
+
+  <main class="adm-main">
+    <header class="adm-header">
+      <div class="adm-header-title" style="flex-direction:row;align-items:center;gap:16px;">
+        <a class="adm-icon-btn" href="Admin Portfolio.html" aria-label="Back" style="border:1px solid var(--border-light);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </a>
+        <div>
+          <h1>Edit portfolio piece</h1>
+          <div class="adm-header-meta">Lyra Vexweaver · last saved 2 min ago · <span class="adm-status published" style="margin-left:8px;">Published</span></div>
+        </div>
+      </div>
+      <div class="adm-header-actions">
+        <button class="dv-btn dv-btn-outline sm">Preview</button>
+        <button class="dv-btn dv-btn-ghost sm" style="color:var(--burgundy-700);">Discard</button>
+        <button class="dv-btn dv-btn-primary sm">Save changes</button>
+      </div>
+    </header>
+
+    <div class="adm-content">
+
+      <div class="adm-form-grid">
+
+        <!-- LEFT 60% -->
+        <div>
+          <section class="adm-card">
+            <div class="adm-field">
+              <label class="adm-field-label">Title</label>
+              <input class="adm-input title" value="Lyra Vexweaver, Tiefling Sorceror" />
+            </div>
+
+            <div class="adm-field">
+              <label class="adm-field-label">Slug
+                <span style="font-weight:400;text-transform:none;letter-spacing:0;color:var(--ink-500);">designvortek.com/portfolio/<strong style="color:var(--burgundy-700);">lyra-vexweaver-tiefling-sorceror</strong></span>
+              </label>
+              <input class="adm-input adm-table-mono" value="lyra-vexweaver-tiefling-sorceror" style="font-size:0.875rem;" />
+            </div>
+
+            <div class="adm-form-row-2" style="margin-bottom:16px;">
+              <div class="adm-field" style="margin:0;">
+                <label class="adm-field-label">Category</label>
+                <select class="adm-input">
+                  <option>Character Art</option>
+                  <option>VTT Tokens</option>
+                  <option>Party Portraits</option>
+                  <option>NPC Packs</option>
+                  <option>Anime</option>
+                  <option>Custom</option>
+                </select>
+              </div>
+              <div class="adm-field" style="margin:0;">
+                <label class="adm-field-label">Sub-style</label>
+                <select class="adm-input">
+                  <option>Painterly · warm</option>
+                  <option>Anime · cell-shaded</option>
+                  <option>Lineart</option>
+                  <option>Semi-realistic</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="adm-field">
+              <label class="adm-field-label">Description</label>
+              <p class="adm-field-help">Tell the story behind the piece — what made it special.</p>
+              <textarea class="adm-textarea" style="min-height:140px;">A level-9 tiefling sorceress, soft purple skin and dark freckles, gold horns swept back. Her robe is stitched with constellations in silver thread — a family heirloom from a sister she's lost.
+
+Aria came to us with a six-paragraph backstory and a single Pinterest board. We talked for an hour, then painted for three weeks.</textarea>
+            </div>
+
+            <div class="adm-field">
+              <label class="adm-field-label">Tags</label>
+              <div class="adm-tag-input">
+                <span class="adm-tag">Tiefling <button aria-label="Remove"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></span>
+                <span class="adm-tag">Sorceress <button><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></span>
+                <span class="adm-tag">D&amp;D 5e <button><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></span>
+                <span class="adm-tag">Painterly <button><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></span>
+                <span class="adm-tag">Constellations <button><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></span>
+                <input type="text" placeholder="Add tag…" />
+              </div>
+            </div>
+
+            <div class="adm-field">
+              <label class="adm-field-label">Images</label>
+              <div class="adm-dropzone">
+                <div class="adm-dropzone-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+                </div>
+                <div class="adm-dropzone-title">Drop images here or click to upload</div>
+                <div class="adm-dropzone-help">PNG, JPG, WebP · up to 20MB each · max 8 images</div>
+              </div>
+              <div class="adm-img-grid">
+                <div class="adm-img-tile">
+                  <div style="width:100%;height:100%;" class="ds-ph-character"></div>
+                  <div class="adm-img-tile-overlay">
+                    <button aria-label="Move"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>
+                    <button aria-label="Delete"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg></button>
+                  </div>
+                </div>
+                <div class="adm-img-tile">
+                  <div style="width:100%;height:100%;filter:grayscale(1) brightness(1.1)" class="ds-ph-character"></div>
+                  <div class="adm-img-tile-overlay">
+                    <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>
+                    <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18"/></svg></button>
+                  </div>
+                </div>
+                <div class="adm-img-tile">
+                  <div style="width:100%;height:100%;filter:saturate(0.4)" class="ds-ph-character"></div>
+                  <div class="adm-img-tile-overlay">
+                    <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>
+                    <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18"/></svg></button>
+                  </div>
+                </div>
+                <div class="adm-img-tile">
+                  <div style="width:100%;height:100%;filter:hue-rotate(30deg)" class="ds-ph-character"></div>
+                  <div class="adm-img-tile-overlay">
+                    <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/></svg></button>
+                    <button><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18"/></svg></button>
+                  </div>
+                </div>
+              </div>
+              <p class="adm-field-help" style="margin-top:10px;">Drag to reorder. First image is the cover.</p>
+            </div>
+          </section>
+
+          <!-- SEO collapsed section -->
+          <details class="adm-card" style="padding:0;">
+            <summary style="list-style:none;cursor:pointer;padding: 20px 26px;display:flex;justify-content:space-between;align-items:center;">
+              <div>
+                <div class="adm-card-title">SEO &amp; metadata</div>
+                <div class="adm-field-help" style="margin-top:4px;">Title, description, alt text for search engines</div>
+              </div>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9l6 6 6-6"/></svg>
+            </summary>
+            <div style="padding:0 26px 24px;">
+              <div class="adm-field">
+                <label class="adm-field-label">Meta title</label>
+                <input class="adm-input" value="Lyra Vexweaver · Tiefling Sorceror · DesignVortek" />
+              </div>
+              <div class="adm-field">
+                <label class="adm-field-label">Meta description</label>
+                <textarea class="adm-textarea" style="min-height:70px;">A painterly portrait of Lyra Vexweaver — a level 9 tiefling sorceress commissioned by Aria M. for her weekly D&amp;D campaign.</textarea>
+              </div>
+              <div class="adm-field" style="margin-bottom:0;">
+                <label class="adm-field-label">Alt text</label>
+                <input class="adm-input" value="Tiefling sorceress in violet robe with gold horns, holding a glass orb in a dark forest" />
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- RIGHT 40% sidebar -->
+        <div>
+          <section class="adm-card">
+            <div class="adm-card-eyebrow">Publish</div>
+            <div class="adm-publish" style="margin-bottom:14px;">
+              <div class="adm-publish-item">
+                <span class="adm-publish-key">Status</span>
+                <span class="adm-status published">Published</span>
+              </div>
+              <div class="adm-publish-item">
+                <span class="adm-publish-key">Featured</span>
+                <label class="adm-toggle is-on"><span class="adm-toggle-track"></span></label>
+              </div>
+              <div class="adm-publish-item">
+                <span class="adm-publish-key">Visible in gallery</span>
+                <label class="adm-toggle is-on"><span class="adm-toggle-track"></span></label>
+              </div>
+              <div class="adm-publish-item">
+                <span class="adm-publish-key">Allow as inspiration ref</span>
+                <label class="adm-toggle is-on"><span class="adm-toggle-track"></span></label>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button class="dv-btn dv-btn-primary sm" style="flex:1;">Save changes</button>
+              <button class="dv-btn dv-btn-outline sm" style="flex:1;">Preview</button>
+            </div>
+          </section>
+
+          <section class="adm-card">
+            <div class="adm-card-eyebrow">Commissioned by</div>
+            <div style="display:flex;align-items:center;gap:12px;padding:8px 0;">
+              <div class="adm-user-avatar">AM</div>
+              <div>
+                <div style="font-family:var(--font-display);font-weight:600;color:var(--ink-900);">Aria Mendel</div>
+                <div style="font-size:0.8125rem;color:var(--ink-500);">aria@example.com</div>
+              </div>
+            </div>
+            <a class="adm-panel-link" style="display:block;text-align:center;margin-top:12px;font-size:0.6875rem;">View customer →</a>
+          </section>
+
+          <section class="adm-card">
+            <div class="adm-card-eyebrow">Project specs</div>
+            <div class="adm-publish">
+              <div class="adm-publish-item"><span class="adm-publish-key">Tools</span><span class="adm-publish-val">Procreate · Photoshop</span></div>
+              <div class="adm-publish-item"><span class="adm-publish-key">Hours logged</span><span class="adm-publish-val">14h</span></div>
+              <div class="adm-publish-item"><span class="adm-publish-key">Days in studio</span><span class="adm-publish-val">18 days</span></div>
+              <div class="adm-publish-item"><span class="adm-publish-key">Style</span><span class="adm-publish-val">Painterly · warm</span></div>
+              <div class="adm-publish-item"><span class="adm-publish-key">Final resolution</span><span class="adm-publish-val">4096 × 5120</span></div>
+              <div class="adm-publish-item"><span class="adm-publish-key">Delivered</span><span class="adm-publish-val">Mar 12, 2026</span></div>
+            </div>
+          </section>
+
+          <section class="adm-card">
+            <div class="adm-card-eyebrow">Danger zone</div>
+            <button class="dv-btn dv-btn-ghost" style="color:var(--burgundy-700);width:100%;justify-content:flex-start;">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+              Delete this piece
+            </button>
+          </section>
+        </div>
+
+      </div>
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

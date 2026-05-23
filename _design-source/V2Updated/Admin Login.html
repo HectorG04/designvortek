@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sign in · DesignVortek Admin</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="admin.css" />
+</head>
+<body class="adm-login-page">
+  <div class="adm-login-card" data-screen-label="01 Login">
+    <div class="adm-login-flourish" aria-hidden="true">
+      <svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1">
+        <circle cx="28" cy="28" r="20" />
+        <path d="M28 6 L31 28 L28 50 L25 28 Z M6 28 L28 25 L50 28 L28 31 Z" fill="currentColor"/>
+        <circle cx="28" cy="28" r="2.5" fill="var(--parchment-100)" />
+      </svg>
+    </div>
+    <h1 class="adm-login-title">Welcome back</h1>
+    <p class="adm-login-sub">Sign in to manage DesignVortek</p>
+
+    <form class="adm-login-form" onsubmit="event.preventDefault();window.location.href='Admin Dashboard.html'">
+      <div class="dv-field">
+        <label class="dv-label" for="adm-email">Email</label>
+        <input class="dv-input" id="adm-email" type="email" placeholder="theo@designvortek.com" required autocomplete="email" />
+      </div>
+      <div class="dv-field">
+        <label class="dv-label" for="adm-pw">Password</label>
+        <input class="dv-input" id="adm-pw" type="password" placeholder="••••••••••" required autocomplete="current-password" />
+      </div>
+      <label class="dv-check" style="font-size:0.875rem;color:var(--ink-700);">
+        <input type="checkbox" />
+        <span class="dv-check-box checkbox"></span>
+        <span>Keep me signed in</span>
+      </label>
+      <button type="submit" class="dv-btn dv-btn-primary lg" style="margin-top:8px;">
+        Sign in
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </form>
+
+    <div class="adm-login-foot">
+      <a href="#">Forgot your password?</a>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Settings · DesignVortek Admin</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<div class="adm-app" data-screen-label="01 Settings">
+
+  <aside class="adm-sidebar">
+    <a class="adm-brand" href="Admin Dashboard.html">
+      <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+      <div><div class="adm-brand-name">DesignVortek</div><div class="adm-brand-meta">Admin</div></div>
+    </a>
+    <nav class="adm-nav">
+      <a href="Admin Dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Dashboard</a>
+      <a href="Admin Orders.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Orders<span class="adm-nav-badge">3</span></a>
+      <a href="Admin Portfolio.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Portfolio</a>
+      <a href="Admin Blog.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/></svg>Blog</a>
+      <a href="Admin Services.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>Services</a>
+      <a href="Admin Reviews.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>Reviews</a>
+      <a href="Admin Availability.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>Availability</a>
+      <a href="Admin Inquiries.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Inquiries<span class="adm-nav-badge">7</span></a>
+      <a href="Admin Customers.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Customers</a>
+      <a href="Admin Media.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/></svg>Media</a>
+      <div class="adm-nav-group-label">Configure</div>
+      <a href="Admin Settings.html" class="is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/></svg>Settings</a>
+    </nav>
+    <div class="adm-sidebar-foot"><div class="adm-user"><div class="adm-user-avatar">T</div><div class="adm-user-meta"><span class="adm-user-name">Theo</span><span class="adm-user-role">Owner</span></div></div></div>
+  </aside>
+
+  <main class="adm-main">
+    <header class="adm-header">
+      <div class="adm-header-title">
+        <h1>Settings</h1>
+        <div class="adm-header-meta">Studio config, profile, email &amp; SEO defaults</div>
+      </div>
+      <div class="adm-header-actions">
+        <button class="dv-btn dv-btn-outline sm">Discard</button>
+        <button class="dv-btn dv-btn-primary sm">Save all changes</button>
+      </div>
+    </header>
+
+    <div class="adm-content">
+
+      <!-- Tab strip -->
+      <div class="adm-tabs">
+        <button class="adm-tab is-active">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 12 L12 3 L21 12"/><path d="M5 10v10h14V10"/></svg>
+          Site
+        </button>
+        <button class="adm-tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a4 4 0 014-4h8a4 4 0 014 4v2"/></svg>
+          Profile
+        </button>
+        <button class="adm-tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          SMTP
+        </button>
+        <button class="adm-tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          SEO
+        </button>
+        <button class="adm-tab">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 11.5a8.4 8.4 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.4 8.4 0 01-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.4 8.4 0 013.8-.9h.5a8.5 8.5 0 018 8z"/></svg>
+          Legal
+        </button>
+      </div>
+
+      <!-- Site identity -->
+      <section class="adm-settings-section">
+        <div class="adm-settings-head">
+          <div class="adm-settings-title">Site identity</div>
+          <div class="adm-settings-desc">What the world sees when they find DesignVortek.</div>
+        </div>
+        <div class="adm-form-row-2">
+          <div class="adm-field">
+            <label class="adm-field-label">Site name</label>
+            <input class="adm-input" value="DesignVortek" />
+          </div>
+          <div class="adm-field">
+            <label class="adm-field-label">Tagline</label>
+            <input class="adm-input" value="Premium art commissions, since 2022" />
+          </div>
+        </div>
+        <div class="adm-form-row-2">
+          <div class="adm-field">
+            <label class="adm-field-label">Logo</label>
+            <div class="adm-dropzone" style="padding:16px;">
+              <div style="display:flex;align-items:center;gap:14px;">
+                <div style="width:56px;height:56px;display:flex;align-items:center;justify-content:center;color:var(--burgundy-700);flex-shrink:0;">
+                  <svg viewBox="0 0 32 32" style="width:100%;height:100%;"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+                </div>
+                <div style="text-align:left;flex:1;">
+                  <div class="adm-dropzone-title" style="margin-bottom:2px;">logo.svg</div>
+                  <div class="adm-dropzone-help">SVG · 2.1 KB</div>
+                </div>
+                <button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></button>
+              </div>
+            </div>
+          </div>
+          <div class="adm-field">
+            <label class="adm-field-label">Favicon</label>
+            <div class="adm-dropzone" style="padding:16px;">
+              <div style="display:flex;align-items:center;gap:14px;">
+                <div style="width:32px;height:32px;background:var(--burgundy-700);border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--gold-glow);flex-shrink:0;font-family:var(--font-display);font-weight:600;font-size:0.875rem;">DV</div>
+                <div style="text-align:left;flex:1;">
+                  <div class="adm-dropzone-title" style="margin-bottom:2px;">favicon.ico</div>
+                  <div class="adm-dropzone-help">32×32 · 1.4 KB</div>
+                </div>
+                <button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg></button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="adm-field" style="margin-top:8px;">
+          <label class="adm-field-label">Footer text</label>
+          <textarea class="adm-textarea" style="min-height:70px;">Premium art commissions, since 2022. Every piece, by hand, by humans.</textarea>
+        </div>
+      </section>
+
+      <!-- Social -->
+      <section class="adm-settings-section">
+        <div class="adm-settings-head">
+          <div class="adm-settings-title">Social links</div>
+          <div class="adm-settings-desc">Linked from the footer and contact page.</div>
+        </div>
+        <div class="adm-form-row-2">
+          <div class="adm-field">
+            <label class="adm-field-label">Instagram URL</label>
+            <input class="adm-input" value="https://instagram.com/designvortek" />
+          </div>
+          <div class="adm-field">
+            <label class="adm-field-label">Twitter / X URL</label>
+            <input class="adm-input" value="https://x.com/designvortek" />
+          </div>
+        </div>
+        <div class="adm-form-row-2">
+          <div class="adm-field">
+            <label class="adm-field-label">ArtStation URL</label>
+            <input class="adm-input" placeholder="https://" />
+          </div>
+          <div class="adm-field">
+            <label class="adm-field-label">Public email</label>
+            <input class="adm-input" value="hello@designvortek.com" />
+          </div>
+        </div>
+      </section>
+
+      <!-- Commission settings -->
+      <section class="adm-settings-section">
+        <div class="adm-settings-head">
+          <div class="adm-settings-title">Commission settings</div>
+          <div class="adm-settings-desc">Slots per month, deposit %, default response window.</div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+          <div class="adm-field">
+            <label class="adm-field-label">Slots per month</label>
+            <input class="adm-input" type="number" value="5" />
+            <p class="adm-field-help">Max active commissions in any given month.</p>
+          </div>
+          <div class="adm-field">
+            <label class="adm-field-label">Deposit %</label>
+            <input class="adm-input" type="number" value="25" />
+            <p class="adm-field-help">% taken on slot reservation.</p>
+          </div>
+          <div class="adm-field">
+            <label class="adm-field-label">Response window (hours)</label>
+            <input class="adm-input" type="number" value="48" />
+            <p class="adm-field-help">Shown on the site as your SLA.</p>
+          </div>
+        </div>
+        <div class="adm-field" style="margin-top:8px;">
+          <label class="adm-toggle is-on">
+            <span class="adm-toggle-track"></span>
+            <span class="adm-toggle-label">Accept new commissions</span>
+          </label>
+          <p class="adm-field-help" style="margin-top:6px;">Toggle off to hide the commission form &amp; show "currently full" on availability.</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

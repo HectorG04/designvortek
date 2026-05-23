@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design System · Design Vortex</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+</head>
+<body>
+
+<!-- =========================================================
+     Layout: sidebar TOC + main content
+     ========================================================= -->
+<div class="ds-layout">
+
+  <!-- ===================== Sidebar ===================== -->
+  <aside class="ds-sidebar">
+    <div class="ds-sidebar-brand">
+      <svg class="ds-logo-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+        <path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/>
+      </svg>
+      <div>
+        <div class="ds-sidebar-name">Design Vortex</div>
+        <div class="ds-sidebar-tag">Design System · v1.0</div>
+      </div>
+    </div>
+
+    <nav class="ds-nav" aria-label="Design system sections">
+      <div class="ds-nav-group">
+        <div class="ds-nav-label">Foundations</div>
+        <a href="#intro">Introduction</a>
+        <a href="#color">Color</a>
+        <a href="#type">Typography</a>
+        <a href="#spacing">Spacing &amp; radius</a>
+        <a href="#motion">Motion</a>
+        <a href="#flourishes">Flourishes</a>
+        <a href="#icons">Iconography</a>
+        <a href="#imagery">Imagery</a>
+      </div>
+      <div class="ds-nav-group">
+        <div class="ds-nav-label">Components</div>
+        <a href="#buttons">Buttons</a>
+        <a href="#forms">Form controls</a>
+        <a href="#cards">Cards</a>
+        <a href="#slot-widget">Slot widget</a>
+        <a href="#badges">Badges &amp; chips</a>
+        <a href="#nav">Header &amp; footer</a>
+        <a href="#feedback">Modal · Toast</a>
+        <a href="#meta">Pagination · Breadcrumbs</a>
+        <a href="#states">Loading · Empty</a>
+      </div>
+      <div class="ds-nav-group">
+        <div class="ds-nav-label">Handoff</div>
+        <a href="#handoff">For Claude Code</a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- ===================== Main ===================== -->
+  <main class="ds-main">
+
+    <!-- ----- Intro / cover ----- -->
+    <header id="intro" class="ds-cover">
+      <div class="ds-cover-label">DESIGN VORTEX · BRAND SYSTEM</div>
+      <h1 class="ds-cover-title">
+        Illuminated manuscript<br/>
+        meets <em>modern luxury</em>.
+      </h1>
+      <p class="ds-cover-lede">
+        A single source of truth for color, typography, motion, and every reusable component used across the public site and admin CMS. Designed as a reference document for engineering handoff — every token is named, every spec is buildable.
+      </p>
+
+      <div class="ds-cover-meta">
+        <div><span class="ds-meta-k">Version</span><span class="ds-meta-v">1.0 · Complete</span></div>
+        <div><span class="ds-meta-k">Stack target</span><span class="ds-meta-v">Next.js 16 · Tailwind v4</span></div>
+        <div><span class="ds-meta-k">Tokens</span><span class="ds-meta-v"><code>tokens.css</code></span></div>
+      </div>
+
+      <!-- Signature flourish: compass rose divider -->
+      <div class="ds-compass-divider" aria-hidden="true">
+        <span class="ds-rule"></span>
+        <svg viewBox="0 0 32 32" class="ds-compass">
+          <circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8" />
+          <path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/>
+          <circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)" />
+        </svg>
+        <span class="ds-rule"></span>
+      </div>
+    </header>
+
+    <!-- ============================================================ -->
+    <!-- COLOR                                                        -->
+    <!-- ============================================================ -->
+    <section id="color" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">01 · Foundations</div>
+        <h2>Color</h2>
+        <p class="ds-lede">A warm parchment palette grounds the entire experience. Burgundy carries primary actions; gold accents earn their place; forest appears sparingly. Dark "tome" sections are used 2&ndash;3 times per page for dramatic contrast &mdash; never as default state.</p>
+      </div>
+
+      <h3 class="ds-h3">Parchment &mdash; page surfaces</h3>
+      <div class="ds-swatches">
+        <div class="ds-swatch" style="background:var(--parchment-50)">
+          <div class="ds-swatch-tag"><span>parchment-50</span><code>#FBF6E9</code></div>
+          <div class="ds-swatch-note">Page background</div>
+        </div>
+        <div class="ds-swatch" style="background:var(--parchment-100)">
+          <div class="ds-swatch-tag"><span>parchment-100</span><code>#F5EBD3</code></div>
+          <div class="ds-swatch-note">Card surface</div>
+        </div>
+        <div class="ds-swatch" style="background:var(--parchment-200)">
+          <div class="ds-swatch-tag"><span>parchment-200</span><code>#EDDDB8</code></div>
+          <div class="ds-swatch-note">Section variation</div>
+        </div>
+        <div class="ds-swatch" style="background:var(--parchment-300)">
+          <div class="ds-swatch-tag"><span>parchment-300</span><code>#E0CC9A</code></div>
+          <div class="ds-swatch-note">Hover surface</div>
+        </div>
+        <div class="ds-swatch" style="background:var(--parchment-400)">
+          <div class="ds-swatch-tag"><span>parchment-400</span><code>#C8B07A</code></div>
+          <div class="ds-swatch-note">Decorative dividers</div>
+        </div>
+      </div>
+
+      <h3 class="ds-h3">Ink &mdash; text</h3>
+      <div class="ds-swatches">
+        <div class="ds-swatch dark" style="background:var(--ink-900)">
+          <div class="ds-swatch-tag"><span>ink-900</span><code>#1E1408</code></div>
+          <div class="ds-swatch-note">Primary text</div>
+        </div>
+        <div class="ds-swatch dark" style="background:var(--ink-700)">
+          <div class="ds-swatch-tag"><span>ink-700</span><code>#3A2A1C</code></div>
+          <div class="ds-swatch-note">Body text</div>
+        </div>
+        <div class="ds-swatch dark" style="background:var(--ink-500)">
+          <div class="ds-swatch-tag"><span>ink-500</span><code>#6B5A48</code></div>
+          <div class="ds-swatch-note">Muted / meta</div>
+        </div>
+        <div class="ds-swatch" style="background:var(--ink-400)">
+          <div class="ds-swatch-tag"><span>ink-400</span><code>#9A8870</code></div>
+          <div class="ds-swatch-note">Placeholder</div>
+        </div>
+        <div class="ds-swatch" style="background:var(--ink-300)">
+          <div class="ds-swatch-tag"><span>ink-300</span><code>#C2B59A</code></div>
+          <div class="ds-swatch-note">Disabled</div>
+        </div>
+      </div>
+
+      <h3 class="ds-h3">Burgundy &mdash; primary brand</h3>
+      <div class="ds-swatches">
+        <div class="ds-swatch dark" style="background:var(--burgundy-900)">
+          <div class="ds-swatch-tag"><span>burgundy-900</span><code>#3E1218</code></div>
+          <div class="ds-swatch-note">Pressed / active</div>
+        </div>
+        <div class="ds-swatch dark" style="background:var(--burgundy-700)">
+          <div class="ds-swatch-tag"><span>burgundy-700</span><code>#6B1F2A</code></div>
+          <div class="ds-swatch-note">Primary CTA</div>
+        </div>
+        <div class="ds-swatch dark" style="background:var(--burgundy-500)">
+          <div class="ds-swatch-tag"><span>burgundy-500</span><code>#8A2A35</code></div>
+          <div class="ds-swatch-note">Hover</div>
+        </div>
+        <div class="ds-swatch" style="background:var(--burgundy-100)">
+          <div class="ds-swatch-tag"><span>burgundy-100</span><code>#F3D6D9</code></div>
+          <div class="ds-swatch-note">Tinted background</div>
+        </div>
+      </div>
+
+      <h3 class="ds-h3">Gold &mdash; accent</h3>
+      <div class="ds-swatches">
+        <div class="ds-swatch dark" style="background:var(--gold-700)">
+          <div class="ds-swatch-tag"><span>gold-700</span><code>#9A7232</code></div>
+          <div class="ds-swatch-note">Icon hover</div>
+        </div>
+        <div class="ds-swatch" style="background:var(--gold-500)">
+          <div class="ds-swatch-tag"><span>gold-500</span><code>#C9A04A</code></div>
+          <div class="ds-swatch-note">Accent &middot; stars</div>
+        </div>
+        <div class="ds-swatch" style="background:var(--gold-300)">
+          <div class="ds-swatch-tag"><span>gold-300</span><code>#E8C880</code></div>
+          <div class="ds-swatch-note">Highlights</div>
+        </div>
+        <div class="ds-swatch" style="background:var(--gold-100)">
+          <div class="ds-swatch-tag"><span>gold-100</span><code>#F8EBC4</code></div>
+          <div class="ds-swatch-note">Tinted background</div>
+        </div>
+      </div>
+
+      <h3 class="ds-h3">Forest &mdash; secondary accent</h3>
+      <div class="ds-swatches">
+        <div class="ds-swatch dark" style="background:var(--forest-700)">
+          <div class="ds-swatch-tag"><span>forest-700</span><code>#1F4D3A</code></div>
+          <div class="ds-swatch-note">Success / nav</div>
+        </div>
+        <div class="ds-swatch dark" style="background:var(--forest-500)">
+          <div class="ds-swatch-tag"><span>forest-500</span><code>#3D7256</code></div>
+          <div class="ds-swatch-note">Hover</div>
+        </div>
+        <div class="ds-swatch dark" style="background:var(--success)">
+          <div class="ds-swatch-tag"><span>success</span><code>#4A6B3A</code></div>
+          <div class="ds-swatch-note">Form success</div>
+        </div>
+        <div class="ds-swatch dark" style="background:var(--error)">
+          <div class="ds-swatch-tag"><span>error</span><code>#8A2A2A</code></div>
+          <div class="ds-swatch-note">Form error</div>
+        </div>
+      </div>
+
+      <h3 class="ds-h3">Tome &mdash; dark sections (used sparingly)</h3>
+      <div class="ds-tome-demo">
+        <div class="ds-tome-inner">
+          <div class="ds-eyebrow tome">PREMIUM ART COMMISSIONS · SINCE 2022</div>
+          <h2 class="ds-tome-headline">Used 2&ndash;3 times per page, never as default.</h2>
+          <p class="ds-tome-body">Reserve dark sections for hero blocks and CTA closers &mdash; like flipping to a dramatic page in an old book. The cream text on warm leather feels right; flat black would feel cold.</p>
+          <div class="ds-tome-swatches">
+            <span style="background:var(--tome-950)">tome-950 <code>#1A130C</code></span>
+            <span style="background:var(--tome-900)">tome-900 <code>#251A10</code></span>
+            <span style="background:var(--tome-800)">tome-800 <code>#3A2A1C</code></span>
+            <span style="background:var(--gold-glow);color:var(--ink-900)">gold-glow <code>#D4A24C</code></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-callout">
+        <div class="ds-callout-title">Rules</div>
+        <ul>
+          <li>Page background is always <code>parchment-50</code>. Cards / elevated surfaces are <code>parchment-100</code>.</li>
+          <li>Primary text is always <code>ink-900</code> or <code>ink-700</code> (4.5:1 minimum contrast on parchment).</li>
+          <li>Burgundy is the CTA color. Gold is for <em>accents</em>, never primary CTAs (except hero gold-accent button).</li>
+          <li>Forest green appears sparingly &mdash; success states and the occasional service card.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- TYPOGRAPHY                                                   -->
+    <!-- ============================================================ -->
+    <section id="type" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">02 · Foundations</div>
+        <h2>Typography</h2>
+        <p class="ds-lede">Cormorant Garamond carries the editorial voice in display sizes. Inter handles body and UI. Caveat appears once or twice per page &mdash; never more &mdash; for handwritten flourishes like pull quotes and signatures.</p>
+      </div>
+
+      <div class="ds-type-stack">
+        <div class="ds-type-card">
+          <div class="ds-type-card-name" style="font-family:var(--font-display)">Cormorant Garamond</div>
+          <div class="ds-type-card-role">Display &middot; headlines</div>
+          <div class="ds-type-card-sample" style="font-family:var(--font-display);font-weight:600">Bring your <em>character</em> to life</div>
+          <div class="ds-type-card-weights">400 · 500 · 600 · 700 · italic</div>
+        </div>
+        <div class="ds-type-card">
+          <div class="ds-type-card-name" style="font-family:var(--font-body)">Inter</div>
+          <div class="ds-type-card-role">Body &middot; UI</div>
+          <div class="ds-type-card-sample" style="font-family:var(--font-body);font-weight:500">The quick brown fox jumps over the lazy dog 0123456789</div>
+          <div class="ds-type-card-weights">400 · 500 · 600 · 700</div>
+        </div>
+        <div class="ds-type-card">
+          <div class="ds-type-card-name" style="font-family:var(--font-accent);font-size:1.6rem">Caveat</div>
+          <div class="ds-type-card-role">Accent &middot; flourish only</div>
+          <div class="ds-type-card-sample" style="font-family:var(--font-accent);font-size:1.5rem;line-height:1.2">with love, from the studio</div>
+          <div class="ds-type-card-weights">400 · 700 · max 2 per page</div>
+        </div>
+      </div>
+
+      <h3 class="ds-h3">Type scale</h3>
+      <div class="ds-scale">
+        <div class="ds-scale-row">
+          <div class="ds-scale-meta"><code>display-xl</code><span>80 / 1.05 / 600</span></div>
+          <div class="ds-scale-sample" style="font-family:var(--font-display);font-size:var(--text-display-xl);font-weight:600;line-height:1.05;letter-spacing:-0.02em">Bring your character to life</div>
+        </div>
+        <div class="ds-scale-row">
+          <div class="ds-scale-meta"><code>display-lg</code><span>64 / 1.1 / 600</span></div>
+          <div class="ds-scale-sample" style="font-family:var(--font-display);font-size:var(--text-display-lg);font-weight:600;line-height:1.1;letter-spacing:-0.02em">Crafted with care</div>
+        </div>
+        <div class="ds-scale-row">
+          <div class="ds-scale-meta"><code>display-md</code><span>48 / 1.15 / 600</span></div>
+          <div class="ds-scale-sample" style="font-family:var(--font-display);font-size:var(--text-display-md);font-weight:600;line-height:1.15;letter-spacing:-0.02em">Three signature services</div>
+        </div>
+        <div class="ds-scale-row">
+          <div class="ds-scale-meta"><code>display-sm</code><span>36 / 1.2 / 600</span></div>
+          <div class="ds-scale-sample" style="font-family:var(--font-display);font-size:var(--text-display-sm);font-weight:600;line-height:1.2;letter-spacing:-0.02em">From idea to artwork</div>
+        </div>
+        <div class="ds-scale-row">
+          <div class="ds-scale-meta"><code>heading-lg</code><span>28 / 1.3 / 600</span></div>
+          <div class="ds-scale-sample" style="font-family:var(--font-display);font-size:var(--text-heading-lg);font-weight:600;line-height:1.3">Tiefling Sorceror, painterly</div>
+        </div>
+        <div class="ds-scale-row">
+          <div class="ds-scale-meta"><code>heading-md</code><span>22 / 1.35 / 500</span></div>
+          <div class="ds-scale-sample" style="font-family:var(--font-display);font-size:var(--text-heading-md);font-weight:500;line-height:1.35">Small headings &amp; card titles</div>
+        </div>
+        <div class="ds-scale-row">
+          <div class="ds-scale-meta"><code>heading-sm</code><span>18 / 1.4 / 600 · Inter</span></div>
+          <div class="ds-scale-sample" style="font-family:var(--font-body);font-size:var(--text-heading-sm);font-weight:600;line-height:1.4">Form section labels</div>
+        </div>
+        <div class="ds-scale-row">
+          <div class="ds-scale-meta"><code>body-lg</code><span>18 / 1.7 / 400</span></div>
+          <div class="ds-scale-sample" style="font-family:var(--font-body);font-size:var(--text-body-lg);line-height:1.7">Lead paragraphs sit at body-lg, giving the opening of long-form content room to breathe.</div>
+        </div>
+        <div class="ds-scale-row">
+          <div class="ds-scale-meta"><code>body-md</code><span>16 / 1.65 / 400</span></div>
+          <div class="ds-scale-sample" style="font-family:var(--font-body);font-size:var(--text-body-md);line-height:1.65">Default body text. Comfortable at 65&ndash;75ch line length for sustained reading.</div>
+        </div>
+        <div class="ds-scale-row">
+          <div class="ds-scale-meta"><code>body-sm</code><span>14 / 1.55 / 400</span></div>
+          <div class="ds-scale-sample" style="font-family:var(--font-body);font-size:var(--text-body-sm);line-height:1.55;color:var(--ink-500)">Meta and captions sit in ink-500 by default.</div>
+        </div>
+        <div class="ds-scale-row">
+          <div class="ds-scale-meta"><code>label</code><span>12 / 600 / 0.15em</span></div>
+          <div class="ds-scale-sample ds-label-sample">SECTION LABEL · TRACKED</div>
+        </div>
+        <div class="ds-scale-row">
+          <div class="ds-scale-meta"><code>label-sm</code><span>10 / 700 / 0.2em</span></div>
+          <div class="ds-scale-sample ds-label-sample-sm">BADGE LABEL</div>
+        </div>
+        <div class="ds-scale-row">
+          <div class="ds-scale-meta"><code>accent</code><span>Caveat · sparingly</span></div>
+          <div class="ds-scale-sample" style="font-family:var(--font-accent);font-size:2rem;color:var(--burgundy-700);line-height:1.1">crafted, not generated</div>
+        </div>
+      </div>
+
+      <div class="ds-callout">
+        <div class="ds-callout-title">Rules</div>
+        <ul>
+          <li>One H1 per page. Always <code>display-lg</code> or <code>display-xl</code>.</li>
+          <li>All headings: <code>tracking-tight</code> (-0.02em). Body line height 1.65&ndash;1.75.</li>
+          <li>Max line length 65&ndash;75ch (about <code>max-w-[68ch]</code>).</li>
+          <li>Italic Cormorant works beautifully for emphasis &mdash; "Bring your <em>character</em> to life".</li>
+          <li>Mobile: reduce display sizes ~30% below 768px (handled by clamp() in tokens).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- SPACING & RADIUS                                             -->
+    <!-- ============================================================ -->
+    <section id="spacing" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">03 · Foundations</div>
+        <h2>Spacing &amp; radius</h2>
+        <p class="ds-lede">Tailwind default scale, with conventions for section padding, container widths, and a 6-step radius ramp.</p>
+      </div>
+
+      <div class="ds-spacing-grid">
+        <div class="ds-spec-card">
+          <div class="ds-spec-card-title">Container</div>
+          <table class="ds-spec-table">
+            <tr><td>Default</td><td><code>max-w-7xl</code> · 1280px</td></tr>
+            <tr><td>Narrow</td><td><code>max-w-3xl</code> · 768px (legal, blog)</td></tr>
+            <tr><td>Gutter (mobile)</td><td><code>px-6</code> · 24px</td></tr>
+            <tr><td>Gutter (desktop)</td><td><code>px-12</code> · 48px</td></tr>
+          </table>
+        </div>
+        <div class="ds-spec-card">
+          <div class="ds-spec-card-title">Section padding</div>
+          <table class="ds-spec-table">
+            <tr><td>Vertical (mobile)</td><td><code>py-16</code> · 64px</td></tr>
+            <tr><td>Vertical (desktop)</td><td><code>py-32</code> · 128px</td></tr>
+            <tr><td>Card padding</td><td><code>p-8</code> · 32px</td></tr>
+            <tr><td>Element gap</td><td><code>gap-2</code> · 8px</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <h3 class="ds-h3">Border radius</h3>
+      <div class="ds-radius-row">
+        <div class="ds-radius-demo"><div style="border-radius:4px"></div><span>sm · 4</span></div>
+        <div class="ds-radius-demo"><div style="border-radius:8px"></div><span>md · 8</span></div>
+        <div class="ds-radius-demo"><div style="border-radius:12px"></div><span>lg · 12</span></div>
+        <div class="ds-radius-demo"><div style="border-radius:16px"></div><span>xl · 16</span></div>
+        <div class="ds-radius-demo"><div style="border-radius:24px"></div><span>2xl · 24</span></div>
+        <div class="ds-radius-demo"><div style="border-radius:9999px"></div><span>full · pill</span></div>
+      </div>
+
+      <h3 class="ds-h3">Shadow</h3>
+      <div class="ds-shadow-row">
+        <div class="ds-shadow-demo" style="box-shadow:var(--shadow-sm)"><span>shadow-sm</span></div>
+        <div class="ds-shadow-demo" style="box-shadow:var(--shadow-md)"><span>shadow-md</span></div>
+        <div class="ds-shadow-demo" style="box-shadow:var(--shadow-lg)"><span>shadow-lg</span></div>
+        <div class="ds-shadow-demo" style="box-shadow:var(--shadow-gold)"><span>shadow-gold</span></div>
+      </div>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- MOTION                                                       -->
+    <!-- ============================================================ -->
+    <section id="motion" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">04 · Foundations</div>
+        <h2>Motion</h2>
+        <p class="ds-lede">Pages "unfurl" rather than slam. Restraint over flair &mdash; we use motion to direct attention, never to perform.</p>
+      </div>
+
+      <table class="ds-motion-table">
+        <thead><tr><th>Token</th><th>Duration</th><th>Easing</th><th>Used for</th></tr></thead>
+        <tbody>
+          <tr><td><code>motion-fast</code></td><td>150ms</td><td>ease-out</td><td>Hover state, color transitions</td></tr>
+          <tr><td><code>motion-default</code></td><td>250ms</td><td>ease-out</td><td>Most UI transitions</td></tr>
+          <tr><td><code>motion-slow</code></td><td>400ms</td><td>ease-soft</td><td>Section reveals, modals</td></tr>
+          <tr><td><code>motion-reveal</code></td><td>600ms</td><td>ease-soft</td><td>Hero text staggers</td></tr>
+        </tbody>
+      </table>
+
+      <div class="ds-callout">
+        <div class="ds-callout-title">Principles</div>
+        <ul>
+          <li><strong>Hover lift</strong> &mdash; cards rise 2&ndash;4px, gain subtle shadow + faint gold border.</li>
+          <li><strong>Click feedback</strong> &mdash; buttons scale to 0.98 on <code>:active</code>.</li>
+          <li><strong>Section reveals</strong> &mdash; fade + 20px translate-up. Trigger once. Never replay.</li>
+          <li><strong>Stagger</strong> &mdash; 80&ndash;120ms between siblings.</li>
+          <li><strong>No infinite animations</strong> except gentle ambient gradient orbs in hero (8&ndash;10s) and skeleton shimmer.</li>
+          <li>Respect <code>prefers-reduced-motion</code> &mdash; disable scroll animations, keep functional ones.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- FLOURISHES                                                   -->
+    <!-- ============================================================ -->
+    <section id="flourishes" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">05 · Foundations</div>
+        <h2>Decorative motifs</h2>
+        <p class="ds-lede">Two signature flourishes &mdash; used consistently rather than mixing five. They give the brand its TTRPG soul without tipping into RPG-character-sheet territory.</p>
+      </div>
+
+      <div class="ds-flourish-grid">
+        <div class="ds-flourish-card">
+          <div class="ds-flourish-label">01 · Compass rose divider</div>
+          <div class="ds-flourish-demo">
+            <div class="ds-compass-divider inline" aria-hidden="true">
+              <span class="ds-rule"></span>
+              <svg viewBox="0 0 32 32" class="ds-compass">
+                <circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8" />
+                <path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/>
+                <circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)" />
+              </svg>
+              <span class="ds-rule"></span>
+            </div>
+          </div>
+          <p class="ds-flourish-note">Used between major sections instead of plain <code>&lt;hr&gt;</code>. SVG glyph at 24px, gold-500 on parchment.</p>
+        </div>
+
+        <div class="ds-flourish-card">
+          <div class="ds-flourish-label">02 · Gold corner flourish</div>
+          <div class="ds-flourish-demo">
+            <div class="ds-corner-demo">
+              <svg class="ds-corner tl" viewBox="0 0 24 24"><path d="M2 12 V2 H12 M2 2 Q8 4 12 8" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+              <svg class="ds-corner tr" viewBox="0 0 24 24"><path d="M22 12 V2 H12 M22 2 Q16 4 12 8" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+              <svg class="ds-corner bl" viewBox="0 0 24 24"><path d="M2 12 V22 H12 M2 22 Q8 20 12 16" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+              <svg class="ds-corner br" viewBox="0 0 24 24"><path d="M22 12 V22 H12 M22 22 Q16 20 12 16" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+              <div class="ds-corner-content">Featured commission</div>
+            </div>
+          </div>
+          <p class="ds-flourish-note">Four 24px SVG corners on featured portfolio cards. Appear on hover (fade + slight outward translate).</p>
+        </div>
+
+        <div class="ds-flourish-card">
+          <div class="ds-flourish-label">03 · Drop cap (long-form only)</div>
+          <div class="ds-flourish-demo dropcap-demo">
+            <p class="ds-dropcap-paragraph">
+              <span class="ds-dropcap">T</span>he first paragraph of a blog article opens with a Cormorant italic capital, 4 lines tall, gold-700. Used exclusively in <code>/blog/[slug]</code> &mdash; never on marketing pages, never in cards.
+            </p>
+          </div>
+          <p class="ds-flourish-note">Cormorant italic, 4-line drop, <code>gold-700</code>. Padding-right keeps body text from kissing the cap.</p>
+        </div>
+
+        <div class="ds-flourish-card muted">
+          <div class="ds-flourish-label muted">Explicitly NOT in the system</div>
+          <ul class="ds-anti-list">
+            <li>Fleur-de-lis bullet points</li>
+            <li>Rune-style numerals for stats</li>
+            <li>Hand-drawn Caveat underlines under accent text</li>
+            <li>Aged-paper texture as primary background (3% overlay on cards only)</li>
+            <li>Scroll-shaped buttons, dice as bullets, ornate borders</li>
+          </ul>
+          <p class="ds-flourish-note">Each was tempting. Each, deployed, would tip the brand into RPG-character-sheet territory. We're going Forbes-profile-of-a-master-illuminator, not Skyrim UI.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- ICONOGRAPHY                                                  -->
+    <!-- ============================================================ -->
+    <section id="icons" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">06 · Foundations</div>
+        <h2>Iconography</h2>
+        <p class="ds-lede">Lucide Icons library &mdash; clean, consistent, modern. Stroke width 1.5 (slightly thinner than default for elegance). Even sizes only: 14, 16, 18, 20, 24. Never emojis. No exceptions.</p>
+      </div>
+
+      <div class="ds-icon-grid">
+        <!-- Each icon: 24px, stroke-width 1.5, ink-700 -->
+        <div class="ds-icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 L12 3 L21 12"/><path d="M5 10v10h14V10"/></svg><span>home</span></div>
+        <div class="ds-icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg><span>globe</span></div>
+        <div class="ds-icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg><span>image</span></div>
+        <div class="ds-icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg><span>edit</span></div>
+        <div class="ds-icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9 6 9-6"/><rect x="3" y="5" width="18" height="14" rx="2"/></svg><span>mail</span></div>
+        <div class="ds-icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>clock</span></div>
+        <div class="ds-icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg><span>calendar</span></div>
+        <div class="ds-icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg><span>star</span></div>
+        <div class="ds-icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg><span>search</span></div>
+        <div class="ds-icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg><span>check</span></div>
+        <div class="ds-icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span>arrow-right</span></div>
+        <div class="ds-icon-cell"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg><span>verified</span></div>
+      </div>
+
+      <div class="ds-icon-size-row">
+        <div class="ds-icon-size"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>14</span></div>
+        <div class="ds-icon-size"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>16</span></div>
+        <div class="ds-icon-size"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>18</span></div>
+        <div class="ds-icon-size"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>20</span></div>
+        <div class="ds-icon-size"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg><span>24</span></div>
+      </div>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- IMAGERY                                                      -->
+    <!-- ============================================================ -->
+    <section id="imagery" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">07 · Foundations</div>
+        <h2>Imagery placeholders</h2>
+        <p class="ds-lede">Until real portfolio art lands, all imagery uses tonal gradient placeholders with monospace labels. Each gradient hints at category; never solid color blocks; never hand-drawn fantasy SVG.</p>
+      </div>
+
+      <div class="ds-image-grid">
+        <div class="ds-placeholder ds-ph-character ratio-4-5">
+          <span class="ds-ph-label">TIEFLING SORCEROR · PAINTERLY · 4:5</span>
+        </div>
+        <div class="ds-placeholder ds-ph-token ratio-1-1">
+          <span class="ds-ph-label">VTT TOKEN · 1:1</span>
+        </div>
+        <div class="ds-placeholder ds-ph-anime ratio-4-5">
+          <span class="ds-ph-label">ANIME PORTRAIT · CELL · 4:5</span>
+        </div>
+        <div class="ds-placeholder ds-ph-party ratio-3-4">
+          <span class="ds-ph-label">PARTY · 6 FIGURES · 3:4</span>
+        </div>
+        <div class="ds-placeholder ds-ph-scene ratio-16-9">
+          <span class="ds-ph-label">BLOG HERO · ATMOSPHERIC SCENE · 16:9</span>
+        </div>
+        <div class="ds-placeholder ds-ph-character ratio-4-5">
+          <span class="ds-ph-label">HALF-ELF RANGER · LINEART · 4:5</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- BUTTONS                                                      -->
+    <!-- ============================================================ -->
+    <section id="buttons" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">08 · Components</div>
+        <h2>Buttons</h2>
+        <p class="ds-lede">Burgundy primary for nearly every CTA. Gold accent reserved for hero buttons. Outline / ghost handle secondary and tertiary actions. All buttons use uppercase Inter 600 with 0.12em letter-spacing.</p>
+      </div>
+
+      <h3 class="ds-h3">Variants</h3>
+      <div class="ds-btn-row">
+        <button class="dv-btn dv-btn-primary">Start commission</button>
+        <button class="dv-btn dv-btn-gold">Reserve a slot</button>
+        <button class="dv-btn dv-btn-outline">View portfolio</button>
+        <button class="dv-btn dv-btn-ghost">Cancel</button>
+        <button class="dv-btn dv-btn-primary" disabled>Disabled</button>
+      </div>
+
+      <h3 class="ds-h3">Sizes</h3>
+      <div class="ds-btn-row">
+        <button class="dv-btn dv-btn-primary sm">Small</button>
+        <button class="dv-btn dv-btn-primary">Default</button>
+        <button class="dv-btn dv-btn-primary lg">Large</button>
+      </div>
+
+      <h3 class="ds-h3">With icon</h3>
+      <div class="ds-btn-row">
+        <button class="dv-btn dv-btn-primary">
+          Start commission
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <button class="dv-btn dv-btn-outline">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+          Confirm
+        </button>
+        <button class="dv-icon-btn" aria-label="Edit">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg>
+        </button>
+        <button class="dv-icon-btn" aria-label="Open">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        </button>
+      </div>
+
+      <div class="ds-callout">
+        <div class="ds-callout-title">Specs (primary)</div>
+        <table class="ds-spec-table">
+          <tr><td>Background</td><td><code>burgundy-700</code> → hover <code>burgundy-500</code> → active <code>burgundy-900</code></td></tr>
+          <tr><td>Text</td><td><code>cream-50</code></td></tr>
+          <tr><td>Padding (md)</td><td>14px 28px</td></tr>
+          <tr><td>Radius</td><td><code>rounded-full</code></td></tr>
+          <tr><td>Type</td><td>Inter 600 · 12px · uppercase · letter-spacing 0.12em</td></tr>
+          <tr><td>Hover</td><td>+translate-y -1px · shadow-md</td></tr>
+          <tr><td>Active</td><td>scale(0.98)</td></tr>
+          <tr><td>Disabled</td><td>bg <code>ink-300</code> · text <code>ink-400</code> · cursor not-allowed</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- FORMS                                                        -->
+    <!-- ============================================================ -->
+    <section id="forms" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">09 · Components</div>
+        <h2>Form controls</h2>
+        <p class="ds-lede">Inputs sit on <code>parchment-50</code> with a 1.5px <code>border-light</code> rest state. Focus moves to <code>burgundy-500</code> with a 3px <code>burgundy-100</code> ring. Generous tap targets &mdash; minimum 44px.</p>
+      </div>
+
+      <div class="ds-form-grid">
+        <div class="ds-form-col">
+          <div class="dv-field">
+            <label class="dv-label" for="f1">Character name</label>
+            <input class="dv-input" id="f1" type="text" placeholder="e.g. Lyra Vexweaver" />
+            <div class="dv-helper">The hero of your campaign.</div>
+          </div>
+
+          <div class="dv-field">
+            <label class="dv-label" for="f2">Email <span class="dv-label-required">required</span></label>
+            <input class="dv-input is-focus" id="f2" type="email" value="aria@example.com" />
+            <div class="dv-helper">Focus state — burgundy ring.</div>
+          </div>
+
+          <div class="dv-field">
+            <label class="dv-label" for="f3">Phone</label>
+            <input class="dv-input is-error" id="f3" type="tel" value="not-a-phone" />
+            <div class="dv-error">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+              Please enter a valid phone number.
+            </div>
+          </div>
+
+          <div class="dv-field">
+            <label class="dv-label" for="f4">Service type</label>
+            <div class="dv-select">
+              <select id="f4">
+                <option>Character Art &mdash; from $180</option>
+                <option>VTT Tokens &mdash; from $80</option>
+                <option>Party Portraits &mdash; from $400</option>
+                <option>NPC Packs &mdash; from $300</option>
+                <option>Custom Projects &mdash; quote</option>
+              </select>
+              <svg class="dv-select-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+          </div>
+
+          <div class="dv-field">
+            <label class="dv-label" for="f5">Disabled input</label>
+            <input class="dv-input" id="f5" type="text" value="Locked until quote sent" disabled />
+          </div>
+        </div>
+
+        <div class="ds-form-col">
+          <div class="dv-field">
+            <label class="dv-label" for="f6">Project description</label>
+            <textarea class="dv-input dv-textarea" id="f6" placeholder="Tell us about the character &mdash; species, class, vibe, references, what makes them yours&hellip;"></textarea>
+            <div class="dv-helper">120 character minimum. Markdown welcome.</div>
+          </div>
+
+          <div class="dv-field">
+            <span class="dv-label">Style preference</span>
+            <div class="dv-check-group">
+              <label class="dv-check">
+                <input type="radio" name="style" checked />
+                <span class="dv-check-box"></span>
+                <span>Painterly &mdash; warm, dramatic</span>
+              </label>
+              <label class="dv-check">
+                <input type="radio" name="style" />
+                <span class="dv-check-box"></span>
+                <span>Anime &mdash; cell-shaded</span>
+              </label>
+              <label class="dv-check">
+                <input type="radio" name="style" />
+                <span class="dv-check-box"></span>
+                <span>Lineart &mdash; clean, expressive</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="dv-field">
+            <span class="dv-label">Extras</span>
+            <div class="dv-check-group">
+              <label class="dv-check">
+                <input type="checkbox" checked />
+                <span class="dv-check-box checkbox"></span>
+                <span>Rush delivery (+$50)</span>
+              </label>
+              <label class="dv-check">
+                <input type="checkbox" />
+                <span class="dv-check-box checkbox"></span>
+                <span>Layered PSD (+$30)</span>
+              </label>
+              <label class="dv-check">
+                <input type="checkbox" />
+                <span class="dv-check-box checkbox"></span>
+                <span>Commercial license (+$150)</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="ds-h3">Multi-step progress</h3>
+      <div class="dv-stepper">
+        <div class="dv-step is-done">
+          <span class="dv-step-dot"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></span>
+          <div class="dv-step-meta">
+            <span class="dv-step-num">01</span>
+            <span class="dv-step-label">What you need</span>
+          </div>
+        </div>
+        <div class="dv-step-line is-done"></div>
+        <div class="dv-step is-active">
+          <span class="dv-step-dot">02</span>
+          <div class="dv-step-meta">
+            <span class="dv-step-num">02</span>
+            <span class="dv-step-label">Tell us about it</span>
+          </div>
+        </div>
+        <div class="dv-step-line"></div>
+        <div class="dv-step">
+          <span class="dv-step-dot">03</span>
+          <div class="dv-step-meta">
+            <span class="dv-step-num">03</span>
+            <span class="dv-step-label">Your details</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- CARDS                                                        -->
+    <!-- ============================================================ -->
+    <section id="cards" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">10 · Components</div>
+        <h2>Cards</h2>
+        <p class="ds-lede">Four card patterns cover almost every surface: portfolio, service, testimonial, blog. All share the same hover language &mdash; lift 4px, gain soft shadow, border darkens.</p>
+      </div>
+
+      <h3 class="ds-h3">Portfolio card</h3>
+      <div class="ds-cards-row">
+        <article class="dv-portfolio-card featured">
+          <svg class="ds-corner tl" viewBox="0 0 24 24"><path d="M2 12 V2 H12 M2 2 Q8 4 12 8" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+          <svg class="ds-corner tr" viewBox="0 0 24 24"><path d="M22 12 V2 H12 M22 2 Q16 4 12 8" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+          <svg class="ds-corner bl" viewBox="0 0 24 24"><path d="M2 12 V22 H12 M2 22 Q8 20 12 16" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+          <svg class="ds-corner br" viewBox="0 0 24 24"><path d="M22 12 V22 H12 M22 22 Q16 20 12 16" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+          <div class="dv-portfolio-img ds-ph-character ratio-4-5">
+            <span class="dv-portfolio-badge">Character Art</span>
+          </div>
+          <div class="dv-portfolio-body">
+            <h4>Lyra, Tiefling Sorceror</h4>
+            <div class="dv-portfolio-meta">Painterly · Commissioned by Aria M.</div>
+          </div>
+        </article>
+
+        <article class="dv-portfolio-card">
+          <div class="dv-portfolio-img ds-ph-anime ratio-4-5">
+            <span class="dv-portfolio-badge">Anime</span>
+          </div>
+          <div class="dv-portfolio-body">
+            <h4>Kaeru &mdash; spring duelist</h4>
+            <div class="dv-portfolio-meta">Cell-shaded · 3 weeks turnaround</div>
+          </div>
+        </article>
+
+        <article class="dv-portfolio-card">
+          <div class="dv-portfolio-img ds-ph-token ratio-4-5">
+            <span class="dv-portfolio-badge">VTT Token</span>
+          </div>
+          <div class="dv-portfolio-body">
+            <h4>The Hooded Stranger</h4>
+            <div class="dv-portfolio-meta">512px · Roll20 + Foundry</div>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="ds-h3">Service card</h3>
+      <div class="ds-cards-row">
+        <article class="dv-service-card">
+          <div class="dv-service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          </div>
+          <h4 class="dv-service-title">Character Art</h4>
+          <div class="dv-service-sub">your hero, painted</div>
+          <p class="dv-service-body">Single-character portraits at portfolio quality. Detailed rendering, expressive poses, dramatic lighting.</p>
+          <ul class="dv-service-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 2 revisions included</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 7&ndash;14 day turnaround</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 4K final delivery</li>
+          </ul>
+          <div class="dv-service-foot">
+            <div class="dv-service-price-wrap">
+              <span class="dv-service-price-label">Starting at</span>
+              <span class="dv-service-price-value">$180</span>
+            </div>
+            <a class="dv-service-link">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </article>
+
+        <article class="dv-service-card">
+          <div class="dv-service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+          </div>
+          <h4 class="dv-service-title">VTT Tokens</h4>
+          <div class="dv-service-sub">for the virtual tabletop</div>
+          <p class="dv-service-body">Circular tokens optimised for Roll20 and Foundry. Rich color, decorative borders, perfect at any zoom.</p>
+          <ul class="dv-service-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 512px &amp; 1024px exports</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Transparent PNG</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Bulk discounts (4+)</li>
+          </ul>
+          <div class="dv-service-foot">
+            <div class="dv-service-price-wrap">
+              <span class="dv-service-price-label">Starting at</span>
+              <span class="dv-service-price-value">$80</span>
+            </div>
+            <a class="dv-service-link">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </article>
+
+        <article class="dv-service-card">
+          <div class="dv-service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="15" cy="8" r="3"/><path d="M4 20c0-3 2-5 5-5s5 2 5 5M15 20c0-2 1-4 3-4s2 1 2 4"/></svg>
+          </div>
+          <h4 class="dv-service-title">Party Portraits</h4>
+          <div class="dv-service-sub">the whole gang</div>
+          <p class="dv-service-body">Group illustrations &mdash; adventuring parties, weddings, gifts. Consistent style across every figure.</p>
+          <ul class="dv-service-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 3&ndash;8 figure groups</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Optional background scene</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Print-ready files</li>
+          </ul>
+          <div class="dv-service-foot">
+            <div class="dv-service-price-wrap">
+              <span class="dv-service-price-label">Starting at</span>
+              <span class="dv-service-price-value">$400</span>
+            </div>
+            <a class="dv-service-link">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="ds-h3">Testimonial card</h3>
+      <div class="ds-cards-row">
+        <article class="dv-testimonial-card">
+          <svg class="dv-quote-glyph" viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M6 22 Q6 14 14 10 L13 13 Q9 15 9 22 Z M18 22 Q18 14 26 10 L25 13 Q21 15 21 22 Z" fill="currentColor"/>
+          </svg>
+          <div class="dv-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          </div>
+          <blockquote class="dv-quote">Lyra came back better than I could have pictured. The communication was thoughtful, every revision sharpened the piece. This isn't a transaction &mdash; it's a collaboration.</blockquote>
+          <div class="dv-quote-divider"></div>
+          <div class="dv-quote-attribution">
+            <div class="dv-avatar">AM</div>
+            <div>
+              <div class="dv-quote-name">Aria Mendel</div>
+              <div class="dv-quote-role">D&amp;D player &middot; character commission</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="dv-testimonial-card">
+          <svg class="dv-quote-glyph" viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M6 22 Q6 14 14 10 L13 13 Q9 15 9 22 Z M18 22 Q18 14 26 10 L25 13 Q21 15 21 22 Z" fill="currentColor"/>
+          </svg>
+          <div class="dv-stars" aria-label="5 out of 5 stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          </div>
+          <blockquote class="dv-quote">Eight NPCs for Curse of Strahd, all in matching style, delivered on a schedule I could plan sessions around. Worth every dollar.</blockquote>
+          <div class="dv-quote-divider"></div>
+          <div class="dv-quote-attribution">
+            <div class="dv-avatar">MK</div>
+            <div>
+              <div class="dv-quote-name">Marcus K.</div>
+              <div class="dv-quote-role">Dungeon Master · NPC pack</div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <h3 class="ds-h3">Blog card</h3>
+      <div class="ds-cards-row">
+        <article class="dv-blog-card">
+          <div class="dv-blog-img ds-ph-scene ratio-16-9">
+            <span class="dv-blog-cat">Guides</span>
+          </div>
+          <div class="dv-blog-body">
+            <h4>How to write a commission brief that gets the art you actually want</h4>
+            <div class="dv-blog-meta">
+              <span class="dv-blog-date">Mar 12 · 2026</span>
+              <span class="dv-blog-dot"></span>
+              <span class="dv-blog-read">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                8 min read
+              </span>
+            </div>
+            <p class="dv-blog-excerpt">The difference between "tiefling sorcerer" and a brief I can paint from. A working checklist with examples.</p>
+          </div>
+        </article>
+        <article class="dv-blog-card">
+          <div class="dv-blog-img ds-ph-scene ratio-16-9" style="filter:hue-rotate(40deg)">
+            <span class="dv-blog-cat">Behind the scenes</span>
+          </div>
+          <div class="dv-blog-body">
+            <h4>Three weeks with Lyra: from a player's note to a final painting</h4>
+            <div class="dv-blog-meta">
+              <span class="dv-blog-date">Feb 28 · 2026</span>
+              <span class="dv-blog-dot"></span>
+              <span class="dv-blog-read">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                12 min read
+              </span>
+            </div>
+            <p class="dv-blog-excerpt">Sketches, color blocks, and the revision where everything clicked. A full process walkthrough.</p>
+          </div>
+        </article>
+        <article class="dv-blog-card">
+          <div class="dv-blog-img ds-ph-scene ratio-16-9" style="filter:hue-rotate(-30deg)">
+            <span class="dv-blog-cat">D&amp;D</span>
+          </div>
+          <div class="dv-blog-body">
+            <h4>Why your VTT token deserves more than a clipped headshot</h4>
+            <div class="dv-blog-meta">
+              <span class="dv-blog-date">Feb 11 · 2026</span>
+              <span class="dv-blog-dot"></span>
+              <span class="dv-blog-read">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+                5 min read
+              </span>
+            </div>
+            <p class="dv-blog-excerpt">A defense of the round portrait at 512px. Plus three tokens that earned their pixel budget.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- SLOT WIDGET                                                  -->
+    <!-- ============================================================ -->
+    <section id="slot-widget" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">11 · Components · Signature</div>
+        <h2>Slot availability widget</h2>
+        <p class="ds-lede">The brand's signature component. Honest, scarce, never aggressive. Filled = booked (burgundy with check). Open = outlined, gently pulsing. Shown in compact and full form.</p>
+      </div>
+
+      <div class="ds-slot-demo-row">
+        <div class="dv-slot-card">
+          <div class="dv-slot-card-head">
+            <div>
+              <div class="ds-eyebrow inline">AVAILABILITY</div>
+              <h3 class="dv-slot-month">May 2026</h3>
+            </div>
+            <span class="dv-pill dv-pill-burgundy">2 of 5 open</span>
+          </div>
+          <div class="dv-slot-row" role="list">
+            <div class="dv-slot is-booked" role="listitem" aria-label="Slot 1, booked">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <div class="dv-slot is-booked" role="listitem" aria-label="Slot 2, booked">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <div class="dv-slot is-booked" role="listitem" aria-label="Slot 3, booked">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </div>
+            <button class="dv-slot is-open" role="listitem" aria-label="Slot 4, click to reserve">
+              <span class="dv-slot-num">04</span>
+            </button>
+            <button class="dv-slot is-open" role="listitem" aria-label="Slot 5, click to reserve">
+              <span class="dv-slot-num">05</span>
+            </button>
+          </div>
+          <div class="dv-slot-foot">
+            <span>3 of 5 slots booked &middot; 2 remaining</span>
+          </div>
+          <div class="dv-slot-actions">
+            <button class="dv-btn dv-btn-gold">Reserve a May slot</button>
+            <button class="dv-btn dv-btn-outline">Join June waitlist</button>
+          </div>
+        </div>
+
+        <div class="dv-slot-card alt">
+          <div class="dv-slot-card-head">
+            <div>
+              <div class="ds-eyebrow inline">AVAILABILITY</div>
+              <h3 class="dv-slot-month">June 2026</h3>
+            </div>
+            <span class="dv-pill dv-pill-gold">Fully booked</span>
+          </div>
+          <div class="dv-slot-row">
+            <div class="dv-slot is-booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+            <div class="dv-slot is-booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+            <div class="dv-slot is-booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+            <div class="dv-slot is-booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+            <div class="dv-slot is-booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+          </div>
+          <div class="dv-slot-foot">
+            <span>Waitlist of 4 &middot; we'll reach out if a slot frees up</span>
+          </div>
+          <div class="dv-slot-actions">
+            <button class="dv-btn dv-btn-outline">Join the waitlist</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ds-callout">
+        <div class="ds-callout-title">Behavior</div>
+        <ul>
+          <li><strong>Open slot</strong> pulses gently at 1.0&nbsp;→&nbsp;1.05 scale, 1.5s loop. Stops on hover.</li>
+          <li><strong>Hover open</strong> &mdash; scale 1.1, cursor pointer, tooltip "Click to reserve".</li>
+          <li><strong>Click open</strong> &mdash; opens reservation modal with brief form (name, email, service, notes).</li>
+          <li><strong>Booked slots</strong> are non-interactive. No click. No hover.</li>
+          <li>On the <code>/availability</code> page, show 3 months side-by-side. On homepage, show current month only.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- BADGES & CHIPS                                               -->
+    <!-- ============================================================ -->
+    <section id="badges" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">12 · Components</div>
+        <h2>Badges, pills &amp; chips</h2>
+        <p class="ds-lede">A tight palette of small surfaces: neutral default, burgundy for primary, gold for featured/premium, plus the four admin status colors.</p>
+      </div>
+
+      <h3 class="ds-h3">Pills</h3>
+      <div class="ds-pill-row">
+        <span class="dv-pill">Default</span>
+        <span class="dv-pill dv-pill-burgundy">Primary</span>
+        <span class="dv-pill dv-pill-gold">Featured</span>
+        <span class="dv-pill dv-pill-forest">Success</span>
+      </div>
+
+      <h3 class="ds-h3">Status pills (admin)</h3>
+      <div class="ds-pill-row">
+        <span class="dv-pill dv-pill-gold"><span class="dv-pill-dot"></span>Pending</span>
+        <span class="dv-pill dv-pill-burgundy"><span class="dv-pill-dot"></span>In progress</span>
+        <span class="dv-pill dv-pill-forest"><span class="dv-pill-dot"></span>Delivered</span>
+        <span class="dv-pill dv-pill-ink"><span class="dv-pill-dot"></span>Closed</span>
+      </div>
+
+      <h3 class="ds-h3">Filter chips</h3>
+      <div class="ds-chip-row">
+        <button class="dv-chip is-active">All</button>
+        <button class="dv-chip">Character Art</button>
+        <button class="dv-chip">VTT Tokens</button>
+        <button class="dv-chip">Party Portraits</button>
+        <button class="dv-chip">Anime</button>
+        <button class="dv-chip">Custom</button>
+      </div>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- HEADER & FOOTER                                              -->
+    <!-- ============================================================ -->
+    <section id="nav" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">13 · Components</div>
+        <h2>Header &amp; footer</h2>
+        <p class="ds-lede">Header glides from transparent (top of page) to parchment with backdrop-blur (scrolled). Footer uses a slightly darker parchment for grounding.</p>
+      </div>
+
+      <h3 class="ds-h3">Header &mdash; default state</h3>
+      <div class="dv-header">
+        <div class="dv-header-brand">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/>
+          </svg>
+          <span>Design Vortex</span>
+        </div>
+        <nav class="dv-header-nav">
+          <a class="is-active">Portfolio</a>
+          <a>Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg></a>
+          <a>Process</a>
+          <a>About</a>
+          <a>Blog</a>
+        </nav>
+        <div class="dv-header-cta">
+          <button class="dv-btn dv-btn-primary">Start commission</button>
+        </div>
+      </div>
+
+      <h3 class="ds-h3">Header &mdash; scrolled state</h3>
+      <div class="dv-header scrolled">
+        <div class="dv-header-brand">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/>
+          </svg>
+          <span>Design Vortex</span>
+        </div>
+        <nav class="dv-header-nav">
+          <a>Portfolio</a>
+          <a class="is-active">Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg></a>
+          <a>Process</a>
+          <a>About</a>
+          <a>Blog</a>
+        </nav>
+        <div class="dv-header-cta">
+          <button class="dv-btn dv-btn-primary">Start commission</button>
+        </div>
+      </div>
+
+      <h3 class="ds-h3">Footer</h3>
+      <footer class="dv-footer">
+        <div class="dv-footer-grid">
+          <div class="dv-footer-col">
+            <div class="dv-footer-brand">
+              <svg viewBox="0 0 32 32" aria-hidden="true">
+                <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+                <path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/>
+              </svg>
+              <span>Design Vortex</span>
+            </div>
+            <p class="dv-footer-tag">Premium art commissions, since 2022. Every piece, by hand, by humans.</p>
+          </div>
+          <div class="dv-footer-col">
+            <div class="dv-footer-label">Studio</div>
+            <a>About</a><a>Process</a><a>Pricing</a><a>Availability</a>
+          </div>
+          <div class="dv-footer-col">
+            <div class="dv-footer-label">Services</div>
+            <a>Character Art</a><a>VTT Tokens</a><a>Party Portraits</a><a>NPC Packs</a><a>Custom Projects</a>
+          </div>
+          <div class="dv-footer-col">
+            <div class="dv-footer-label">Resources</div>
+            <a>Blog</a><a>FAQ</a><a>Reviews</a><a>Order Form</a>
+          </div>
+          <div class="dv-footer-col">
+            <div class="dv-footer-label">Contact</div>
+            <a>hello@designvortek.com</a><a>Instagram</a><a>Twitter</a>
+            <div class="dv-newsletter">
+              <input class="dv-input" placeholder="your@email.com" />
+              <button class="dv-btn dv-btn-primary sm">Subscribe</button>
+            </div>
+          </div>
+        </div>
+        <div class="dv-footer-bottom">
+          <span>© 2026 Design Vortex Studio</span>
+          <span class="dv-footer-bottom-links">
+            <a>Privacy</a><a>Terms</a><a>Refunds</a>
+          </span>
+        </div>
+      </footer>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- MODAL & TOAST                                                -->
+    <!-- ============================================================ -->
+    <section id="feedback" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">14 · Components</div>
+        <h2>Modal &amp; toast</h2>
+        <p class="ds-lede">Backdrops use <code>ink-900</code> at 40% opacity with backdrop-blur. Toast variants share the same shape, differentiated by left-border accent color.</p>
+      </div>
+
+      <h3 class="ds-h3">Modal (reserve a slot)</h3>
+      <div class="dv-modal-demo">
+        <div class="dv-modal-backdrop">
+          <div class="dv-modal" role="dialog" aria-modal="true">
+            <button class="dv-modal-close" aria-label="Close">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg>
+            </button>
+            <div class="ds-eyebrow inline">MAY 2026 · SLOT 04</div>
+            <h3 class="dv-modal-title">Reserve your slot</h3>
+            <p class="dv-modal-lede">A 25% deposit holds the slot. We'll send a quote within 48 hours.</p>
+            <div class="dv-field">
+              <label class="dv-label">Name</label>
+              <input class="dv-input" placeholder="Aria Mendel" />
+            </div>
+            <div class="dv-field">
+              <label class="dv-label">Email</label>
+              <input class="dv-input" placeholder="aria@example.com" />
+            </div>
+            <div class="dv-field">
+              <label class="dv-label">Service</label>
+              <div class="dv-select">
+                <select>
+                  <option>Character Art &mdash; from $180</option>
+                  <option>VTT Tokens &mdash; from $80</option>
+                </select>
+                <svg class="dv-select-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+            </div>
+            <div class="dv-modal-actions">
+              <button class="dv-btn dv-btn-ghost">Cancel</button>
+              <button class="dv-btn dv-btn-primary">Hold this slot</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="ds-h3">Toast notifications</h3>
+      <div class="ds-toast-stack">
+        <div class="dv-toast dv-toast-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+          <div>
+            <div class="dv-toast-title">Slot reserved</div>
+            <div class="dv-toast-body">Your May slot is held. Check your email for next steps.</div>
+          </div>
+          <button class="dv-toast-close" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+        </div>
+        <div class="dv-toast dv-toast-error">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v4M12 16h.01"/></svg>
+          <div>
+            <div class="dv-toast-title">We couldn't send that</div>
+            <div class="dv-toast-body">Check your connection &mdash; we'll keep your draft.</div>
+          </div>
+          <button class="dv-toast-close" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+        </div>
+        <div class="dv-toast dv-toast-info">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v.01M11 12h1v5h1"/></svg>
+          <div>
+            <div class="dv-toast-title">June waitlist updated</div>
+            <div class="dv-toast-body">You're #4 in line. We'll reach out within a week.</div>
+          </div>
+          <button class="dv-toast-close" aria-label="Dismiss"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- PAGINATION & BREADCRUMBS                                     -->
+    <!-- ============================================================ -->
+    <section id="meta" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">15 · Components</div>
+        <h2>Pagination &amp; breadcrumbs</h2>
+        <p class="ds-lede">"Load more" is preferred over numbered pages for portfolio and blog &mdash; better for engagement. Numbered pagination shows up in admin tables.</p>
+      </div>
+
+      <h3 class="ds-h3">Breadcrumbs</h3>
+      <nav class="dv-breadcrumbs" aria-label="Breadcrumb">
+        <a>Home</a>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg>
+        <a>Portfolio</a>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg>
+        <a>Character Art</a>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg>
+        <span aria-current="page">Lyra Vexweaver</span>
+      </nav>
+
+      <h3 class="ds-h3">Load more</h3>
+      <div class="ds-loadmore-row">
+        <button class="dv-btn dv-btn-outline">Load more pieces</button>
+        <span class="dv-loadmore-meta">Showing 24 of 247</span>
+      </div>
+
+      <h3 class="ds-h3">Numbered pagination (admin)</h3>
+      <nav class="dv-pagination" aria-label="Pagination">
+        <button class="dv-page-btn" aria-label="Previous"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
+        <button class="dv-page-btn">1</button>
+        <button class="dv-page-btn is-active">2</button>
+        <button class="dv-page-btn">3</button>
+        <button class="dv-page-btn">4</button>
+        <span class="dv-page-ellipsis">…</span>
+        <button class="dv-page-btn">12</button>
+        <button class="dv-page-btn" aria-label="Next"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></button>
+      </nav>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- LOADING & EMPTY                                              -->
+    <!-- ============================================================ -->
+    <section id="states" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">16 · Components</div>
+        <h2>Loading &amp; empty states</h2>
+        <p class="ds-lede">Skeleton placeholders shimmer subtly. Empty states own the space rather than apologise &mdash; they tell the user exactly what to do next.</p>
+      </div>
+
+      <h3 class="ds-h3">Skeleton (portfolio card)</h3>
+      <div class="ds-cards-row">
+        <div class="dv-skeleton-card">
+          <div class="dv-skeleton-img"></div>
+          <div class="dv-skeleton-line w-80"></div>
+          <div class="dv-skeleton-line w-50"></div>
+        </div>
+        <div class="dv-skeleton-card">
+          <div class="dv-skeleton-img"></div>
+          <div class="dv-skeleton-line w-70"></div>
+          <div class="dv-skeleton-line w-40"></div>
+        </div>
+        <div class="dv-skeleton-card">
+          <div class="dv-skeleton-img"></div>
+          <div class="dv-skeleton-line w-85"></div>
+          <div class="dv-skeleton-line w-55"></div>
+        </div>
+      </div>
+
+      <h3 class="ds-h3">Empty state</h3>
+      <div class="dv-empty">
+        <div class="dv-empty-mark" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="32" cy="32" r="22" />
+            <path d="M32 14 L34 30 L50 32 L34 34 L32 50 L30 34 L14 32 L30 30 Z" fill="currentColor" fill-opacity="0.12" />
+          </svg>
+        </div>
+        <h3 class="dv-empty-title">Nothing here yet</h3>
+        <p class="dv-empty-body">When you mark a portfolio piece as published, it'll show up here. Start by uploading one &mdash; it takes about a minute.</p>
+        <button class="dv-btn dv-btn-primary">Upload new piece</button>
+      </div>
+    </section>
+
+    <!-- compass divider -->
+    <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+
+    <!-- ============================================================ -->
+    <!-- HANDOFF NOTES                                                -->
+    <!-- ============================================================ -->
+    <section id="handoff" class="ds-section">
+      <div class="ds-section-head">
+        <div class="ds-eyebrow">17 · Handoff</div>
+        <h2>For Claude Code &amp; the Next.js build</h2>
+        <p class="ds-lede">Notes specifically for the engineering pass. Every visual decision in this document is grounded in the brief and is buildable in Next.js 16 / Tailwind v4 / Framer Motion without surprises.</p>
+      </div>
+
+      <div class="ds-handoff-grid">
+        <div class="ds-handoff-card">
+          <h4>Tokens → Tailwind v4</h4>
+          <p>All design tokens live in <code>tokens.css</code> as CSS custom properties. Map directly to Tailwind v4 <code>@theme</code> in <code>app/globals.css</code>:</p>
+          <pre class="ds-code">@theme {
+  --color-parchment-50:  #FBF6E9;
+  --color-burgundy-700:  #6B1F2A;
+  --color-gold-500:      #C9A04A;
+  --font-display: "Cormorant Garamond", serif;
+  --font-body:    "Inter", system-ui, sans-serif;
+  /* …all others from tokens.css */
+}</pre>
+        </div>
+
+        <div class="ds-handoff-card">
+          <h4>Fonts</h4>
+          <p>Use <code>next/font/google</code> for Cormorant Garamond + Inter + Caveat. Set them as CSS variables so Tailwind picks them up:</p>
+          <pre class="ds-code">import { Cormorant_Garamond, Inter, Caveat } from "next/font/google";
+
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400","500","600","700"],
+  style: ["normal","italic"],
+  variable: "--font-display",
+});
+const inter = Inter({ subsets:["latin"], weight:["400","500","600","700"], variable:"--font-body" });
+const caveat = Caveat({ subsets:["latin"], weight:["400","700"], variable:"--font-accent" });</pre>
+        </div>
+
+        <div class="ds-handoff-card">
+          <h4>Component → file mapping</h4>
+          <p>Suggested locations in your Next.js project:</p>
+          <table class="ds-spec-table">
+            <tr><td><code>Button</code></td><td><code>components/ui/Button.tsx</code></td></tr>
+            <tr><td><code>Input · Textarea · Select</code></td><td><code>components/ui/Field.tsx</code></td></tr>
+            <tr><td><code>PortfolioCard · ServiceCard · TestimonialCard · BlogCard</code></td><td><code>components/cards/*.tsx</code></td></tr>
+            <tr><td><code>SlotWidget</code></td><td><code>components/SlotWidget.tsx</code></td></tr>
+            <tr><td><code>Header · Footer</code></td><td><code>components/layout/*.tsx</code></td></tr>
+            <tr><td><code>Modal · Toast</code></td><td><code>components/ui/*.tsx</code> (consider Radix primitives)</td></tr>
+            <tr><td><code>CompassDivider · GoldCorners</code></td><td><code>components/decor/*.tsx</code></td></tr>
+          </table>
+        </div>
+
+        <div class="ds-handoff-card">
+          <h4>Recommended libs</h4>
+          <ul class="ds-anti-list compact">
+            <li><strong>Framer Motion</strong> &mdash; section reveals, hover lifts, slot pulse, modal enter/exit</li>
+            <li><strong>Radix UI</strong> &mdash; Dialog, DropdownMenu, Tabs, Toast (skin them to brand)</li>
+            <li><strong>Lucide React</strong> &mdash; all icons. Stroke width 1.5 globally.</li>
+            <li><strong>Tiptap</strong> or <strong>Lexical</strong> &mdash; blog editor in admin</li>
+            <li><strong>react-hook-form + zod</strong> &mdash; multi-step order form validation</li>
+            <li><strong>next/image</strong> &mdash; everywhere. WebP + lazy-load below fold.</li>
+          </ul>
+        </div>
+
+        <div class="ds-handoff-card">
+          <h4>Phase 5 additions · services restructure</h4>
+          <p>New patterns added in the May 23, 2026 services restructure. All follow existing tokens — no new colors invented.</p>
+          <ul class="ds-anti-list compact">
+            <li><strong>USD disclaimer chip</strong> · <code>.dv-usd</code> with <code>.block</code> and <code>.tome</code> variants. Appears near any prominent price</li>
+            <li><strong>Bucket-grouped admin list</strong> · <code>.adm-svc-group</code> + <code>.adm-svc-row</code> with drag handle, mode chip, status, last-edited</li>
+            <li><strong>Pricing mode chip selector</strong> · <code>.adm-mode-chip</code> with 8 modes (Tiered / Range / Per-extra / Pack / % uplift / Monthly / Flat / Quote-only). One <code>.adm-mode-panel.is-active</code> visible at a time</li>
+            <li><strong>Bucket selector cards</strong> · <code>.of-bucket-card</code> for the order-form Step 1 progressive disclosure (bucket → product → tier)</li>
+            <li><strong>Custom adjustment row</strong> · <code>.adm-adjust</code> in the quote builder — label, internal note, ± amount for discounts and surcharges</li>
+            <li><strong>Bucket detail patterns</strong> · <code>.bd-product</code>, <code>.bd-card</code>, <code>.bd-stack</code>, <code>.bd-bundle</code> — demonstrate 6 pricing-card variants in <code>Service Detail v2.html</code></li>
+          </ul>
+          <p style="margin-top:12px"><strong>Files added to root:</strong> <code>Subscription.html</code> · <code>Commercial.html</code> · <code>Maps.html</code> · <code>Service Detail v2.html</code> · <code>Order Form v2 Step 1.html</code> · <code>Admin Services List v2.html</code> · <code>Admin Service Editor v2.html</code></p>
+          <p><strong>CSS appended to:</strong> <code>pages.css</code> · <code>order-form.css</code> · <code>admin.css</code> — all new classes are prefixed (<code>dv-usd</code>, <code>sub-*</code>, <code>com-*</code>, <code>map-*</code>, <code>bd-*</code>, <code>of-bucket-*</code>, <code>adm-svc-*</code>, <code>adm-svce-*</code>) so they're easy to find.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="ds-doc-foot">
+      <div class="ds-compass-divider" aria-hidden="true"><span class="ds-rule"></span><svg viewBox="0 0 32 32" class="ds-compass"><circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/><path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/></svg><span class="ds-rule"></span></div>
+      <p>Design Vortex Brand System · v1.0 · Complete · All phases shipped</p>
+      <p class="ds-doc-foot-meta">Designed for handoff to Claude Code · Next.js 16 · Tailwind v4 · Framer Motion · Supabase</p>
+    </footer>
+
+  </main>
+</div>
+
+</body>
+</html>

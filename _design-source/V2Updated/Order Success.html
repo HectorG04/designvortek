@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Brief received · Design Vortek</title>
+<meta name="robots" content="noindex, follow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="order-form.css" />
+</head>
+<body class="os-page">
+
+<!-- Header -->
+<header class="of-header" data-screen-label="00 Header">
+  <a class="of-header-brand" href="Homepage.html" style="text-decoration:none">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/>
+    </svg>
+    <span>Design Vortek</span>
+  </a>
+  <a class="of-header-back" href="Homepage.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    Back to studio
+  </a>
+</header>
+
+<!-- Main -->
+<main class="os-main" data-screen-label="01 Success">
+  <div class="os-inner">
+    <div class="os-mark" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+    </div>
+
+    <div class="os-eyebrow">Brief received</div>
+    <h1 class="os-title">Thank you, <em>storyteller</em>.</h1>
+    <p class="os-lede">
+      Your commission brief just landed in our inbox. We'll review it, gather our thoughts, and send a fixed quote with timeline to <strong id="os-email">your email</strong> within 48 hours.
+    </p>
+
+    <div class="os-summary">
+      <div class="os-summary-row">
+        <span class="os-summary-key">Reference</span>
+        <span class="os-summary-val" id="os-ref">DV-2026-0518</span>
+      </div>
+      <div class="os-summary-row">
+        <span class="os-summary-key">Submitted</span>
+        <span class="os-summary-val" id="os-date">May 20, 2026</span>
+      </div>
+      <div class="os-summary-row">
+        <span class="os-summary-key">Expected response</span>
+        <span class="os-summary-val">Within 48 hours</span>
+      </div>
+    </div>
+
+    <div class="os-next-card">
+      <div class="os-next-title">What happens now</div>
+      <ol class="os-next-list">
+        <li class="os-next-item">
+          <span class="os-next-item-num">1</span>
+          <span class="os-next-item-text">
+            <strong>Check your inbox</strong>
+            We just sent a confirmation. If it isn't there in 10 minutes, peek in spam &mdash; or email us directly at hello@designvortek.com.
+          </span>
+        </li>
+        <li class="os-next-item">
+          <span class="os-next-item-num">2</span>
+          <span class="os-next-item-text">
+            <strong>We review &amp; reply</strong>
+            Within 48 hours you'll receive a fixed quote, proposed timeline, and a few clarifying questions if needed.
+          </span>
+        </li>
+        <li class="os-next-item">
+          <span class="os-next-item-num">3</span>
+          <span class="os-next-item-text">
+            <strong>You approve, we begin</strong>
+            25% deposit holds your slot. First sketches usually land within a week.
+          </span>
+        </li>
+      </ol>
+    </div>
+
+    <div class="os-actions">
+      <a class="dv-btn dv-btn-primary" href="Homepage.html">
+        Back to studio
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="dv-btn dv-btn-outline" href="Homepage.html#portfolio">View portfolio</a>
+    </div>
+  </div>
+</main>
+
+<!-- Stamp reference number + submitted date dynamically -->
+<script>
+  // Generate a friendly reference number from timestamp
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, '0');
+  const d = String(now.getDate()).padStart(2, '0');
+  const rand = String(Math.floor(Math.random() * 9000) + 1000);
+  document.getElementById('os-ref').textContent = `DV-${y}-${m}${d}-${rand}`;
+  document.getElementById('os-date').textContent = now.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+</script>
+
+</body>
+</html>

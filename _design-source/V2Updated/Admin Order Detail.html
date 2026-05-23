@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Order DV-2026-0518-4302 · Aria Mendel · DesignVortek Admin</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<div class="adm-app" data-screen-label="01 Order Detail">
+
+  <aside class="adm-sidebar">
+    <a class="adm-brand" href="Admin Dashboard.html">
+      <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+      <div><div class="adm-brand-name">DesignVortek</div><div class="adm-brand-meta">Admin</div></div>
+    </a>
+    <nav class="adm-nav">
+      <a href="Admin Dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Dashboard</a>
+      <a href="Admin Orders.html" class="is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Orders<span class="adm-nav-badge">3</span></a>
+      <a href="Admin Portfolio.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Portfolio</a>
+      <a href="Admin Blog.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/></svg>Blog</a>
+      <a href="Admin Services.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>Services</a>
+      <a href="Admin Reviews.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>Reviews</a>
+      <a href="Admin Availability.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>Availability</a>
+      <a href="Admin Inquiries.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Inquiries<span class="adm-nav-badge">7</span></a>
+      <a href="Admin Customers.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Customers</a>
+      <a href="Admin Media.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/></svg>Media</a>
+      <div class="adm-nav-group-label">Configure</div>
+      <a href="Admin Settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/></svg>Settings</a>
+    </nav>
+    <div class="adm-sidebar-foot"><div class="adm-user"><div class="adm-user-avatar">T</div><div class="adm-user-meta"><span class="adm-user-name">Theo</span><span class="adm-user-role">Owner</span></div></div></div>
+  </aside>
+
+  <main class="adm-main">
+    <header class="adm-header">
+      <div class="adm-header-title" style="display:flex;flex-direction:row;align-items:center;gap:16px;">
+        <a class="adm-icon-btn" href="Admin Orders.html" aria-label="Back" style="border:1px solid var(--border-light);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg>
+        </a>
+        <div>
+          <h1>Aria Mendel</h1>
+          <div class="adm-header-meta">DV-2026-0518-4302 · submitted 14 hours ago</div>
+        </div>
+      </div>
+      <div class="adm-header-actions">
+        <button class="dv-btn dv-btn-outline sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          Email customer
+        </button>
+        <button class="dv-btn dv-btn-primary sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          Send quote
+        </button>
+      </div>
+    </header>
+
+    <div class="adm-content">
+
+      <div class="adm-order-grid">
+
+        <!-- LEFT 60% -->
+        <div>
+          <div class="adm-order-head">
+            <div>
+              <div class="adm-order-id">DV-2026-0518-4302</div>
+              <div class="adm-order-customer">Aria Mendel</div>
+              <div class="adm-order-summary">
+                <strong>Character Art · Deluxe</strong> · budget <strong>$200–$400</strong> · deadline <strong>June 14, 2026</strong>
+              </div>
+            </div>
+            <span class="adm-status pending" style="font-size:0.9375rem;padding:8px 14px;">Pending quote</span>
+          </div>
+
+          <!-- Brief -->
+          <section class="adm-card">
+            <div class="adm-card-head">
+              <div class="adm-card-title">Commission brief</div>
+              <span class="adm-card-eyebrow" style="margin:0;">From the customer</span>
+            </div>
+            <dl style="margin:0;">
+              <div class="adm-brief-row">
+                <dt>Service</dt>
+                <dd>Character Art &middot; Deluxe tier ($320 baseline)</dd>
+              </div>
+              <div class="adm-brief-row">
+                <dt>Style</dt>
+                <dd>Painterly · warm</dd>
+              </div>
+              <div class="adm-brief-row">
+                <dt>Description</dt>
+                <dd>Lyra Vexweaver, tiefling sorceress, level 9. Tall and lean, soft purple skin with darker freckles, gold horns swept back. Wears a tattered violet robe stitched with constellations in silver thread &mdash; a family heirloom from a sister she's lost. Holds a glass orb that catches the light. Painterly, warm dramatic lighting, dark mossy forest in the background. Vibe: melancholy but powerful &mdash; she's just lost her familiar.</dd>
+              </div>
+              <div class="adm-brief-row">
+                <dt>References</dt>
+                <dd>
+                  <div class="adm-brief-refs">
+                    <a href="#">https://pinterest.com/aria_m/tiefling-vibes</a>
+                    <a href="#">https://artstation.com/work/lyra-mood</a>
+                    <a href="#">https://imgur.com/a/forest-lighting</a>
+                  </div>
+                </dd>
+              </div>
+              <div class="adm-brief-row">
+                <dt>Quantity</dt>
+                <dd>1 piece</dd>
+              </div>
+              <div class="adm-brief-row">
+                <dt>Deadline</dt>
+                <dd>June 14, 2026 (25 days away)</dd>
+              </div>
+              <div class="adm-brief-row">
+                <dt>Found us via</dt>
+                <dd>Reddit (r/characterdrawing)</dd>
+              </div>
+              <div class="adm-brief-row">
+                <dt>Notes</dt>
+                <dd style="font-style:italic;color:var(--ink-500);">— none provided —</dd>
+              </div>
+            </dl>
+          </section>
+
+          <!-- Internal notes -->
+          <section class="adm-card">
+            <div class="adm-card-head">
+              <div class="adm-card-title">Internal notes</div>
+              <span class="adm-card-eyebrow" style="margin:0;">Admin only</span>
+            </div>
+            <textarea class="adm-notes" placeholder="Notes visible only to you — pricing thoughts, customer history, scheduling notes...">Strong brief, clear references. Could fit the Deluxe tier comfortably. Suggest $340 with optional transparent BG ($30) — keeping inside her stated budget while delivering a step above. June 14 deadline gives us 3-week runway from quote approval.</textarea>
+          </section>
+
+          <!-- Communication thread placeholder -->
+          <section class="adm-card">
+            <div class="adm-card-head">
+              <div class="adm-card-title">Communication</div>
+              <a class="adm-panel-link" style="font-size:0.6875rem;">View full thread</a>
+            </div>
+            <div style="display:flex; gap:12px; padding:8px 0; border-bottom:1px dashed var(--border-light);">
+              <div class="adm-activity-dot burgundy" style="flex-shrink:0;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+              <div style="flex:1; font-size:0.875rem; color:var(--ink-700); line-height:1.55;">
+                <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px;">
+                  <strong style="color:var(--ink-900);font-family:var(--font-display);font-size:1rem;">Brief auto-receipt sent</strong>
+                  <span style="font-size:0.75rem;color:var(--ink-500);">14h ago</span>
+                </div>
+                <span>"Thanks for your brief, Aria — we'll send a fixed quote within 48 hours."</span>
+              </div>
+            </div>
+            <div style="margin-top: 16px;">
+              <textarea class="adm-input adm-textarea" placeholder="Reply to Aria&hellip;" style="min-height:80px;"></textarea>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+                <div style="font-size:0.75rem;color:var(--ink-500);">Replies are sent from <strong>theo@designvortek.com</strong> via Resend</div>
+                <button class="dv-btn dv-btn-primary sm">Send reply <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- RIGHT 40% -->
+        <div>
+
+          <!-- Status changer -->
+          <section class="adm-card">
+            <div class="adm-card-eyebrow">Status</div>
+            <div class="adm-status-changer">
+              <span class="adm-status pending is-current">Pending quote</span>
+              <span class="adm-status reviewing">Reviewing</span>
+              <span class="adm-status in-progress">In progress</span>
+              <span class="adm-status delivered">Delivered</span>
+            </div>
+            <p style="font-size:0.75rem;color:var(--ink-500);margin-top:10px;line-height:1.45;">Click any state to change. Customer gets an email on every transition.</p>
+          </section>
+
+          <!-- Quote builder -->
+          <section class="adm-card">
+            <div class="adm-card-head">
+              <div class="adm-card-title">Quote builder</div>
+            </div>
+            <div class="adm-quote-row">
+              <div style="flex:1;">
+                <div class="adm-publish-key">Base price (Deluxe tier)</div>
+              </div>
+              <div class="adm-quote-currency" style="width:120px;">
+                <input class="adm-quote-input" value="320" />
+              </div>
+            </div>
+            <div class="adm-quote-row">
+              <div style="flex:1;"><div class="adm-publish-key">Transparent BG (+$30)</div></div>
+              <label class="adm-toggle is-on" style="margin-left:auto;"><span class="adm-toggle-track"></span></label>
+            </div>
+            <div class="adm-quote-row">
+              <div style="flex:1;"><div class="adm-publish-key">Rush turnaround (+$50)</div></div>
+              <label class="adm-toggle"><span class="adm-toggle-track"></span></label>
+            </div>
+
+            <!-- Custom adjustment row: for discounts, retainer overrides, loyalty pricing, charity, etc.
+                 Label is admin-editable so it appears on the customer's quote email as-is. -->
+            <div class="adm-adjust">
+              <div class="adm-adjust-head">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 5L5 19M9 5h10v10"/></svg>
+                <span>Custom adjustment</span>
+                <em>optional · discount or surcharge</em>
+              </div>
+              <div class="adm-adjust-row">
+                <input class="adm-adjust-label" type="text" placeholder="Label shown to customer · e.g. Returning client, multi-piece bundle" />
+                <div class="adm-quote-currency adm-adjust-amount">
+                  <input class="adm-quote-input" type="text" placeholder="±0" />
+                </div>
+              </div>
+              <textarea class="adm-adjust-reason" placeholder="Internal note · why this adjustment? (private, not sent to customer)"></textarea>
+            </div>
+
+            <div class="adm-quote-row" style="background:var(--gold-100);margin:0 -26px -24px;padding:14px 26px;border-radius:0 0 var(--radius-lg) var(--radius-lg);">
+              <div style="flex:1;"><div style="font-family:var(--font-display);font-size:1rem;font-weight:600;color:var(--ink-900);">Total quote</div></div>
+              <div style="font-family:var(--font-display);font-size:1.75rem;font-weight:600;color:var(--burgundy-700);letter-spacing:-0.015em;">$350</div>
+            </div>
+          </section>
+
+          <!-- Quick actions -->
+          <section class="adm-card">
+            <div class="adm-card-head"><div class="adm-card-title">Quick actions</div></div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <button class="dv-btn dv-btn-outline" style="justify-content:flex-start;width:100%;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+                Send quote email
+              </button>
+              <button class="dv-btn dv-btn-ghost" style="justify-content:flex-start;width:100%;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>
+                Schedule a call
+              </button>
+              <button class="dv-btn dv-btn-ghost" style="justify-content:flex-start;width:100%;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>
+                Move to portfolio
+              </button>
+              <button class="dv-btn dv-btn-ghost" style="justify-content:flex-start;width:100%;color:var(--burgundy-700);">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+                Archive order
+              </button>
+            </div>
+          </section>
+
+          <!-- Customer history -->
+          <section class="adm-card">
+            <div class="adm-card-head"><div class="adm-card-title">About this customer</div></div>
+            <div style="display:flex;gap:12px;align-items:center;margin-bottom:14px;">
+              <div class="adm-user-avatar" style="width:44px;height:44px;font-size:1rem;">AM</div>
+              <div>
+                <div style="font-family:var(--font-display);font-size:1.125rem;font-weight:600;color:var(--ink-900);">Aria Mendel</div>
+                <div style="font-size:0.8125rem;color:var(--ink-500);">aria@example.com · +1 (555) 123-9821</div>
+              </div>
+            </div>
+            <div class="adm-publish">
+              <div class="adm-publish-item">
+                <span class="adm-publish-key">Past orders</span>
+                <span class="adm-publish-val">1 commission · $320 spent</span>
+              </div>
+              <div class="adm-publish-item">
+                <span class="adm-publish-key">First seen</span>
+                <span class="adm-publish-val">Feb 2026</span>
+              </div>
+              <div class="adm-publish-item">
+                <span class="adm-publish-key">Source</span>
+                <span class="adm-publish-val">Reddit referral</span>
+              </div>
+            </div>
+            <a class="adm-panel-link" style="display:block;text-align:center;margin-top:12px;font-size:0.6875rem;">View customer profile →</a>
+          </section>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

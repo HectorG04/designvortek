@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Studio Notes · DesignVortek Blog</title>
+<meta name="description" content="Guides on commissioning art, process walkthroughs, and thoughts on what makes a good character portrait. Updated weekly." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="pages.css" />
+</head>
+<body>
+
+<header class="pg-header" id="pg-header" data-screen-label="00 Header">
+  <a class="pg-header-brand" href="Homepage.html" style="text-decoration:none">
+    <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+    <span>DesignVortek</span>
+  </a>
+  <nav class="pg-header-nav">
+    <a href="Portfolio.html">Portfolio</a>
+    <a href="Services.html">Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg></a>
+    <a href="Process.html">Process</a>
+    <a href="Pricing.html">Pricing</a>
+    <a href="About.html">About</a>
+    <a href="Contact.html">Contact</a>
+    <a class="is-active" href="Blog.html">Blog</a>
+  </nav>
+  <a class="dv-btn dv-btn-primary" href="Order Form.html">Start commission</a>
+</header>
+
+<section class="pg-hero" data-screen-label="01 Hero">
+  <div class="pg-container">
+    <span class="ds-eyebrow">Studio Notes</span>
+    <h1>Field notes &amp; <em>process</em></h1>
+    <p>Guides on commissioning art, walkthroughs of recent pieces, and occasional thoughts on what makes a portrait worth keeping.</p>
+  </div>
+</section>
+
+<section class="pg-section tight" data-screen-label="02 Featured + Grid">
+  <div class="pg-container">
+
+    <!-- Featured post -->
+    <a class="bl-featured" href="Blog Post.html">
+      <div class="bl-featured-img ds-ph-scene">
+        <span class="bl-featured-cat">Guides</span>
+        <span class="bl-featured-flag">Featured</span>
+      </div>
+      <div class="bl-featured-body">
+        <h2>How to write a commission brief that <em>actually</em> gets you the art you want</h2>
+        <p class="bl-featured-excerpt">The difference between "tiefling sorcerer" and a brief I can paint from. A working checklist with examples from real client briefs &mdash; what worked, what missed, and the words that always make the artist's job easier.</p>
+        <div class="bl-featured-meta">
+          <span class="dv-blog-date">Mar 12 · 2026</span>
+          <span class="dv-blog-dot"></span>
+          <span class="dv-blog-read">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+            8 min read
+          </span>
+        </div>
+        <div class="bl-featured-link">Read the full guide <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+      </div>
+    </a>
+
+    <!-- Category chips -->
+    <div class="bl-cat-chips">
+      <button class="dv-chip is-active">All · 24</button>
+      <button class="dv-chip">Guides · 9</button>
+      <button class="dv-chip">Behind the scenes · 7</button>
+      <button class="dv-chip">D&amp;D · 6</button>
+      <button class="dv-chip">Studio news · 2</button>
+    </div>
+
+    <!-- Grid -->
+    <div class="bl-grid">
+      <a class="dv-blog-card" href="Blog Post.html" style="text-decoration:none">
+        <div class="dv-blog-img ds-ph-scene" style="filter:hue-rotate(40deg)"><span class="dv-blog-cat">Behind the scenes</span></div>
+        <div class="dv-blog-body">
+          <h4>Three weeks with Lyra: from a player's note to a final painting</h4>
+          <div class="dv-blog-meta">
+            <span class="dv-blog-date">Feb 28 · 2026</span><span class="dv-blog-dot"></span>
+            <span class="dv-blog-read"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>12 min</span>
+          </div>
+          <p class="dv-blog-excerpt">Sketches, color blocks, and the revision where everything clicked. A full process walkthrough.</p>
+        </div>
+      </a>
+      <a class="dv-blog-card" href="Blog Post.html" style="text-decoration:none">
+        <div class="dv-blog-img ds-ph-scene" style="filter:hue-rotate(-30deg)"><span class="dv-blog-cat">D&amp;D</span></div>
+        <div class="dv-blog-body">
+          <h4>Why your VTT token deserves more than a clipped headshot</h4>
+          <div class="dv-blog-meta">
+            <span class="dv-blog-date">Feb 11 · 2026</span><span class="dv-blog-dot"></span>
+            <span class="dv-blog-read"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>5 min</span>
+          </div>
+          <p class="dv-blog-excerpt">A defense of the round portrait at 512px. Plus three tokens that earned their pixel budget.</p>
+        </div>
+      </a>
+      <a class="dv-blog-card" href="Blog Post.html" style="text-decoration:none">
+        <div class="dv-blog-img ds-ph-scene" style="filter:hue-rotate(120deg)"><span class="dv-blog-cat">Guides</span></div>
+        <div class="dv-blog-body">
+          <h4>Hero Forge to hand-painted: a starter guide for D&amp;D players</h4>
+          <div class="dv-blog-meta">
+            <span class="dv-blog-date">Jan 22 · 2026</span><span class="dv-blog-dot"></span>
+            <span class="dv-blog-read"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>6 min</span>
+          </div>
+          <p class="dv-blog-excerpt">What translates from Hero Forge to a painted portrait, and what we sketch around.</p>
+        </div>
+      </a>
+      <a class="dv-blog-card" href="Blog Post.html" style="text-decoration:none">
+        <div class="dv-blog-img ds-ph-scene" style="filter:hue-rotate(200deg)"><span class="dv-blog-cat">Behind the scenes</span></div>
+        <div class="dv-blog-body">
+          <h4>What I packed for my first art-fair booth (and what I'd cut)</h4>
+          <div class="dv-blog-meta">
+            <span class="dv-blog-date">Jan 9 · 2026</span><span class="dv-blog-dot"></span>
+            <span class="dv-blog-read"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>7 min</span>
+          </div>
+          <p class="dv-blog-excerpt">Prints, palette samples, and the one thing I should have left at home.</p>
+        </div>
+      </a>
+      <a class="dv-blog-card" href="Blog Post.html" style="text-decoration:none">
+        <div class="dv-blog-img ds-ph-scene" style="filter:hue-rotate(-80deg)"><span class="dv-blog-cat">D&amp;D</span></div>
+        <div class="dv-blog-body">
+          <h4>The Curse of Strahd NPC pack, painted over six weeks</h4>
+          <div class="dv-blog-meta">
+            <span class="dv-blog-date">Dec 19 · 2025</span><span class="dv-blog-dot"></span>
+            <span class="dv-blog-read"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>10 min</span>
+          </div>
+          <p class="dv-blog-excerpt">Strahd, Ireena, Madam Eva, and the other six. How we kept style consistent across eight portraits.</p>
+        </div>
+      </a>
+      <a class="dv-blog-card" href="Blog Post.html" style="text-decoration:none">
+        <div class="dv-blog-img ds-ph-scene" style="filter:hue-rotate(160deg)"><span class="dv-blog-cat">Guides</span></div>
+        <div class="dv-blog-body">
+          <h4>Choosing a commission style: painterly vs anime vs lineart</h4>
+          <div class="dv-blog-meta">
+            <span class="dv-blog-date">Dec 4 · 2025</span><span class="dv-blog-dot"></span>
+            <span class="dv-blog-read"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>9 min</span>
+          </div>
+          <p class="dv-blog-excerpt">What each style is best for, side-by-side examples, and how to decide for your character.</p>
+        </div>
+      </a>
+    </div>
+
+    <div style="text-align:center;">
+      <button class="dv-btn dv-btn-outline">Load 6 more articles</button>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="pg-section" data-screen-label="03 Newsletter">
+  <div class="pg-container">
+    <div class="bl-newsletter">
+      <div>
+        <span class="ds-eyebrow">Studio dispatch</span>
+        <h3>New work &amp; new <em>thinking</em>, monthly</h3>
+        <p>Every few weeks, a roundup of recent commissions, process notes, and slot openings. No spam, no marketing fluff &mdash; just the good stuff.</p>
+      </div>
+      <form class="bl-newsletter-form" onsubmit="event.preventDefault()">
+        <div class="row">
+          <input type="email" placeholder="your@email.com" required />
+          <button class="dv-btn dv-btn-primary">Subscribe</button>
+        </div>
+        <p class="bl-newsletter-note">Unsubscribe with one click. We never share your email.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer class="pg-footer" data-screen-label="04 Footer">
+  <div class="pg-container">
+    <div class="pg-footer-grid">
+      <div class="pg-footer-col">
+        <a class="pg-footer-brand" href="Homepage.html" style="text-decoration:none">
+          <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+          <span>DesignVortek</span>
+        </a>
+        <p class="pg-footer-tag">Premium art commissions, since 2022. Every piece, by hand, by humans.</p>
+      </div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Studio</div><a href="About.html">About</a><a href="Process.html">Process</a><a href="Pricing.html">Pricing</a><a href="Availability.html">Availability</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Services</div><a href="Service Detail.html">Character Art</a><a href="Services.html">VTT Tokens</a><a href="Services.html">Party Portraits</a><a href="Services.html">NPC Packs</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Resources</div><a href="Blog.html">Blog</a><a href="FAQ.html">FAQ</a><a href="Reviews.html">Reviews</a><a href="Order Form.html">Order Form</a><a href="Contact.html">Contact</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Stay in touch</div><a href="Contact.html">hello@designvortek.com</a></div>
+    </div>
+    <div class="pg-footer-bottom"><span>© 2026 DesignVortek Studio.</span><span class="pg-footer-bottom-links"><a href="Privacy.html">Privacy</a><a href="Privacy.html">Terms</a><a href="Privacy.html">Refunds</a></span></div>
+  </div>
+</footer>
+
+<script>(function(){const h=document.getElementById('pg-header');const f=()=>h.classList.toggle('scrolled',window.scrollY>20);f();window.addEventListener('scroll',f,{passive:true});})();</script>
+</body>
+</html>

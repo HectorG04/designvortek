@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<!--
+  ROUTES THIS DESIGN MAPS TO
+  ──────────────────────────
+  Public: /services/[bucket-slug]
+  This page demonstrates the bucket detail template using the Character bucket
+  as the canonical example. The other 4 buckets (Party, GM, Tokens, Commercial,
+  Subscription) use the same shell with different product blocks plugged in.
+  Source-of-truth brief: Design-Requirements-Handoff.md §4.4
+  6 pricing-card variants demonstrated: Tiered · Range · Bundle · Per-extra ·
+  Pack-with-quantity · Quote-only (last 3 in appendix at bottom).
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Character work · every tier of finish · Design Vortek</title>
+<meta name="description" content="Character portraits, full-body illustrations, reference sheets, and character+token bundles. Hand-painted, fixed-rate pricing, two revisions on every tier." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="pages.css" />
+</head>
+<body>
+
+<!-- Header -->
+<header class="pg-header" id="pg-header" data-screen-label="00 Header">
+  <a class="pg-header-brand" href="Homepage.html" style="text-decoration:none">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+    <span>Design Vortek</span>
+  </a>
+  <nav class="pg-header-nav">
+    <a href="Portfolio.html">Portfolio</a>
+    <a href="Services.html" class="is-active">Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg></a>
+    <a href="Process.html">Process</a>
+    <a href="Pricing.html">Pricing</a>
+    <a href="About.html">About</a>
+    <a href="Blog.html">Blog</a>
+  </nav>
+  <a class="dv-btn dv-btn-primary" href="Order Form.html">Start commission</a>
+</header>
+
+<!-- Breadcrumbs -->
+<div class="pg-container" data-screen-label="01 Breadcrumbs">
+  <nav class="pd-breadcrumbs" aria-label="Breadcrumb" style="padding-top:108px">
+    <a href="Homepage.html">Home</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg>
+    <a href="Services.html">Services</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg>
+    <span aria-current="page">Character work</span>
+  </nav>
+</div>
+
+<!-- Hero -->
+<section class="pg-hero" data-screen-label="02 Hero" style="padding-top:24px">
+  <div class="pg-container">
+    <span class="ds-eyebrow">Character work</span>
+    <h1>Character work, every <em>tier of finish</em>.</h1>
+    <p>Four ways to commission a character. A bust for the character sheet, a full-body for the wall, a reference sheet for the long campaign, or the bundle that includes a matching VTT token. Same hand-painted craft on every option.</p>
+  </div>
+</section>
+
+<!-- Bucket-level truths strip -->
+<section class="pg-section" data-screen-label="03 Bucket truths" style="padding-bottom:0">
+  <div class="pg-container">
+    <div class="bd-bucket-truths">
+      <div class="bd-truth">
+        <div class="bd-truth-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></div>
+        <div>
+          <span class="bd-truth-label">Revisions</span>
+          <span class="bd-truth-value">2 included on every tier</span>
+        </div>
+      </div>
+      <div class="bd-truth">
+        <div class="bd-truth-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <div>
+          <span class="bd-truth-label">Turnaround</span>
+          <span class="bd-truth-value">2 to 4 weeks per piece</span>
+        </div>
+      </div>
+      <div class="bd-truth">
+        <div class="bd-truth-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v12H4z"/><path d="M4 20h16"/></svg></div>
+        <div>
+          <span class="bd-truth-label">Delivery</span>
+          <span class="bd-truth-value">4K final + transparent PNG</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Per-product sections -->
+<section class="pg-section" data-screen-label="04 Products">
+  <div class="pg-container">
+
+    <!-- ============ PRODUCT 1: Character Portrait (TIERED) ============ -->
+    <div class="bd-product" data-screen-label="04a Portrait">
+      <div class="bd-product-head">
+        <div>
+          <h2>Character Portrait <em>(bust)</em></h2>
+          <div class="bd-product-best">your hero, head to shoulders</div>
+        </div>
+        <div class="bd-product-meta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          Turnaround <strong>2 to 3 weeks</strong>
+        </div>
+      </div>
+      <p class="bd-product-desc">The classic. Painted from chest up, with enough room to show face, expression, and the start of armor or clothing. Most people commission this first, then come back for the full-body later.</p>
+
+      <div class="sd-tiers">
+        <div class="sd-tier">
+          <div class="sd-tier-name">Basic</div>
+          <div class="sd-tier-best">clean and clear</div>
+          <div class="sd-tier-price">
+            <span class="sd-tier-price-num">$60</span>
+            <span class="sd-tier-price-note">line + flat color</span>
+          </div>
+          <ul class="sd-tier-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Clean line art</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Flat color, simple shading</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Plain background</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 2 revisions</li>
+          </ul>
+          <a class="dv-btn dv-btn-outline sd-tier-cta" href="Order Form.html">Choose Basic</a>
+        </div>
+
+        <div class="sd-tier featured">
+          <span class="sd-tier-flag">Most picked</span>
+          <div class="sd-tier-name">Standard</div>
+          <div class="sd-tier-best">the sweet spot</div>
+          <div class="sd-tier-price">
+            <span class="sd-tier-price-num">$90</span>
+            <span class="sd-tier-price-note">full render</span>
+          </div>
+          <ul class="sd-tier-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Full rendering, light and shadow</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Textured materials and fabric</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Suggested setting</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 2 revisions</li>
+          </ul>
+          <a class="dv-btn dv-btn-primary sd-tier-cta" href="Order Form.html">Choose Standard</a>
+        </div>
+
+        <div class="sd-tier">
+          <div class="sd-tier-name">Premium</div>
+          <div class="sd-tier-best">the showpiece</div>
+          <div class="sd-tier-price">
+            <span class="sd-tier-price-num">$140</span>
+            <span class="sd-tier-price-note">atmospheric</span>
+          </div>
+          <ul class="sd-tier-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> High detail, dynamic pose</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Effects (magic, weather, light)</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Full atmospheric background</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 2 revisions</li>
+          </ul>
+          <a class="dv-btn dv-btn-outline sd-tier-cta" href="Order Form.html">Choose Premium</a>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:16px;"><span class="dv-usd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg> Prices in USD · international cards billed at current rate</span></div>
+    </div>
+
+    <!-- ============ PRODUCT 2: Full-body Character (TIERED) ============ -->
+    <div class="bd-product" data-screen-label="04b Full-body">
+      <div class="bd-product-head">
+        <div>
+          <h2>Full-body Character</h2>
+          <div class="bd-product-best">head to toe, pose and all</div>
+        </div>
+        <div class="bd-product-meta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          Turnaround <strong>3 to 4 weeks</strong>
+        </div>
+      </div>
+      <p class="bd-product-desc">When you want the whole character. Boots, weapons, posture, the way they stand. The same three rendering tiers as the portrait, but for a piece that takes more time to paint properly.</p>
+
+      <div class="sd-tiers">
+        <div class="sd-tier">
+          <div class="sd-tier-name">Basic</div>
+          <div class="sd-tier-best">clean line + flat color</div>
+          <div class="sd-tier-price">
+            <span class="sd-tier-price-num">$120</span>
+            <span class="sd-tier-price-note">line + flat color</span>
+          </div>
+          <ul class="sd-tier-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Clean line art, full figure</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Flat color, simple shading</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Plain background</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 2 revisions</li>
+          </ul>
+          <a class="dv-btn dv-btn-outline sd-tier-cta" href="Order Form.html">Choose Basic</a>
+        </div>
+
+        <div class="sd-tier featured">
+          <span class="sd-tier-flag">Most picked</span>
+          <div class="sd-tier-name">Standard</div>
+          <div class="sd-tier-best">the sweet spot</div>
+          <div class="sd-tier-price">
+            <span class="sd-tier-price-num">$180</span>
+            <span class="sd-tier-price-note">full render</span>
+          </div>
+          <ul class="sd-tier-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Full rendering, light and shadow</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Textured materials and fabric</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Suggested setting</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 2 revisions</li>
+          </ul>
+          <a class="dv-btn dv-btn-primary sd-tier-cta" href="Order Form.html">Choose Standard</a>
+        </div>
+
+        <div class="sd-tier">
+          <div class="sd-tier-name">Premium</div>
+          <div class="sd-tier-best">cinematic</div>
+          <div class="sd-tier-price">
+            <span class="sd-tier-price-num">$280</span>
+            <span class="sd-tier-price-note">atmospheric</span>
+          </div>
+          <ul class="sd-tier-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> High detail, dynamic pose</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Magic, weather, light effects</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Full cinematic background</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 2 revisions</li>
+          </ul>
+          <a class="dv-btn dv-btn-outline sd-tier-cta" href="Order Form.html">Choose Premium</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PRODUCT 3: Reference Sheet (RANGE) ============ -->
+    <div class="bd-product" data-screen-label="04c Reference Sheet">
+      <div class="bd-product-head">
+        <div>
+          <h2>Character Reference Sheet</h2>
+          <div class="bd-product-best">three to four views, one character</div>
+        </div>
+        <div class="bd-product-meta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          Turnaround <strong>3 to 5 weeks</strong>
+        </div>
+      </div>
+      <p class="bd-product-desc">For the long campaign. Three to four views of the same character at consistent scale, plus expression studies, equipment detail, and optional alt outfit. The base price covers three views. The upper end adds extra angles, more expressions, detail call-outs, and a second outfit.</p>
+
+      <div class="bd-card">
+        <div class="bd-card-info">
+          <h4>Reference Sheet</h4>
+          <p>3 to 4 character views, expression studies, equipment details, optional alt outfit. Scoped per character based on detail and outfit count.</p>
+          <ul class="map-product-list" style="margin-top:14px">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Base: 3 views, single outfit, neutral expressions ($250)</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Upper end: 4 views, alt outfit, expression studies, detail call-outs ($450)</li>
+          </ul>
+        </div>
+        <div class="bd-card-price">
+          <span class="bd-card-price-num">$250 – $450</span>
+          <span class="bd-card-price-note">scoped per brief</span>
+          <a class="dv-btn dv-btn-primary" style="margin-top:14px" href="Order Form.html">Request a quote</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PRODUCT 4: Bundle (BUNDLE add-on) ============ -->
+    <div class="bd-product" data-screen-label="04d Bundle">
+      <div class="bd-product-head">
+        <div>
+          <h2>Character + Token <em>Bundle</em></h2>
+          <div class="bd-product-best">portrait that comes with a matching token</div>
+        </div>
+        <div class="bd-product-meta">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v6m0 0l-3 3m3-3l3 3"/><rect x="3" y="14" width="18" height="7" rx="2"/></svg>
+          Added to any portrait
+        </div>
+      </div>
+      <p class="bd-product-desc">Most clients who commission a portrait also need a VTT token of the same character. The bundle adds a circular, VTT-ready token (512 and 1024 exports) cropped from the same painting, with consistent style. Smaller than commissioning the token separately.</p>
+
+      <div class="bd-bundle">
+        <div>
+          <h4>Add a matching <em>token</em> for $25</h4>
+          <p>One flat price on top of any portrait tier. Circular crop, VTT-scaled, transparent PNG. Same character, same painting, ready for Roll20 or Foundry the day the portrait ships.</p>
+        </div>
+        <div class="bd-bundle-uplift">+ $25</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Pick your style (Character bucket only) -->
+<section class="pg-section" style="background:var(--parchment-100);" data-screen-label="05 Styles">
+  <div class="pg-container">
+    <div class="pg-section-head">
+      <span class="ds-eyebrow">Pick your style</span>
+      <h2>Four styles, <em>one craft</em></h2>
+      <p>Available on every character work product. Not sure? Send references in the brief and the studio will recommend.</p>
+    </div>
+
+    <div class="sd-styles">
+      <div class="sd-style">
+        <div class="sd-style-img ds-ph-character"></div>
+        <div class="sd-style-body">
+          <div class="sd-style-name">Painterly</div>
+          <div class="sd-style-note">Warm, dramatic, signature</div>
+        </div>
+      </div>
+      <div class="sd-style">
+        <div class="sd-style-img ds-ph-anime"></div>
+        <div class="sd-style-body">
+          <div class="sd-style-name">Anime</div>
+          <div class="sd-style-note">Cell-shaded, expressive</div>
+        </div>
+      </div>
+      <div class="sd-style">
+        <div class="sd-style-img ds-ph-character" style="filter: saturate(0.4) brightness(1.05)"></div>
+        <div class="sd-style-body">
+          <div class="sd-style-name">Lineart</div>
+          <div class="sd-style-note">Clean, ink-and-wash</div>
+        </div>
+      </div>
+      <div class="sd-style">
+        <div class="sd-style-img ds-ph-character" style="filter: hue-rotate(60deg) brightness(1.1)"></div>
+        <div class="sd-style-body">
+          <div class="sd-style-name">Semi-realistic</div>
+          <div class="sd-style-note">For the serious PC</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Examples -->
+<section class="pg-section" data-screen-label="06 Examples">
+  <div class="pg-container">
+    <div class="pg-section-head">
+      <span class="ds-eyebrow">Recent character work</span>
+      <h2>Pieces from <em>this bucket</em></h2>
+    </div>
+
+    <div class="pd-related-grid" style="grid-template-columns:repeat(3,1fr)">
+      <article class="dv-portfolio-card">
+        <div class="dv-portfolio-img ds-ph-character"><span class="dv-portfolio-badge">Portrait · Premium</span></div>
+        <div class="dv-portfolio-body"><h4>Lyra · Tiefling Sorceror</h4><div class="dv-portfolio-meta">Mar 2026</div></div>
+      </article>
+      <article class="dv-portfolio-card">
+        <div class="dv-portfolio-img ds-ph-character" style="filter:hue-rotate(40deg)"><span class="dv-portfolio-badge">Full-body · Standard</span></div>
+        <div class="dv-portfolio-body"><h4>Aldric · half-elf paladin</h4><div class="dv-portfolio-meta">Mar 2026</div></div>
+      </article>
+      <article class="dv-portfolio-card">
+        <div class="dv-portfolio-img ds-ph-character" style="filter:hue-rotate(-40deg)"><span class="dv-portfolio-badge">Reference Sheet</span></div>
+        <div class="dv-portfolio-body"><h4>Captain Veska · 4 views</h4><div class="dv-portfolio-meta">Feb 2026</div></div>
+      </article>
+    </div>
+
+    <div style="text-align:center; margin-top: 32px;">
+      <a href="Portfolio.html" class="dv-btn dv-btn-outline">See all character work <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="pg-section" style="background:var(--parchment-100);" data-screen-label="07 FAQ">
+  <div class="pg-container">
+    <div class="hp-faq-layout">
+      <div class="hp-faq-side">
+        <span class="ds-eyebrow">Character work FAQ</span>
+        <h2>Common questions <em>across the bucket</em></h2>
+        <p>Answers that apply to portraits, full-body, reference sheets, and bundles alike.</p>
+        <a class="hp-faq-side-cta" href="FAQ.html">Full FAQ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="hp-faq-list">
+        <details class="hp-faq-item" open>
+          <summary>How do the tiers differ?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>Tiers describe rendering complexity, not subject matter. Basic is clean line and flat color. Standard is fully rendered with shadow, texture, and a suggested setting. Premium adds dynamic pose, atmospheric background, and effects. Same character at any tier, different finish.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>Can I commission a portrait without a token, or add a token later?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>Yes to both. The bundle is just a smaller package price when bought together. A token added later from an existing portrait runs $25 too, same flat rate. Tokens commissioned without a portrait start at $40.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>What's the deposit?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>30% upfront to hold the slot, with the remainder due on delivery. The deposit is refundable until sketches begin and non-refundable after. Subscriptions bill the full month upfront instead, no deposit.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>What species and classes do you cover?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>Every D&amp;D 5e species and class, every Pathfinder ancestry, homebrew species, and characters from your own setting. Tieflings, drow, dragonborn, kobolds, custom mixes. Send a description and the studio will paint it.</p></div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="pg-cta-strip" data-screen-label="08 CTA">
+  <div class="pg-container">
+    <h2>Ready to commission a <em>character</em>?</h2>
+    <p>Pick a product, pick a tier, send a short brief. Quote back within 48 hours.</p>
+    <div class="pg-cta-strip-actions">
+      <a class="dv-btn dv-btn-gold lg" href="Order Form.html">Start a commission <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="dv-btn dv-btn-outline-cream lg" href="Portfolio.html">Browse portfolio</a>
+    </div>
+  </div>
+</section>
+
+<!-- ====== ENGINEERING APPENDIX: 6 card variants reference ====== -->
+<!--
+  This appendix demonstrates the 2 pricing-card variants that don't naturally
+  appear in the Character bucket (Per-extra-member, Pack-with-quantity,
+  Quote-only). The Character bucket above already shows Tiered, Range,
+  and Bundle. The engineer should be able to map any product to one of these
+  six card shapes.
+-->
+<section class="pg-section" style="background:var(--tome-950); color: var(--cream-50);" data-screen-label="09 Appendix">
+  <div class="pg-container">
+    <div class="pg-section-head">
+      <span class="ds-eyebrow tome">Engineering appendix</span>
+      <h2 style="color:var(--cream-50)">Six card variants, <em style="color:var(--gold-glow)">one bucket template</em></h2>
+      <p style="color:var(--cream-200)">Reference for the engineer porting this template into the codebase. The Character bucket above shows Tiered (Portrait, Full-body), Range (Reference Sheet), and Bundle (Character+Token). The three below cover the rest.</p>
+    </div>
+
+    <div class="bd-keynote" style="margin-bottom: 36px;">
+      <strong>Variant key</strong> · Tiered (3 cards) · Range (1 card, From-To) · Bundle (1 callout) · Per-extra (1 card + footnote) · Pack-with-quantity (1 card, stacked rows) · Quote-only (1 card, no price)
+    </div>
+
+    <!-- Variant 4: Per-extra-member -->
+    <div style="margin-bottom: 32px;">
+      <span class="ds-eyebrow tome">Variant 4 · Per-extra-member · (e.g. Party Portrait)</span>
+      <div class="sd-tiers" style="grid-template-columns: repeat(2, 1fr); max-width: 720px; margin-top: 16px;">
+        <div class="sd-tier">
+          <div class="sd-tier-name">Party Portrait · Standard</div>
+          <div class="sd-tier-best">up to 4 in one composition</div>
+          <div class="sd-tier-price">
+            <span class="sd-tier-price-num">$350</span>
+            <span class="sd-tier-price-note">4 figures, single comp</span>
+          </div>
+          <ul class="sd-tier-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Up to 4 figures in one piece</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Standard rendering</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Detailed background</li>
+          </ul>
+          <a class="dv-btn dv-btn-outline sd-tier-cta" href="Order Form.html">Choose Standard</a>
+        </div>
+        <div class="sd-tier featured">
+          <span class="sd-tier-flag">Most parties</span>
+          <div class="sd-tier-name">Party Portrait · Premium</div>
+          <div class="sd-tier-best">cinematic scene</div>
+          <div class="sd-tier-price">
+            <span class="sd-tier-price-num">$600</span>
+            <span class="sd-tier-price-note">4 figures, cinematic</span>
+          </div>
+          <ul class="sd-tier-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Up to 4 figures</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Premium rendering, effects</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Cinematic background</li>
+          </ul>
+          <a class="dv-btn dv-btn-primary sd-tier-cta" href="Order Form.html">Choose Premium</a>
+        </div>
+      </div>
+      <p style="color:var(--cream-200); font-size: 0.875rem; margin-top: 14px; font-style: italic;">
+        Each additional member adds <strong style="color: var(--gold-glow);">+$80 to $120</strong> depending on tier complexity.
+      </p>
+    </div>
+
+    <!-- Variant 5: Pack-with-quantity -->
+    <div style="margin-bottom: 32px;">
+      <span class="ds-eyebrow tome">Variant 5 · Pack-with-quantity · (e.g. NPC Pack)</span>
+      <div class="bd-card" style="background: var(--tome-900); border-color: rgba(255,255,255,0.08); margin-top: 16px;">
+        <div class="bd-card-info">
+          <h4 style="color:var(--cream-50)">NPC Pack</h4>
+          <p style="color:var(--cream-200)">A batch of NPCs in matching style. Simpler render than character portraits. Pick the volume that fits the campaign.</p>
+          <div class="bd-stack">
+            <div class="bd-stack-row" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08);">
+              <span style="color:var(--cream-200)">5 NPCs in matching style</span>
+              <strong style="color: var(--gold-glow);">$220</strong>
+            </div>
+            <div class="bd-stack-row" style="background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.08);">
+              <span style="color:var(--cream-200)">10 NPCs in matching style</span>
+              <strong style="color: var(--gold-glow);">$400</strong>
+            </div>
+          </div>
+        </div>
+        <div class="bd-card-price" style="border-left-color: rgba(255,255,255,0.10);">
+          <span class="bd-card-price-num" style="color: var(--gold-glow);">$220 / $400</span>
+          <span class="bd-card-price-note" style="color: var(--cream-200)">two quantities</span>
+          <a class="dv-btn dv-btn-gold" style="margin-top:14px" href="Order Form.html">Start a pack</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Variant 6: Quote-only -->
+    <div>
+      <span class="ds-eyebrow tome">Variant 6 · Quote-only · (e.g. Battle Map, Commercial)</span>
+      <div class="bd-card" style="background: var(--tome-900); border-color: rgba(255,255,255,0.08); margin-top: 16px;">
+        <div class="bd-card-info">
+          <h4 style="color:var(--cream-50)">Battle Map</h4>
+          <p style="color:var(--cream-200)">Quote-based pricing. Scope depends on size, detail, and labels. Send a brief and the studio will quote within 48 hours.</p>
+        </div>
+        <div class="bd-card-price" style="border-left-color: rgba(255,255,255,0.10);">
+          <span class="bd-card-price-num" style="color: var(--gold-glow);">From $150</span>
+          <span class="bd-card-price-note" style="color: var(--cream-200)">request a quote</span>
+          <a class="dv-btn dv-btn-gold" style="margin-top:14px" href="Maps.html">Send a brief</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="pg-footer" data-screen-label="10 Footer">
+  <div class="pg-container">
+    <div class="pg-footer-grid">
+      <div class="pg-footer-col">
+        <a class="pg-footer-brand" href="Homepage.html" style="text-decoration:none">
+          <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+          <span>Design Vortek</span>
+        </a>
+        <p class="pg-footer-tag">Premium art commissions, since 2022. Every piece, by hand, by humans.</p>
+      </div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Studio</div><a href="About.html">About</a><a href="Process.html">Process</a><a href="Pricing.html">Pricing</a><a href="Availability.html">Availability</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Services</div><a href="Service Detail v2.html">Character work</a><a href="Services.html">Party work</a><a href="Maps.html">Maps</a><a href="Subscription.html">Subscription</a><a href="Commercial.html">Commercial</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Resources</div><a href="Blog.html">Blog</a><a href="FAQ.html">FAQ</a><a href="Reviews.html">Reviews</a><a href="Order Form.html">Order Form</a><a href="Contact.html">Contact</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Stay in touch</div><a href="Contact.html">hello@designvortek.com</a></div>
+    </div>
+    <div class="pg-footer-bottom"><span>© 2026 Design Vortek Studio.</span><span class="pg-footer-bottom-links"><a href="Privacy.html">Privacy</a><a href="Privacy.html">Terms</a><a href="Privacy.html">Refunds</a></span></div>
+  </div>
+</footer>
+
+<script>(function(){const h=document.getElementById('pg-header');const f=()=>h.classList.toggle('scrolled',window.scrollY>20);f();window.addEventListener('scroll',f,{passive:true});})();</script>
+</body>
+</html>

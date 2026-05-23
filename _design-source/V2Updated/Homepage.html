@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Design Vortex — Premium art commissions for tabletop, anime &amp; beyond</title>
+<meta name="description" content="Painterly TTRPG portraits, VTT tokens, party illustrations and custom art — crafted by hand. Commissions from $80. 7–14 day turnaround." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="homepage.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER (fixed, scroll-aware: starts on dark hero, then transitions)
+     ============================================================ -->
+<header class="hp-header on-hero" id="hp-header" data-screen-label="00 Header">
+  <a class="hp-header-brand" href="Homepage.html" style="text-decoration:none">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/>
+    </svg>
+    <span>Design Vortek</span>
+  </a>
+  <nav class="hp-header-nav">
+    <a href="Portfolio.html">Portfolio</a>
+    <a href="Services.html">Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg></a>
+    <a href="Process.html">Process</a>
+    <a href="Pricing.html">Pricing</a>
+    <a href="About.html">About</a>
+    <a href="Blog.html">Blog</a>
+  </nav>
+  <div class="hp-header-cta">
+    <button class="dv-btn dv-btn-gold">Start commission</button>
+  </div>
+</header>
+
+<!-- ============================================================
+     1 · HERO (dark tome)
+     ============================================================ -->
+<section class="hp-hero" data-screen-label="01 Hero">
+  <div class="hp-hero-orbs" aria-hidden="true"></div>
+  <div class="hp-hero-grain" aria-hidden="true"></div>
+
+  <div class="hp-hero-grid">
+    <!-- LEFT: text -->
+    <div class="hp-hero-text">
+      <span class="ds-eyebrow">Premium Art Commissions · Since 2022</span>
+      <h1 class="hp-hero-title">
+        Bring your<br/>
+        <em>character</em> to life.
+      </h1>
+      <p class="hp-hero-sub">
+        Painterly TTRPG portraits, VTT tokens, and party illustrations. Crafted by hand, by humans &mdash; not generated, never traced.
+      </p>
+
+      <div class="hp-hero-ctas">
+        <a class="dv-btn dv-btn-gold lg" href="Order Form.html">Start commission <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <button class="dv-btn dv-btn-outline-cream lg">View portfolio</button>
+      </div>
+
+      <div class="hp-hero-trust">
+        <div>
+          <span class="hp-hero-trust-num">500+</span>
+          <span>commissions delivered</span>
+        </div>
+        <div>
+          <span class="hp-hero-trust-num">4.9</span>
+          <span class="hp-hero-trust-stars">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          </span>
+          <span>across 247 reviews</span>
+        </div>
+        <div>
+          <span class="hp-hero-trust-num">48h</span>
+          <span>average response</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: 2x2 thumb grid + floating availability badge -->
+    <div class="hp-hero-artwork">
+      <div class="hp-hero-avail" role="status">
+        <span class="hp-hero-avail-dot" aria-hidden="true"></span>
+        <span><span class="hp-hero-avail-num">2</span> slots open · May 2026</span>
+      </div>
+
+      <div class="hp-hero-thumbs">
+        <div class="hp-hero-thumb hp-thumb-character">
+          <span class="hp-hero-badge">Character Art</span>
+        </div>
+        <div class="hp-hero-thumb hp-thumb-token">
+          <span class="hp-hero-badge">VTT Token</span>
+        </div>
+        <div class="hp-hero-thumb hp-thumb-anime">
+          <span class="hp-hero-badge">Anime</span>
+        </div>
+        <div class="hp-hero-thumb hp-thumb-party">
+          <span class="hp-hero-badge">Party</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hp-hero-scroll" aria-hidden="true">
+    <span>Scroll</span>
+    <span class="hp-hero-scroll-line"></span>
+  </div>
+</section>
+
+<!-- ============================================================
+     2 · SERVICES PREVIEW
+     ============================================================ -->
+<section class="hp-section hp-services" data-screen-label="02 Services">
+  <div class="hp-container">
+    <div class="hp-section-head">
+      <span class="ds-eyebrow">What we create</span>
+      <h2>Three signature <em>services</em></h2>
+      <p class="hp-section-sub">Painterly portraits, virtual tokens, and group illustrations &mdash; each held to the same craft. Choose what fits, or commission something custom.</p>
+    </div>
+
+    <div class="hp-services-grid">
+
+      <article class="dv-service-card">
+        <div class="dv-service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+        </div>
+        <h4 class="dv-service-title">Character Art</h4>
+        <div class="dv-service-sub">your hero, painted</div>
+        <p class="dv-service-body">Single-character portraits at portfolio quality. Detailed rendering, expressive poses, dramatic lighting.</p>
+        <ul class="dv-service-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 2 revisions included</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 7&ndash;14 day turnaround</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 4K final delivery</li>
+        </ul>
+        <div class="dv-service-foot">
+          <div class="dv-service-price-wrap">
+            <span class="dv-service-price-label">Starting at</span>
+            <span class="dv-service-price-value">$180</span>
+          </div>
+          <a class="dv-service-link">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+      <article class="dv-service-card">
+        <div class="dv-service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+        </div>
+        <h4 class="dv-service-title">VTT Tokens</h4>
+        <div class="dv-service-sub">for the virtual tabletop</div>
+        <p class="dv-service-body">Circular tokens optimised for Roll20 and Foundry. Rich color, decorative borders, perfect at any zoom.</p>
+        <ul class="dv-service-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 512px &amp; 1024px exports</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Transparent PNG &middot; ready to drop in</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Bulk discounts (4+)</li>
+        </ul>
+        <div class="dv-service-foot">
+          <div class="dv-service-price-wrap">
+            <span class="dv-service-price-label">Starting at</span>
+            <span class="dv-service-price-value">$80</span>
+          </div>
+          <a class="dv-service-link">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+      <article class="dv-service-card">
+        <div class="dv-service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="15" cy="8" r="3"/><path d="M4 20c0-3 2-5 5-5s5 2 5 5M15 20c0-2 1-4 3-4s2 1 2 4"/></svg>
+        </div>
+        <h4 class="dv-service-title">Party Portraits</h4>
+        <div class="dv-service-sub">the whole gang</div>
+        <p class="dv-service-body">Group illustrations &mdash; adventuring parties, weddings, gifts. Consistent style across every figure in the frame.</p>
+        <ul class="dv-service-list">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 3&ndash;8 figure groups</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Optional background scene</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Print-ready files</li>
+        </ul>
+        <div class="dv-service-foot">
+          <div class="dv-service-price-wrap">
+            <span class="dv-service-price-label">Starting at</span>
+            <span class="dv-service-price-value">$400</span>
+          </div>
+          <a class="dv-service-link">Explore <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="hp-services-foot">
+      <a href="Services.html">See all five services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- compass divider (pulls into adjacent section padding) -->
+<div class="hp-container hp-divider-wrap">
+  <div class="ds-compass-divider" aria-hidden="true">
+    <span class="ds-rule"></span>
+    <svg viewBox="0 0 32 32" class="ds-compass">
+      <circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/>
+      <path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/>
+      <circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/>
+    </svg>
+    <span class="ds-rule"></span>
+  </div>
+</div>
+
+<!-- ============================================================
+     3 · WHO WE MAKE ART FOR (personas — SEO: persona keywords)
+     ============================================================ -->
+<section class="hp-section hp-personas" data-screen-label="03 Personas">
+  <div class="hp-container">
+    <div class="hp-section-head">
+      <span class="ds-eyebrow">Who we make art for</span>
+      <h2>Three kinds of <em>storytellers</em></h2>
+      <p class="hp-section-sub">We've spent years working alongside the people who care most about their characters. Here's who usually finds us.</p>
+    </div>
+
+    <div class="hp-persona-rows">
+
+      <!-- Persona 1: D&D Player -->
+      <div class="hp-persona-row">
+        <div class="hp-persona-image hp-persona-img-player">
+          <span class="hp-persona-tag">D&amp;D PLAYER · LYRA · 5:4</span>
+        </div>
+        <div class="hp-persona-text">
+          <div class="hp-persona-num">01 · The Player</div>
+          <h3 class="hp-persona-title">For your weekly <em>D&amp;D character</em></h3>
+          <div class="hp-persona-sub">your hero deserves a portrait</div>
+          <p class="hp-persona-body">You've played them for sixty sessions. You know their backstory better than your own. A cheap fiverr sketch or AI mash-up won't do them justice &mdash; a real painterly portrait will. We commission tieflings, half-orcs, drow rangers, gnome wizards, every flavor of fantasy character.</p>
+          <div class="hp-persona-tags">
+            <span class="hp-persona-tag-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>Tabletop RPG portraits</span>
+            <span class="hp-persona-tag-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>D&amp;D 5e &amp; Pathfinder</span>
+            <span class="hp-persona-tag-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>All species welcome</span>
+          </div>
+          <a class="hp-persona-cta">See character portraits <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+
+      <!-- Persona 2: Dungeon Master -->
+      <div class="hp-persona-row reverse">
+        <div class="hp-persona-image hp-persona-img-dm">
+          <span class="hp-persona-tag">NPC PACK · CURSE OF STRAHD · 5:4</span>
+        </div>
+        <div class="hp-persona-text">
+          <div class="hp-persona-num">02 · The Dungeon Master</div>
+          <h3 class="hp-persona-title">For the <em>campaign</em> you've built</h3>
+          <div class="hp-persona-sub">consistent NPCs, ready for the table</div>
+          <p class="hp-persona-body">Running a long-form campaign? You need a cast that feels real &mdash; not stock art mashups that break the table's immersion. We do NPC packs in matching style: 5 to 20 portraits delivered to a schedule you can plan sessions around. Strahd campaigns, homebrew worlds, Curse of Strahd, Storm King's Thunder &mdash; we've illustrated for them all.</p>
+          <div class="hp-persona-tags">
+            <span class="hp-persona-tag-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>NPC packs (5&ndash;20)</span>
+            <span class="hp-persona-tag-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>Matching style guarantee</span>
+            <span class="hp-persona-tag-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>VTT tokens included</span>
+          </div>
+          <a class="hp-persona-cta">See NPC packs <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+
+      <!-- Persona 3: Gift Buyer -->
+      <div class="hp-persona-row">
+        <div class="hp-persona-image hp-persona-img-gift">
+          <span class="hp-persona-tag">PARTY PORTRAIT · WEDDING · 5:4</span>
+        </div>
+        <div class="hp-persona-text">
+          <div class="hp-persona-num">03 · The Gift Giver</div>
+          <h3 class="hp-persona-title">For the <em>impossible</em> birthday</h3>
+          <div class="hp-persona-sub">a heirloom for the table they love</div>
+          <p class="hp-persona-body">Looking for a wedding, birthday, or graduation gift for someone who plays D&amp;D every week? A party portrait of their adventuring group is the gift they didn't know they wanted. We handle every detail &mdash; you brief us, we collect references, you approve at every step. Surprise-friendly process available.</p>
+          <div class="hp-persona-tags">
+            <span class="hp-persona-tag-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>Gift commissions</span>
+            <span class="hp-persona-tag-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>Surprise-friendly</span>
+            <span class="hp-persona-tag-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>Print-ready files</span>
+          </div>
+          <a class="hp-persona-cta">See party portraits <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- compass divider (pulls into adjacent section padding) -->
+<div class="hp-container hp-divider-wrap">
+  <div class="ds-compass-divider" aria-hidden="true">
+    <span class="ds-rule"></span>
+    <svg viewBox="0 0 32 32" class="ds-compass">
+      <circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/>
+      <path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/>
+      <circle cx="16" cy="16" r="1.6" fill="var(--parchment-50)"/>
+    </svg>
+    <span class="ds-rule"></span>
+  </div>
+</div>
+
+<!-- ============================================================
+     4 · PORTFOLIO STRIP
+     ============================================================ -->
+<section class="hp-section hp-portfolio" data-screen-label="04 Portfolio">
+  <div class="hp-container">
+    <div class="hp-section-head">
+      <span class="ds-eyebrow">Recent work</span>
+      <h2>Crafted with <em>care</em></h2>
+      <p class="hp-section-sub">A small slice of the last few months. Each piece took 2&ndash;4 weeks of close collaboration with the client.</p>
+    </div>
+
+    <div class="hp-portfolio-filters">
+      <button class="dv-chip is-active">All</button>
+      <button class="dv-chip">Character Art</button>
+      <button class="dv-chip">Tokens</button>
+      <button class="dv-chip">Portraits</button>
+      <button class="dv-chip">Anime</button>
+      <button class="dv-chip">Custom</button>
+    </div>
+
+    <div class="hp-portfolio-grid">
+      <a class="hp-portfolio-item" href="Portfolio Detail.html" style="text-decoration:none;display:block;">
+        <div class="hp-portfolio-item-img ds-ph-character"></div>
+        <div class="hp-portfolio-item-overlay">
+          <div class="hp-portfolio-item-cat">Character Art</div>
+          <div class="hp-portfolio-item-title">Lyra Vexweaver, Tiefling Sorceror</div>
+        </div>
+      </a>
+      <a class="hp-portfolio-item" href="Portfolio Detail.html" style="text-decoration:none;display:block;">
+        <div class="hp-portfolio-item-img ds-ph-anime"></div>
+        <div class="hp-portfolio-item-overlay">
+          <div class="hp-portfolio-item-cat">Anime</div>
+          <div class="hp-portfolio-item-title">Kaeru &mdash; spring duelist</div>
+        </div>
+      </a>
+      <a class="hp-portfolio-item" href="Portfolio Detail.html" style="text-decoration:none;display:block;">
+        <div class="hp-portfolio-item-img ds-ph-token" style="aspect-ratio: 4/5"></div>
+        <div class="hp-portfolio-item-overlay">
+          <div class="hp-portfolio-item-cat">VTT Token</div>
+          <div class="hp-portfolio-item-title">The Hooded Stranger</div>
+        </div>
+      </a>
+      <a class="hp-portfolio-item" href="Portfolio Detail.html" style="text-decoration:none;display:block;">
+        <div class="hp-portfolio-item-img ds-ph-party"></div>
+        <div class="hp-portfolio-item-overlay">
+          <div class="hp-portfolio-item-cat">Party Portrait</div>
+          <div class="hp-portfolio-item-title">The Howling Crows, level 9</div>
+        </div>
+      </a>
+      <a class="hp-portfolio-item" href="Portfolio Detail.html" style="text-decoration:none;display:block;">
+        <div class="hp-portfolio-item-img ds-ph-character" style="filter:hue-rotate(20deg)"></div>
+        <div class="hp-portfolio-item-overlay">
+          <div class="hp-portfolio-item-cat">Character Art</div>
+          <div class="hp-portfolio-item-title">Aldric, half-elf paladin</div>
+        </div>
+      </a>
+      <a class="hp-portfolio-item" href="Portfolio Detail.html" style="text-decoration:none;display:block;">
+        <div class="hp-portfolio-item-img ds-ph-token" style="aspect-ratio: 4/5; filter:hue-rotate(-30deg)"></div>
+        <div class="hp-portfolio-item-overlay">
+          <div class="hp-portfolio-item-cat">VTT Token</div>
+          <div class="hp-portfolio-item-title">Skyborn Druid</div>
+        </div>
+      </a>
+      <a class="hp-portfolio-item" href="Portfolio Detail.html" style="text-decoration:none;display:block;">
+        <div class="hp-portfolio-item-img ds-ph-anime" style="filter:hue-rotate(60deg)"></div>
+        <div class="hp-portfolio-item-overlay">
+          <div class="hp-portfolio-item-cat">Anime</div>
+          <div class="hp-portfolio-item-title">Mira &mdash; lantern keeper</div>
+        </div>
+      </a>
+      <a class="hp-portfolio-item" href="Portfolio Detail.html" style="text-decoration:none;display:block;">
+        <div class="hp-portfolio-item-img ds-ph-character" style="filter:hue-rotate(-40deg)"></div>
+        <div class="hp-portfolio-item-overlay">
+          <div class="hp-portfolio-item-cat">Character Art</div>
+          <div class="hp-portfolio-item-title">Drowned Captain Veska</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="hp-portfolio-foot">
+      <a class="dv-btn dv-btn-outline" href="Portfolio.html">View full gallery <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     4 · PROCESS
+     ============================================================ -->
+<section class="hp-section hp-process" data-screen-label="05 Process">
+  <div class="hp-container">
+    <div class="hp-section-head">
+      <span class="ds-eyebrow">How it works</span>
+      <h2>From idea to artwork in <em>four steps</em></h2>
+      <p class="hp-section-sub">Predictable, communicative, no surprises. You always know what's happening and when.</p>
+    </div>
+
+    <div class="hp-process-steps">
+      <div class="hp-process-step">
+        <div class="hp-process-num">01</div>
+        <h3 class="hp-process-title">Discuss</h3>
+        <p class="hp-process-body">Share your character, references, and vibe. We talk through what'll make the piece feel right.</p>
+      </div>
+      <div class="hp-process-step">
+        <div class="hp-process-num">02</div>
+        <h3 class="hp-process-title">Quote</h3>
+        <p class="hp-process-body">Within 48 hours, a clear quote with timeline. 25% deposit to hold your slot.</p>
+      </div>
+      <div class="hp-process-step">
+        <div class="hp-process-num">03</div>
+        <h3 class="hp-process-title">Create</h3>
+        <p class="hp-process-body">Sketches, then color blocks, then final paint. Two rounds of revisions baked in.</p>
+      </div>
+      <div class="hp-process-step">
+        <div class="hp-process-num">04</div>
+        <h3 class="hp-process-title">Deliver</h3>
+        <p class="hp-process-body">4K final files, layered PSD if you want it. Yours to use, print, frame, share.</p>
+      </div>
+    </div>
+
+    <div class="hp-process-foot">
+      <div class="hp-process-stat">Average turnaround <strong>7&ndash;14 days</strong></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     5 · TESTIMONIALS
+     ============================================================ -->
+<section class="hp-section hp-testimonials" data-screen-label="06 Testimonials">
+  <div class="hp-container">
+    <div class="hp-section-head">
+      <span class="ds-eyebrow">What clients say</span>
+      <h2>Words from the <em>table</em></h2>
+    </div>
+
+    <div class="hp-testimonials-grid">
+      <article class="dv-testimonial-card">
+        <svg class="dv-quote-glyph" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M6 22 Q6 14 14 10 L13 13 Q9 15 9 22 Z M18 22 Q18 14 26 10 L25 13 Q21 15 21 22 Z" fill="currentColor"/>
+        </svg>
+        <div class="dv-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+        </div>
+        <blockquote class="dv-quote">Lyra came back better than I could have pictured. Every revision sharpened the piece. This isn't a transaction &mdash; it's a collaboration.</blockquote>
+        <div class="dv-quote-divider"></div>
+        <div class="dv-quote-attribution">
+          <div class="dv-avatar">AM</div>
+          <div>
+            <div class="dv-quote-name">Aria Mendel</div>
+            <div class="dv-quote-role">D&amp;D player · character commission</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="dv-testimonial-card">
+        <svg class="dv-quote-glyph" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M6 22 Q6 14 14 10 L13 13 Q9 15 9 22 Z M18 22 Q18 14 26 10 L25 13 Q21 15 21 22 Z" fill="currentColor"/>
+        </svg>
+        <div class="dv-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+        </div>
+        <blockquote class="dv-quote">Eight NPCs for Curse of Strahd, all in matching style, delivered on a schedule I could plan sessions around. Worth every dollar.</blockquote>
+        <div class="dv-quote-divider"></div>
+        <div class="dv-quote-attribution">
+          <div class="dv-avatar">MK</div>
+          <div>
+            <div class="dv-quote-name">Marcus K.</div>
+            <div class="dv-quote-role">Dungeon Master · NPC pack</div>
+          </div>
+        </div>
+      </article>
+
+      <article class="dv-testimonial-card">
+        <svg class="dv-quote-glyph" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M6 22 Q6 14 14 10 L13 13 Q9 15 9 22 Z M18 22 Q18 14 26 10 L25 13 Q21 15 21 22 Z" fill="currentColor"/>
+        </svg>
+        <div class="dv-stars">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+        </div>
+        <blockquote class="dv-quote">A wedding party portrait for my brother and his fianc&eacute;e. They cried. I cried. The piece hangs above their mantel now.</blockquote>
+        <div class="dv-quote-divider"></div>
+        <div class="dv-quote-attribution">
+          <div class="dv-avatar">PR</div>
+          <div>
+            <div class="dv-quote-name">Priya R.</div>
+            <div class="dv-quote-role">Gift commission · party portrait</div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     7 · FROM THE STUDIO (blog preview — SEO: freshness + internal links)
+     ============================================================ -->
+<section class="hp-section hp-studio" data-screen-label="07 Studio Notes">
+  <div class="hp-container">
+    <div class="hp-section-head">
+      <span class="ds-eyebrow">From the studio</span>
+      <h2>Field notes &amp; <em>process</em></h2>
+      <p class="hp-section-sub">Guides on commissioning art, walkthroughs of recent pieces, and thoughts on what makes a good portrait.</p>
+    </div>
+
+    <div class="hp-studio-grid">
+      <article class="dv-blog-card">
+        <div class="dv-blog-img ds-ph-scene">
+          <span class="dv-blog-cat">Guides</span>
+        </div>
+        <div class="dv-blog-body">
+          <h4>How to write a commission brief that gets the art you actually want</h4>
+          <div class="dv-blog-meta">
+            <span class="dv-blog-date">Mar 12 · 2026</span>
+            <span class="dv-blog-dot"></span>
+            <span class="dv-blog-read">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+              8 min read
+            </span>
+          </div>
+          <p class="dv-blog-excerpt">The difference between "tiefling sorcerer" and a brief I can paint from. A working checklist with examples.</p>
+        </div>
+      </article>
+
+      <article class="dv-blog-card">
+        <div class="dv-blog-img ds-ph-scene" style="filter:hue-rotate(40deg)">
+          <span class="dv-blog-cat">Behind the scenes</span>
+        </div>
+        <div class="dv-blog-body">
+          <h4>Three weeks with Lyra: from a player's note to a final painting</h4>
+          <div class="dv-blog-meta">
+            <span class="dv-blog-date">Feb 28 · 2026</span>
+            <span class="dv-blog-dot"></span>
+            <span class="dv-blog-read">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+              12 min read
+            </span>
+          </div>
+          <p class="dv-blog-excerpt">Sketches, color blocks, and the revision where everything clicked. A full process walkthrough.</p>
+        </div>
+      </article>
+
+      <article class="dv-blog-card">
+        <div class="dv-blog-img ds-ph-scene" style="filter:hue-rotate(-30deg)">
+          <span class="dv-blog-cat">D&amp;D</span>
+        </div>
+        <div class="dv-blog-body">
+          <h4>Why your VTT token deserves more than a clipped headshot</h4>
+          <div class="dv-blog-meta">
+            <span class="dv-blog-date">Feb 11 · 2026</span>
+            <span class="dv-blog-dot"></span>
+            <span class="dv-blog-read">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+              5 min read
+            </span>
+          </div>
+          <p class="dv-blog-excerpt">A defense of the round portrait at 512px. Plus three tokens that earned their pixel budget.</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="hp-studio-foot">
+      <a class="dv-btn dv-btn-outline" href="Blog.html">Read all articles <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     8 · AVAILABILITY (slot widget)
+     ============================================================ -->
+<section class="hp-section hp-availability" data-screen-label="08 Availability">
+  <div class="hp-container">
+    <div class="hp-section-head">
+      <span class="ds-eyebrow">Availability</span>
+      <h2>Currently open for <em>commissions</em></h2>
+      <p class="hp-section-sub">We take a fixed number of pieces each month so every commission gets the attention it deserves.</p>
+    </div>
+
+    <div class="hp-availability-card">
+      <div class="dv-slot-card-head">
+        <div>
+          <div class="ds-eyebrow inline">May 2026</div>
+          <h3 class="dv-slot-month">2 slots remaining</h3>
+        </div>
+      </div>
+      <div class="dv-slot-row" role="list">
+        <div class="dv-slot is-booked" role="listitem" aria-label="Slot 1, booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+        <div class="dv-slot is-booked" role="listitem" aria-label="Slot 2, booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+        <div class="dv-slot is-booked" role="listitem" aria-label="Slot 3, booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+        <button class="dv-slot is-open" role="listitem" aria-label="Slot 4, click to reserve">
+          <span class="dv-slot-num">04</span>
+        </button>
+        <button class="dv-slot is-open" role="listitem" aria-label="Slot 5, click to reserve">
+          <span class="dv-slot-num">05</span>
+        </button>
+      </div>
+      <div class="dv-slot-foot">
+        3 of 5 May slots booked &middot; 2 remaining &middot; June waitlist now open
+      </div>
+      <div class="dv-slot-actions">
+        <a class="dv-btn dv-btn-gold" href="Order Form.html">Reserve a May slot</a>
+        <a class="dv-btn dv-btn-outline" href="Order Form.html">Join June waitlist</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     9 · COMMON QUESTIONS (FAQ — SEO: FAQPage schema eligible)
+     ============================================================ -->
+<section class="hp-section hp-faq" data-screen-label="09 FAQ">
+  <div class="hp-container">
+    <div class="hp-faq-layout">
+      <div class="hp-faq-side">
+        <span class="ds-eyebrow">Common questions</span>
+        <h2>Quick answers, no <em>fluff</em></h2>
+        <p>The questions clients ask most. Don't see yours? Send a note &mdash; we usually reply within 48 hours.</p>
+        <a class="hp-faq-side-cta">See full FAQ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+
+      <div class="hp-faq-list">
+        <details class="hp-faq-item" open>
+          <summary>
+            How much does a commission cost?
+            <span class="hp-faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body">
+            <p>Commissions range from <strong>$80 for a single VTT token</strong> to <strong>$600+ for a full party portrait</strong>. Character art starts at $180; NPC packs from $300. Every quote is fixed up front &mdash; no surprises, no add-ons mid-project.</p>
+            <p>See the full <a>pricing breakdown</a> for every service tier.</p>
+          </div>
+        </details>
+
+        <details class="hp-faq-item">
+          <summary>
+            How long does a commission take?
+            <span class="hp-faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body">
+            <p>Most character portraits ship within <strong>7&ndash;14 days</strong> of brief approval. VTT tokens are faster (3&ndash;7 days). Party portraits and NPC packs take 2&ndash;4 weeks depending on figure count.</p>
+            <p>Rush turnaround is available for +$50 on most services &mdash; reach out before booking.</p>
+          </div>
+        </details>
+
+        <details class="hp-faq-item">
+          <summary>
+            What's included with every commission?
+            <span class="hp-faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body">
+            <p>Every commission includes: <strong>2 rounds of revisions</strong>, the final piece at 4K resolution, both PNG and JPG exports, and a transparent-background version where it makes sense. Layered PSD files are available as a $30 add-on.</p>
+          </div>
+        </details>
+
+        <details class="hp-faq-item">
+          <summary>
+            Can I use the art commercially?
+            <span class="hp-faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body">
+            <p>Personal use (prints, social posts, your character sheet) is included with every commission. <strong>Commercial licensing</strong> &mdash; books, merch, streaming, paid Patreons &mdash; is available as a $150 add-on per piece, or as a bulk arrangement for larger projects.</p>
+          </div>
+        </details>
+
+        <details class="hp-faq-item">
+          <summary>
+            Do you use AI in any part of the process?
+            <span class="hp-faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body">
+            <p><strong>No.</strong> Every piece is hand-painted from scratch by a human artist. No AI generation, no auto-fills, no traced-over outputs. That's the entire point of the studio.</p>
+            <p>If you want to see the process, we share work-in-progress sketches and color blocks for every commission.</p>
+          </div>
+        </details>
+
+        <details class="hp-faq-item">
+          <summary>
+            What if I'm not happy with the result?
+            <span class="hp-faq-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body">
+            <p>Two revisions are baked into every commission &mdash; we usually nail it well within that. If the piece is genuinely not what you wanted at the end, we'll refund the balance beyond the 25% deposit (which covers our sketch work).</p>
+            <p>In four years and 500+ commissions, this has happened twice. Full <a>refund policy</a>.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     10 · CTA CLOSER (dark tome)
+     ============================================================ -->
+<section class="hp-section hp-cta-closer" data-screen-label="10 CTA Closer">
+  <div class="hp-hero-orbs" aria-hidden="true"></div>
+  <div class="hp-hero-grain" aria-hidden="true"></div>
+
+  <div class="hp-cta-closer-inner">
+    <div class="hp-cta-closer-mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32" class="ds-compass">
+        <circle cx="16" cy="16" r="11" fill="none" stroke="currentColor" stroke-width="0.8"/>
+        <path d="M16 3 L18 16 L16 29 L14 16 Z M3 16 L16 14 L29 16 L16 18 Z" fill="currentColor"/>
+        <circle cx="16" cy="16" r="1.6" fill="var(--tome-950)"/>
+      </svg>
+    </div>
+    <h2>Ready to bring your <em>vision</em> to life?</h2>
+    <p>Tell us about the character, the campaign, or the gift. We'll send a quote within 48 hours — no commitment until you're ready.</p>
+    <div class="hp-cta-closer-actions">
+      <a class="dv-btn dv-btn-gold lg" href="Order Form.html">Start commission <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <button class="dv-btn dv-btn-outline-cream lg">Ask a question</button>
+    </div>
+    <div class="hp-cta-closer-trust">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> No commitment</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 100% satisfaction focus</span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Secure payments</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     8 · FOOTER
+     ============================================================ -->
+<footer class="hp-footer" data-screen-label="11 Footer">
+  <div class="hp-container">
+    <div class="hp-footer-grid">
+
+      <div class="hp-footer-col">
+        <a class="hp-footer-brand" href="Homepage.html" style="text-decoration:none">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/>
+          </svg>
+          <span>Design Vortek</span>
+        </a>
+        <p class="hp-footer-tag">Premium art commissions, since 2022. Every piece, by hand, by humans.</p>
+        <div class="hp-footer-socials">
+          <a class="hp-footer-soc" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor"/></svg>
+          </a>
+          <a class="hp-footer-soc" aria-label="Twitter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 5.8a8.5 8.5 0 01-2.4.7 4.2 4.2 0 001.8-2.3 8.4 8.4 0 01-2.6 1 4.2 4.2 0 00-7.2 3.8A11.9 11.9 0 013 4.8a4.2 4.2 0 001.3 5.6 4.1 4.1 0 01-1.9-.5v.1a4.2 4.2 0 003.4 4.1 4.2 4.2 0 01-1.9.1 4.2 4.2 0 003.9 2.9A8.5 8.5 0 012 18.6 11.9 11.9 0 008.5 20.5c7.7 0 11.9-6.4 11.9-11.9v-.5A8.5 8.5 0 0022 5.8z"/></svg>
+          </a>
+          <a class="hp-footer-soc" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="hp-footer-col">
+        <div class="hp-footer-label">Studio</div>
+        <a href="About.html">About</a><a href="Process.html">Process</a><a href="Pricing.html">Pricing</a><a href="Availability.html">Availability</a>
+      </div>
+
+      <div class="hp-footer-col">
+        <div class="hp-footer-label">Services</div>
+        <a href="Service Detail.html">Character Art</a><a href="Services.html">VTT Tokens</a><a href="Services.html">Party Portraits</a><a href="Services.html">NPC Packs</a><a href="Services.html">Custom Projects</a>
+      </div>
+
+      <div class="hp-footer-col">
+        <div class="hp-footer-label">Resources</div>
+        <a href="Blog.html">Blog</a><a>FAQ</a><a>Reviews</a><a href="Order Form.html">Order Form</a>
+      </div>
+
+      <div class="hp-footer-col">
+        <div class="hp-footer-label">Stay in touch</div>
+        <a>hello@designvortek.com</a>
+        <div class="hp-footer-newsletter">
+          <input placeholder="your@email.com" />
+          <button class="dv-btn dv-btn-primary sm">Subscribe</button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hp-footer-bottom">
+      <span>© 2026 Design Vortek Studio. All rights reserved.</span>
+      <span class="hp-footer-bottom-links">
+        <a>Privacy</a><a>Terms</a><a>Refunds</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     Scroll-aware header
+     ============================================================ -->
+<script>
+  (function() {
+    const header = document.getElementById('hp-header');
+    const handle = () => {
+      if (window.scrollY > 20) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    };
+    handle();
+    window.addEventListener('scroll', handle, { passive: true });
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<!--
+  ROUTES THIS DESIGN MAPS TO
+  ──────────────────────────
+  Admin: /admin/services
+  Source-of-truth brief: Design-Requirements-Handoff.md §4.6
+  Pattern reuse: adm-shell, adm-sidebar, adm-toolbar, adm-filter-chip, adm-status.
+  Adds: bucket-grouped list with drag handles, pricing summary per product.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Services · DesignVortek Admin</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<div class="adm-app" data-screen-label="01 Services List v2">
+
+  <aside class="adm-sidebar">
+    <a class="adm-brand" href="Admin Dashboard.html">
+      <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+      <div><div class="adm-brand-name">DesignVortek</div><div class="adm-brand-meta">Admin</div></div>
+    </a>
+    <nav class="adm-nav">
+      <a href="Admin Dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Dashboard</a>
+      <a href="Admin Orders.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Orders<span class="adm-nav-badge">3</span></a>
+      <a href="Admin Portfolio.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Portfolio</a>
+      <a href="Admin Blog.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/></svg>Blog</a>
+      <a href="Admin Services List v2.html" class="is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>Services</a>
+      <a href="Admin Reviews.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>Reviews</a>
+      <a href="Admin Availability.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>Availability</a>
+      <a href="Admin Inquiries.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Inquiries<span class="adm-nav-badge">7</span></a>
+      <a href="Admin Customers.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Customers</a>
+      <a href="Admin Media.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/></svg>Media</a>
+      <div class="adm-nav-group-label">Configure</div>
+      <a href="Admin Settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/></svg>Settings</a>
+    </nav>
+    <div class="adm-sidebar-foot"><div class="adm-user"><div class="adm-user-avatar">T</div><div class="adm-user-meta"><span class="adm-user-name">Theo</span><span class="adm-user-role">Owner</span></div></div></div>
+  </aside>
+
+  <main class="adm-main">
+    <header class="adm-header">
+      <div class="adm-header-title">
+        <h1>Services</h1>
+        <div class="adm-header-meta">5 buckets · 17 products · 1 draft</div>
+      </div>
+      <div class="adm-header-actions">
+        <div class="adm-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+          <input type="search" placeholder="Search products…" />
+        </div>
+        <a class="dv-btn dv-btn-primary sm" href="Admin Service Editor v2.html">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          New product
+        </a>
+      </div>
+    </header>
+
+    <div class="adm-content">
+
+      <div class="adm-toolbar">
+        <div class="adm-toolbar-left">
+          <button class="adm-filter-chip is-active">All <span class="adm-filter-chip-count">17</span></button>
+          <button class="adm-filter-chip">Published <span class="adm-filter-chip-count">16</span></button>
+          <button class="adm-filter-chip">Drafts <span class="adm-filter-chip-count">1</span></button>
+          <button class="adm-filter-chip">Quote-only <span class="adm-filter-chip-count">4</span></button>
+          <button class="adm-filter-chip">Subscription <span class="adm-filter-chip-count">2</span></button>
+        </div>
+        <div class="adm-toolbar-right">
+          <select class="adm-select">
+            <option>Group by bucket</option>
+            <option>Flat list</option>
+            <option>Featured first</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ===== Bucket 1: CHARACTER WORK ===== -->
+      <div class="adm-svc-group">
+        <div class="adm-svc-group-head">
+          <div class="adm-svc-group-head-left">
+            <div class="adm-svc-group-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7"/></svg>
+            </div>
+            <div>
+              <div class="adm-svc-group-name">Character work</div>
+              <div class="adm-svc-group-meta">4 products · from $60</div>
+            </div>
+          </div>
+          <div class="adm-svc-group-actions">
+            <button class="adm-icon-btn" title="Reorder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 6v12M16 6v12M4 10h8M4 14h12"/></svg></button>
+            <button class="adm-icon-btn" title="Add to bucket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+          </div>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()" title="Drag to reorder"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Character Portrait <span class="adm-svc-mode-chip">Tiered</span></div>
+            <div class="adm-svc-sub">your hero, head to shoulders · /services/character-work/portrait</div>
+          </div>
+          <div class="adm-svc-pricing">$60 / $90 / $140</div>
+          <div class="adm-svc-tier-count">3 tiers</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">Apr 18</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()" title="Drag to reorder"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Full-body Character <span class="adm-svc-mode-chip">Tiered</span></div>
+            <div class="adm-svc-sub">head to toe, pose and all · /services/character-work/full-body</div>
+          </div>
+          <div class="adm-svc-pricing">$120 / $180 / $280</div>
+          <div class="adm-svc-tier-count">3 tiers</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">Apr 18</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()" title="Drag to reorder"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Reference Sheet <span class="adm-svc-mode-chip">Range</span></div>
+            <div class="adm-svc-sub">3 or 4 views, one character · /services/character-work/reference-sheet</div>
+          </div>
+          <div class="adm-svc-pricing">$250 – $450</div>
+          <div class="adm-svc-tier-count">—</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">Apr 12</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()" title="Drag to reorder"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Character + Token Bundle <span class="adm-svc-mode-chip">Bundle</span></div>
+            <div class="adm-svc-sub">portrait + matching VTT token · /services/character-work/bundle</div>
+          </div>
+          <div class="adm-svc-pricing">+$25 add-on</div>
+          <div class="adm-svc-tier-count">—</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">Apr 12</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+      </div>
+
+      <!-- ===== Bucket 2: PARTY WORK ===== -->
+      <div class="adm-svc-group">
+        <div class="adm-svc-group-head">
+          <div class="adm-svc-group-head-left">
+            <div class="adm-svc-group-icon" style="background:var(--gold-700)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M3 20c0-3 2-5 6-5s6 2 6 5M14 20c0-2 2-4 5-4s3 1 3 4"/></svg>
+            </div>
+            <div>
+              <div class="adm-svc-group-name">Party work</div>
+              <div class="adm-svc-group-meta">3 products · from $220</div>
+            </div>
+          </div>
+          <div class="adm-svc-group-actions">
+            <button class="adm-icon-btn" title="Add to bucket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+          </div>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Party Portrait <span class="adm-svc-mode-chip">Tiered + Per-extra</span></div>
+            <div class="adm-svc-sub">up to 4 in one composition · +$80–120 per extra member</div>
+          </div>
+          <div class="adm-svc-pricing">$350 / $600</div>
+          <div class="adm-svc-tier-count">2 tiers</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">Apr 10</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Matched Party Set <span class="adm-svc-mode-chip">Pack</span></div>
+            <div class="adm-svc-sub">separate portraits, unified style</div>
+          </div>
+          <div class="adm-svc-pricing">$220 / $320</div>
+          <div class="adm-svc-tier-count">2 quantities</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">Apr 10</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Action / Scene Illustration <span class="adm-svc-mode-chip">Range</span></div>
+            <div class="adm-svc-sub">party mid-encounter with background</div>
+          </div>
+          <div class="adm-svc-pricing">$400 – $900</div>
+          <div class="adm-svc-tier-count">—</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">Apr 02</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+      </div>
+
+      <!-- ===== Bucket 3: GM / WORLD-BUILDING ===== -->
+      <div class="adm-svc-group">
+        <div class="adm-svc-group-head">
+          <div class="adm-svc-group-head-left">
+            <div class="adm-svc-group-icon" style="background:var(--forest-700)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19l6-12 6 8 4-5 2 9z"/></svg>
+            </div>
+            <div>
+              <div class="adm-svc-group-name">GM &amp; world-building</div>
+              <div class="adm-svc-group-meta">5 products · from $30</div>
+            </div>
+          </div>
+          <div class="adm-svc-group-actions">
+            <button class="adm-icon-btn" title="Add to bucket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+          </div>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">NPC Pack <span class="adm-svc-mode-chip">Pack</span></div>
+            <div class="adm-svc-sub">5 or 10 portraits in matching style</div>
+          </div>
+          <div class="adm-svc-pricing">$220 / $400</div>
+          <div class="adm-svc-tier-count">2 quantities</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">Apr 18</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Monster / Creature <span class="adm-svc-mode-chip">Range</span></div>
+            <div class="adm-svc-sub">single creature, scoped by complexity</div>
+          </div>
+          <div class="adm-svc-pricing">$90 – $250</div>
+          <div class="adm-svc-tier-count">—</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">Apr 12</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Item / Artifact <span class="adm-svc-mode-chip">Pack</span></div>
+            <div class="adm-svc-sub">single or 6-pack</div>
+          </div>
+          <div class="adm-svc-pricing">$30 / $150</div>
+          <div class="adm-svc-tier-count">2 quantities</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">Apr 08</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Battle Map <span class="adm-svc-mode-chip">Quote only</span></div>
+            <div class="adm-svc-sub">hand-drawn, gridded, VTT-ready</div>
+          </div>
+          <div class="adm-svc-pricing muted">From $150</div>
+          <div class="adm-svc-tier-count">—</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">May 02</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">World / Region Map <span class="adm-svc-mode-chip">Quote only</span></div>
+            <div class="adm-svc-sub">decorative, stylized cartography</div>
+          </div>
+          <div class="adm-svc-pricing muted">From $300</div>
+          <div class="adm-svc-tier-count">—</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">May 02</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+      </div>
+
+      <!-- ===== Bucket 4: TOKENS ===== -->
+      <div class="adm-svc-group">
+        <div class="adm-svc-group-head">
+          <div class="adm-svc-group-head-left">
+            <div class="adm-svc-group-icon" style="background:var(--ink-700)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+            </div>
+            <div>
+              <div class="adm-svc-group-name">Tokens (standalone)</div>
+              <div class="adm-svc-group-meta">3 products · from $25</div>
+            </div>
+          </div>
+          <div class="adm-svc-group-actions">
+            <button class="adm-icon-btn" title="Add to bucket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+          </div>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Single Token <span class="adm-svc-mode-chip">Range</span></div>
+            <div class="adm-svc-sub">one original VTT-ready token</div>
+          </div>
+          <div class="adm-svc-pricing">$40 – $60</div>
+          <div class="adm-svc-tier-count">—</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">Apr 22</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Token Pack <span class="adm-svc-mode-chip">Flat</span></div>
+            <div class="adm-svc-sub">5 original tokens, matching style</div>
+          </div>
+          <div class="adm-svc-pricing">$180</div>
+          <div class="adm-svc-tier-count">—</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">Apr 22</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Convert art to token <span class="adm-svc-mode-chip">Flat</span></div>
+            <div class="adm-svc-sub">crop and prep your existing art</div>
+          </div>
+          <div class="adm-svc-pricing">$25</div>
+          <div class="adm-svc-tier-count">—</div>
+          <span class="adm-status draft">Draft</span>
+          <div class="adm-svc-updated">May 15</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+      </div>
+
+      <!-- ===== Bucket 5: COMMERCIAL ===== -->
+      <div class="adm-svc-group">
+        <div class="adm-svc-group-head">
+          <div class="adm-svc-group-head-left">
+            <div class="adm-svc-group-icon" style="background:var(--tome-950)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5a2 2 0 012-2h11a3 3 0 013 3v14H7a3 3 0 01-3-3z"/><path d="M4 16h16"/></svg>
+            </div>
+            <div>
+              <div class="adm-svc-group-name">Commercial / publisher</div>
+              <div class="adm-svc-group-meta">2 products · custom quote</div>
+            </div>
+          </div>
+          <div class="adm-svc-group-actions">
+            <button class="adm-icon-btn" title="Add to bucket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+          </div>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Commercial Licensing <span class="adm-svc-mode-chip">% Uplift</span></div>
+            <div class="adm-svc-sub">flat percentage on top of base job</div>
+          </div>
+          <div class="adm-svc-pricing">+40% of job</div>
+          <div class="adm-svc-tier-count">—</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">May 08</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Publisher Retainer <span class="adm-svc-mode-chip">Quote only</span></div>
+            <div class="adm-svc-sub">monthly arrangement, priority queue</div>
+          </div>
+          <div class="adm-svc-pricing muted">Custom quote</div>
+          <div class="adm-svc-tier-count">—</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">May 08</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+      </div>
+
+      <!-- ===== Bucket 6: SUBSCRIPTION ===== -->
+      <div class="adm-svc-group">
+        <div class="adm-svc-group-head">
+          <div class="adm-svc-group-head-left">
+            <div class="adm-svc-group-icon" style="background:var(--burgundy-500)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg>
+            </div>
+            <div>
+              <div class="adm-svc-group-name">Subscription</div>
+              <div class="adm-svc-group-meta">2 tiers · monthly recurring</div>
+            </div>
+          </div>
+          <div class="adm-svc-group-actions">
+            <button class="adm-icon-btn" title="Add to bucket"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+          </div>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">Companion <span class="adm-svc-mode-chip">Monthly</span></div>
+            <div class="adm-svc-sub">10 tokens + 2 NPCs / month</div>
+          </div>
+          <div class="adm-svc-pricing">$30 / mo</div>
+          <div class="adm-svc-tier-count">—</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">May 18</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+
+        <div class="adm-svc-row" onclick="window.location.href='Admin Service Editor v2.html'">
+          <span class="adm-drag-handle" onclick="event.stopPropagation()"><span></span><span></span><span></span></span>
+          <div>
+            <div class="adm-svc-name">GM tier <span class="adm-svc-mode-chip">Monthly</span></div>
+            <div class="adm-svc-sub">tokens + NPCs + 1 battle map / month</div>
+          </div>
+          <div class="adm-svc-pricing">$75 / mo</div>
+          <div class="adm-svc-tier-count">—</div>
+          <span class="adm-status published">Published</span>
+          <div class="adm-svc-updated">May 18</div>
+          <button class="adm-icon-btn" onclick="event.stopPropagation()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg></button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+</body>
+</html>

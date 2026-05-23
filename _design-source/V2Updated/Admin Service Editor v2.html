@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<!--
+  ROUTES THIS DESIGN MAPS TO
+  ──────────────────────────
+  Admin: /admin/services/new  and  /admin/services/[id]/edit
+  Source-of-truth brief: Design-Requirements-Handoff.md §4.7
+  Demonstrates the 7 pricing-mode selector that swaps the pricing input area
+  per mode (Tiered / Range / Per-extra / Pack / Percentage / Monthly / Quote-only).
+  This file shows the EDIT state for "Character Portrait" (Tiered mode is the
+  active panel). All 7 panels live in the DOM; the chip selector swaps which
+  one is visible via JS.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Edit · Character Portrait · DesignVortek Admin</title>
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<div class="adm-app" data-screen-label="01 Service Editor v2">
+
+  <aside class="adm-sidebar">
+    <a class="adm-brand" href="Admin Dashboard.html">
+      <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+      <div><div class="adm-brand-name">DesignVortek</div><div class="adm-brand-meta">Admin</div></div>
+    </a>
+    <nav class="adm-nav">
+      <a href="Admin Dashboard.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"/><rect x="14" y="3" width="7" height="5"/><rect x="14" y="12" width="7" height="9"/><rect x="3" y="16" width="7" height="5"/></svg>Dashboard</a>
+      <a href="Admin Orders.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>Orders<span class="adm-nav-badge">3</span></a>
+      <a href="Admin Portfolio.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-9 9"/></svg>Portfolio</a>
+      <a href="Admin Blog.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 00-8.49-8.49L5 10.5V19h8.5z"/><line x1="16" y1="8" x2="2" y2="22"/></svg>Blog</a>
+      <a href="Admin Services List v2.html" class="is-active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>Services</a>
+      <a href="Admin Reviews.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>Reviews</a>
+      <a href="Admin Availability.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg>Availability</a>
+      <a href="Admin Inquiries.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Inquiries<span class="adm-nav-badge">7</span></a>
+      <a href="Admin Customers.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Customers</a>
+      <a href="Admin Media.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/></svg>Media</a>
+      <div class="adm-nav-group-label">Configure</div>
+      <a href="Admin Settings.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/></svg>Settings</a>
+    </nav>
+    <div class="adm-sidebar-foot"><div class="adm-user"><div class="adm-user-avatar">T</div><div class="adm-user-meta"><span class="adm-user-name">Theo</span><span class="adm-user-role">Owner</span></div></div></div>
+  </aside>
+
+  <main class="adm-main">
+    <header class="adm-header">
+      <div class="adm-header-title">
+        <nav class="adm-svce-breadcrumb">
+          <a href="Admin Services List v2.html">Services</a>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 6l6 6-6 6"/></svg>
+          <a href="Admin Services List v2.html">Character work</a>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 6l6 6-6 6"/></svg>
+          <span>Character Portrait</span>
+        </nav>
+        <h1>Edit product</h1>
+        <div class="adm-header-meta">Last saved 2 hours ago · auto-draft is on</div>
+      </div>
+      <div class="adm-header-actions">
+        <button class="dv-btn dv-btn-outline sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 12h6m-3-3v6"/><circle cx="12" cy="12" r="9"/></svg>
+          Preview
+        </button>
+        <button class="dv-btn dv-btn-outline sm">Save as draft</button>
+        <button class="dv-btn dv-btn-primary sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+          Publish changes
+        </button>
+      </div>
+    </header>
+
+    <div class="adm-content">
+
+      <div class="adm-svce-shell">
+
+        <!-- =========================================================
+             MAIN COLUMN
+             ========================================================= -->
+        <div class="adm-svce-main">
+
+          <!-- Title + slug + identity -->
+          <section class="adm-svce-card">
+            <div class="adm-field">
+              <label class="adm-field-label">Product title</label>
+              <input class="adm-input title" value="Character Portrait" />
+            </div>
+            <div class="adm-field">
+              <label class="adm-field-label">URL slug</label>
+              <div class="adm-svce-slug">
+                <span class="adm-svce-slug-prefix">/services/character-work/</span>
+                <input value="portrait" />
+              </div>
+            </div>
+            <div class="adm-form-row-2" style="margin-top: 6px;">
+              <div class="adm-field">
+                <label class="adm-field-label">Bucket</label>
+                <select class="adm-select">
+                  <option selected>Character work</option>
+                  <option>Party work</option>
+                  <option>GM &amp; world-building</option>
+                  <option>Tokens (standalone)</option>
+                  <option>Commercial / publisher</option>
+                  <option>Subscription</option>
+                </select>
+              </div>
+              <div class="adm-field">
+                <label class="adm-field-label">Eyebrow / one-line subtitle</label>
+                <input class="adm-input" placeholder="your hero, painted" value="your hero, head to shoulders" />
+              </div>
+            </div>
+            <div class="adm-field">
+              <label class="adm-field-label">Lead paragraph</label>
+              <textarea class="adm-textarea" style="min-height: 80px;">The classic. Painted from chest up, with enough room to show face, expression, and the start of armor or clothing. Most people commission this first, then come back for the full-body later.</textarea>
+            </div>
+          </section>
+
+          <!-- Pricing -->
+          <section class="adm-svce-card">
+            <div class="adm-svce-card-head">
+              <div class="adm-svce-card-title">Pricing</div>
+              <span class="adm-svce-card-hint">Pick a mode, fill the matching inputs</span>
+            </div>
+
+            <div class="adm-mode-grid" id="adm-mode-grid">
+              <label class="adm-mode-chip is-active" data-mode="tiered">
+                <input type="radio" name="mode" value="tiered" checked />
+                <span class="adm-mode-chip-name">Tiered</span>
+                <span class="adm-mode-chip-desc">Basic / Standard / Premium</span>
+              </label>
+              <label class="adm-mode-chip" data-mode="range">
+                <input type="radio" name="mode" value="range" />
+                <span class="adm-mode-chip-name">Range</span>
+                <span class="adm-mode-chip-desc">From $X to $Y</span>
+              </label>
+              <label class="adm-mode-chip" data-mode="per-extra">
+                <input type="radio" name="mode" value="per-extra" />
+                <span class="adm-mode-chip-name">Per-extra</span>
+                <span class="adm-mode-chip-desc">Base + per member</span>
+              </label>
+              <label class="adm-mode-chip" data-mode="pack">
+                <input type="radio" name="mode" value="pack" />
+                <span class="adm-mode-chip-name">Pack-with-quantity</span>
+                <span class="adm-mode-chip-desc">Multiple qty rows</span>
+              </label>
+              <label class="adm-mode-chip" data-mode="percentage">
+                <input type="radio" name="mode" value="percentage" />
+                <span class="adm-mode-chip-name">Percentage uplift</span>
+                <span class="adm-mode-chip-desc">+X% of base job</span>
+              </label>
+              <label class="adm-mode-chip" data-mode="monthly">
+                <input type="radio" name="mode" value="monthly" />
+                <span class="adm-mode-chip-name">Monthly recurring</span>
+                <span class="adm-mode-chip-desc">$X / month</span>
+              </label>
+              <label class="adm-mode-chip" data-mode="flat">
+                <input type="radio" name="mode" value="flat" />
+                <span class="adm-mode-chip-name">Flat fee</span>
+                <span class="adm-mode-chip-desc">Single price</span>
+              </label>
+              <label class="adm-mode-chip" data-mode="quote">
+                <input type="radio" name="mode" value="quote" />
+                <span class="adm-mode-chip-name">Quote only</span>
+                <span class="adm-mode-chip-desc">No price, CTA target</span>
+              </label>
+            </div>
+
+            <!-- ===== PRICING PANELS (one visible at a time) ===== -->
+            <div style="margin-top: 24px;">
+
+              <!-- Mode: Tiered -->
+              <div class="adm-mode-panel is-active" data-panel="tiered">
+
+                <div class="adm-tier-block">
+                  <div class="adm-tier-block-head">
+                    <div class="adm-tier-block-title"><span class="adm-tier-block-title-num">1</span> Tier 1</div>
+                    <button class="adm-icon-btn" title="Remove tier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+                  </div>
+                  <div class="adm-form-row-2">
+                    <div class="adm-field" style="margin-bottom: 8px;">
+                      <label class="adm-field-label">Tier name</label>
+                      <input class="adm-input" value="Basic" />
+                    </div>
+                    <div class="adm-field" style="margin-bottom: 8px;">
+                      <label class="adm-field-label">Price</label>
+                      <div class="adm-input-currency"><input class="adm-input" value="60" /></div>
+                    </div>
+                  </div>
+                  <div class="adm-form-row-2">
+                    <div class="adm-field" style="margin-bottom: 8px;">
+                      <label class="adm-field-label">"Best for" subtitle</label>
+                      <input class="adm-input" value="clean and clear" />
+                    </div>
+                    <div class="adm-field" style="margin-bottom: 8px;">
+                      <label class="adm-field-label">Price note</label>
+                      <input class="adm-input" value="line + flat color" />
+                    </div>
+                  </div>
+                  <div>
+                    <label class="adm-field-label">Feature checklist</label>
+                    <div class="adm-tier-features">
+                      <div class="adm-tier-feat-row">
+                        <input type="text" value="Clean line art" />
+                        <button class="adm-icon-btn" title="Remove"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+                      </div>
+                      <div class="adm-tier-feat-row">
+                        <input type="text" value="Flat color, simple shading" />
+                        <button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+                      </div>
+                      <div class="adm-tier-feat-row">
+                        <input type="text" value="Plain background" />
+                        <button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+                      </div>
+                      <div class="adm-tier-feat-row">
+                        <input type="text" value="2 revisions" />
+                        <button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+                      </div>
+                    </div>
+                    <button class="adm-add-row" style="margin-top:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add feature</button>
+                  </div>
+                </div>
+
+                <div class="adm-tier-block" style="border-color: var(--gold-500); box-shadow: 0 0 0 2px var(--gold-100);">
+                  <div class="adm-tier-block-head">
+                    <div class="adm-tier-block-title"><span class="adm-tier-block-title-num" style="background:var(--gold-500); color:var(--ink-900);">2</span> Tier 2 <span style="font-size:0.6875rem; color:var(--gold-700); margin-left:8px; letter-spacing:0.1em; text-transform:uppercase;">Featured</span></div>
+                    <button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+                  </div>
+                  <div class="adm-form-row-2">
+                    <div class="adm-field" style="margin-bottom: 8px;">
+                      <label class="adm-field-label">Tier name</label>
+                      <input class="adm-input" value="Standard" />
+                    </div>
+                    <div class="adm-field" style="margin-bottom: 8px;">
+                      <label class="adm-field-label">Price</label>
+                      <div class="adm-input-currency"><input class="adm-input" value="90" /></div>
+                    </div>
+                  </div>
+                  <div class="adm-form-row-2">
+                    <div class="adm-field" style="margin-bottom: 8px;">
+                      <label class="adm-field-label">"Best for" subtitle</label>
+                      <input class="adm-input" value="the sweet spot" />
+                    </div>
+                    <div class="adm-field" style="margin-bottom: 8px;">
+                      <label class="adm-field-label">Price note</label>
+                      <input class="adm-input" value="full render" />
+                    </div>
+                  </div>
+                  <div>
+                    <label class="adm-field-label">Feature checklist</label>
+                    <div class="adm-tier-features">
+                      <div class="adm-tier-feat-row"><input type="text" value="Full rendering, light and shadow" /><button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+                      <div class="adm-tier-feat-row"><input type="text" value="Textured materials and fabric" /><button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+                      <div class="adm-tier-feat-row"><input type="text" value="Suggested setting" /><button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+                      <div class="adm-tier-feat-row"><input type="text" value="2 revisions" /><button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+                    </div>
+                    <button class="adm-add-row" style="margin-top:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add feature</button>
+                  </div>
+                </div>
+
+                <div class="adm-tier-block">
+                  <div class="adm-tier-block-head">
+                    <div class="adm-tier-block-title"><span class="adm-tier-block-title-num">3</span> Tier 3</div>
+                    <button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+                  </div>
+                  <div class="adm-form-row-2">
+                    <div class="adm-field" style="margin-bottom: 8px;">
+                      <label class="adm-field-label">Tier name</label>
+                      <input class="adm-input" value="Premium" />
+                    </div>
+                    <div class="adm-field" style="margin-bottom: 8px;">
+                      <label class="adm-field-label">Price</label>
+                      <div class="adm-input-currency"><input class="adm-input" value="140" /></div>
+                    </div>
+                  </div>
+                  <div class="adm-form-row-2">
+                    <div class="adm-field" style="margin-bottom: 8px;">
+                      <label class="adm-field-label">"Best for" subtitle</label>
+                      <input class="adm-input" value="the showpiece" />
+                    </div>
+                    <div class="adm-field" style="margin-bottom: 8px;">
+                      <label class="adm-field-label">Price note</label>
+                      <input class="adm-input" value="atmospheric" />
+                    </div>
+                  </div>
+                  <div>
+                    <label class="adm-field-label">Feature checklist</label>
+                    <div class="adm-tier-features">
+                      <div class="adm-tier-feat-row"><input type="text" value="High detail, dynamic pose" /><button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+                      <div class="adm-tier-feat-row"><input type="text" value="Effects (magic, weather, light)" /><button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+                      <div class="adm-tier-feat-row"><input type="text" value="Full atmospheric background" /><button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+                    </div>
+                    <button class="adm-add-row" style="margin-top:8px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add feature</button>
+                  </div>
+                </div>
+
+                <button class="adm-add-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add another tier</button>
+              </div>
+
+              <!-- Mode: Range -->
+              <div class="adm-mode-panel" data-panel="range">
+                <div class="adm-form-row-2">
+                  <div class="adm-field">
+                    <label class="adm-field-label">Low price</label>
+                    <div class="adm-input-currency"><input class="adm-input" placeholder="250" /></div>
+                  </div>
+                  <div class="adm-field">
+                    <label class="adm-field-label">High price</label>
+                    <div class="adm-input-currency"><input class="adm-input" placeholder="450" /></div>
+                  </div>
+                </div>
+                <div class="adm-field">
+                  <label class="adm-field-label">Range note (shown next to "From $X" anchor)</label>
+                  <input class="adm-input" placeholder="scoped per brief" />
+                </div>
+              </div>
+
+              <!-- Mode: Per-extra -->
+              <div class="adm-mode-panel" data-panel="per-extra">
+                <div class="adm-form-row-2">
+                  <div class="adm-field">
+                    <label class="adm-field-label">Base price</label>
+                    <div class="adm-input-currency"><input class="adm-input" placeholder="350" /></div>
+                  </div>
+                  <div class="adm-field">
+                    <label class="adm-field-label">Base description</label>
+                    <input class="adm-input" placeholder="up to 4 members" />
+                  </div>
+                </div>
+                <div class="adm-form-row-2">
+                  <div class="adm-field">
+                    <label class="adm-field-label">Extra member · low</label>
+                    <div class="adm-input-currency"><input class="adm-input" placeholder="80" /></div>
+                  </div>
+                  <div class="adm-field">
+                    <label class="adm-field-label">Extra member · high</label>
+                    <div class="adm-input-currency"><input class="adm-input" placeholder="120" /></div>
+                  </div>
+                </div>
+                <div class="adm-field">
+                  <label class="adm-field-label">Extra note (shows below tier card)</label>
+                  <input class="adm-input" placeholder="depending on tier complexity" />
+                </div>
+              </div>
+
+              <!-- Mode: Pack-with-quantity -->
+              <div class="adm-mode-panel" data-panel="pack">
+                <label class="adm-field-label" style="margin-bottom: 10px; display:block;">Quantity rows (add a row per quantity option)</label>
+                <div class="adm-pack-row">
+                  <div class="adm-field" style="margin: 0;"><input class="adm-input" placeholder="qty" value="5" /></div>
+                  <div class="adm-field" style="margin: 0;"><input class="adm-input" placeholder="label · e.g. NPCs in matching style" value="NPCs in matching style" /></div>
+                  <div class="adm-field" style="margin: 0;"><div class="adm-input-currency"><input class="adm-input" value="220" /></div></div>
+                  <button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+                </div>
+                <div class="adm-pack-row">
+                  <div class="adm-field" style="margin: 0;"><input class="adm-input" placeholder="qty" value="10" /></div>
+                  <div class="adm-field" style="margin: 0;"><input class="adm-input" placeholder="label" value="NPCs in matching style" /></div>
+                  <div class="adm-field" style="margin: 0;"><div class="adm-input-currency"><input class="adm-input" value="400" /></div></div>
+                  <button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+                </div>
+                <button class="adm-add-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add quantity row</button>
+              </div>
+
+              <!-- Mode: Percentage uplift -->
+              <div class="adm-mode-panel" data-panel="percentage">
+                <div class="adm-form-row-2">
+                  <div class="adm-field">
+                    <label class="adm-field-label">Percentage uplift</label>
+                    <div class="adm-input-suffix">
+                      <input class="adm-input" placeholder="40" />
+                      <span class="adm-input-suffix-label">% of base</span>
+                    </div>
+                  </div>
+                  <div class="adm-field">
+                    <label class="adm-field-label">Calculated on</label>
+                    <select class="adm-select">
+                      <option>Base job price</option>
+                      <option>Tier price</option>
+                      <option>Final invoice total</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="adm-field">
+                  <label class="adm-field-label">Customer-facing note</label>
+                  <textarea class="adm-textarea" style="min-height:60px;" placeholder="e.g. Covers commercial use across the agreed scope. No tiered upgrades."></textarea>
+                </div>
+              </div>
+
+              <!-- Mode: Monthly recurring -->
+              <div class="adm-mode-panel" data-panel="monthly">
+                <div class="adm-form-row-2">
+                  <div class="adm-field">
+                    <label class="adm-field-label">Monthly price</label>
+                    <div class="adm-input-currency"><input class="adm-input" placeholder="30" /></div>
+                  </div>
+                  <div class="adm-field">
+                    <label class="adm-field-label">Billing cadence note</label>
+                    <input class="adm-input" placeholder="Ships the 15th of each month" />
+                  </div>
+                </div>
+                <div class="adm-field">
+                  <label class="adm-field-label">What's included (monthly allotment)</label>
+                  <textarea class="adm-textarea" style="min-height:80px;" placeholder="e.g. 10 hand-painted tokens · 2 NPC portraits · VTT-ready exports · cancel any cycle"></textarea>
+                </div>
+              </div>
+
+              <!-- Mode: Flat fee -->
+              <div class="adm-mode-panel" data-panel="flat">
+                <div class="adm-form-row-2">
+                  <div class="adm-field">
+                    <label class="adm-field-label">Flat price</label>
+                    <div class="adm-input-currency"><input class="adm-input" placeholder="180" /></div>
+                  </div>
+                  <div class="adm-field">
+                    <label class="adm-field-label">Per-unit label</label>
+                    <input class="adm-input" placeholder="e.g. per token, per pack" />
+                  </div>
+                </div>
+                <div class="adm-field">
+                  <label class="adm-field-label">Customer note</label>
+                  <input class="adm-input" placeholder="5 originals in matching style" />
+                </div>
+              </div>
+
+              <!-- Mode: Quote only -->
+              <div class="adm-mode-panel" data-panel="quote">
+                <div class="adm-form-row-2">
+                  <div class="adm-field">
+                    <label class="adm-field-label">CTA label (button text)</label>
+                    <input class="adm-input" placeholder="Request a quote" />
+                  </div>
+                  <div class="adm-field">
+                    <label class="adm-field-label">CTA target URL</label>
+                    <input class="adm-input" placeholder="/services/maps · or external URL" />
+                  </div>
+                </div>
+                <div class="adm-form-row-2">
+                  <div class="adm-field">
+                    <label class="adm-field-label">"From $X" anchor (optional)</label>
+                    <div class="adm-input-currency"><input class="adm-input" placeholder="150" /></div>
+                  </div>
+                  <div class="adm-field">
+                    <label class="adm-field-label">Anchor label</label>
+                    <input class="adm-input" placeholder="scoped per brief" />
+                  </div>
+                </div>
+                <div class="adm-field">
+                  <label class="adm-field-label">Why pricing is quote-based (customer-facing)</label>
+                  <textarea class="adm-textarea" style="min-height:60px;" placeholder="e.g. Maps vary in scope more than character pieces. Size, detail density, and label style all change the quote."></textarea>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- Operational fields -->
+          <section class="adm-svce-card">
+            <div class="adm-svce-card-head"><div class="adm-svce-card-title">Operational</div></div>
+            <div class="adm-form-row-2">
+              <div class="adm-field">
+                <label class="adm-field-label">Turnaround · low</label>
+                <input class="adm-input" value="2" />
+              </div>
+              <div class="adm-field">
+                <label class="adm-field-label">Turnaround · high</label>
+                <div class="adm-input-suffix">
+                  <input class="adm-input" value="3" />
+                  <span class="adm-input-suffix-label">
+                    <select style="border:none; background:transparent; font-size:inherit; color:inherit;">
+                      <option>weeks</option><option>days</option><option>months</option>
+                    </select>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="adm-form-row-2">
+              <div class="adm-field">
+                <label class="adm-field-label">Revisions included</label>
+                <input class="adm-input" value="2" />
+              </div>
+              <div class="adm-field">
+                <label class="adm-field-label">Resolution / delivery</label>
+                <input class="adm-input" value="4K final + transparent PNG" />
+              </div>
+            </div>
+          </section>
+
+          <!-- Included grid -->
+          <section class="adm-svce-card">
+            <div class="adm-svce-card-head">
+              <div class="adm-svce-card-title">"What's included" grid</div>
+              <span class="adm-svce-card-hint">6 cards recommended</span>
+            </div>
+            <div class="adm-tier-features">
+              <div class="adm-tier-feat-row"><input type="text" value="2 rounds of revisions" /><button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+              <div class="adm-tier-feat-row"><input type="text" value="4K final delivery" /><button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+              <div class="adm-tier-feat-row"><input type="text" value="Transparent background" /><button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+              <div class="adm-tier-feat-row"><input type="text" value="Process updates every 3 days" /><button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+              <div class="adm-tier-feat-row"><input type="text" value="Personal use rights" /><button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+              <div class="adm-tier-feat-row"><input type="text" value="Fixed pricing" /><button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button></div>
+            </div>
+            <button class="adm-add-row" style="margin-top: 10px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add included item</button>
+          </section>
+
+          <!-- Examples editor -->
+          <section class="adm-svce-card">
+            <div class="adm-svce-card-head">
+              <div class="adm-svce-card-title">Examples gallery</div>
+              <span class="adm-svce-card-hint">3 cards · upload images later</span>
+            </div>
+            <div class="adm-pack-row" style="grid-template-columns: 110px 1fr 1fr 32px;">
+              <select class="adm-select" style="padding: 9px 28px 9px 12px;"><option>ds-ph-character</option><option>ds-ph-anime</option><option>ds-ph-scene</option><option>ds-ph-token</option><option>ds-ph-party</option></select>
+              <input class="adm-input" placeholder="Title" value="Lyra · Tiefling Sorceror" />
+              <input class="adm-input" placeholder="Meta · e.g. Premium tier · Mar 2026" value="Premium tier · Mar 2026" />
+              <button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+            </div>
+            <div class="adm-pack-row" style="grid-template-columns: 110px 1fr 1fr 32px;">
+              <select class="adm-select" style="padding: 9px 28px 9px 12px;"><option>ds-ph-character</option></select>
+              <input class="adm-input" placeholder="Title" value="Aldric · half-elf paladin" />
+              <input class="adm-input" placeholder="Meta" value="Standard tier · Mar 2026" />
+              <button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+            </div>
+            <div class="adm-pack-row" style="grid-template-columns: 110px 1fr 1fr 32px;">
+              <select class="adm-select" style="padding: 9px 28px 9px 12px;"><option>ds-ph-character</option></select>
+              <input class="adm-input" placeholder="Title" value="Captain Veska" />
+              <input class="adm-input" placeholder="Meta" value="Premium tier · Feb 2026" />
+              <button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+            </div>
+            <button class="adm-add-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add example</button>
+          </section>
+
+          <!-- FAQ editor -->
+          <section class="adm-svce-card">
+            <div class="adm-svce-card-head">
+              <div class="adm-svce-card-title">Product FAQ</div>
+              <span class="adm-svce-card-hint">4 to 5 questions recommended</span>
+            </div>
+            <div class="adm-tier-block">
+              <div class="adm-tier-block-head">
+                <div class="adm-tier-block-title"><span class="adm-tier-block-title-num">1</span> Question 1</div>
+                <button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+              </div>
+              <div class="adm-field" style="margin-bottom: 8px;">
+                <input class="adm-input" value="How do the tiers differ?" />
+              </div>
+              <div class="adm-field" style="margin-bottom: 0;">
+                <textarea class="adm-textarea" style="min-height: 64px;">Tiers describe rendering complexity, not subject matter. Basic is clean line and flat color. Standard is fully rendered. Premium adds dynamic pose and atmospheric background.</textarea>
+              </div>
+            </div>
+            <div class="adm-tier-block">
+              <div class="adm-tier-block-head">
+                <div class="adm-tier-block-title"><span class="adm-tier-block-title-num">2</span> Question 2</div>
+                <button class="adm-icon-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg></button>
+              </div>
+              <div class="adm-field" style="margin-bottom: 8px;">
+                <input class="adm-input" value="What species and classes do you cover?" />
+              </div>
+              <div class="adm-field" style="margin-bottom: 0;">
+                <textarea class="adm-textarea" style="min-height: 64px;">Every D&amp;D 5e species and class, every Pathfinder ancestry, homebrew species, and characters from your own setting.</textarea>
+              </div>
+            </div>
+            <button class="adm-add-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Add question</button>
+          </section>
+
+          <!-- Long description -->
+          <section class="adm-svce-card">
+            <div class="adm-svce-card-head">
+              <div class="adm-svce-card-title">Long description <span style="color:var(--ink-500); font-weight:400; font-size: 0.8125rem;">(optional)</span></div>
+              <span class="adm-svce-card-hint">Markdown supported</span>
+            </div>
+            <textarea class="adm-textarea" style="min-height: 160px;" placeholder="Add a richer product page body. Used on the public detail page if present, ignored if blank."></textarea>
+          </section>
+
+        </div>
+
+        <!-- =========================================================
+             RIGHT SIDEBAR
+             ========================================================= -->
+        <div class="adm-svce-aside">
+
+          <!-- Visibility -->
+          <section class="adm-svce-card">
+            <div class="adm-svce-card-head"><div class="adm-svce-card-title">Visibility</div></div>
+            <div class="adm-visibility-row">
+              <div><strong>Status</strong><small>Public listing</small></div>
+              <div class="adm-status-changer" style="display:flex;gap:6px;">
+                <span class="adm-status published is-current">Published</span>
+                <span class="adm-status draft">Draft</span>
+              </div>
+            </div>
+            <div class="adm-visibility-row">
+              <div><strong>Show on homepage</strong><small>Featured strip</small></div>
+              <label class="adm-toggle is-on"><span class="adm-toggle-track"></span></label>
+            </div>
+            <div class="adm-visibility-row">
+              <div><strong>Featured order</strong><small>Sort within bucket</small></div>
+              <input class="adm-input" value="1" style="width: 60px; text-align: center;" />
+            </div>
+          </section>
+
+          <!-- Bundle linkage -->
+          <section class="adm-svce-card">
+            <div class="adm-svce-card-head"><div class="adm-svce-card-title">Bundle linkage</div></div>
+            <div class="adm-visibility-row">
+              <div><strong>Part of a bundle</strong><small>Pair with another product</small></div>
+              <label class="adm-toggle is-on"><span class="adm-toggle-track"></span></label>
+            </div>
+            <div style="margin-top: 12px;">
+              <div class="adm-field" style="margin-bottom: 10px;">
+                <label class="adm-field-label">Partner product</label>
+                <select class="adm-select">
+                  <option>Token Pack (1 token from same art)</option>
+                  <option>Full-body Character</option>
+                  <option>Reference Sheet</option>
+                </select>
+              </div>
+              <div class="adm-field" style="margin-bottom: 0;">
+                <label class="adm-field-label">Bundle uplift price</label>
+                <div class="adm-input-currency"><input class="adm-input" value="25" /></div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Genre tags -->
+          <section class="adm-svce-card">
+            <div class="adm-svce-card-head">
+              <div class="adm-svce-card-title">Genre tags</div>
+              <span class="adm-svce-card-hint">Filter on portfolio</span>
+            </div>
+            <div class="adm-tag-chips">
+              <span class="adm-tag-chip is-active">Fantasy</span>
+              <span class="adm-tag-chip is-active">D&amp;D 5e</span>
+              <span class="adm-tag-chip">Sci-fi</span>
+              <span class="adm-tag-chip">Horror</span>
+              <span class="adm-tag-chip">Cyberpunk</span>
+              <span class="adm-tag-chip">Modern</span>
+              <span class="adm-tag-chip">Historical</span>
+              <span class="adm-tag-chip">+ tag</span>
+            </div>
+          </section>
+
+          <!-- SEO (collapsible) -->
+          <section class="adm-svce-card" style="padding: 0;">
+            <details>
+              <summary style="cursor: pointer; padding: 18px 24px; display: flex; align-items: center; justify-content: space-between;">
+                <div class="adm-svce-card-title">SEO</div>
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9l6 6 6-6"/></svg>
+              </summary>
+              <div style="padding: 0 24px 24px;">
+                <div class="adm-field">
+                  <label class="adm-field-label">Meta title</label>
+                  <input class="adm-input" placeholder="Character Portrait commissions · DesignVortek" />
+                </div>
+                <div class="adm-field" style="margin-bottom: 0;">
+                  <label class="adm-field-label">Meta description</label>
+                  <textarea class="adm-textarea" style="min-height: 72px;" placeholder="Hand-painted bust-shot character portraits from $60. Three tiers, 2 revisions, 4K delivery..."></textarea>
+                </div>
+              </div>
+            </details>
+          </section>
+
+          <!-- Danger zone (edit state only) -->
+          <section class="adm-danger">
+            <h4>Danger zone</h4>
+            <p>Deleting a product unpublishes it immediately and breaks any direct links. Order history stays intact.</p>
+            <button class="dv-btn danger sm">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/></svg>
+              Delete Character Portrait
+            </button>
+          </section>
+
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Pricing mode chip selector: swaps the visible panel -->
+<script>
+(function() {
+  const chips = document.querySelectorAll('.adm-mode-chip');
+  const panels = document.querySelectorAll('.adm-mode-panel');
+  chips.forEach(chip => {
+    chip.addEventListener('change', () => {
+      const input = chip.querySelector('input');
+      if (!input.checked) return;
+      chips.forEach(c => c.classList.remove('is-active'));
+      chip.classList.add('is-active');
+      const mode = chip.dataset.mode;
+      panels.forEach(p => p.classList.toggle('is-active', p.dataset.panel === mode));
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

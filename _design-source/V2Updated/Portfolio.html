@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portfolio · Design Vortek</title>
+<meta name="description" content="500+ painterly TTRPG portraits, VTT tokens, party illustrations and custom art. Filter by category to see our range." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="pages.css" />
+</head>
+<body>
+
+<!-- Header -->
+<header class="pg-header" id="pg-header" data-screen-label="00 Header">
+  <a class="pg-header-brand" href="Homepage.html" style="text-decoration:none">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/>
+    </svg>
+    <span>Design Vortek</span>
+  </a>
+  <nav class="pg-header-nav">
+    <a href="Portfolio.html" class="is-active">Portfolio</a>
+    <a href="Services.html">Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg></a>
+    <a href="Process.html">Process</a>
+    <a href="Pricing.html">Pricing</a>
+    <a href="About.html">About</a>
+    <a href="Blog.html">Blog</a>
+  </nav>
+  <a class="dv-btn dv-btn-primary" href="Order Form.html">Start commission</a>
+</header>
+
+<!-- Hero -->
+<section class="pg-hero" data-screen-label="01 Hero">
+  <div class="pg-container">
+    <span class="ds-eyebrow">Portfolio</span>
+    <h1>Five hundred pieces.<br/><em>One craft.</em></h1>
+    <p>Every commission since 2022 &mdash; character portraits, VTT tokens, NPC packs, party portraits, and the occasional book cover.</p>
+    <div class="pg-hero-stat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+      <span><strong>500+ pieces</strong> &middot; updated weekly &middot; last update May 18, 2026</span>
+    </div>
+  </div>
+</section>
+
+<!-- Sticky filter / search bar -->
+<div class="po-controls" data-screen-label="02 Controls">
+  <div class="pg-container po-controls-inner">
+    <div class="po-filters">
+      <button class="dv-chip is-active">All · 247</button>
+      <button class="dv-chip">Character Art · 142</button>
+      <button class="dv-chip">VTT Tokens · 58</button>
+      <button class="dv-chip">Party Portraits · 24</button>
+      <button class="dv-chip">Anime · 16</button>
+      <button class="dv-chip">Custom · 7</button>
+    </div>
+    <div class="po-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="search" placeholder="Search by title or tag&hellip;" />
+    </div>
+    <div class="po-sort">
+      <label for="po-sort">Sort</label>
+      <select id="po-sort">
+        <option>Newest first</option>
+        <option>Oldest first</option>
+        <option>Most popular</option>
+        <option>Random</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- Gallery -->
+<section class="pg-container" data-screen-label="03 Gallery">
+  <div class="po-gallery">
+
+    <!-- 12 items with varied aspect ratios + filters via hue-rotate -->
+    <a class="po-item" href="Portfolio Detail.html">
+      <svg class="ds-corner tl" viewBox="0 0 24 24"><path d="M2 12 V2 H12 M2 2 Q8 4 12 8" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+      <svg class="ds-corner tr" viewBox="0 0 24 24"><path d="M22 12 V2 H12 M22 2 Q16 4 12 8" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+      <svg class="ds-corner bl" viewBox="0 0 24 24"><path d="M2 12 V22 H12 M2 22 Q8 20 12 16" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+      <svg class="ds-corner br" viewBox="0 0 24 24"><path d="M22 12 V22 H12 M22 22 Q16 20 12 16" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+      <button onclick="event.preventDefault();event.stopPropagation();" class="po-item-quick" aria-label="Quick view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg></button>
+      <div class="po-item-img r-4-5 ds-ph-character"></div>
+      <div class="po-item-overlay">
+        <div class="po-item-cat">Character Art</div>
+        <div class="po-item-title">Lyra Vexweaver · Tiefling Sorceror</div>
+      </div>
+    </a>
+
+    <a class="po-item" href="Portfolio Detail.html">
+      <button onclick="event.preventDefault();event.stopPropagation();" class="po-item-quick" aria-label="Quick view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg></button>
+      <div class="po-item-img r-1-1 ds-ph-token"></div>
+      <div class="po-item-overlay">
+        <div class="po-item-cat">VTT Token</div>
+        <div class="po-item-title">The Hooded Stranger</div>
+      </div>
+    </a>
+
+    <a class="po-item" href="Portfolio Detail.html">
+      <button onclick="event.preventDefault();event.stopPropagation();" class="po-item-quick" aria-label="Quick view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg></button>
+      <div class="po-item-img r-3-4 ds-ph-anime"></div>
+      <div class="po-item-overlay">
+        <div class="po-item-cat">Anime</div>
+        <div class="po-item-title">Kaeru &mdash; spring duelist</div>
+      </div>
+    </a>
+
+    <a class="po-item" href="Portfolio Detail.html">
+      <button onclick="event.preventDefault();event.stopPropagation();" class="po-item-quick" aria-label="Quick view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg></button>
+      <div class="po-item-img r-3-2 ds-ph-party"></div>
+      <div class="po-item-overlay">
+        <div class="po-item-cat">Party Portrait</div>
+        <div class="po-item-title">The Howling Crows · level 9</div>
+      </div>
+    </a>
+
+    <a class="po-item" href="Portfolio Detail.html">
+      <svg class="ds-corner tl" viewBox="0 0 24 24"><path d="M2 12 V2 H12 M2 2 Q8 4 12 8" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+      <svg class="ds-corner tr" viewBox="0 0 24 24"><path d="M22 12 V2 H12 M22 2 Q16 4 12 8" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+      <svg class="ds-corner bl" viewBox="0 0 24 24"><path d="M2 12 V22 H12 M2 22 Q8 20 12 16" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+      <svg class="ds-corner br" viewBox="0 0 24 24"><path d="M22 12 V22 H12 M22 22 Q16 20 12 16" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round"/></svg>
+      <button onclick="event.preventDefault();event.stopPropagation();" class="po-item-quick" aria-label="Quick view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg></button>
+      <div class="po-item-img r-4-5 ds-ph-character" style="filter:hue-rotate(20deg)"></div>
+      <div class="po-item-overlay">
+        <div class="po-item-cat">Character Art</div>
+        <div class="po-item-title">Aldric · half-elf paladin</div>
+      </div>
+    </a>
+
+    <a class="po-item" href="Portfolio Detail.html">
+      <button onclick="event.preventDefault();event.stopPropagation();" class="po-item-quick" aria-label="Quick view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg></button>
+      <div class="po-item-img r-1-1 ds-ph-token" style="filter:hue-rotate(-30deg)"></div>
+      <div class="po-item-overlay">
+        <div class="po-item-cat">VTT Token</div>
+        <div class="po-item-title">Skyborn Druid</div>
+      </div>
+    </a>
+
+    <a class="po-item" href="Portfolio Detail.html">
+      <button onclick="event.preventDefault();event.stopPropagation();" class="po-item-quick" aria-label="Quick view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg></button>
+      <div class="po-item-img r-4-5 ds-ph-anime" style="filter:hue-rotate(60deg)"></div>
+      <div class="po-item-overlay">
+        <div class="po-item-cat">Anime</div>
+        <div class="po-item-title">Mira &mdash; lantern keeper</div>
+      </div>
+    </a>
+
+    <a class="po-item" href="Portfolio Detail.html">
+      <button onclick="event.preventDefault();event.stopPropagation();" class="po-item-quick" aria-label="Quick view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg></button>
+      <div class="po-item-img r-3-4 ds-ph-character" style="filter:hue-rotate(-40deg)"></div>
+      <div class="po-item-overlay">
+        <div class="po-item-cat">Character Art</div>
+        <div class="po-item-title">Drowned Captain Veska</div>
+      </div>
+    </a>
+
+    <a class="po-item" href="Portfolio Detail.html">
+      <button onclick="event.preventDefault();event.stopPropagation();" class="po-item-quick" aria-label="Quick view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg></button>
+      <div class="po-item-img r-3-2 ds-ph-scene"></div>
+      <div class="po-item-overlay">
+        <div class="po-item-cat">Custom</div>
+        <div class="po-item-title">Book cover &mdash; Ashes of Caer</div>
+      </div>
+    </a>
+
+    <a class="po-item" href="Portfolio Detail.html">
+      <button onclick="event.preventDefault();event.stopPropagation();" class="po-item-quick" aria-label="Quick view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg></button>
+      <div class="po-item-img r-4-5 ds-ph-character" style="filter:hue-rotate(80deg)"></div>
+      <div class="po-item-overlay">
+        <div class="po-item-cat">Character Art</div>
+        <div class="po-item-title">Brennen &mdash; bardic college dropout</div>
+      </div>
+    </a>
+
+    <a class="po-item" href="Portfolio Detail.html">
+      <button onclick="event.preventDefault();event.stopPropagation();" class="po-item-quick" aria-label="Quick view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg></button>
+      <div class="po-item-img r-1-1 ds-ph-token" style="filter:hue-rotate(120deg)"></div>
+      <div class="po-item-overlay">
+        <div class="po-item-cat">VTT Token</div>
+        <div class="po-item-title">Forest Witch · NPC pack 04</div>
+      </div>
+    </a>
+
+    <a class="po-item" href="Portfolio Detail.html">
+      <button onclick="event.preventDefault();event.stopPropagation();" class="po-item-quick" aria-label="Quick view"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/></svg></button>
+      <div class="po-item-img r-4-5 ds-ph-party" style="filter:hue-rotate(-60deg)"></div>
+      <div class="po-item-overlay">
+        <div class="po-item-cat">Party Portrait</div>
+        <div class="po-item-title">Wedding gift · Priya &amp; James</div>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="po-loadmore-row">
+    <button class="dv-btn dv-btn-outline">Load 24 more</button>
+    <div class="po-loadmore-meta">Showing 12 of 247</div>
+  </div>
+</section>
+
+<!-- CTA strip -->
+<section class="pg-cta-strip" data-screen-label="04 CTA">
+  <div class="pg-container">
+    <h2>Seen something you <em>love</em>?</h2>
+    <p>Every portrait above was a collaboration. Yours can be next.</p>
+    <div class="pg-cta-strip-actions">
+      <a class="dv-btn dv-btn-gold lg" href="Order Form.html">Start commission <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <button class="dv-btn dv-btn-outline-cream lg">Ask a question</button>
+    </div>
+  </div>
+</section>
+
+<!-- Footer (reused) -->
+<footer class="pg-footer" data-screen-label="05 Footer">
+  <div class="pg-container">
+    <div class="pg-footer-grid">
+      <div class="pg-footer-col">
+        <a class="pg-footer-brand" href="Homepage.html" style="text-decoration:none">
+          <svg viewBox="0 0 32 32" aria-hidden="true">
+            <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+            <path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/>
+          </svg>
+          <span>Design Vortek</span>
+        </a>
+        <p class="pg-footer-tag">Premium art commissions, since 2022. Every piece, by hand, by humans.</p>
+      </div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Studio</div><a href="About.html">About</a><a href="Process.html">Process</a><a href="Pricing.html">Pricing</a><a href="Availability.html">Availability</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Services</div><a href="Service Detail.html">Character Art</a><a href="Services.html">VTT Tokens</a><a href="Services.html">Party Portraits</a><a href="Services.html">NPC Packs</a><a href="Services.html">Custom Projects</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Resources</div><a href="Blog.html">Blog</a><a>FAQ</a><a>Reviews</a><a href="Order Form.html">Order Form</a><a href="Contact.html">Contact</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Stay in touch</div><a>hello@designvortek.com</a></div>
+    </div>
+    <div class="pg-footer-bottom">
+      <span>© 2026 Design Vortek Studio.</span>
+      <span class="pg-footer-bottom-links"><a>Privacy</a><a>Terms</a><a>Refunds</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function() {
+    const h = document.getElementById('pg-header');
+    const onScroll = () => h.classList.toggle('scrolled', window.scrollY > 20);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>
+
+</body>
+</html>

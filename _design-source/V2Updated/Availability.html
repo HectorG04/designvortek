@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Availability · Design Vortek</title>
+<meta name="description" content="Check current commission availability. We take a fixed number of pieces each month so every commission gets the attention it deserves." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="pages.css" />
+</head>
+<body>
+
+<!-- Header -->
+<header class="pg-header" id="pg-header" data-screen-label="00 Header">
+  <a class="pg-header-brand" href="Homepage.html" style="text-decoration:none">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+    <span>Design Vortek</span>
+  </a>
+  <nav class="pg-header-nav">
+    <a href="Portfolio.html">Portfolio</a>
+    <a href="Services.html">Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg></a>
+    <a href="Process.html">Process</a>
+    <a href="Pricing.html">Pricing</a>
+    <a href="About.html">About</a>
+    <a href="Blog.html">Blog</a>
+  </nav>
+  <a class="dv-btn dv-btn-primary" href="Order Form.html">Start commission</a>
+</header>
+
+<!-- Hero -->
+<section class="pg-hero" data-screen-label="01 Hero">
+  <div class="pg-container">
+    <span class="ds-eyebrow">Availability</span>
+    <h1>When can we <em>start</em>?</h1>
+    <p>We take a fixed number of pieces each month so every commission gets the attention it deserves. Here's what's open right now.</p>
+  </div>
+</section>
+
+<!-- 3-month calendar -->
+<section class="pg-section tight" data-screen-label="02 Months">
+  <div class="pg-container">
+    <div class="av-months">
+
+      <!-- MAY (current, open) -->
+      <div class="av-month current">
+        <div class="av-month-head">
+          <div>
+            <div class="av-month-name">May 2026</div>
+            <div class="ds-eyebrow inline">Current month</div>
+          </div>
+          <span class="av-month-flag open">2 open</span>
+        </div>
+        <div class="av-month-slots">
+          <div class="dv-slot is-booked" title="Booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+          <div class="dv-slot is-booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+          <div class="dv-slot is-booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+          <button class="dv-slot is-open" aria-label="Reserve May slot 4"><span class="dv-slot-num">04</span></button>
+          <button class="dv-slot is-open" aria-label="Reserve May slot 5"><span class="dv-slot-num">05</span></button>
+        </div>
+        <div class="av-month-meta">3 booked · 2 remaining · book by May 25</div>
+        <div class="av-month-cta">
+          <a class="dv-btn dv-btn-gold" href="Order Form.html">Reserve a May slot <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+
+      <!-- JUNE (full, waitlist) -->
+      <div class="av-month">
+        <div class="av-month-head">
+          <div>
+            <div class="av-month-name">June 2026</div>
+            <div class="ds-eyebrow inline" style="color:var(--ink-500)">Next month</div>
+          </div>
+          <span class="av-month-flag full">Fully booked</span>
+        </div>
+        <div class="av-month-slots">
+          <div class="dv-slot is-booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+          <div class="dv-slot is-booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+          <div class="dv-slot is-booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+          <div class="dv-slot is-booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+          <div class="dv-slot is-booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+        </div>
+        <div class="av-month-meta">5 booked · waitlist of 4 · we'll reach out if a slot opens</div>
+        <div class="av-month-cta">
+          <a class="dv-btn dv-btn-outline" href="Order Form.html">Join June waitlist</a>
+        </div>
+      </div>
+
+      <!-- JULY (mostly open) -->
+      <div class="av-month">
+        <div class="av-month-head">
+          <div>
+            <div class="av-month-name">July 2026</div>
+            <div class="ds-eyebrow inline" style="color:var(--ink-500)">Booking now</div>
+          </div>
+          <span class="av-month-flag open">4 open</span>
+        </div>
+        <div class="av-month-slots">
+          <div class="dv-slot is-booked"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg></div>
+          <button class="dv-slot is-open" aria-label="Reserve July slot 2"><span class="dv-slot-num">02</span></button>
+          <button class="dv-slot is-open" aria-label="Reserve July slot 3"><span class="dv-slot-num">03</span></button>
+          <button class="dv-slot is-open" aria-label="Reserve July slot 4"><span class="dv-slot-num">04</span></button>
+          <button class="dv-slot is-open" aria-label="Reserve July slot 5"><span class="dv-slot-num">05</span></button>
+        </div>
+        <div class="av-month-meta">1 booked · 4 remaining · early-bird friendly</div>
+        <div class="av-month-cta">
+          <a class="dv-btn dv-btn-gold" href="Order Form.html">Reserve a July slot <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- "What is a slot" explainer -->
+<section class="pg-section" data-screen-label="03 Explainer">
+  <div class="pg-container">
+    <div class="av-explainer">
+      <div>
+        <span class="ds-eyebrow">What is a "slot"?</span>
+        <h3>One slot, <em>one commission</em>.</h3>
+        <p>We take 5 commissions per month, each one getting our full attention through sketches, paint, and revisions. No overlap, no juggling, no rushed work.</p>
+        <p>That's why we're worth booking ahead &mdash; and why the slots fill up.</p>
+      </div>
+      <div>
+        <div class="av-explainer-steps">
+          <div class="av-explainer-step">
+            <span class="av-explainer-step-num">1</span>
+            <div class="av-explainer-step-text">
+              <strong>Reserve your slot</strong>
+              <span>25% deposit holds it. Refundable until first sketch.</span>
+            </div>
+          </div>
+          <div class="av-explainer-step">
+            <span class="av-explainer-step-num">2</span>
+            <div class="av-explainer-step-text">
+              <strong>We confirm + brief</strong>
+              <span>Within 48 hours we send the quote and brief intake form.</span>
+            </div>
+          </div>
+          <div class="av-explainer-step">
+            <span class="av-explainer-step-num">3</span>
+            <div class="av-explainer-step-text">
+              <strong>Sketches begin</strong>
+              <span>Usually within a week. Updates every 3 days from there.</span>
+            </div>
+          </div>
+          <div class="av-explainer-step">
+            <span class="av-explainer-step-num">4</span>
+            <div class="av-explainer-step-text">
+              <strong>Final delivery</strong>
+              <span>4K final + transparent BG. Yours, forever.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Waitlist callout -->
+<section class="pg-section tight" data-screen-label="04 Waitlist">
+  <div class="pg-container">
+    <div class="pr-custom">
+      <div>
+        <span class="ds-eyebrow tome">Waitlist</span>
+        <h3>This month's full. <em>Next month's coming</em>.</h3>
+        <p>Drop your email and the kind of commission you're after. We'll reach out the moment a slot opens, plus give you first pick when the next month's slots release.</p>
+      </div>
+      <div class="pr-custom-actions">
+        <div style="display:flex;gap:8px;">
+          <input type="email" placeholder="your@email.com" style="background:var(--tome-900);border:1.5px solid var(--tome-800);border-radius:var(--radius-md);padding:12px 16px;font-family:var(--font-body);font-size:var(--text-body-md);color:var(--cream-50);flex:1;min-width:0;" />
+          <button class="dv-btn dv-btn-gold">Join</button>
+        </div>
+        <div style="font-size:0.8125rem;color:var(--cream-200);text-align:center;margin-top:4px;">No spam, no marketing. Just availability notes.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="pg-cta-strip" data-screen-label="05 CTA">
+  <div class="pg-container">
+    <h2>Two slots remain for <em>May</em>.</h2>
+    <p>If your character has been waiting, this is the month.</p>
+    <div class="pg-cta-strip-actions">
+      <a class="dv-btn dv-btn-gold lg" href="Order Form.html">Reserve a slot <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <button class="dv-btn dv-btn-outline-cream lg">See portfolio first</button>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="pg-footer" data-screen-label="06 Footer">
+  <div class="pg-container">
+    <div class="pg-footer-grid">
+      <div class="pg-footer-col">
+        <a class="pg-footer-brand" href="Homepage.html" style="text-decoration:none">
+          <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+          <span>Design Vortek</span>
+        </a>
+        <p class="pg-footer-tag">Premium art commissions, since 2022. Every piece, by hand, by humans.</p>
+      </div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Studio</div><a href="About.html">About</a><a href="Process.html">Process</a><a href="Pricing.html">Pricing</a><a href="Availability.html">Availability</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Services</div><a href="Service Detail.html">Character Art</a><a href="Services.html">VTT Tokens</a><a href="Services.html">Party Portraits</a><a href="Services.html">NPC Packs</a><a href="Services.html">Custom Projects</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Resources</div><a href="Blog.html">Blog</a><a>FAQ</a><a>Reviews</a><a href="Order Form.html">Order Form</a><a href="Contact.html">Contact</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Stay in touch</div><a>hello@designvortek.com</a></div>
+    </div>
+    <div class="pg-footer-bottom"><span>© 2026 Design Vortek Studio.</span><span class="pg-footer-bottom-links"><a>Privacy</a><a>Terms</a><a>Refunds</a></span></div>
+  </div>
+</footer>
+
+<script>(function(){const h=document.getElementById('pg-header');const f=()=>h.classList.toggle('scrolled',window.scrollY>20);f();window.addEventListener('scroll',f,{passive:true});})();</script>
+
+</body>
+</html>

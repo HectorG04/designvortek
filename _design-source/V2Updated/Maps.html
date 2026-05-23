@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<!--
+  ROUTES THIS DESIGN MAPS TO
+  ──────────────────────────
+  Public: /services/maps
+  Source-of-truth brief: Design-Requirements-Handoff.md §4.3
+  Pattern reuse: hero (.pg-hero), placeholder gradients (.ds-ph-scene),
+  FAQ accordion (.hp-faq-*), CTA strip (.pg-cta-strip).
+  Tone: cartographic, slightly older — within 10% of studio chrome.
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Battle maps &amp; world maps · Design Vortek</title>
+<meta name="description" content="Hand-drawn battle maps and region/world maps for D&amp;D and other tabletop games. Gridded, VTT-ready, quote-based pricing. Send a brief and the studio will send a quote." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="pages.css" />
+</head>
+<body>
+
+<!-- Header -->
+<header class="pg-header" id="pg-header" data-screen-label="00 Header">
+  <a class="pg-header-brand" href="Homepage.html" style="text-decoration:none">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+    <span>Design Vortek</span>
+  </a>
+  <nav class="pg-header-nav">
+    <a href="Portfolio.html">Portfolio</a>
+    <a href="Services.html" class="is-active">Services <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg></a>
+    <a href="Process.html">Process</a>
+    <a href="Pricing.html">Pricing</a>
+    <a href="About.html">About</a>
+    <a href="Blog.html">Blog</a>
+  </nav>
+  <a class="dv-btn dv-btn-primary" href="#map-brief">Send a brief</a>
+</header>
+
+<!-- Breadcrumbs -->
+<div class="pg-container" data-screen-label="01 Breadcrumbs">
+  <nav class="pd-breadcrumbs" aria-label="Breadcrumb" style="padding-top:108px">
+    <a href="Homepage.html">Home</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg>
+    <a href="Services.html">Services</a>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 6l6 6-6 6"/></svg>
+    <span aria-current="page">Maps</span>
+  </nav>
+</div>
+
+<!-- Hero -->
+<section class="pg-hero" data-screen-label="02 Hero" style="padding-top:24px">
+  <div class="pg-container">
+    <span class="ds-eyebrow">GM / world-building · Maps</span>
+    <h1>Maps your players will <em>steal</em>.</h1>
+    <p>Hand-drawn battle maps and stylized region maps for tabletop campaigns. VTT-ready exports, gridded or ungridded, hand-lettered labels if you want them. Pricing depends on the brief, so send one.</p>
+  </div>
+</section>
+
+<!-- Two product cards -->
+<section class="pg-section" data-screen-label="03 Products">
+  <div class="pg-container">
+    <div class="map-products">
+
+      <!-- Battle map -->
+      <article class="map-product">
+        <div class="map-product-img ds-ph-scene">
+          <span class="ds-ph-label">BATTLE MAP · 16×20 · GRIDDED</span>
+        </div>
+        <div class="map-product-body">
+          <div class="map-product-eyebrow">for the encounter</div>
+          <div class="map-product-name">Battle Map</div>
+          <ul class="map-product-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Hand-drawn at 300dpi, room or open-field scale</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Gridded or ungridded variants, both delivered</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Roll20 + Foundry exports, scaled and tagged</li>
+          </ul>
+          <div class="map-product-foot">
+            <div>
+              <span class="map-product-from">From $150</span>
+              <span class="map-product-from-note">scoped by size &amp; detail</span>
+            </div>
+            <a class="dv-btn dv-btn-primary" href="#map-brief">Request a quote</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- World map -->
+      <article class="map-product">
+        <div class="map-product-img ds-ph-scene" style="filter:hue-rotate(40deg) saturate(0.85)">
+          <span class="ds-ph-label">WORLD MAP · 12 SETTLEMENTS · LABELED</span>
+        </div>
+        <div class="map-product-body">
+          <div class="map-product-eyebrow">for the campaign atlas</div>
+          <div class="map-product-name">World / Region Map</div>
+          <ul class="map-product-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Decorative, stylized cartography</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Hand-lettered labels or digital, your call</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Region, continent, or full-world scale</li>
+          </ul>
+          <div class="map-product-foot">
+            <div>
+              <span class="map-product-from">From $300</span>
+              <span class="map-product-from-note">scoped by scale &amp; complexity</span>
+            </div>
+            <a class="dv-btn dv-btn-primary" href="#map-brief">Request a quote</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+    <div style="text-align:center; margin-top: 18px;">
+      <span class="dv-usd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg> Prices in USD · international cards billed at current rate</span>
+    </div>
+  </div>
+</section>
+
+<!-- Pricing depends on -->
+<section class="pg-section" style="background:var(--parchment-100);" data-screen-label="04 Factors">
+  <div class="pg-container">
+    <div class="pg-section-head">
+      <span class="ds-eyebrow">Pricing depends on</span>
+      <h2>Four things that <em>move the quote</em></h2>
+      <p>Maps vary in scope more than character pieces, which is why pricing is quote-based. The factors below are the ones that change the number.</p>
+    </div>
+
+    <div class="map-factors">
+      <div class="map-factor">
+        <div class="map-factor-num">01</div>
+        <h4>Size &amp; print scale</h4>
+        <p>A 16×20 battle map at 300dpi is different work from a 24×36 city spread. Bigger usually means more detail to fill.</p>
+      </div>
+      <div class="map-factor">
+        <div class="map-factor-num">02</div>
+        <h4>Detail density</h4>
+        <p>Empty fields are quick. Dungeons stuffed with furniture, traps, and elevation changes take much longer.</p>
+      </div>
+      <div class="map-factor">
+        <div class="map-factor-num">03</div>
+        <h4>Color vs ink-wash</h4>
+        <p>Full color rendered maps cost more than a clean ink-and-wash treatment. Both are offered at different price points.</p>
+      </div>
+      <div class="map-factor">
+        <div class="map-factor-num">04</div>
+        <h4>Labels &amp; VTT prep</h4>
+        <p>Hand-lettered labels look gorgeous and take time. Digital labels are faster. VTT exports (gridded, scaled, tagged) add a small line item.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About map work · editorial / SEO long-form -->
+<section class="pg-section" data-screen-label="05 About map work">
+  <div class="pg-container">
+    <div class="map-seo">
+
+      <aside class="map-seo-side">
+        <span class="ds-eyebrow">About map work</span>
+        <h2>What it takes to draw a <em>good map</em></h2>
+        <p>Short context on the craft, the tools, and the choices that shape a quote. Replace this copy with your own SEO content when you're ready.</p>
+        <nav class="map-seo-toc">
+          <a href="#seo-what">What we draw</a>
+          <a href="#seo-vtt">VTT readiness</a>
+          <a href="#seo-hand">Hand-drawn, not generated</a>
+          <a href="#seo-process">How a map gets made</a>
+        </nav>
+      </aside>
+
+      <div class="map-seo-body">
+
+        <div class="map-seo-block" id="seo-what">
+          <h3>What the studio <em>actually draws</em></h3>
+          <p>Hand-drawn battle maps for D&amp;D 5e, Pathfinder 2e, Pathfinder 1e, Call of Cthulhu, Mothership, Mörk Borg, and homebrew systems. Region and continent maps for long-running campaigns. Stylized world maps for setting books, gazetteers, and player handouts. Multi-level dungeons rendered as separate floors with consistent visual language across the set.</p>
+          <p>Most briefs land in one of three buckets. <strong>Encounter battle maps</strong> at 16×20 or 22×17 inches, designed for a single fight or a single room. <strong>City and town maps</strong> showing districts, key buildings, and the streets the party will run through. <strong>Region and world maps</strong> showing biomes, settlements, trade routes, and the political shape of the setting.</p>
+        </div>
+
+        <div class="map-seo-block" id="seo-vtt">
+          <h3>VTT ready, table ready</h3>
+          <p>Every map ships with two delivery layers. A print-ready master at 300dpi for the GM who likes to print on tabloid paper, and a virtual tabletop export scaled to the platform you specified. Roll20, Foundry VTT, Owlbear Rodeo, Fantasy Grounds, and Talespire are all standard. Grid scale defaults to 70px per 5-foot square unless you ask for something else.</p>
+          <ul>
+            <li><strong>Gridded and ungridded versions</strong> delivered together, so you can run the same map at the table and on screen without redrawing</li>
+            <li><strong>Multi-light variants</strong> for dungeons that switch from lit to dark mid-encounter</li>
+            <li><strong>Layered exports on request</strong> so you can hide furniture, swap weather, or reveal hidden corridors during play</li>
+          </ul>
+        </div>
+
+        <div class="map-seo-block" id="seo-hand">
+          <h3>Hand-drawn, not generated</h3>
+          <p>Every map starts with a thumbnail sketch and ends with hand-painted detail. No AI generators, no asset packs assembled into a mosaic, no traced reference. That choice costs more time and shows up in the finish. It also means the map is unique to your campaign and free of the legal mess that comes with generated work.</p>
+          <p class="map-seo-callout">The map should feel like it came from inside the setting. If your campaign has a tone, the cartography should carry it.</p>
+        </div>
+
+        <div class="map-seo-block" id="seo-process">
+          <h3>How a map gets made</h3>
+          <p>Once you send the brief and approve the quote, the studio works in three visible stages. The first is a rough thumbnail of layout, scale, and major features, sent within five to seven days. Free revisions sit here. Once you sign off, the studio moves to detailed line work and labels, which is where most of the time gets spent. The final stage is color, lighting, and any VTT preparation. You see the work at each stage, and there are two paint-level revisions baked into the quote.</p>
+          <p>Most battle maps move from brief to delivery in two to three weeks. Region and world maps run three to five weeks depending on settlement count and labeling style. Rush turnaround is occasionally available for an uplift, ask in the brief.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Quote brief form -->
+<section class="pg-section" style="background:var(--parchment-100);" data-screen-label="06 Brief" id="map-brief">
+  <div class="pg-container">
+    <form class="map-form" action="/api/inquiry" method="post">
+      <div class="map-form-head">
+        <span class="ds-eyebrow">Map brief</span>
+        <h3>Send the <em>scope</em>, get a quote</h3>
+        <p>One short form. We'll reply within 48 hours with a fixed quote, a turnaround estimate, and any clarifying questions.</p>
+      </div>
+
+      <div class="map-form-row">
+        <div class="map-form-field full">
+          <label class="map-form-label">Map type</label>
+          <div class="map-form-chips">
+            <label class="map-form-chip"><input type="radio" name="map_type" value="battle" checked /><span>Battle map</span></label>
+            <label class="map-form-chip"><input type="radio" name="map_type" value="region" /><span>Region map</span></label>
+            <label class="map-form-chip"><input type="radio" name="map_type" value="world" /><span>World map</span></label>
+            <label class="map-form-chip"><input type="radio" name="map_type" value="unsure" /><span>Not sure</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-form-row">
+        <div class="map-form-field">
+          <label class="map-form-label" for="map-size">Estimated size or scope</label>
+          <input id="map-size" name="size" type="text" placeholder="e.g. 16×20, room scale, or 12 settlements" />
+        </div>
+        <div class="map-form-field">
+          <label class="map-form-label" for="map-deadline">Deadline <span class="map-form-optional">optional</span></label>
+          <input id="map-deadline" name="deadline" type="date" />
+        </div>
+      </div>
+
+      <div class="map-form-row">
+        <div class="map-form-field full">
+          <label class="map-form-label">Tone</label>
+          <div class="map-form-chips">
+            <label class="map-form-chip"><input type="radio" name="tone" value="classic" checked /><span>Classic fantasy</span></label>
+            <label class="map-form-chip"><input type="radio" name="tone" value="sci-fi" /><span>Sci-fi</span></label>
+            <label class="map-form-chip"><input type="radio" name="tone" value="horror" /><span>Horror</span></label>
+            <label class="map-form-chip"><input type="radio" name="tone" value="modern" /><span>Modern</span></label>
+            <label class="map-form-chip"><input type="radio" name="tone" value="other" /><span>Other</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="map-form-row">
+        <div class="map-form-field full">
+          <label class="map-form-label" for="map-desc">Description</label>
+          <textarea id="map-desc" name="description" placeholder="What the map is for, who's running through it, what's on it. Rooms, terrain, encounters, important features. Half a paragraph is enough to quote."></textarea>
+        </div>
+      </div>
+
+      <div class="map-form-row">
+        <div class="map-form-field full">
+          <label class="map-form-label" for="map-refs">Reference links <span class="map-form-optional">optional, one per line</span></label>
+          <textarea id="map-refs" name="references" style="min-height:80px" placeholder="Pinterest boards, existing maps you like, mood images."></textarea>
+        </div>
+      </div>
+
+      <div class="map-form-row">
+        <div class="map-form-field">
+          <label class="map-form-label" for="map-name">Your name</label>
+          <input id="map-name" name="name" type="text" placeholder="Aria Mendel" required autocomplete="name" />
+        </div>
+        <div class="map-form-field">
+          <label class="map-form-label" for="map-email">Email</label>
+          <input id="map-email" name="email" type="email" placeholder="aria@example.com" required autocomplete="email" />
+        </div>
+      </div>
+
+      <div class="map-form-foot">
+        <p class="map-form-foot-note">No commitment until the quote comes back and you say yes. USD pricing.</p>
+        <button class="dv-btn dv-btn-primary lg" type="submit">Send map brief
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="pg-section" data-screen-label="07 FAQ">
+  <div class="pg-container">
+    <div class="hp-faq-layout">
+      <div class="hp-faq-side">
+        <span class="ds-eyebrow">Map FAQ</span>
+        <h2>About <em>map work</em></h2>
+        <p>The four questions that come up most. Anything else, send it in the brief or ask the studio directly.</p>
+        <a class="hp-faq-side-cta" href="FAQ.html">Full FAQ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="hp-faq-list">
+        <details class="hp-faq-item" open>
+          <summary>How long does a battle map take?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>A standard 16×20 battle map runs about 2 to 3 weeks. Bigger spreads, multi-level dungeons, and heavy detail push toward 4 weeks. Quote turnaround is 48 hours so you'll know the timeline before committing.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>Can you match my existing campaign art?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>If the studio painted the character art, yes. If you're bringing in art from another artist or AI tools, the studio will work to a complementary palette and feel but won't trace or copy another artist's linework. Reference is welcome.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>Hand-lettered labels or digital?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>Both, your choice. Hand-lettered looks gorgeous on world maps and takes longer. Digital labels read more clearly at VTT scale and let you edit names later. Many clients pick hand-lettered for the showpiece and digital for the play layer.</p></div>
+        </details>
+        <details class="hp-faq-item">
+          <summary>What VTT formats do you export?
+            <span class="hp-faq-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span>
+          </summary>
+          <div class="hp-faq-body"><p>Roll20 and Foundry VTT, with grid scaled to 70px per square unless you specify otherwise. Owlbear Rodeo, Fantasy Grounds, Talespire on request. Standard delivery includes a print-ready master file and the gridded VTT export.</p></div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="pg-cta-strip" data-screen-label="08 CTA">
+  <div class="pg-container">
+    <h2>Send a map <em>brief</em></h2>
+    <p>Five fields, two minutes. Quote back within 48 hours.</p>
+    <div class="pg-cta-strip-actions">
+      <a class="dv-btn dv-btn-gold lg" href="#map-brief">Send a brief <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="dv-btn dv-btn-outline-cream lg" href="Contact.html">Talk to the studio</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="pg-footer" data-screen-label="09 Footer">
+  <div class="pg-container">
+    <div class="pg-footer-grid">
+      <div class="pg-footer-col">
+        <a class="pg-footer-brand" href="Homepage.html" style="text-decoration:none">
+          <svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/><path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/></svg>
+          <span>Design Vortek</span>
+        </a>
+        <p class="pg-footer-tag">Premium art commissions, since 2022. Every piece, by hand, by humans.</p>
+      </div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Studio</div><a href="About.html">About</a><a href="Process.html">Process</a><a href="Pricing.html">Pricing</a><a href="Availability.html">Availability</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Services</div><a href="Service Detail.html">Character Art</a><a href="Services.html">VTT Tokens</a><a href="Maps.html">Maps</a><a href="Subscription.html">Subscription</a><a href="Commercial.html">Commercial</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Resources</div><a href="Blog.html">Blog</a><a href="FAQ.html">FAQ</a><a href="Reviews.html">Reviews</a><a href="Order Form.html">Order Form</a><a href="Contact.html">Contact</a></div>
+      <div class="pg-footer-col"><div class="pg-footer-label">Stay in touch</div><a href="Contact.html">hello@designvortek.com</a></div>
+    </div>
+    <div class="pg-footer-bottom"><span>© 2026 Design Vortek Studio.</span><span class="pg-footer-bottom-links"><a href="Privacy.html">Privacy</a><a href="Privacy.html">Terms</a><a href="Privacy.html">Refunds</a></span></div>
+  </div>
+</footer>
+
+<script>(function(){const h=document.getElementById('pg-header');const f=()=>h.classList.toggle('scrolled',window.scrollY>20);f();window.addEventListener('scroll',f,{passive:true});})();</script>
+</body>
+</html>

@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Start a commission · Design Vortek</title>
+<meta name="description" content="Tell us about your character, party, or NPC pack. We'll send a quote within 48 hours — no commitment until you're ready." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="tokens.css" />
+<link rel="stylesheet" href="design-system.css" />
+<link rel="stylesheet" href="order-form.css" />
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="of-header" data-screen-label="00 Header">
+  <a class="of-header-brand" href="Homepage.html" style="text-decoration:none">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <circle cx="16" cy="16" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M16 4 L18 14 L28 16 L18 18 L16 28 L14 18 L4 16 L14 14 Z" fill="currentColor"/>
+    </svg>
+    <span>Design Vortek</span>
+  </a>
+  <a class="of-header-back" href="Homepage.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+    Back to studio
+  </a>
+</header>
+
+<!-- ============================================================
+     HERO + PROGRESS
+     ============================================================ -->
+<section class="of-hero" data-screen-label="01 Hero">
+  <div class="of-container">
+    <span class="ds-eyebrow">Commission brief</span>
+    <h1>Tell us about your <em>commission</em></h1>
+    <p>Four short steps. Takes about 3 minutes. We respond within 48 hours with a fixed quote &mdash; no commitment until you're ready.</p>
+  </div>
+
+  <div class="of-progress" aria-label="Form progress">
+    <div class="of-progress-track">
+      <div class="of-progress-step is-active" data-step="1">
+        <div class="of-progress-dot">1</div>
+        <div class="of-progress-label">
+          <span class="of-progress-num">Step 01</span>
+          <span class="of-progress-text">What you need</span>
+        </div>
+      </div>
+      <div class="of-progress-line" data-line="1"></div>
+      <div class="of-progress-step" data-step="2">
+        <div class="of-progress-dot">2</div>
+        <div class="of-progress-label">
+          <span class="of-progress-num">Step 02</span>
+          <span class="of-progress-text">Tell us about it</span>
+        </div>
+      </div>
+      <div class="of-progress-line" data-line="2"></div>
+      <div class="of-progress-step" data-step="3">
+        <div class="of-progress-dot">3</div>
+        <div class="of-progress-label">
+          <span class="of-progress-num">Step 03</span>
+          <span class="of-progress-text">Your details</span>
+        </div>
+      </div>
+      <div class="of-progress-line" data-line="3"></div>
+      <div class="of-progress-step" data-step="4">
+        <div class="of-progress-dot">4</div>
+        <div class="of-progress-label">
+          <span class="of-progress-num">Step 04</span>
+          <span class="of-progress-text">Review</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MAIN — form + sidebar
+     ============================================================ -->
+<section class="of-container of-main" data-screen-label="02 Form">
+
+  <!-- FORM -->
+  <form class="of-form-card" id="of-form" autocomplete="on" novalidate>
+
+    <!-- ===================== STEP 1 ===================== -->
+    <fieldset class="of-step is-current" data-step="1">
+      <div class="of-step-head">
+        <div class="of-step-eyebrow">Step 01 of 04</div>
+        <h2 class="of-step-title">What do you <em>need</em>?</h2>
+        <p class="of-step-sub">Pick the service that fits. Not sure? Start with Character Art &mdash; we'll talk through the rest.</p>
+      </div>
+
+      <div class="of-field-group">
+        <label class="of-field-group-label">Service type</label>
+        <p class="of-field-group-hint">Choose one. You can refine details in the next step.</p>
+
+        <div class="of-service-grid">
+          <label class="of-service-card">
+            <input type="radio" name="service" value="character-art" data-label="Character Art · from $180" checked />
+            <span class="of-service-card-check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </span>
+            <span class="of-service-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg>
+            </span>
+            <span class="of-service-card-title">Character Art</span>
+            <span class="of-service-card-price">From $180</span>
+            <span class="of-service-card-desc">Single-character painterly portrait. Your hero, brought to life.</span>
+          </label>
+
+          <label class="of-service-card">
+            <input type="radio" name="service" value="vtt-token" data-label="VTT Tokens · from $80" />
+            <span class="of-service-card-check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </span>
+            <span class="of-service-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+            </span>
+            <span class="of-service-card-title">VTT Tokens</span>
+            <span class="of-service-card-price">From $80</span>
+            <span class="of-service-card-desc">Roll20 &amp; Foundry-ready circular tokens. 512px &amp; 1024px.</span>
+          </label>
+
+          <label class="of-service-card">
+            <input type="radio" name="service" value="party-portrait" data-label="Party Portraits · from $400" />
+            <span class="of-service-card-check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </span>
+            <span class="of-service-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="15" cy="8" r="3"/><path d="M4 20c0-3 2-5 5-5s5 2 5 5M15 20c0-2 1-4 3-4s2 1 2 4"/></svg>
+            </span>
+            <span class="of-service-card-title">Party Portrait</span>
+            <span class="of-service-card-price">From $400</span>
+            <span class="of-service-card-desc">Adventuring party, wedding, gift &mdash; 3 to 8 figures.</span>
+          </label>
+
+          <label class="of-service-card">
+            <input type="radio" name="service" value="npc-pack" data-label="NPC Pack · from $300" />
+            <span class="of-service-card-check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </span>
+            <span class="of-service-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="1"/><rect x="3" y="14" width="18" height="6" rx="1"/><path d="M7 7h.01M7 17h.01"/></svg>
+            </span>
+            <span class="of-service-card-title">NPC Pack</span>
+            <span class="of-service-card-price">From $300</span>
+            <span class="of-service-card-desc">5+ NPCs in matching style. Schedule-friendly for DMs.</span>
+          </label>
+
+          <label class="of-service-card">
+            <input type="radio" name="service" value="custom" data-label="Custom Project · quote" />
+            <span class="of-service-card-check" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>
+            </span>
+            <span class="of-service-card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg>
+            </span>
+            <span class="of-service-card-title">Custom</span>
+            <span class="of-service-card-price">Quote</span>
+            <span class="of-service-card-desc">Book covers, game assets, merch, concept art &mdash; we'll quote.</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="of-field-group">
+        <label class="of-field-group-label">Style preference</label>
+        <p class="of-field-group-hint">Optional &mdash; we'll discuss style in detail before starting. Skip if undecided.</p>
+        <div class="of-style-chips">
+          <label class="of-style-chip"><input type="checkbox" name="style" value="painterly" checked /> Painterly &middot; warm</label>
+          <label class="of-style-chip"><input type="checkbox" name="style" value="anime" /> Anime &middot; cell-shaded</label>
+          <label class="of-style-chip"><input type="checkbox" name="style" value="lineart" /> Lineart &middot; clean</label>
+          <label class="of-style-chip"><input type="checkbox" name="style" value="chibi" /> Chibi</label>
+          <label class="of-style-chip"><input type="checkbox" name="style" value="realistic" /> Semi-realistic</label>
+          <label class="of-style-chip"><input type="checkbox" name="style" value="open" /> Open to suggestion</label>
+        </div>
+      </div>
+    </fieldset>
+
+    <!-- ===================== STEP 2 ===================== -->
+    <fieldset class="of-step" data-step="2">
+      <div class="of-step-head">
+        <div class="of-step-eyebrow">Step 02 of 04</div>
+        <h2 class="of-step-title">Tell us about <em>it</em></h2>
+        <p class="of-step-sub">The more specific, the better the brief. Include species, class, vibe, key features &mdash; whatever makes them theirs.</p>
+      </div>
+
+      <div class="of-field-group">
+        <label class="of-label" for="of-desc">Project description</label>
+        <div class="of-textarea-wrap">
+          <textarea
+            id="of-desc"
+            name="description"
+            class="of-textarea"
+            placeholder="e.g. Lyra Vexweaver — tiefling sorceress, level 9. Tall, lean, soft purple skin with darker freckles, gold horns swept back. Wears a tattered violet robe with constellations stitched in silver thread. Holds a glass orb that catches the light. Painterly style, warm dramatic lighting, dark mossy forest in the background. Vibe: melancholy but powerful — she's just lost her familiar."></textarea>
+          <div class="of-textarea-counter"><span id="of-desc-count">0</span> / 1500</div>
+        </div>
+      </div>
+
+      <div class="of-field-group">
+        <label class="of-field-group-label">References (up to 5)</label>
+        <p class="of-field-group-hint">Pinterest boards, ArtStation, mood images, or other character portraits you love. Helps us nail the vibe faster.</p>
+
+        <div class="of-refs" id="of-refs">
+          <div class="of-ref-row">
+            <span class="of-ref-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7L11 7"/><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7L13 17"/></svg></span>
+            <input type="url" class="of-ref-input" name="ref-1" placeholder="https://" />
+            <button type="button" class="of-ref-remove" aria-label="Remove reference" data-ref-remove>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg>
+            </button>
+          </div>
+          <div class="of-ref-row">
+            <span class="of-ref-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7L11 7"/><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7L13 17"/></svg></span>
+            <input type="url" class="of-ref-input" name="ref-2" placeholder="https://" />
+            <button type="button" class="of-ref-remove" aria-label="Remove reference" data-ref-remove>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg>
+            </button>
+          </div>
+        </div>
+        <button type="button" class="of-ref-add" id="of-ref-add">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+          Add another reference
+        </button>
+      </div>
+
+      <div class="of-field-row">
+        <div>
+          <label class="of-label" for="of-deadline">Preferred deadline <span class="of-label-optional">optional</span></label>
+          <input type="date" id="of-deadline" name="deadline" class="of-input" />
+        </div>
+        <div>
+          <label class="of-label" for="of-qty">Quantity</label>
+          <div class="of-select">
+            <select id="of-qty" name="quantity">
+              <option value="1">1 piece</option>
+              <option value="2">2 pieces</option>
+              <option value="3-5">3 – 5 pieces</option>
+              <option value="6-10">6 – 10 pieces</option>
+              <option value="10+">10+ pieces (bulk)</option>
+            </select>
+            <svg class="of-select-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="of-field-group" style="margin-top: 28px;">
+        <label class="of-label" for="of-notes">Anything else? <span class="of-label-optional">optional</span></label>
+        <textarea id="of-notes" name="notes" class="of-textarea" style="min-height:100px" placeholder="Surprise gift? Specific delivery date? Layered PSD needed? Tell us here."></textarea>
+      </div>
+    </fieldset>
+
+    <!-- ===================== STEP 3 ===================== -->
+    <fieldset class="of-step" data-step="3">
+      <div class="of-step-head">
+        <div class="of-step-eyebrow">Step 03 of 04</div>
+        <h2 class="of-step-title">Your <em>details</em></h2>
+        <p class="of-step-sub">So we can send the quote. We never share your details &mdash; ever. See our <a>privacy policy</a>.</p>
+      </div>
+
+      <div class="of-field-row">
+        <div>
+          <label class="of-label" for="of-name">Your name</label>
+          <input type="text" id="of-name" name="name" class="of-input" placeholder="Aria Mendel" required autocomplete="name" />
+        </div>
+        <div>
+          <label class="of-label" for="of-email">Email</label>
+          <input type="email" id="of-email" name="email" class="of-input" placeholder="aria@example.com" required autocomplete="email" />
+        </div>
+      </div>
+
+      <div class="of-field-row" style="margin-top: 20px;">
+        <div>
+          <label class="of-label" for="of-phone">Phone <span class="of-label-optional">optional</span></label>
+          <input type="tel" id="of-phone" name="phone" class="of-input" placeholder="+1 (555) 123-4567" autocomplete="tel" />
+        </div>
+        <div>
+          <label class="of-label" for="of-source">How did you find us?</label>
+          <div class="of-select">
+            <select id="of-source" name="source">
+              <option value="">Choose one&hellip;</option>
+              <option>Instagram</option>
+              <option>Twitter / X</option>
+              <option>Reddit (r/DnD, r/characterdrawing&hellip;)</option>
+              <option>Google search</option>
+              <option>Friend referral</option>
+              <option>Previous commission</option>
+              <option>Other</option>
+            </select>
+            <svg class="of-select-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="of-field-group" style="margin-top: 32px;">
+        <label class="of-field-group-label">Budget range</label>
+        <p class="of-field-group-hint">Helps us match scope to what you'd like to invest. We'll confirm in the quote.</p>
+        <div class="of-budget-grid">
+          <label class="of-budget-card">
+            <input type="radio" name="budget" value="under-200" data-label="Under $200" />
+            <div class="of-budget-card-range">Under $200</div>
+            <div class="of-budget-card-note">Token or simple piece</div>
+          </label>
+          <label class="of-budget-card">
+            <input type="radio" name="budget" value="200-400" data-label="$200 – $400" checked />
+            <div class="of-budget-card-range">$200 – $400</div>
+            <div class="of-budget-card-note">Standard character art</div>
+          </label>
+          <label class="of-budget-card">
+            <input type="radio" name="budget" value="400-800" data-label="$400 – $800" />
+            <div class="of-budget-card-range">$400 – $800</div>
+            <div class="of-budget-card-note">Party portraits, packs</div>
+          </label>
+          <label class="of-budget-card">
+            <input type="radio" name="budget" value="800-plus" data-label="$800+" />
+            <div class="of-budget-card-range">$800+</div>
+            <div class="of-budget-card-note">Large commissions</div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Budget context: optional textarea for negotiation / discount conversations.
+           Studio reads this before quoting and can offer a custom arrangement when appropriate. -->
+      <div class="of-field-group" style="margin-top: 24px;">
+        <label class="of-label" for="of-budget-context">Anything else about your budget? <span class="of-label-optional">optional</span></label>
+        <p class="of-field-group-hint" style="margin-bottom: 10px;">Returning client, student, multi-piece commission, gift, charity, anything else worth knowing. The studio reads this before quoting and may offer a custom arrangement.</p>
+        <textarea id="of-budget-context" name="budget_context" class="of-textarea" style="min-height: 88px;" placeholder="e.g. This is my fourth commission this year and I'm hoping to bundle this with a token pack. Or: I'm a student, but I've been saving for this since the campaign started."></textarea>
+      </div>
+    </fieldset>
+
+    <!-- ===================== STEP 4 (REVIEW) ===================== -->
+    <fieldset class="of-step" data-step="4">
+      <div class="of-step-head">
+        <div class="of-step-eyebrow">Step 04 of 04</div>
+        <h2 class="of-step-title">Review &amp; <em>send</em></h2>
+        <p class="of-step-sub">Quick check &mdash; everything look right? Edit any section if not.</p>
+      </div>
+
+      <div class="of-review">
+
+        <div class="of-review-card">
+          <div class="of-review-card-head">
+            <div class="of-review-card-title">What you need</div>
+            <button type="button" class="of-review-edit" data-jump="1">
+              Edit <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg>
+            </button>
+          </div>
+          <dl>
+            <div class="of-review-row"><dt>Service</dt><dd data-summary="service">Character Art · from $180</dd></div>
+            <div class="of-review-row"><dt>Style</dt><dd data-summary="style">Painterly · warm</dd></div>
+          </dl>
+        </div>
+
+        <div class="of-review-card">
+          <div class="of-review-card-head">
+            <div class="of-review-card-title">Project details</div>
+            <button type="button" class="of-review-edit" data-jump="2">
+              Edit <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg>
+            </button>
+          </div>
+          <dl>
+            <div class="of-review-row"><dt>Description</dt><dd data-summary="description" class="empty">No description yet</dd></div>
+            <div class="of-review-row"><dt>References</dt><dd data-summary="refs" class="empty">None added</dd></div>
+            <div class="of-review-row"><dt>Deadline</dt><dd data-summary="deadline" class="empty">No deadline set</dd></div>
+            <div class="of-review-row"><dt>Quantity</dt><dd data-summary="quantity">1 piece</dd></div>
+            <div class="of-review-row"><dt>Notes</dt><dd data-summary="notes" class="empty">None</dd></div>
+          </dl>
+        </div>
+
+        <div class="of-review-card">
+          <div class="of-review-card-head">
+            <div class="of-review-card-title">Your details</div>
+            <button type="button" class="of-review-edit" data-jump="3">
+              Edit <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20l9-9-3-3-9 9v3z"/><path d="M16 8l-3-3"/></svg>
+            </button>
+          </div>
+          <dl>
+            <div class="of-review-row"><dt>Name</dt><dd data-summary="name" class="empty">—</dd></div>
+            <div class="of-review-row"><dt>Email</dt><dd data-summary="email" class="empty">—</dd></div>
+            <div class="of-review-row"><dt>Phone</dt><dd data-summary="phone" class="empty">Not provided</dd></div>
+            <div class="of-review-row"><dt>Budget</dt><dd data-summary="budget">$200 – $400</dd></div>
+            <div class="of-review-row"><dt>How found</dt><dd data-summary="source" class="empty">—</dd></div>
+          </dl>
+        </div>
+
+      </div>
+
+      <div class="of-terms">
+        <input type="checkbox" id="of-terms" required />
+        <label for="of-terms">
+          I understand this is a brief, not a contract &mdash; we'll send a fixed quote within 48 hours and nothing is charged until I approve. I've read the <a>terms</a> and <a>refund policy</a>.
+        </label>
+      </div>
+    </fieldset>
+
+    <!-- ===================== FOOTER NAV ===================== -->
+    <div class="of-form-foot">
+      <div class="of-form-foot-left">
+        <button type="button" class="dv-btn dv-btn-ghost" id="of-back" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+          Back
+        </button>
+        <span class="of-step-counter">Step <strong id="of-step-curr">1</strong> of 4</span>
+      </div>
+      <button type="button" class="dv-btn dv-btn-primary" id="of-next">
+        Continue
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  </form>
+
+  <!-- SIDEBAR -->
+  <aside class="of-sidebar">
+
+    <div class="of-side-card">
+      <div class="of-side-eyebrow">What happens next</div>
+      <div class="of-side-title">A clear, honest process &mdash; no chasing.</div>
+      <ol class="of-next-steps">
+        <li class="of-next-step">
+          <span class="of-next-step-num">1</span>
+          <span class="of-next-step-text">
+            <strong>Within 48 hours</strong>
+            We review and send a fixed quote with timeline.
+          </span>
+        </li>
+        <li class="of-next-step">
+          <span class="of-next-step-num">2</span>
+          <span class="of-next-step-text">
+            <strong>You approve &amp; deposit</strong>
+            25% to hold your slot. Refundable until first sketch.
+          </span>
+        </li>
+        <li class="of-next-step">
+          <span class="of-next-step-num">3</span>
+          <span class="of-next-step-text">
+            <strong>Work begins</strong>
+            Sketches, color blocks, final paint. Updates every 3 days.
+          </span>
+        </li>
+      </ol>
+      <div class="of-side-stat">
+        <span class="of-side-stat-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        </span>
+        <div class="of-side-stat-text">
+          <span class="of-side-stat-num">48 hours</span>
+          <span class="of-side-stat-label">average response time</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="of-side-card tome">
+      <div class="of-side-eyebrow">Recent client</div>
+      <blockquote class="of-side-quote">
+        "The communication was thoughtful, every revision sharpened the piece. This isn't a transaction &mdash; it's a collaboration."
+      </blockquote>
+      <div class="of-side-quote-attr">
+        <span class="of-side-quote-avatar">AM</span>
+        <div>
+          <div class="of-side-quote-name">Aria Mendel</div>
+          <div class="of-side-quote-role">Character commission · March 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="of-side-card">
+      <ul class="of-side-trust">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> No commitment until you approve</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Refundable deposit until first sketch</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> Secure payments via Stripe</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg> 2 revisions baked into every piece</li>
+      </ul>
+    </div>
+
+  </aside>
+
+</section>
+
+<!-- ============================================================
+     MULTI-STEP CONTROLLER (vanilla JS)
+     Claude Code: port to React Hook Form + zod for production.
+     ============================================================ -->
+<script>
+(function() {
+  const form = document.getElementById('of-form');
+  const steps = form.querySelectorAll('.of-step');
+  const progressSteps = document.querySelectorAll('.of-progress-step');
+  const progressLines = document.querySelectorAll('.of-progress-line');
+  const backBtn = document.getElementById('of-back');
+  const nextBtn = document.getElementById('of-next');
+  const stepCurr = document.getElementById('of-step-curr');
+  const refsContainer = document.getElementById('of-refs');
+  const refAddBtn = document.getElementById('of-ref-add');
+  const desc = document.getElementById('of-desc');
+  const descCount = document.getElementById('of-desc-count');
+
+  const STORAGE_KEY = 'designvortek-order-draft';
+  const TOTAL = 4;
+  let current = 1;
+
+  /* ---------- Step switching ---------- */
+  function goTo(n) {
+    current = Math.max(1, Math.min(TOTAL, n));
+    steps.forEach(s => s.classList.toggle('is-current', +s.dataset.step === current));
+    progressSteps.forEach(s => {
+      const n = +s.dataset.step;
+      s.classList.toggle('is-active', n === current);
+      s.classList.toggle('is-done', n < current);
+      const dot = s.querySelector('.of-progress-dot');
+      if (n < current) {
+        dot.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12l5 5L20 7"/></svg>';
+      } else {
+        dot.textContent = n;
+      }
+    });
+    progressLines.forEach(l => l.classList.toggle('is-done', +l.dataset.line < current));
+    backBtn.disabled = current === 1;
+    stepCurr.textContent = current;
+
+    if (current === TOTAL) {
+      nextBtn.innerHTML = 'Send commission brief <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+      buildReview();
+    } else {
+      nextBtn.innerHTML = 'Continue <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+    }
+
+    window.scrollTo({ top: form.offsetTop - 100, behavior: 'smooth' });
+  }
+
+  /* ---------- Service / style / budget visual checked state ---------- */
+  function updateChecked() {
+    document.querySelectorAll('.of-service-card').forEach(card => {
+      const input = card.querySelector('input');
+      card.classList.toggle('is-checked', input.checked);
+    });
+    document.querySelectorAll('.of-style-chip').forEach(chip => {
+      const input = chip.querySelector('input');
+      chip.classList.toggle('is-checked', input.checked);
+    });
+    document.querySelectorAll('.of-budget-card').forEach(card => {
+      const input = card.querySelector('input');
+      card.classList.toggle('is-checked', input.checked);
+    });
+  }
+
+  form.addEventListener('change', () => { updateChecked(); saveDraft(); });
+  form.addEventListener('input', () => { saveDraft(); });
+  updateChecked();
+
+  /* ---------- Description counter ---------- */
+  if (desc && descCount) {
+    const updateCount = () => { descCount.textContent = desc.value.length; };
+    desc.addEventListener('input', updateCount);
+    updateCount();
+  }
+
+  /* ---------- References add/remove ---------- */
+  let refCount = 2;
+  refAddBtn.addEventListener('click', () => {
+    if (refCount >= 5) return;
+    refCount++;
+    const row = document.createElement('div');
+    row.className = 'of-ref-row';
+    row.innerHTML = `
+      <span class="of-ref-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7L11 7"/><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7L13 17"/></svg></span>
+      <input type="url" class="of-ref-input" name="ref-${refCount}" placeholder="https://" />
+      <button type="button" class="of-ref-remove" aria-label="Remove reference" data-ref-remove>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6l-12 12"/></svg>
+      </button>`;
+    refsContainer.appendChild(row);
+    if (refCount >= 5) refAddBtn.style.display = 'none';
+  });
+  refsContainer.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-ref-remove]');
+    if (!btn) return;
+    const rows = refsContainer.querySelectorAll('.of-ref-row');
+    if (rows.length <= 1) { btn.previousElementSibling.value = ''; return; }
+    btn.closest('.of-ref-row').remove();
+    refCount--;
+    if (refCount < 5) refAddBtn.style.display = '';
+  });
+
+  /* ---------- Review summary builder ---------- */
+  function buildReview() {
+    const fd = new FormData(form);
+
+    // Service
+    const serviceInput = form.querySelector('input[name="service"]:checked');
+    setSummary('service', serviceInput ? serviceInput.dataset.label : '');
+
+    // Style (checkboxes — collect labels)
+    const styles = [...form.querySelectorAll('input[name="style"]:checked')]
+      .map(el => el.parentElement.textContent.trim());
+    setSummary('style', styles.length ? styles.join(' · ') : '');
+
+    setSummary('description', fd.get('description'));
+
+    // References (collect non-empty)
+    const refs = [...form.querySelectorAll('input[name^="ref-"]')]
+      .map(el => el.value.trim()).filter(Boolean);
+    setSummary('refs', refs.length ? refs.join('\n') : '');
+
+    setSummary('deadline', fd.get('deadline') ? formatDate(fd.get('deadline')) : '');
+    setSummary('quantity', form.querySelector('#of-qty').selectedOptions[0].textContent);
+    setSummary('notes', fd.get('notes'));
+    setSummary('name', fd.get('name'));
+    setSummary('email', fd.get('email'));
+    setSummary('phone', fd.get('phone'));
+    const budget = form.querySelector('input[name="budget"]:checked');
+    setSummary('budget', budget ? budget.dataset.label : '');
+    setSummary('source', fd.get('source'));
+  }
+  function setSummary(key, value) {
+    const el = document.querySelector(`[data-summary="${key}"]`);
+    if (!el) return;
+    if (value && String(value).trim()) {
+      el.textContent = value;
+      el.classList.remove('empty');
+    } else {
+      el.classList.add('empty');
+    }
+  }
+  function formatDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  }
+
+  /* ---------- Edit jumps from review ---------- */
+  document.querySelectorAll('[data-jump]').forEach(btn => {
+    btn.addEventListener('click', () => goTo(+btn.dataset.jump));
+  });
+
+  /* ---------- Navigation ---------- */
+  backBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => {
+    if (current === TOTAL) {
+      // Submit — in production, post to API
+      if (!document.getElementById('of-terms').checked) {
+        document.getElementById('of-terms').focus();
+        document.querySelector('.of-terms').animate(
+          [{ transform: 'translateX(-4px)' }, { transform: 'translateX(4px)' }, { transform: 'translateX(0)' }],
+          { duration: 250, iterations: 1 }
+        );
+        return;
+      }
+      localStorage.removeItem(STORAGE_KEY);
+      window.location.href = 'Order Success.html';
+      return;
+    }
+    goTo(current + 1);
+  });
+
+  /* ---------- Draft persistence (refresh-safe) ---------- */
+  function saveDraft() {
+    const data = {};
+    new FormData(form).forEach((v, k) => {
+      if (data[k] !== undefined) {
+        data[k] = [].concat(data[k], v);
+      } else {
+        data[k] = v;
+      }
+    });
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch (e) {}
+  }
+  function loadDraft() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      Object.entries(data).forEach(([k, v]) => {
+        const fields = form.querySelectorAll(`[name="${k}"]`);
+        fields.forEach(f => {
+          if (f.type === 'checkbox' || f.type === 'radio') {
+            const vals = [].concat(v);
+            f.checked = vals.includes(f.value);
+          } else {
+            f.value = v;
+          }
+        });
+      });
+      updateChecked();
+      if (desc && descCount) descCount.textContent = desc.value.length;
+    } catch (e) {}
+  }
+  loadDraft();
+})();
+</script>
+
+</body>
+</html>
