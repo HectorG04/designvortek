@@ -22,12 +22,13 @@ export const NAV_LINKS = [
  * (/services/[bucket-slug]). Buckets match lib/services.ts BUCKETS,
  * minus the Commercial bucket which lives at /commercial. */
 export const SERVICES_NAV = [
-  { label: 'Character work',     href: '/services/character-work' },
-  { label: 'Party work',         href: '/services/party-work' },
+  { label: 'Character work',      href: '/services/character-work' },
+  { label: 'Party work',          href: '/services/party-work' },
   { label: 'GM & world-building', href: '/services/gm-world-building' },
-  { label: 'Tokens',             href: '/services/tokens' },
-  { label: 'Subscription',       href: '/subscription' },
-  { label: 'Commercial',         href: '/commercial' },
+  { label: 'Maps',                href: '/services/maps' },
+  { label: 'Tokens',              href: '/services/tokens' },
+  { label: 'Subscription',        href: '/subscription' },
+  { label: 'Commercial',          href: '/commercial' },
 ]
 
 export const FOOTER_LINKS = {
