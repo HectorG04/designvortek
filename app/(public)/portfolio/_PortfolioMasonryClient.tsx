@@ -26,15 +26,27 @@ import {
    or removed.
    ===================================================================== */
 
-type CategoryKey = 'all' | 'character-art' | 'vtt-tokens' | 'party-portraits' | 'anime' | 'custom'
+type CategoryKey =
+  | 'all'
+  | 'character-art'
+  | 'vtt-tokens'
+  | 'party-portraits'
+  | 'anime'
+  | 'custom'
+  | 'weapons-assets'
+  | 'character-sheets'
+  | 'emotes'
 
 const FILTER_DEFINITIONS: { key: CategoryKey; label: string }[] = [
-  { key: 'all',              label: 'All' },
-  { key: 'character-art',    label: 'Character Art' },
-  { key: 'vtt-tokens',       label: 'VTT Tokens' },
-  { key: 'party-portraits',  label: 'Party Portraits' },
-  { key: 'anime',            label: 'Anime' },
-  { key: 'custom',           label: 'Custom' },
+  { key: 'all',               label: 'All' },
+  { key: 'character-art',     label: 'Character Art' },
+  { key: 'vtt-tokens',        label: 'VTT Tokens' },
+  { key: 'party-portraits',   label: 'Party Portraits' },
+  { key: 'anime',             label: 'Anime' },
+  { key: 'custom',            label: 'Custom' },
+  { key: 'weapons-assets',    label: 'Weapons & Assets' },
+  { key: 'character-sheets',  label: 'Character Sheets' },
+  { key: 'emotes',            label: 'Emotes' },
 ]
 
 /* ---------- Inline SVGs from the design HTML (verbatim) ---------- */
