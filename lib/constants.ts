@@ -2,7 +2,7 @@ export const SITE_NAME = 'Design Vortex'
 export const SITE_URL = 'https://designvortex.co'
 export const SITE_TAGLINE = 'Premium Art Commissions'
 export const SITE_DESCRIPTION =
-  'Painterly TTRPG portraits, VTT tokens, party illustrations and custom art — crafted by hand. Commissions from $80. 7–14 day turnaround.'
+  'Hand-painted TTRPG character portraits, VTT tokens, party illustrations, NPC packs, maps and bespoke art. Commissions from $25. Genre-agnostic, hand-drawn, never AI.'
 
 /* Primary nav order — Home first (universal convention), then content
  * sections in the design order (Portfolio → Blog), Contact last so the
@@ -18,12 +18,16 @@ export const NAV_LINKS = [
   { label: 'Contact',   href: '/contact' },
 ]
 
+/* Services dropdown — points at the new bucket detail routes
+ * (/services/[bucket-slug]). Buckets match lib/services.ts BUCKETS,
+ * minus the Commercial bucket which lives at /commercial. */
 export const SERVICES_NAV = [
-  { label: 'Character Art',    href: '/services/character-art' },
-  { label: 'VTT Tokens',       href: '/services/vtt-tokens' },
-  { label: 'Party Portraits',  href: '/services/party-portraits' },
-  { label: 'NPC Packs',        href: '/services/npc-packs' },
-  { label: 'Custom Projects',  href: '/services/custom-projects' },
+  { label: 'Character work',     href: '/services/character-work' },
+  { label: 'Party work',         href: '/services/party-work' },
+  { label: 'GM & world-building', href: '/services/gm-world-building' },
+  { label: 'Tokens',             href: '/services/tokens' },
+  { label: 'Subscription',       href: '/subscription' },
+  { label: 'Commercial',         href: '/commercial' },
 ]
 
 export const FOOTER_LINKS = {
@@ -35,11 +39,13 @@ export const FOOTER_LINKS = {
   ],
   Services: SERVICES_NAV,
   Resources: [
-    { label: 'Blog',       href: '/blog' },
-    { label: 'FAQ',        href: '/faq' },
-    { label: 'Reviews',    href: '/reviews' },
-    { label: 'Order Form', href: '/order' },
-    { label: 'Contact',    href: '/contact' },
+    { label: 'Blog',           href: '/blog' },
+    { label: 'FAQ',            href: '/faq' },
+    { label: 'Reviews',        href: '/reviews' },
+    { label: 'Subscription',   href: '/subscription' },
+    { label: 'Commercial',     href: '/commercial' },
+    { label: 'Order Form',     href: '/order' },
+    { label: 'Contact',        href: '/contact' },
   ],
   Legal: [
     { label: 'Privacy Policy',    href: '/privacy' },
@@ -84,35 +90,41 @@ export const HERO_THUMBS: Array<{
 ]
 
 /* =====================================================================
-   SERVICES PREVIEW (3 featured)
+   SERVICES PREVIEW — 3 featured cards on the homepage strip.
+
+   Values mirror the products flagged `is_featured_homepage = true` in
+   the services table (see lib/services.ts SERVICES). Kept here as a
+   simple constant so the homepage strip stays a static client
+   component. If we later want admin to drive the strip live, swap
+   ServicesPreview to fetch via fetchFeaturedHomepageProducts().
    ===================================================================== */
 export const FEATURED_SERVICES = [
   {
     icon: 'star',
-    title: 'Character Art',
+    title: 'Full-body Character Art',
     sub: 'your hero, painted',
-    body: 'Single-character portraits at portfolio quality. Detailed rendering, expressive poses, dramatic lighting.',
-    features: ['2 revisions included', '7–14 day turnaround', '4K final delivery'],
-    price: '$180',
-    href: '/services/character-art',
+    body: 'Full-figure portrait, head to toe. Painterly rendering, dramatic lighting, the character in their world.',
+    features: ['Basic · Standard · Premium tiers', '7 to 14 day turnaround', '4K final delivery'],
+    price: 'From $120',
+    href: '/services/character-work',
   },
   {
     icon: 'token',
-    title: 'VTT Tokens',
-    sub: 'for the virtual tabletop',
-    body: 'Circular tokens optimised for Roll20 and Foundry. Rich color, decorative borders, perfect at any zoom.',
-    features: ['512px & 1024px exports', 'Transparent PNG · ready to drop in', 'Bulk discounts (4+)'],
-    price: '$80',
-    href: '/services/vtt-tokens',
+    title: 'Single Custom Token',
+    sub: 'table-ready',
+    body: 'A single character token painted from scratch for the virtual tabletop. Built for the circle, not cropped.',
+    features: ['512 + 1024 px exports', 'Transparent PNG ready for Roll20 & Foundry', 'Bulk + bundle discounts'],
+    price: 'From $40',
+    href: '/services/tokens',
   },
   {
     icon: 'party',
-    title: 'Party Portraits',
+    title: 'Party Portrait',
     sub: 'the whole gang',
-    body: 'Group illustrations — adventuring parties, weddings, gifts. Consistent style across every figure in the frame.',
-    features: ['3–8 figure groups', 'Optional background scene', 'Print-ready files'],
-    price: '$400',
-    href: '/services/party-portraits',
+    body: 'Group illustration of an adventuring party, family, or wedding party. Up to 8 figures, consistent style.',
+    features: ['Up to 4 figures included', '14 to 21 day turnaround', 'Print-ready files'],
+    price: 'From $350',
+    href: '/services/party-work',
   },
 ] as const
 
@@ -170,7 +182,7 @@ export const PERSONAS: readonly Persona[] = [
     body: "Running a long-form campaign? You need a cast that feels real — not stock art mashups that break the table's immersion. We do NPC packs in matching style: 5 to 20 portraits delivered to a schedule you can plan sessions around. Strahd campaigns, homebrew worlds, Curse of Strahd, Storm King's Thunder — we've illustrated for them all.",
     tags: ['NPC packs (5–20)', 'Matching style guarantee', 'VTT tokens included'],
     cta: 'See NPC packs',
-    href: '/services/npc-packs',
+    href: '/services/gm-world-building',
     bg: 'persona-dm',
     /* Wide 16:9 NPC scene — uses object-contain so the full composition
      * stays visible against the forest-burgundy gradient backdrop. */
@@ -190,7 +202,7 @@ export const PERSONAS: readonly Persona[] = [
       "Wedding, anniversary, retirement, milestone birthday — for the friend who's played D&D every Sunday for the last decade. We paint their adventuring party as a 19th-century family portrait: central oval cameo of the main party, supporting NPCs in smaller medallions around the edges, ornate gilded borders, the works. The kind of painting that gets passed down, not just hung. Surprise-friendly process — you brief us, we coordinate references with a co-conspirator at the table, you approve at every step.",
     tags: ['1800s heirloom style', 'Up to 8 figures', 'Surprise-friendly process'],
     cta: 'See party portraits',
-    href: '/services/party-portraits',
+    href: '/services/party-work',
     bg: 'persona-gift',
     /* Wide framed-piece artwork — uses object-contain so the gilded frame
      * + side medallions stay fully visible against the gradient backdrop.
@@ -215,7 +227,7 @@ export const PORTFOLIO_CATEGORIES = ['All', 'Character Art', 'Tokens', 'Portrait
    ===================================================================== */
 export const PROCESS_STEPS = [
   { num: '01', title: 'Discuss',  body: "Share your character, references, and vibe. We talk through what'll make the piece feel right." },
-  { num: '02', title: 'Quote',    body: 'Within 48 hours, a clear quote with timeline. 25% deposit to hold your slot.' },
+  { num: '02', title: 'Quote',    body: 'Within 48 hours, a clear quote with timeline. 30% deposit to hold your slot.' },
   { num: '03', title: 'Create',   body: 'Sketches, then color blocks, then final paint. Two rounds of revisions baked in.' },
   { num: '04', title: 'Deliver',  body: '4K final files, layered PSD if you want it. Yours to use, print, frame, share.' },
 ] as const
@@ -306,23 +318,23 @@ export const CURRENT_AVAILABILITY = {
 export const HOMEPAGE_FAQ = [
   {
     q: 'How much does a commission cost?',
-    a: `Commissions range from **$80 for a single VTT token** to **$600+ for a full party portrait**. Character art starts at $180; NPC packs from $300. Every quote is fixed up front — no surprises, no add-ons mid-project.
+    a: `Commissions range from **$25 for a converted VTT token** to **$900+ for an action scene illustration**. Character portraits start at $60 (bust) or $120 (full-body). NPC packs from $220 for five. Every quote is fixed up front, no surprises, no add-ons mid-project.
 
-See the full [pricing breakdown](/pricing) for every service tier.`,
+Prices in USD. See the full [pricing breakdown](/pricing) for every service.`,
   },
   {
     q: 'How long does a commission take?',
-    a: `Most character portraits ship within **7–14 days** of brief approval. VTT tokens are faster (3–7 days). Party portraits and NPC packs take 2–4 weeks depending on figure count.
+    a: `Turnaround is quoted as a range per tier, not a fixed date. Character bust portraits ship in **5 to 10 days**. Full-body character art runs **7 to 14 days**. VTT tokens are 3 to 7 days. NPC packs and party portraits run 2 to 6 weeks depending on figure count.
 
-Rush turnaround is available for +$50 on most services — reach out before booking.`,
+We frame these as ranges because everything is handcrafted, slot-limited, and revision-friendly.`,
   },
   {
     q: "What's included with every commission?",
-    a: `Every commission includes: **2 rounds of revisions**, the final piece at 4K resolution, both PNG and JPG exports, and a transparent-background version where it makes sense. Layered PSD files are available as a $30 add-on.`,
+    a: `Every commission includes **2 rounds of revisions**, the final piece at 4K (where applicable), PNG and JPG exports, and a transparent-background version where it makes sense. Sketch revisions are always free.`,
   },
   {
     q: 'Can I use the art commercially?',
-    a: `Personal use (prints, social posts, your character sheet) is included with every commission. **Commercial licensing** — books, merch, streaming, paid Patreons — is available as a $150 add-on per piece, or as a bulk arrangement for larger projects.`,
+    a: `Personal use (prints, social posts, your character sheet) is included with every commission. **Commercial licensing** for books, merch, streaming, or paid Patreons is **+40% of the base job price (flat)**. See [/commercial](/commercial) for retainer and publisher arrangements.`,
   },
   {
     q: 'Do you use AI in any part of the process?',
@@ -332,7 +344,7 @@ If you want to see the process, we share work-in-progress sketches and color blo
   },
   {
     q: "What if I'm not happy with the result?",
-    a: `Two revisions are baked into every commission — we usually nail it well within that. If the piece is genuinely not what you wanted at the end, we'll refund the balance beyond the 25% deposit (which covers our sketch work).
+    a: `Two revisions are baked into every commission and we usually nail it well within that. If the piece is genuinely not what you wanted at the end, we refund the balance beyond the **30% deposit** (which covers our sketch work).
 
 In four years and 500+ commissions, this has happened twice. Full [refund policy](/refunds).`,
   },

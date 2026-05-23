@@ -1,143 +1,95 @@
+/* =====================================================================
+   ADMIN · SERVICES — list view (Phase 5 polish).
+
+   Literal port of:
+   `Claude Design Final/Claude designs New Screens and flow V2/Admin Services List v2.html`
+   plus the `.adm-svc-*` class spec from the V2 admin.css.
+
+   Renders services grouped by bucket with drag handles (visual only),
+   pricing-mode chips, status pills, and filter chips. Page chrome is
+   provided by <AdminShell>. Filter chips are non-interactive (static
+   visual treatment) — real filter logic remains deferred. Drag-to-
+   reorder behavior is intentionally not wired; the grip icon is a
+   visual affordance only.
+   ===================================================================== */
+
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { revalidatePath } from 'next/cache'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
 import AdminShell from '@/components/admin/AdminShell'
 import {
-  Briefcase,
   Plus,
   Pencil,
-  Sparkles,
-  Palette,
-  Coins,
-  Users,
-  Crown,
-  Wand2,
   Info,
+  GripVertical,
+  User,
+  Users,
+  Mountain,
+  Coins,
+  BookOpen,
+  CalendarDays,
 } from 'lucide-react'
+import { BUCKETS, type ServiceBucket, type PricingPayload } from '@/lib/services'
 
 export const metadata: Metadata = { title: 'Services' }
 
-type IconKey =
-  | 'character-art'
-  | 'vtt-tokens'
-  | 'party-portraits'
-  | 'npc-packs'
-  | 'custom-projects'
-
-const ICON_MAP: Record<string, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>> = {
-  'character-art': Palette,
-  'vtt-tokens': Coins,
-  'party-portraits': Users,
-  'npc-packs': Crown,
-  'custom-projects': Wand2,
-}
-
-interface ServiceCardItem {
-  id: string
+type ServiceRow = {
+  id: number
   slug: string
-  title: string
-  subtitle: string
-  description: string
-  starting_price: number | null
-  price_label: string
-  turnaround_days: string
-  features: string[]
-  is_active: boolean
+  name: string
+  bucket: string
+  eyebrow: string | null
+  pricing_mode: string
+  pricing: PricingPayload | Record<string, unknown> | null
+  is_published: boolean
+  is_featured_homepage: boolean
   sort_order: number
-  icon_name: string
-  dbId: number | null
+  updated_at: string
+  bundle_with_slugs: string[] | null
+  bundle_uplift_cents: number | null
 }
-type DemoService = ServiceCardItem
 
-const DEMO_SERVICES: DemoService[] = [
-  {
-    id: 'character-art',
-    slug: 'character-art',
-    title: 'Character Art',
-    subtitle: 'your hero, painted',
-    description:
-      'Single-character portraits at portfolio quality. Detailed rendering, expressive poses, dramatic lighting.',
-    starting_price: 180,
-    price_label: '$180',
-    turnaround_days: '7–14 days',
-    features: ['2 revisions included', '7–14 day turnaround', '4K final delivery', 'Transparent background export'],
-    is_active: true,
-    sort_order: 1,
-    icon_name: 'character-art',
-    dbId: null,
-  },
-  {
-    id: 'vtt-tokens',
-    slug: 'vtt-tokens',
-    title: 'VTT Tokens',
-    subtitle: 'for the virtual tabletop',
-    description:
-      'Round, square, hex — token sets ready for Roll20, Foundry, and the rest. Crisp at every grid size.',
-    starting_price: 80,
-    price_label: '$80',
-    turnaround_days: '3–7 days',
-    features: ['Single · Party · Bulk tiers', '3–7 day turnaround', 'Multi-format export', 'Print-friendly version'],
-    is_active: true,
-    sort_order: 2,
-    icon_name: 'vtt-tokens',
-    dbId: null,
-  },
-  {
-    id: 'party-portraits',
-    slug: 'party-portraits',
-    title: 'Party Portraits',
-    subtitle: 'the whole gang',
-    description:
-      'Group compositions for adventuring parties. Custom backgrounds, dynamic poses, table-worthy presence.',
-    starting_price: 400,
-    price_label: '$400',
-    turnaround_days: '14–21 days',
-    features: ['Trio · Adventurers · Epic tiers', '14–21 day turnaround', 'Print-ready master file', 'Up to 6 characters'],
-    is_active: true,
-    sort_order: 3,
-    icon_name: 'party-portraits',
-    dbId: null,
-  },
-  {
-    id: 'npc-packs',
-    slug: 'npc-packs',
-    title: 'NPC Packs',
-    subtitle: 'for the campaign',
-    description:
-      'A bench of supporting characters delivered in a unified style. Drop-in-ready for your sessions.',
-    starting_price: 600,
-    price_label: '$600',
-    turnaround_days: '3–6 weeks',
-    features: ['5–20 figure tiers', '3–6 week turnaround', 'Style-locked bench', 'Token cuts included'],
-    is_active: true,
-    sort_order: 4,
-    icon_name: 'npc-packs',
-    dbId: null,
-  },
-  {
-    id: 'custom-projects',
-    slug: 'custom-projects',
-    title: 'Custom Projects',
-    subtitle: "whatever you're dreaming up",
-    description:
-      'Book covers, indie game art, large illustrations, weird requests. Scoped per project.',
-    starting_price: null,
-    price_label: 'Quote',
-    turnaround_days: 'By scope',
-    features: ['Per-project scoping', 'Quoted turnaround', 'Custom usage license', 'Direct creative partnership'],
-    is_active: true,
-    sort_order: 5,
-    icon_name: 'custom-projects',
-    dbId: null,
-  },
-]
+function pricingModeLabel(mode: string, isBundle: boolean): string {
+  if (isBundle) return 'Bundle'
+  switch (mode) {
+    case 'tiered':            return 'Tiered'
+    case 'range':             return 'Range'
+    case 'per_extra':         return 'Per extra'
+    case 'pack_with_qty':     return 'Pack'
+    case 'pct_uplift':        return '% Uplift'
+    case 'monthly_recurring': return 'Monthly'
+    case 'quote_only':        return 'Quote only'
+    case 'flat':              return 'Flat'
+    default:                  return mode
+  }
+}
 
-async function toggleActive(id: number, next: boolean) {
-  'use server'
-  const admin = createAdminClient()
-  await admin.from('services').update({ is_active: next }).eq('id', id)
-  revalidatePath('/admin/services')
+function formatShortDate(iso: string | null | undefined) {
+  if (!iso) return '—'
+  return new Date(iso).toLocaleDateString('en-US', {
+    month: 'short',
+    day: '2-digit',
+  })
+}
+
+/* Per-bucket icon — picked to echo the V2 SVGs */
+const BUCKET_ICONS: Record<ServiceBucket, React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>> = {
+  'character-work':    User,
+  'party-work':        Users,
+  'gm-world-building': Mountain,
+  'tokens':            Coins,
+  'commercial':        BookOpen,
+  'subscription':      CalendarDays,
+}
+
+/* Per-bucket icon background — matches the V2 HTML inline styles */
+const BUCKET_ICON_BG: Record<ServiceBucket, string> = {
+  'character-work':    'bg-burgundy-700',
+  'party-work':        'bg-gold-700',
+  'gm-world-building': 'bg-forest-700',
+  'tokens':            'bg-ink-700',
+  'commercial':        'bg-tome-950',
+  'subscription':      'bg-burgundy-500',
 }
 
 export default async function ServicesAdminPage() {
@@ -147,31 +99,44 @@ export default async function ServicesAdminPage() {
   const initials = email.slice(0, 2).toUpperCase()
 
   const admin = createAdminClient()
-  const { data: dbServices } = await admin.from('services').select('*').order('sort_order')
+  const { data: rows } = await admin
+    .from('services')
+    .select('id,slug,name,bucket,eyebrow,pricing_mode,pricing,is_published,is_featured_homepage,sort_order,updated_at,bundle_with_slugs,bundle_uplift_cents')
+    .order('bucket', { ascending: true })
+    .order('sort_order', { ascending: true })
 
-  const usingDemo = !dbServices || dbServices.length === 0
+  const services: ServiceRow[] = (rows ?? []) as ServiceRow[]
+  const isEmpty = services.length === 0
 
-  const items: ServiceCardItem[] = usingDemo
-    ? DEMO_SERVICES
-    : dbServices!.map((s) => ({
-        id: String(s.id),
-        slug: s.slug,
-        title: s.title,
-        subtitle: s.subtitle ?? '',
-        description: s.description,
-        starting_price: s.starting_price,
-        price_label: s.starting_price ? `$${s.starting_price}` : 'Quote',
-        turnaround_days: s.turnaround_days ?? 'By scope',
-        features: s.features ?? [],
-        is_active: s.is_active,
-        sort_order: s.sort_order,
-        icon_name: s.icon_name ?? s.slug,
-        dbId: s.id,
-      }))
+  const publishedCount = services.filter((s) => s.is_published).length
+  const draftCount = services.length - publishedCount
 
-  const activeCount = items.filter((s) => s.is_active).length
-  const inactiveCount = items.length - activeCount
-  const subtitle = `${items.length} service${items.length === 1 ? '' : 's'} · ${activeCount} active · ${inactiveCount} inactive`
+  // Counts for filter chips
+  const quoteOnlyCount = services.filter((s) => s.pricing_mode === 'quote_only').length
+  const subscriptionCount = services.filter((s) => s.pricing_mode === 'monthly_recurring').length
+
+  // Bucket count for the header meta line
+  const bucketCount = new Set(services.map((s) => s.bucket)).size
+
+  const subtitle = isEmpty
+    ? 'No products yet — run the Phase 2 seed to populate the catalog'
+    : `${bucketCount} bucket${bucketCount === 1 ? '' : 's'} · ${services.length} product${services.length === 1 ? '' : 's'} · ${draftCount} draft${draftCount === 1 ? '' : 's'}`
+
+  // Group by bucket using BUCKETS for label/tagline/order
+  const grouped: Record<ServiceBucket, ServiceRow[]> = {} as Record<ServiceBucket, ServiceRow[]>
+  for (const b of BUCKETS) grouped[b.slug] = []
+  for (const s of services) {
+    const bucket = s.bucket as ServiceBucket
+    if (grouped[bucket]) grouped[bucket].push(s)
+  }
+
+  const filterChips: { label: string; count: number; active?: boolean }[] = [
+    { label: 'All',          count: services.length, active: true },
+    { label: 'Published',    count: publishedCount },
+    { label: 'Drafts',       count: draftCount },
+    { label: 'Quote-only',   count: quoteOnlyCount },
+    { label: 'Subscription', count: subscriptionCount },
+  ]
 
   return (
     <AdminShell
@@ -184,114 +149,367 @@ export default async function ServicesAdminPage() {
           className="hidden sm:inline-flex items-center gap-1.5 bg-gold-500 text-ink-900 hover:bg-gold-300 hover:shadow-[0_8px_24px_rgba(201,160,74,0.32)] transition-all px-4 py-2 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em]"
         >
           <Plus size={14} strokeWidth={2} />
-          Add service
+          New product
         </Link>
       }
     >
-      {usingDemo && (
-        <div className="mb-6 flex items-start gap-3 rounded-xl border border-gold-300 bg-gold-100 px-4 py-3 text-sm text-ink-700">
-          <Info size={18} strokeWidth={1.6} className="mt-0.5 flex-shrink-0 text-gold-700" />
-          <div className="flex-1">
-            <p className="font-display text-base font-semibold text-ink-900">
-              Showing stub services
-            </p>
-            <p className="mt-0.5 text-[0.8125rem] leading-relaxed">
-              No services exist in the database yet. These are placeholders — edit one to save it
-              to your database.
-            </p>
-          </div>
+      {/* Phase 5 banner — shipping the polished services list */}
+      <div className="mb-6 flex items-start gap-3 rounded-xl border border-gold-300 bg-gold-100 px-4 py-3 text-sm text-ink-700">
+        <Info size={18} strokeWidth={1.6} className="mt-0.5 flex-shrink-0 text-gold-700" />
+        <div className="flex-1">
+          <p className="font-display text-base font-semibold text-ink-900">
+            Phase 5 services list · shipping
+          </p>
+          <p className="mt-0.5 text-[0.8125rem] leading-relaxed">
+            Bucket-grouped catalog with pricing-mode chips and drag handles. Drag-to-reorder and live
+            filter logic are tracked for follow-up; the chips and grip icons here are visual scaffolding only.
+          </p>
+        </div>
+      </div>
+
+      {/* Toolbar: filter chips (visual-only) + group-by select (visual-only) */}
+      <div className="flex flex-wrap items-center justify-between gap-4 bg-parchment-100 border border-border-light rounded-xl px-5 py-4 mb-4">
+        <div className="flex flex-wrap items-center gap-2">
+          {filterChips.map((chip) => (
+            <span
+              key={chip.label}
+              className={
+                chip.active
+                  ? 'inline-flex items-center gap-1.5 rounded-full border border-burgundy-700 bg-burgundy-700 text-cream-50 px-3.5 py-1.5 text-[0.8125rem] font-medium'
+                  : 'inline-flex items-center gap-1.5 rounded-full border border-border-light bg-parchment-50 text-ink-700 px-3.5 py-1.5 text-[0.8125rem] font-medium'
+              }
+            >
+              {chip.label}
+              <span
+                className={
+                  chip.active
+                    ? 'px-1.5 rounded-full bg-white/20 text-[0.6875rem]'
+                    : 'px-1.5 rounded-full bg-parchment-300 text-ink-700 text-[0.6875rem]'
+                }
+              >
+                {chip.count}
+              </span>
+            </span>
+          ))}
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="inline-flex items-center gap-2 rounded-md border border-border-light bg-parchment-50 text-ink-900 px-3 py-1.5 text-[0.8125rem] cursor-default select-none">
+            Group by bucket
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-3 h-3 text-ink-500">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </span>
+        </div>
+      </div>
+
+      {isEmpty ? (
+        <EmptyState />
+      ) : (
+        <div className="flex flex-col gap-[18px]">
+          {BUCKETS.map((bucket) => {
+            const products = grouped[bucket.slug] ?? []
+            if (products.length === 0) return null
+            const Icon = BUCKET_ICONS[bucket.slug]
+            const iconBg = BUCKET_ICON_BG[bucket.slug]
+            const minPrice = computeMinPrice(products)
+            const summary = bucketSummary(bucket.slug, products.length, minPrice)
+            return (
+              <section
+                key={bucket.slug}
+                className="bg-parchment-100 border border-border-light rounded-xl overflow-hidden"
+              >
+                {/* Group head */}
+                <div className="flex items-center justify-between gap-4 px-5 py-4 bg-parchment-50 border-b border-border-light">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-8 h-8 rounded-md ${iconBg} text-cream-50 inline-flex items-center justify-center`}>
+                      <Icon size={16} strokeWidth={1.7} />
+                    </div>
+                    <div>
+                      <div className="font-display text-[1.0625rem] font-semibold text-ink-900 tracking-tight leading-none">
+                        {bucket.label}
+                      </div>
+                      <div className="text-[0.75rem] text-ink-500 mt-1 tracking-[0.04em]">
+                        {summary}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span
+                      className="inline-flex w-[30px] h-[30px] items-center justify-center rounded-sm text-ink-500 border border-transparent cursor-default"
+                      title="Reorder bucket (deferred)"
+                      aria-hidden
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-4 h-4">
+                        <path d="M8 6v12M16 6v12M4 10h8M4 14h12" />
+                      </svg>
+                    </span>
+                    <Link
+                      href="/admin/services/new/edit"
+                      className="inline-flex w-[30px] h-[30px] items-center justify-center rounded-sm text-ink-500 hover:bg-parchment-200 hover:text-burgundy-700 hover:border-border-light border border-transparent transition-colors"
+                      title="Add to bucket"
+                      aria-label="Add product to this bucket"
+                    >
+                      <Plus size={16} strokeWidth={1.8} />
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Product rows */}
+                <div>
+                  {products.map((p, idx) => (
+                    <ProductRow key={p.id} product={p} isFirst={idx === 0} />
+                  ))}
+                </div>
+              </section>
+            )
+          })}
         </div>
       )}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {items.map((service) => {
-          const Icon = ICON_MAP[service.icon_name as IconKey] ?? Briefcase
-          const editHref = `/admin/services/${service.slug}/edit`
-          const dbId = service.dbId
-          return (
-            <article
-              key={service.id}
-              className="relative bg-parchment-100 border border-border-light rounded-xl p-5 flex flex-col gap-4 hover:border-border-medium transition-colors"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-lg bg-burgundy-100/60 border border-gold-300/40 flex items-center justify-center flex-shrink-0 text-burgundy-700">
-                  <Icon size={22} strokeWidth={1.5} />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-start justify-between gap-3">
-                    <h3 className="font-display text-xl font-semibold text-ink-900 leading-tight">
-                      {service.title}
-                    </h3>
-                    <span className="font-mono text-sm font-semibold text-burgundy-700 whitespace-nowrap">
-                      {service.price_label}
-                    </span>
-                  </div>
-                  {service.subtitle && (
-                    <p
-                      className="text-base text-burgundy-700 mt-0.5 font-accent"
-                      style={{ fontSize: '1.125rem', lineHeight: 1.2 }}
-                    >
-                      {service.subtitle}
-                    </p>
-                  )}
-                </div>
-              </div>
-
-              <p className="text-[0.875rem] text-ink-700 line-clamp-2 leading-relaxed">
-                {service.description}
-              </p>
-
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[0.75rem] text-ink-500">
-                <span className="font-mono">
-                  <span className="text-ink-400">Turnaround:</span> {service.turnaround_days}
-                </span>
-                <span className="font-mono">
-                  <span className="text-ink-400">Features:</span> {service.features.length}
-                </span>
-              </div>
-
-              <div className="mt-auto flex items-center justify-between pt-3 border-t border-dashed border-border-light">
-                {dbId !== null ? (
-                  <form action={toggleActive.bind(null, dbId, !service.is_active)}>
-                    <button
-                      type="submit"
-                      className="flex items-center gap-2.5 text-[0.8125rem] font-medium text-ink-700 hover:text-ink-900"
-                      aria-label={service.is_active ? 'Disable service' : 'Activate service'}
-                    >
-                      <span
-                        className={[
-                          'relative inline-block w-10 h-[22px] rounded-full transition-colors',
-                          service.is_active ? 'bg-burgundy-700' : 'bg-parchment-300',
-                        ].join(' ')}
-                      >
-                        <span
-                          className={[
-                            'absolute top-0.5 w-[18px] h-[18px] bg-cream-50 rounded-full shadow-sm transition-all',
-                            service.is_active ? 'left-[20px]' : 'left-0.5',
-                          ].join(' ')}
-                        />
-                      </span>
-                      {service.is_active ? 'Active' : 'Inactive'}
-                    </button>
-                  </form>
-                ) : (
-                  <span className="inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-ink-500">
-                    <Sparkles size={12} strokeWidth={1.8} className="text-gold-700" />
-                    Stub
-                  </span>
-                )}
-                <Link
-                  href={editHref}
-                  className="inline-flex items-center gap-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-burgundy-700 hover:text-burgundy-500"
-                >
-                  <Pencil size={12} strokeWidth={2} />
-                  Edit
-                </Link>
-              </div>
-            </article>
-          )
-        })}
-      </div>
     </AdminShell>
   )
+}
+
+/* ------------ Product row ------------ */
+function ProductRow({ product, isFirst }: { product: ServiceRow; isFirst: boolean }) {
+  const isBundle = (product.bundle_with_slugs?.length ?? 0) > 0
+  const modeLabel = pricingModeLabel(product.pricing_mode, isBundle)
+  const isQuoteOnly = product.pricing_mode === 'quote_only'
+
+  return (
+    <Link
+      href={`/admin/services/${product.id}/edit`}
+      className={`group grid items-center gap-3 px-5 py-3.5 cursor-pointer hover:bg-parchment-50 transition-colors ${
+        isFirst ? '' : 'border-t border-border-light'
+      }`}
+      style={{ gridTemplateColumns: '28px 1fr 200px 110px 70px 110px 36px' }}
+    >
+      {/* Drag handle (visual only) */}
+      <span
+        className="inline-flex items-center justify-center w-7 h-7 -ml-1 rounded-sm text-ink-400 group-hover:text-ink-700"
+        aria-hidden
+        title="Drag to reorder (deferred)"
+      >
+        <GripVertical size={16} strokeWidth={1.6} />
+      </span>
+
+      {/* Name + slug/eyebrow */}
+      <div className="min-w-0">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="font-display text-base font-semibold text-ink-900 leading-tight">
+            {product.name}
+          </span>
+          <span className="inline-flex items-center px-2 py-[2px] rounded-full bg-parchment-200 text-ink-700 text-[0.625rem] font-semibold uppercase tracking-[0.06em]">
+            {modeLabel}
+          </span>
+        </div>
+        <div className="flex flex-wrap items-center gap-2 mt-0.5 text-[0.75rem] text-ink-500">
+          {product.eyebrow && <span>{product.eyebrow}</span>}
+          {product.eyebrow && <span aria-hidden>·</span>}
+          <code className="font-mono text-[0.6875rem] text-ink-500">/services/{product.bucket}/{product.slug}</code>
+        </div>
+      </div>
+
+      {/* Pricing line */}
+      <div
+        className={`font-display font-semibold text-[0.9375rem] ${
+          isQuoteOnly ? 'text-ink-500 font-medium' : 'text-burgundy-700'
+        } hidden md:block`}
+      >
+        {pricingDisplay(product, isBundle)}
+      </div>
+
+      {/* Tier count */}
+      <div className="text-[0.75rem] text-ink-500 text-center hidden md:block">
+        {tierCountDisplay(product)}
+      </div>
+
+      {/* Status */}
+      <div className="hidden md:block">
+        {product.is_published ? (
+          <StatusBadge variant="published">Published</StatusBadge>
+        ) : (
+          <StatusBadge variant="draft">Draft</StatusBadge>
+        )}
+      </div>
+
+      {/* Updated */}
+      <div className="text-[0.75rem] text-ink-500 font-mono hidden md:block">
+        {formatShortDate(product.updated_at)}
+      </div>
+
+      {/* Edit pencil */}
+      <span
+        className="inline-flex w-[30px] h-[30px] items-center justify-center rounded-sm text-ink-500 group-hover:bg-parchment-200 group-hover:text-burgundy-700 group-hover:border-border-light border border-transparent transition-colors justify-self-end"
+        aria-hidden
+      >
+        <Pencil size={14} strokeWidth={1.8} />
+      </span>
+    </Link>
+  )
+}
+
+/* ------------ Status badge (matches .adm-status pill spec) ------------ */
+function StatusBadge({
+  variant,
+  children,
+}: {
+  variant: 'published' | 'draft'
+  children: React.ReactNode
+}) {
+  const styles =
+    variant === 'published'
+      ? 'bg-forest-500/15 text-forest-700'
+      : 'bg-parchment-200 text-ink-500'
+  const dot = variant === 'published' ? 'bg-forest-500' : 'bg-ink-400'
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[0.75rem] font-medium ${styles}`}
+    >
+      <span className={`w-1.5 h-1.5 rounded-full ${dot}`} />
+      {children}
+    </span>
+  )
+}
+
+/* ------------ Empty state ------------ */
+function EmptyState() {
+  return (
+    <section className="bg-parchment-50 border border-dashed border-border-medium rounded-xl px-8 py-12 text-center">
+      <h3 className="font-display text-[1.375rem] font-semibold text-ink-900 mb-2">No products yet</h3>
+      <p className="text-sm text-ink-500 max-w-md mx-auto mb-5">
+        The services catalog is empty. Add a product to get started, or run the Phase 2 seed.
+      </p>
+      <Link
+        href="/admin/services/new/edit"
+        className="inline-flex items-center gap-1.5 bg-gold-500 text-ink-900 hover:bg-gold-300 transition-colors px-5 py-2.5 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em]"
+      >
+        <Plus size={14} strokeWidth={2} />
+        Add a product
+      </Link>
+    </section>
+  )
+}
+
+/* =====================================================================
+   Display helpers — kept local to mirror the V2 HTML's hand-tuned copy.
+   ===================================================================== */
+
+function bucketSummary(bucket: ServiceBucket, productCount: number, minPrice: number | null): string {
+  if (bucket === 'subscription') {
+    return `${productCount} tier${productCount === 1 ? '' : 's'} · monthly recurring`
+  }
+  if (bucket === 'commercial') {
+    return `${productCount} product${productCount === 1 ? '' : 's'} · custom quote`
+  }
+  const priceLabel = minPrice != null ? ` · from $${minPrice}` : ''
+  return `${productCount} product${productCount === 1 ? '' : 's'}${priceLabel}`
+}
+
+function computeMinPrice(products: ServiceRow[]): number | null {
+  let min: number | null = null
+  for (const p of products) {
+    const candidate = minPriceForRow(p)
+    if (candidate == null) continue
+    if (min == null || candidate < min) min = candidate
+  }
+  return min
+}
+
+function minPriceForRow(p: ServiceRow): number | null {
+  const pp = p.pricing as PricingPayload | null
+  if (!pp || typeof pp !== 'object') return null
+  switch ((pp as { mode?: string }).mode) {
+    case 'tiered': {
+      const tiers = (pp as Extract<PricingPayload, { mode: 'tiered' }>).tiers ?? []
+      if (tiers.length === 0) return null
+      return Math.min(...tiers.map((t) => t.price))
+    }
+    case 'range':
+      return (pp as Extract<PricingPayload, { mode: 'range' }>).range?.low ?? null
+    case 'per_extra':
+      return (pp as Extract<PricingPayload, { mode: 'per_extra' }>).per_extra?.base ?? null
+    case 'pack_with_qty': {
+      const packs = (pp as Extract<PricingPayload, { mode: 'pack_with_qty' }>).pack?.packs ?? []
+      if (packs.length === 0) return null
+      return Math.min(...packs.map((q) => q.price))
+    }
+    case 'monthly_recurring':
+      return (pp as Extract<PricingPayload, { mode: 'monthly_recurring' }>).monthly?.monthly_price ?? null
+    case 'quote_only':
+      return (pp as Extract<PricingPayload, { mode: 'quote_only' }>).quote?.from_price ?? null
+    case 'flat':
+      return (pp as Extract<PricingPayload, { mode: 'flat' }>).flat?.price ?? null
+    default:
+      return null
+  }
+}
+
+/** Compact pricing display matching the V2 HTML's hand-tuned strings.
+ *  Examples: `$60 / $90 / $140`, `$250 – $450`, `+40% of job`, `$30 / mo`. */
+function pricingDisplay(product: ServiceRow, isBundle: boolean): string {
+  if (isBundle) {
+    const cents = product.bundle_uplift_cents
+    if (cents != null) return `+$${Math.round(cents / 100)} add-on`
+    return 'Bundle add-on'
+  }
+  const pp = product.pricing as PricingPayload | null
+  if (!pp || typeof pp !== 'object') return '—'
+  switch ((pp as { mode?: string }).mode) {
+    case 'tiered': {
+      const tiers = (pp as Extract<PricingPayload, { mode: 'tiered' }>).tiers ?? []
+      if (tiers.length === 0) return 'Quote'
+      return tiers.map((t) => `$${t.price}`).join(' / ')
+    }
+    case 'range': {
+      const r = (pp as Extract<PricingPayload, { mode: 'range' }>).range
+      return `$${r.low} – $${r.high}`
+    }
+    case 'per_extra': {
+      const x = (pp as Extract<PricingPayload, { mode: 'per_extra' }>).per_extra
+      return `$${x.base} + $${x.extra_low}–${x.extra_high}/extra`
+    }
+    case 'pack_with_qty': {
+      const packs = (pp as Extract<PricingPayload, { mode: 'pack_with_qty' }>).pack?.packs ?? []
+      if (packs.length === 0) return 'Quote'
+      return packs.map((q) => `$${q.price}`).join(' / ')
+    }
+    case 'pct_uplift': {
+      const u = (pp as Extract<PricingPayload, { mode: 'pct_uplift' }>).uplift
+      return `+${u.percent}% of job`
+    }
+    case 'monthly_recurring': {
+      const m = (pp as Extract<PricingPayload, { mode: 'monthly_recurring' }>).monthly
+      return `$${m.monthly_price} / mo`
+    }
+    case 'quote_only': {
+      const q = (pp as Extract<PricingPayload, { mode: 'quote_only' }>).quote
+      return q?.from_price != null ? `From $${q.from_price}` : 'Custom quote'
+    }
+    case 'flat': {
+      const f = (pp as Extract<PricingPayload, { mode: 'flat' }>).flat
+      return `$${f.price}`
+    }
+    default:
+      return '—'
+  }
+}
+
+/** Right-column tier/qty count, matching the V2 HTML's "3 tiers" / "2 quantities" / "—". */
+function tierCountDisplay(product: ServiceRow): string {
+  const pp = product.pricing as PricingPayload | null
+  if (!pp || typeof pp !== 'object') return '—'
+  switch ((pp as { mode?: string }).mode) {
+    case 'tiered': {
+      const tiers = (pp as Extract<PricingPayload, { mode: 'tiered' }>).tiers ?? []
+      if (tiers.length === 0) return '—'
+      return `${tiers.length} tier${tiers.length === 1 ? '' : 's'}`
+    }
+    case 'pack_with_qty': {
+      const packs = (pp as Extract<PricingPayload, { mode: 'pack_with_qty' }>).pack?.packs ?? []
+      if (packs.length === 0) return '—'
+      return `${packs.length} quantit${packs.length === 1 ? 'y' : 'ies'}`
+    }
+    default:
+      return '—'
+  }
 }

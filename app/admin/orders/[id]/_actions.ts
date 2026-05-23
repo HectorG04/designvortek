@@ -64,7 +64,18 @@ export async function updateOrderNotes(formData: FormData): Promise<void> {
 }
 
 /**
- * Set a quoted price and move the order into the `quoted` state.
+ * Set a quoted price + optional custom adjustment and move the order
+ * into the `quoted` state.
+ *
+ * The custom adjustment supports negotiation (discounts, surcharges,
+ * loyalty rates, multi-piece bundles) without exposing those on the
+ * public site. Three columns drive it:
+ *
+ *   adjustment_label  → shown to the customer on the quote email
+ *   adjustment_amount → signed integer in USD whole dollars (negative = discount)
+ *   adjustment_reason → admin-only context, never shared with the customer
+ *
+ * Total quote = quoted_price + adjustment_amount.
  */
 export async function sendQuote(formData: FormData): Promise<void> {
   const id = Number(formData.get('id'))
@@ -73,11 +84,30 @@ export async function sendQuote(formData: FormData): Promise<void> {
   if (!Number.isFinite(id) || id <= 0) return
   if (!Number.isFinite(price) || price < 0) return
 
+  // Custom adjustment (optional). Empty → null. Negative is allowed.
+  const adjLabelRaw = String(formData.get('adjustment_label') ?? '').trim()
+  const adjLabel = adjLabelRaw.length === 0 ? null : adjLabelRaw
+
+  const adjAmountRaw = String(formData.get('adjustment_amount') ?? '').trim()
+  let adjAmount: number | null = null
+  if (adjAmountRaw.length > 0) {
+    // Strip "$", "+", commas, and any en/em dashes the customer might have typed.
+    const cleaned = adjAmountRaw.replace(/[$+,\s]/g, '').replace(/[–—]/g, '-')
+    const n = Number(cleaned)
+    if (Number.isFinite(n)) adjAmount = Math.round(n)
+  }
+
+  const adjReasonRaw = String(formData.get('adjustment_reason') ?? '').trim()
+  const adjReason = adjReasonRaw.length === 0 ? null : adjReasonRaw
+
   const admin = createAdminClient()
   await admin
     .from('commission_orders')
     .update({
       quoted_price: price,
+      adjustment_label: adjLabel,
+      adjustment_amount: adjAmount,
+      adjustment_reason: adjReason,
       status: 'quoted',
       updated_at: new Date().toISOString(),
     })

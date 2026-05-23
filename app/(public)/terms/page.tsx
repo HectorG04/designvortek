@@ -12,36 +12,40 @@ export const metadata: Metadata = {
   alternates: { canonical: '/terms' },
 }
 
-const BODY = `These terms govern your use of the Design Vortex website and any commission you place with us. By submitting a commission brief or purchasing a service, you agree to them. They're written in plain English. If anything is unclear, email us — we'll explain.
+const BODY = `These terms govern your use of the Design Vortex website and any commission you place with us. By submitting a commission brief or purchasing a service, you agree to them. They're written in plain English. If anything is unclear, email us and we'll explain.
 
 ## 1. The service
 
-Design Vortex is a small art studio producing custom illustrations, character art, VTT tokens, party portraits, and related work. We offer **fixed-price commissions** on a fixed-slot, monthly basis. We are a human-only studio: **no AI generation** is used in any part of our production process.
+Design Vortex is a small art studio producing custom illustrations: character art, VTT tokens, party portraits, NPC packs, maps, monsters and items, plus commercial and publisher work. We offer **fixed-price commissions** on a slot-limited basis. We are a human-only studio. **No AI generation** is used in any part of our production process.
 
 ## 2. Brief, quote, and approval
 
-- A submitted brief is not a contract — it's a request for a quote.
+- A submitted brief is not a contract. It's a request for a quote.
 - Within **48 hours** we send a fixed quote with timeline and a slot offer.
-- Your slot is reserved once you pay the 25% deposit and confirm the brief in writing.
+- Your slot is reserved once you pay the 30% deposit and confirm the brief in writing.
 - Until you approve and pay the deposit, nothing is owed.
 
 ## 3. Payment terms
 
 ### 3.1 Deposit
 
-A **25% non-binding deposit** is due at booking. It is refundable until first sketch (see [Refund Policy](/refunds)). Once the first sketch is sent, the deposit covers our sketch labor and becomes non-refundable.
+A **30% non-binding deposit** is due at booking. It is refundable until first sketch (see [Refund Policy](/refunds)). Once the first sketch is sent, the deposit covers our sketch labor and becomes non-refundable.
 
 ### 3.2 Balance
 
-The remaining 75% is due on delivery of the final files. Files are watermarked until balance clears. We accept payment via Stripe (cards), and bank transfer for invoices over $500.
+The remaining 70% is due on delivery of the final files. Files are watermarked until balance clears. We accept payment via Stripe (cards, Apple Pay, Google Pay, Link, ACH).
 
-### 3.3 Late payment
+### 3.3 Currency
+
+All pricing is in **United States Dollars (USD)**. International cards are billed at the current exchange rate by your card provider. We do not invoice in any other currency.
+
+### 3.4 Late payment
 
 Invoices unpaid 14 days past the due date will be assessed a **5% surcharge per month**.
 
 ## 4. Revisions
 
-Every commission includes **two rounds of revisions**: one at the sketch stage and one at the color/paint stage. Additional revisions are billable at $50 per round. Major scope changes (different character, swapped pose) reset the quote.
+Every commission includes **two rounds of revisions**: one at the sketch stage and one at the color/paint stage. Sketch revisions before the first paint pass are unlimited. Major scope changes (different character, swapped pose, new subject) reset the quote.
 
 ## 5. Intellectual property & usage
 
@@ -51,13 +55,17 @@ Every commission includes **two rounds of revisions**: one at the sketch stage a
 - Use on your character sheet, personal social posts, profile pictures.
 - Use as your VTT token in Roll20, Foundry, or similar platforms.
 
-### 5.2 Commercial use (add-on)
+### 5.2 Commercial use
 
-Books, paid streaming, merchandise, paid Patreon tiers, or any revenue-generating use requires a **$150 commercial license** per piece, or a bulk arrangement for larger projects.
+Books, paid streaming, merchandise, paid Patreon tiers, indie game assets, and any revenue-generating use require **commercial licensing**. The licensing uplift is **+40% of the base job price (flat)** and covers the scope agreed in writing before paint starts. See [/commercial](/commercial) for retainer arrangements.
 
 ### 5.3 Studio rights
 
-We retain the right to display the commissioned work in our portfolio, on social media, and in process posts. If you need a non-disclosure window (e.g. a surprise gift, book launch), let us know in the brief.
+We retain the right to display the commissioned work in our portfolio, on social media, and in process posts. If you need a non-disclosure window (e.g. a surprise gift, book launch, unreleased IP), let us know in the brief. NDAs are signed free of charge.
+
+### 5.4 Subscription terms
+
+For subscription tiers ([Campaign Companion](/subscription) and the GM tier), the **first month is paid upfront in full** (no deposit model). Cancel before the **10th of the month** to skip the next cycle. Style guides are held for **12 months** after the last paid cycle.
 
 ## 6. Timeline
 

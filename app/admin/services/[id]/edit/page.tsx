@@ -1,265 +1,171 @@
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { createClient, createAdminClient } from '@/lib/supabase/server'
-import type { Json } from '@/lib/supabase/types'
 import AdminShell from '@/components/admin/AdminShell'
-import ServiceEditorForm, { type ServiceFormValues } from './_ServiceEditorForm'
-import { revalidatePath } from 'next/cache'
-import { redirect } from 'next/navigation'
+import ServiceForm, { type ServiceFormValues } from '../../_ServiceForm'
 
 export const metadata: Metadata = { title: 'Edit service' }
 
-const DEMO_DEFAULTS: Record<string, Partial<ServiceFormValues>> = {
-  'character-art': {
-    slug: 'character-art',
-    title: 'Character Art',
-    subtitle: 'your hero, painted',
-    description:
-      'Single-character portraits at portfolio quality. Detailed rendering, expressive poses, dramatic lighting.',
-    starting_price: 180,
-    turnaround_days: '7–14 days',
-    features: ['2 revisions included', '7–14 day turnaround', '4K final delivery', 'Transparent background export'],
-    tiers: [
-      { name: 'Standard', price: 180, turnaround_days: '10 days', features: ['1 character', '1 revision', 'Standard rendering'] },
-      { name: 'Deluxe',   price: 320, turnaround_days: '14 days', features: ['1 character', '2 revisions', 'Detailed background'] },
-      { name: 'Premium',  price: 520, turnaround_days: '18 days', features: ['1 character', '3 revisions', 'Custom background, props'] },
-    ],
-    sort_order: 1,
-  },
-  'vtt-tokens': {
-    slug: 'vtt-tokens',
-    title: 'VTT Tokens',
-    subtitle: 'for the virtual tabletop',
-    description: 'Round, square, hex — token sets ready for Roll20, Foundry, and the rest.',
-    starting_price: 80,
-    turnaround_days: '3–7 days',
-    features: ['Single · Party · Bulk', '3–7 day turnaround', 'Multi-format export'],
-    tiers: [
-      { name: 'Standard', price: 80,  turnaround_days: '5 days',  features: ['1 token', 'Round + square'] },
-      { name: 'Deluxe',   price: 220, turnaround_days: '7 days',  features: ['Up to 4 tokens', 'All shapes'] },
-      { name: 'Premium',  price: 420, turnaround_days: '10 days', features: ['Bulk set', 'Style-locked'] },
-    ],
-    sort_order: 2,
-  },
-  'party-portraits': {
-    slug: 'party-portraits',
-    title: 'Party Portraits',
-    subtitle: 'the whole gang',
-    description: 'Group compositions for adventuring parties.',
-    starting_price: 400,
-    turnaround_days: '14–21 days',
-    features: ['Trio · Adventurers · Epic', 'Up to 6 characters', 'Print-ready'],
-    tiers: [
-      { name: 'Standard', price: 400, turnaround_days: '14 days', features: ['3 characters', '1 revision'] },
-      { name: 'Deluxe',   price: 720, turnaround_days: '18 days', features: ['Up to 5 characters', '2 revisions'] },
-      { name: 'Premium',  price: 1100, turnaround_days: '21 days', features: ['Up to 6 characters', 'Custom setting'] },
-    ],
-    sort_order: 3,
-  },
-  'npc-packs': {
-    slug: 'npc-packs',
-    title: 'NPC Packs',
-    subtitle: 'for the campaign',
-    description: 'A bench of supporting characters delivered in a unified style.',
-    starting_price: 600,
-    turnaround_days: '3–6 weeks',
-    features: ['5–20 figure tiers', 'Style-locked', 'Token cuts'],
-    tiers: [
-      { name: 'Standard', price: 600,  turnaround_days: '3 weeks', features: ['5 NPCs'] },
-      { name: 'Deluxe',   price: 1100, turnaround_days: '4 weeks', features: ['10 NPCs'] },
-      { name: 'Premium',  price: 2000, turnaround_days: '6 weeks', features: ['20 NPCs'] },
-    ],
-    sort_order: 4,
-  },
-  'custom-projects': {
-    slug: 'custom-projects',
-    title: 'Custom Projects',
-    subtitle: "whatever you're dreaming up",
-    description: 'Book covers, indie game art, large illustrations. Scoped per project.',
-    starting_price: 0,
-    turnaround_days: 'By scope',
-    features: ['Per-project scoping', 'Custom usage license'],
-    tiers: [
-      { name: 'Standard', price: 0, turnaround_days: 'By scope', features: ['Per-project scope'] },
-      { name: 'Deluxe',   price: 0, turnaround_days: 'By scope', features: ['Larger scope, more revisions'] },
-      { name: 'Premium',  price: 0, turnaround_days: 'By scope', features: ['Full creative partnership'] },
-    ],
-    sort_order: 5,
-  },
-}
+/* =====================================================================
+   ADMIN · SERVICES — edit page (Phase 1 interim).
 
-interface Tier {
+   When `id = 'new'`, renders an empty form in create mode.
+   Otherwise loads the row by numeric id and renders an edit form.
+   ===================================================================== */
+
+type ServiceRow = {
+  id: number
+  slug: string
   name: string
-  price: number
-  turnaround_days: string
-  features: string[]
+  bucket: string
+  eyebrow: string | null
+  lede: string | null
+  description: string | null
+  pricing_mode: string
+  pricing: unknown
+  turnaround_low_days: number | null
+  turnaround_high_days: number | null
+  revisions_included: number | null
+  resolution: string | null
+  included: unknown
+  examples: unknown
+  faq: unknown
+  bundle_with_slugs: string[] | null
+  bundle_uplift_cents: number | null
+  genre_tags: string[] | null
+  is_published: boolean
+  is_featured_homepage: boolean
+  featured_order: number | null
+  seo_title: string | null
+  seo_description: string | null
+  sort_order: number
+  updated_at: string
 }
 
-function parseTiers(tierData: unknown): Tier[] {
-  const fallback: Tier[] = [
-    { name: 'Standard', price: 0, turnaround_days: '', features: [] },
-    { name: 'Deluxe',   price: 0, turnaround_days: '', features: [] },
-    { name: 'Premium',  price: 0, turnaround_days: '', features: [] },
-  ]
-  if (!tierData || typeof tierData !== 'object') return fallback
-
-  if (Array.isArray(tierData)) {
-    return tierData.slice(0, 3).map((t) => normalizeTier(t))
-  }
-
-  const obj = tierData as Record<string, unknown>
-  if (Array.isArray(obj.tiers)) {
-    return (obj.tiers as unknown[]).slice(0, 3).map((t) => normalizeTier(t))
-  }
-
-  return fallback
+const EMPTY_VALUES: ServiceFormValues = {
+  slug: '',
+  name: '',
+  bucket: 'character-work',
+  eyebrow: '',
+  lede: '',
+  description: '',
+  pricing_mode: 'tiered',
+  pricing_json: JSON.stringify({ tiers: [{ name: 'Basic', price: 0, features: [] }] }, null, 2),
+  turnaround_low_days: '',
+  turnaround_high_days: '',
+  revisions_included: '2',
+  resolution: '',
+  included_json: '[]',
+  examples_json: '[]',
+  faq_json: '[]',
+  bundle_with_slugs: '',
+  bundle_uplift_cents: '',
+  genre_tags: '',
+  is_published: false,
+  is_featured_homepage: false,
+  featured_order: '',
+  seo_title: '',
+  seo_description: '',
+  sort_order: '0',
 }
 
-function normalizeTier(raw: unknown): Tier {
-  if (!raw || typeof raw !== 'object') {
-    return { name: '', price: 0, turnaround_days: '', features: [] }
-  }
-  const r = raw as Record<string, unknown>
-  const features = Array.isArray(r.features)
-    ? (r.features as unknown[]).filter((x): x is string => typeof x === 'string')
-    : []
-  return {
-    name: typeof r.name === 'string' ? r.name : '',
-    price: typeof r.price === 'number' ? r.price : Number(r.price) || 0,
-    turnaround_days: typeof r.turnaround_days === 'string' ? r.turnaround_days : '',
-    features,
+function jsonString(value: unknown, fallback: string): string {
+  if (value === null || value === undefined) return fallback
+  try {
+    return JSON.stringify(value, null, 2)
+  } catch {
+    return fallback
   }
 }
 
-export default async function ServiceEditorPage({
+export default async function ServiceEditPage({
   params,
 }: {
   params: Promise<{ id: string }>
 }) {
   const { id } = await params
+
   const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
   const email = user?.email ?? 'admin@designvortex.co'
   const initials = email.slice(0, 2).toUpperCase()
 
+  // 'new' route — render empty form for creation
+  if (id === 'new') {
+    return (
+      <AdminShell
+        user={{ email, initials }}
+        title="New product"
+        subtitle="Add a new service to the catalog"
+        showSearch={false}
+      >
+        <ServiceForm mode="create" initial={EMPTY_VALUES} />
+      </AdminShell>
+    )
+  }
+
+  const numericId = parseInt(id, 10)
+  if (!Number.isFinite(numericId)) notFound()
+
   const admin = createAdminClient()
+  const { data: row } = await admin
+    .from('services')
+    .select('*')
+    .eq('id', numericId)
+    .maybeSingle()
 
-  // Try to find the service: first by numeric id, then by slug
-  let existing = null
-  const numericId = Number(id)
-  if (Number.isFinite(numericId) && Number.isInteger(numericId)) {
-    const { data } = await admin.from('services').select('*').eq('id', numericId).maybeSingle()
-    existing = data
-  }
-  if (!existing) {
-    const { data } = await admin.from('services').select('*').eq('slug', id).maybeSingle()
-    existing = data
-  }
+  if (!row) notFound()
 
-  const initialValues: ServiceFormValues = existing
-    ? {
-        id: existing.id,
-        slug: existing.slug,
-        title: existing.title,
-        subtitle: existing.subtitle ?? '',
-        description: existing.description,
-        starting_price: existing.starting_price ?? 0,
-        turnaround_days: existing.turnaround_days ?? '',
-        features: existing.features ?? [],
-        hero_image: existing.hero_image ?? '',
-        sort_order: existing.sort_order ?? 0,
-        is_active: existing.is_active,
-        tiers: parseTiers(existing.tier_data),
-      }
-    : {
-        id: null,
-        slug: id === 'new' ? '' : id,
-        title: '',
-        subtitle: '',
-        description: '',
-        starting_price: 0,
-        turnaround_days: '',
-        features: [],
-        hero_image: '',
-        sort_order: 0,
-        is_active: true,
-        tiers: [
-          { name: 'Standard', price: 0, turnaround_days: '', features: [] },
-          { name: 'Deluxe',   price: 0, turnaround_days: '', features: [] },
-          { name: 'Premium',  price: 0, turnaround_days: '', features: [] },
-        ],
-        ...DEMO_DEFAULTS[id],
-      }
+  const service = row as ServiceRow
 
-  async function saveService(values: ServiceFormValues) {
-    'use server'
-    const admin = createAdminClient()
-
-    if (!values.slug.trim() || !values.title.trim()) {
-      throw new Error('Slug and title are required')
-    }
-
-    const payload = {
-      slug: values.slug.trim(),
-      title: values.title.trim(),
-      subtitle: values.subtitle.trim() || null,
-      description: values.description,
-      starting_price: Number(values.starting_price) || 0,
-      turnaround_days: values.turnaround_days.trim() || null,
-      features: values.features,
-      hero_image: values.hero_image.trim() || null,
-      sort_order: Number(values.sort_order) || 0,
-      is_active: !!values.is_active,
-      tier_data: { tiers: values.tiers } as unknown as Json,
-      updated_at: new Date().toISOString(),
-    }
-
-    // Decide insert vs update: if values.id is set, update. Otherwise look up by slug.
-    if (values.id) {
-      await admin.from('services').update(payload).eq('id', values.id)
-    } else {
-      const { data: bySlug } = await admin
-        .from('services')
-        .select('id')
-        .eq('slug', payload.slug)
-        .maybeSingle()
-      if (bySlug?.id) {
-        await admin.from('services').update(payload).eq('id', bySlug.id)
-      } else {
-        await admin.from('services').insert(payload)
-      }
-    }
-
-    revalidatePath('/admin/services')
-    revalidatePath(`/admin/services/${payload.slug}/edit`)
-    revalidatePath('/services')
-    redirect('/admin/services')
+  const initial: ServiceFormValues = {
+    id: service.id,
+    slug: service.slug,
+    name: service.name,
+    bucket: service.bucket,
+    eyebrow: service.eyebrow ?? '',
+    lede: service.lede ?? '',
+    description: service.description ?? '',
+    pricing_mode: service.pricing_mode,
+    pricing_json: jsonString(service.pricing, '{}'),
+    turnaround_low_days: service.turnaround_low_days?.toString() ?? '',
+    turnaround_high_days: service.turnaround_high_days?.toString() ?? '',
+    revisions_included: service.revisions_included?.toString() ?? '2',
+    resolution: service.resolution ?? '',
+    included_json: jsonString(service.included, '[]'),
+    examples_json: jsonString(service.examples, '[]'),
+    faq_json: jsonString(service.faq, '[]'),
+    bundle_with_slugs: (service.bundle_with_slugs ?? []).join(', '),
+    bundle_uplift_cents: service.bundle_uplift_cents?.toString() ?? '',
+    genre_tags: (service.genre_tags ?? []).join(', '),
+    is_published: !!service.is_published,
+    is_featured_homepage: !!service.is_featured_homepage,
+    featured_order: service.featured_order?.toString() ?? '',
+    seo_title: service.seo_title ?? '',
+    seo_description: service.seo_description ?? '',
+    sort_order: service.sort_order?.toString() ?? '0',
   }
 
-  async function deleteService() {
-    'use server'
-    if (!initialValues.id) {
-      redirect('/admin/services')
-    }
-    const admin = createAdminClient()
-    await admin.from('services').delete().eq('id', initialValues.id!)
-    revalidatePath('/admin/services')
-    redirect('/admin/services')
-  }
+  const lastEdited = new Date(service.updated_at).toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+  })
 
-  const title = existing ? 'Edit service' : 'New service'
-  const subtitle = existing
-    ? `${existing.title} · /${existing.slug}`
-    : id === 'new'
-      ? 'Create a new service'
-      : `Stub — saving will create /${initialValues.slug} in the database`
+  const status = service.is_published ? 'Published' : 'Draft'
 
   return (
-    <AdminShell user={{ email, initials }} title={title} subtitle={subtitle} showSearch={false}>
-      <ServiceEditorForm
-        initialValues={initialValues}
-        onSave={saveService}
-        onDelete={existing ? deleteService : null}
-      />
+    <AdminShell
+      user={{ email, initials }}
+      title="Edit product"
+      subtitle={`${service.name} · last edit ${lastEdited} · ${status}`}
+      showSearch={false}
+    >
+      <ServiceForm mode="edit" initial={initial} />
     </AdminShell>
   )
 }

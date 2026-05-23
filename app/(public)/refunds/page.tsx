@@ -12,18 +12,18 @@ export const metadata: Metadata = {
   alternates: { canonical: '/refunds' },
 }
 
-const BODY = `We make art by hand, one commission at a time, and we want you to love the result. This page explains exactly when a refund applies, when it doesn't, and how to request one. **Written in plain English.** If anything feels unfair, email us — we'll talk it through.
+const BODY = `We make art by hand, one commission at a time, and we want you to love the result. This page explains exactly when a refund applies, when it doesn't, and how to request one. **Written in plain English.** If anything feels unfair, email us and we'll talk it through.
 
 ## 1. Deposit policy
 
-Every commission begins with a **25% non-binding deposit**. The deposit holds your slot in the month's schedule and reserves our time. It is:
+Every commission begins with a **30% non-binding deposit**. The deposit holds your slot in the schedule and reserves our time. It is:
 
 - **Fully refundable** any time before the first sketch is delivered.
-- **Non-refundable** once the first sketch is delivered — it covers our sketch labor.
+- **Non-refundable** once the first sketch is delivered. It covers our sketch labor.
 
 ## 2. The revision process
 
-Two rounds of revisions are baked into every commission — one at the sketch stage and one at the color/paint stage. Most pieces nail it well within that budget. If we're mid-revision and the direction has gone sideways, pause and email us. We'd rather have an honest conversation than a frustrated client.
+Two rounds of revisions are baked into every commission across every tier. One at the sketch stage and one at the color/paint stage. Most pieces nail it well within that budget. If we're mid-revision and the direction has gone sideways, pause and email us. We'd rather have an honest conversation than a frustrated client.
 
 ## 3. Refund eligibility
 
@@ -36,13 +36,17 @@ Two rounds of revisions are baked into every commission — one at the sketch st
 ### 3.2 Partial refund (balance only)
 
 - After the first sketch but before final delivery, the deposit is retained but the **remaining balance is refunded** if you choose to cancel.
-- If at the final delivery stage the piece is genuinely not what you wanted — and the two included revisions have not resolved it — we will refund the balance above the 25% deposit.
+- If at the final delivery stage the piece is genuinely not what you wanted and the two included revisions have not resolved it, we will refund the balance above the 30% deposit.
 
 ### 3.3 Not eligible for refund
 
 - The completed and approved piece (where final files have been delivered).
 - Cancellation after the 2 included revisions, where the revisions are within the original brief.
 - Delays caused by the client (slow approvals, unresponsiveness over 14 days, scope changes).
+
+### 3.4 Subscriptions
+
+Subscription tiers ([Campaign Companion](/subscription) and the GM tier) are **paid monthly upfront**. There is no deposit refund model. To stop billing, cancel before the **10th of the month** and the next cycle will not charge. Already-paid months are not refunded once the month's drop has begun.
 
 ## 4. How to request a refund
 

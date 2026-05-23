@@ -307,7 +307,7 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
           </section>
 
           {/* Quote builder */}
-          <section className="bg-parchment-100 border border-border-light rounded-xl px-6 py-6">
+          <section className="bg-parchment-100 border border-border-light rounded-xl px-6 py-6 overflow-hidden">
             <div className="flex items-center justify-between mb-3">
               <h2 className="font-display text-[1.125rem] font-semibold text-ink-900">
                 Quote builder
@@ -315,9 +315,11 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
             </div>
             <form action={sendQuote} className="flex flex-col gap-3">
               <input type="hidden" name="id" value={order.id} />
+
+              {/* Base price */}
               <label className="flex flex-col gap-1.5">
                 <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500">
-                  Quoted price (USD)
+                  Base price (USD)
                 </span>
                 <div className="relative">
                   <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-500 font-semibold">
@@ -334,16 +336,95 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
                   />
                 </div>
               </label>
+
+              {/* Custom adjustment block — gold dashed border, sits between
+                  base price and total. Three fields: label (customer-visible),
+                  amount (signed), reason (admin-only). */}
+              <div className="border-[1.5px] border-dashed border-gold-300 bg-gold-100/40 rounded-md p-3.5 flex flex-col gap-2.5">
+                <div className="flex items-center gap-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-gold-700">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="12"
+                    height="12"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M19 5L5 19M9 5h10v10" />
+                  </svg>
+                  <span>Custom adjustment</span>
+                  <em className="not-italic font-normal text-ink-500 normal-case tracking-normal text-[0.6875rem]">
+                    optional · discount or surcharge
+                  </em>
+                </div>
+
+                <div className="flex gap-2">
+                  <input
+                    type="text"
+                    name="adjustment_label"
+                    defaultValue={order.adjustment_label ?? ''}
+                    placeholder="Label shown to customer · e.g. Returning client"
+                    className="flex-1 min-w-0 bg-parchment-50 border-[1.5px] border-border-light rounded-md px-3 py-2 text-[0.875rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-gold-500 focus:ring-[3px] focus:ring-gold-100 transition-all"
+                  />
+                  <div className="relative w-[100px] flex-shrink-0">
+                    <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-ink-500 font-semibold text-sm">
+                      $
+                    </span>
+                    <input
+                      type="text"
+                      name="adjustment_amount"
+                      defaultValue={order.adjustment_amount ?? ''}
+                      placeholder="±0"
+                      inputMode="numeric"
+                      className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md pl-6 pr-2 py-2 text-[0.875rem] text-ink-900 font-mono placeholder:text-ink-400 focus:outline-none focus:border-gold-500 focus:ring-[3px] focus:ring-gold-100 transition-all"
+                    />
+                  </div>
+                </div>
+
+                <textarea
+                  name="adjustment_reason"
+                  defaultValue={order.adjustment_reason ?? ''}
+                  rows={2}
+                  placeholder="Internal note · why this adjustment? (private, not sent to customer)"
+                  className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md px-3 py-2 text-[0.8125rem] text-ink-700 placeholder:text-ink-400 focus:outline-none focus:border-gold-500 focus:ring-[3px] focus:ring-gold-100 transition-all resize-y min-h-[52px]"
+                />
+              </div>
+
+              {/* Total quote row — gold strip at the bottom of the card.
+                  Computed server-side from quoted_price + adjustment_amount
+                  for display; the form posts the raw inputs and the action
+                  saves them separately so future edits remain easy. */}
+              <div
+                className="flex items-center justify-between bg-gold-100 px-6 py-3.5 -mx-6 -mb-6 mt-1 border-t border-border-light"
+                aria-label="Total quote"
+              >
+                <span className="font-display text-base font-semibold text-ink-900">
+                  Total quote
+                </span>
+                <span className="font-display text-[1.75rem] font-semibold text-burgundy-700 tracking-[-0.015em]">
+                  {(() => {
+                    const base = order.quoted_price ?? 0
+                    const adj = order.adjustment_amount ?? 0
+                    const total = base + adj
+                    if (base === 0 && adj === 0) return '—'
+                    return `$${total}`
+                  })()}
+                </span>
+              </div>
+
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-1.5 bg-gold-500 text-ink-900 hover:bg-gold-300 hover:shadow-[0_8px_24px_rgba(201,160,74,0.32)] transition-all px-4 py-2.5 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em]"
+                className="inline-flex items-center justify-center gap-1.5 bg-gold-500 text-ink-900 hover:bg-gold-300 hover:shadow-[0_8px_24px_rgba(201,160,74,0.32)] transition-all px-4 py-2.5 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em] mt-7"
               >
                 <Send size={14} strokeWidth={1.8} />
                 Send quote
               </button>
               <p className="text-xs text-ink-500 leading-relaxed">
                 Sending a quote sets status to{' '}
-                <strong className="text-ink-700">Quoted</strong>.
+                <strong className="text-ink-700">Quoted</strong>. The custom adjustment
+                appears on the customer&apos;s quote email; the internal note stays private.
               </p>
             </form>
           </section>

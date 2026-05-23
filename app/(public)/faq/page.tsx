@@ -38,9 +38,9 @@ const FAQS: FaqItem[] = [
   {
     category: 'pricing',
     q: 'How much does a commission cost?',
-    a: `Commissions range from **$80 for a single VTT token** to **$600+ for a full party portrait**. Character art starts at $180; NPC packs from $300. Every quote is fixed up front — no surprises, no add-ons mid-project.
+    a: `Commissions range from **$25 for converting your existing art into a VTT token** all the way to **$900+ for an action scene illustration**. Character bust portraits start at $60. Full-body character art from $120. NPC packs from $220 for five. Subscriptions from $30/month.
 
-See the full [pricing breakdown](/pricing) for every service tier.`,
+All prices are USD. Every quote is fixed up front. See the full [pricing breakdown](/pricing).`,
   },
   {
     category: 'pricing',
@@ -50,44 +50,42 @@ See the full [pricing breakdown](/pricing) for every service tier.`,
   {
     category: 'pricing',
     q: 'How does payment work?',
-    a: `A **25% deposit** holds your slot (refundable until first sketch). The remaining 75% is due on delivery. All payments through Stripe.`,
+    a: `A **30% deposit** holds your slot. It is refundable until the first sketch is sent. After the first sketch the deposit becomes non-refundable (it covers our sketch work). The remaining 70% is due on delivery. All payments through Stripe.`,
   },
   {
     category: 'pricing',
     q: 'Do you offer bulk discounts?',
-    a: `Yes — **NPC packs of 5+** get a per-piece discount. VTT tokens in bulk drop to **$60 each at 8+**. Custom retainer arrangements are available for frequent collaborators.`,
+    a: `Yes. **NPC packs** drop to **$40 each** at 10 NPCs vs **$44** at 5. **Token Pack (5)** at $180 works out to **$36 per token** vs $40–60 individually. **Item / Artifact 6-pack** is $150 ($25 per item) vs $30 single. For volume above these tiers, see the [commercial retainer](/commercial).`,
+  },
+  {
+    category: 'pricing',
+    q: 'Are all prices in USD?',
+    a: `**Yes, USD only.** International cards are billed at the current exchange rate by your card provider. We do not adjust pricing per region.`,
   },
   {
     category: 'process',
     q: 'How long does a commission take?',
-    a: `Most character portraits ship within **7–14 days** of brief approval. VTT tokens are faster (3–7 days). Party portraits and NPC packs take 2–4 weeks depending on figure count.
-
-Rush turnaround is available for **+$50** on most services — reach out before booking.`,
+    a: `Turnaround is quoted as a range per tier, framed as handcrafted and slot-limited. **Character bust** runs 5 to 10 days. **Full-body character art** runs 7 to 14 days. **VTT tokens** are 3 to 7 days. **Party portraits** are 14 to 21 days. **NPC packs** run 3 to 6 weeks depending on pack size. **Maps** and **commercial work** are quoted per brief.`,
   },
   {
     category: 'process',
     q: 'What happens after I submit a brief?',
-    a: `Within **48 hours** we review the brief and send back a fixed quote with a timeline. You approve, pay a 25% deposit, and we begin. Sketches typically land within a week.`,
+    a: `Within **48 hours** we review the brief and send back a fixed quote with a timeline. You approve, pay a 30% deposit, and we begin. Sketches typically land within a week.`,
   },
   {
     category: 'process',
     q: 'Will I get updates during the painting?',
-    a: `Yes — sketches, color blocks, and paint progress are shared **every three days**. You'll never wonder where things stand.`,
-  },
-  {
-    category: 'process',
-    q: 'Can I request a rush?',
-    a: `Yes — **+$50** moves you to the front of the queue with a 3-day turnaround on Character and Token services. Reach out before booking to confirm we have rush capacity.`,
+    a: `Yes. Sketches, color blocks, and paint progress are shared **every few days**. You'll never wonder where things stand.`,
   },
   {
     category: 'revisions',
     q: 'How many revisions are included?',
-    a: `Sketch revisions are **unlimited** — we get the foundation right before paint. **Two paint-stage revisions** are baked into every commission. Extra rounds are $40 each.`,
+    a: `Sketch revisions are **unlimited**. We get the foundation right before paint. **Two paint-stage revisions** are baked into every commission across every tier.`,
   },
   {
     category: 'revisions',
-    q: 'What if I’m not happy with the result?',
-    a: `In four years and **500+ commissions**, this has happened twice. If the piece is genuinely off the brief, we refund the balance beyond the 25% deposit (which covers our sketch work). Read the full [refund policy](/refunds).`,
+    q: "What if I'm not happy with the result?",
+    a: `In four years and **500+ commissions**, this has happened twice. If the piece is genuinely off the brief, we refund the balance beyond the **30% deposit** (which covers our sketch work). Read the full [refund policy](/refunds).`,
   },
   {
     category: 'revisions',
@@ -97,12 +95,12 @@ Rush turnaround is available for **+$50** on most services — reach out before 
   {
     category: 'licensing',
     q: 'Can I use the art commercially?',
-    a: `Personal use (prints, social posts, your character sheet) is **included** with every commission. **Commercial licensing** — books, merch, streaming, paid Patreons — is available as a **$150 add-on** per piece, or as a bulk arrangement for larger projects.`,
+    a: `Personal use (prints, social posts, your character sheet) is **included** with every commission. **Commercial licensing** for books, merch, paid streaming, indie game assets, and paid Patreons is **+40% of the base job price (flat)**. One uplift covers the scope we agree on up front. See [/commercial](/commercial).`,
   },
   {
     category: 'licensing',
     q: 'Can you post my commission on your portfolio?',
-    a: `By default, yes — this is how new clients find us. You can **opt out at any point before delivery**. Sensitive or NSFW commissions are never posted.`,
+    a: `By default, yes. This is how new clients find us. You can **opt out at any point before delivery**. Sensitive or NSFW commissions are never posted.`,
   },
   {
     category: 'licensing',
@@ -111,18 +109,23 @@ Rush turnaround is available for **+$50** on most services — reach out before 
   },
   {
     category: 'cancellations',
-    q: 'What’s your refund policy?',
+    q: 'What is your refund policy?',
     a: `Before first sketch: **100% refundable**. After first sketch: deposit covers the sketch work. After paint begins: pro-rated by stage completed. Full [refund policy](/refunds).`,
   },
   {
     category: 'cancellations',
     q: 'Can I cancel mid-project?',
-    a: `Yes — we'll pro-rate based on stage. You keep what's been delivered (sketches, color blocks) and we settle the balance.`,
+    a: `Yes. We pro-rate based on stage. You keep what's been delivered (sketches, color blocks) and we settle the balance.`,
+  },
+  {
+    category: 'cancellations',
+    q: 'Can I cancel a subscription?',
+    a: `Yes. Email us before the **10th of the month** and your next cycle will not bill. You can also **pause** a subscription if your campaign is on break, and we'll hold your style guide for 12 months.`,
   },
   {
     category: 'tech',
     q: 'What file formats do you deliver?',
-    a: `Every commission ships with a **4K PNG**, a **4K JPG**, and a **print-ready 300 DPI file**. VTT tokens include 512px and 1024px transparent PNGs. Layered PSDs are available as a $30 add-on.`,
+    a: `Most commissions ship with a **4K PNG**, a **4K JPG**, and a **print-ready 300 DPI** file. VTT tokens include **512px and 1024px transparent PNGs**. Maps export to VTT-compatible PNGs at the right pixel-per-square count. Layered PSDs are included with Premium-tier character art and all commercial work.`,
   },
   {
     category: 'tech',

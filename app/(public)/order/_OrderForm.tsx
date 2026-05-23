@@ -4,33 +4,257 @@ import { useState, useEffect } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
+import USDDisclaimer from '@/components/ui/USDDisclaimer'
 import { cn } from '@/lib/utils'
 
 /* =====================================================================
-   ORDER FORM — literal port of Order Form.html.
+   ORDER FORM — port of Order Form.html + V2 Step 1 progressive disclosure.
 
    4-step brief: Service → Project → Details → Review.
-   Progress indicator lives in the hero block above the form card.
-   Form card is parchment-100 with bottom-border step heads.
-   Sidebar has 3 cards: next-steps timeline, recent-client quote (dark
-   tome), trust list.
 
-   Logic preserved from the previous version:
+   PHASE 5 V2 CHANGES (this revision):
+     1) Step 1 replaced with V2 bucket → product → tier flow. Five bucket
+        cards reveal a product chip row, which (for tiered products) reveals
+        a 3-up tier grid. Non-tiered products show an inline preview note.
+        Quote-only products (battle map, world/region map) deep-link to
+        /services/maps instead of advancing the form. Catalog lives in an
+        inline CATALOG const below — sourced from V2 design + lib/services.
+     2) Step 3 gains a "budget_notes" textarea below the budget cards
+        for negotiation context (returning client, student, multi-piece,
+        charity, etc). Submitted as `[Budget context] …` prefix folded
+        into the existing `notes` payload so the API hands it through to
+        `internal_notes` without any backend change.
+
+   Carried over from V1:
      - Submits to /api/order with the same payload shape
      - Validates each step before allowing next
-     - Restores draft from query string (`?month=June` deep-links the
-       notes field from /availability)
-     - Multi-style checkboxes, budget radio cards, service radio cards
+     - Restores draft from query string (`?month=June` deep-links from
+       /availability)
+     - Multi-style checkboxes, budget radio cards
    ===================================================================== */
 
-/* ---------- Static data ---------- */
-const SERVICES = [
-  { value: 'character-art',  label: 'Character Art', price: 'From $180', desc: 'Single-character painterly portrait. Your hero, brought to life.' },
-  { value: 'vtt-token',      label: 'VTT Tokens',    price: 'From $80',  desc: 'Roll20 & Foundry-ready circular tokens. 512px & 1024px.' },
-  { value: 'party-portrait', label: 'Party Portrait',price: 'From $400', desc: 'Adventuring party, wedding, gift. 3 to 8 figures.' },
-  { value: 'npc-pack',       label: 'NPC Pack',      price: 'From $300', desc: '5+ NPCs in matching style. Schedule-friendly for DMs.' },
-  { value: 'custom',         label: 'Custom',        price: 'Quote',     desc: "Book covers, game assets, merch, concept art. We'll quote." },
-] as const
+/* ---------- Pricing-mode types for the V2 catalog ---------- */
+type Tier = { id: string; name: string; price: string; note: string; featured?: boolean }
+type Product =
+  | { id: string; name: string; sub: string; mode: 'tiered'; tiers: Tier[]; footnote?: string }
+  | { id: string; name: string; sub: string; mode: 'range';   rangeNote: string }
+  | { id: string; name: string; sub: string; mode: 'flat';    flatNote: string }
+  | { id: string; name: string; sub: string; mode: 'pack';    packNote: string }
+  | { id: string; name: string; sub: string; mode: 'bundle';  bundleNote: string }
+  | { id: string; name: string; sub: string; mode: 'monthly'; monthlyNote: string }
+  | { id: string; name: string; sub: string; mode: 'quote';   href: string; quoteNote: string }
+
+type BucketKey = 'character' | 'party' | 'gm' | 'tokens' | 'subscription'
+
+type BucketEntry = {
+  label: string
+  tagline: string
+  helper: string
+  fromLine: string
+  countLine: string
+  products: Product[]
+}
+
+/* ---------- V2 CATALOG — bucket → product → tier hierarchy ----------
+ * Mirrors the CATALOG const inside the V2 Step 1 HTML, with the pricing
+ * values taken from lib/services.ts (the locked snapshot). Commercial is
+ * intentionally excluded — that bucket has its own /commercial flow. */
+const CATALOG: Record<BucketKey, BucketEntry> = {
+  character: {
+    label: 'Character work',
+    tagline: 'your hero, painted',
+    helper: 'Single-figure pieces, reference sheets, and the matching-token bundle.',
+    fromLine: 'from $60',
+    countLine: '4 products',
+    products: [
+      {
+        id: 'character-portrait-bust',
+        name: 'Character Portrait',
+        sub: 'bust',
+        mode: 'tiered',
+        tiers: [
+          { id: 'basic',    name: 'Basic',    price: '$60',  note: 'line + flat color' },
+          { id: 'standard', name: 'Standard', price: '$90',  note: 'full render', featured: true },
+          { id: 'premium',  name: 'Premium',  price: '$140', note: 'atmospheric' },
+        ],
+      },
+      {
+        id: 'character-art-full-body',
+        name: 'Full-body Character',
+        sub: 'head to toe',
+        mode: 'tiered',
+        tiers: [
+          { id: 'basic',    name: 'Basic',    price: '$120', note: 'standing pose' },
+          { id: 'standard', name: 'Standard', price: '$180', note: 'dynamic + scene', featured: true },
+          { id: 'premium',  name: 'Premium',  price: '$280', note: 'cinematic' },
+        ],
+      },
+      {
+        id: 'character-reference-sheet',
+        name: 'Reference Sheet',
+        sub: 'from $250',
+        mode: 'range',
+        rangeNote: '$250 to $450 · scoped per brief',
+      },
+      {
+        id: 'character-token-bundle',
+        name: 'Portrait + Token Bundle',
+        sub: '+$25',
+        mode: 'bundle',
+        bundleNote: 'Adds a matching VTT token to any portrait tier for a flat $25. Pick a portrait tier above, then add this on at the brief stage.',
+      },
+    ],
+  },
+  party: {
+    label: 'Party work',
+    tagline: 'the whole gang',
+    helper: 'Group compositions and action scenes.',
+    fromLine: 'from $220',
+    countLine: '3 products',
+    products: [
+      {
+        id: 'party-portrait',
+        name: 'Party Portrait',
+        sub: 'up to 4 in one piece',
+        mode: 'tiered',
+        tiers: [
+          { id: 'standard', name: 'Standard', price: '$350', note: '4 figures, half-body' },
+          { id: 'premium',  name: 'Premium',  price: '$600', note: '4 figures, full scene', featured: true },
+        ],
+        footnote: 'Each extra member adds $80 to $120 depending on tier.',
+      },
+      {
+        id: 'matched-party-set',
+        name: 'Matched Party Set',
+        sub: 'separate portraits, unified style',
+        mode: 'pack',
+        packNote: '4 portraits $220 · 6 portraits $320',
+      },
+      {
+        id: 'action-scene',
+        name: 'Action Scene',
+        sub: 'from $400',
+        mode: 'range',
+        rangeNote: '$400 to $900 · scoped per brief',
+      },
+    ],
+  },
+  gm: {
+    label: 'GM & world-building',
+    tagline: 'for the campaign',
+    helper: 'Everything behind the screen.',
+    fromLine: 'from $30',
+    countLine: '5 products',
+    products: [
+      {
+        id: 'npc-pack',
+        name: 'NPC Pack',
+        sub: '5 or 10 portraits',
+        mode: 'pack',
+        packNote: '5 NPCs $220 · 10 NPCs $400',
+      },
+      {
+        id: 'monster-creature',
+        name: 'Monster / Creature',
+        sub: 'from $90',
+        mode: 'range',
+        rangeNote: '$90 to $250 · scoped by complexity',
+      },
+      {
+        id: 'item-artifact',
+        name: 'Item / Artifact',
+        sub: 'single or 6-pack',
+        mode: 'pack',
+        packNote: 'Single $30 · 6-pack $150',
+      },
+      {
+        id: 'battle-map',
+        name: 'Battle Map',
+        sub: 'quote only',
+        mode: 'quote',
+        href: '/services/maps',
+        quoteNote: 'Battle maps are quote-based. Send a brief on the dedicated maps page so we can scope properly.',
+      },
+      {
+        id: 'world-region-map',
+        name: 'World / Region Map',
+        sub: 'quote only',
+        mode: 'quote',
+        href: '/services/maps',
+        quoteNote: 'World and region maps are quote-based. Brief them on the maps page.',
+      },
+    ],
+  },
+  tokens: {
+    label: 'Tokens',
+    tagline: 'tabletop-ready',
+    helper: 'For VTT play. Personal use included.',
+    fromLine: 'from $25',
+    countLine: '3 products',
+    products: [
+      {
+        id: 'vtt-token-single',
+        name: 'Single Token',
+        sub: 'from $40',
+        mode: 'range',
+        rangeNote: '$40 to $60 · scoped per character',
+      },
+      {
+        id: 'vtt-token-pack-5',
+        name: 'Token Pack',
+        sub: '5 originals',
+        mode: 'flat',
+        flatNote: '$180 · 5 original tokens in matching style',
+      },
+      {
+        id: 'convert-to-token',
+        name: 'Convert client art to token',
+        sub: 'flat fee',
+        mode: 'flat',
+        flatNote: '$25 per token · works from art you already own',
+      },
+    ],
+  },
+  subscription: {
+    label: 'Subscription',
+    tagline: 'campaign companion',
+    helper: 'Monthly bundle, cancel any cycle.',
+    fromLine: '$30 or $75 / mo',
+    countLine: '2 tiers',
+    products: [
+      {
+        id: 'subscription-companion',
+        name: 'Companion',
+        sub: '$30 / mo',
+        mode: 'monthly',
+        monthlyNote: '$30 / month · 10 tokens + 2 NPCs · cancel or pause any cycle',
+      },
+      {
+        id: 'subscription-gm',
+        name: 'GM tier',
+        sub: '$75 / mo',
+        mode: 'monthly',
+        monthlyNote: '$75 / month · ~15 tokens + 3 NPCs + 1 battle map · cancel or pause any cycle',
+      },
+    ],
+  },
+}
+
+const BUCKET_ORDER: BucketKey[] = ['character', 'party', 'gm', 'tokens', 'subscription']
+
+/* Design-spec gradients matching .ds-ph-* (same palette as services/page.tsx) */
+const BUCKET_GRADIENTS: Record<BucketKey, string> = {
+  character:
+    'radial-gradient(ellipse at 30% 20%, rgba(232,200,128,0.6), transparent 55%), radial-gradient(ellipse at 70% 80%, rgba(107,31,42,0.6), transparent 60%), linear-gradient(135deg, #2a1810, #3e1218 60%, #1a130c)',
+  party:
+    'radial-gradient(ellipse at 20% 40%, rgba(201,160,74,0.5), transparent 50%), radial-gradient(ellipse at 80% 60%, rgba(31,77,58,0.6), transparent 55%), linear-gradient(160deg, #3e1218, #6B1F2A, #1F4D3A)',
+  gm:
+    'radial-gradient(ellipse at 50% 80%, rgba(232,200,128,0.4), transparent 60%), linear-gradient(180deg, #1F4D3A 0%, #6B1F2A 60%, #1a130c 100%)',
+  tokens:
+    'radial-gradient(circle at 50% 50%, rgba(212,162,76,0.5), transparent 50%), radial-gradient(circle at 50% 50%, rgba(107,31,42,0.8), transparent 70%), linear-gradient(135deg, #1a130c, #251A10)',
+  subscription:
+    'radial-gradient(ellipse at 50% 50%, rgba(232,200,128,0.5), transparent 55%), linear-gradient(140deg, #1F4D3A 0%, #2a1810 70%, #6B1F2A 100%)',
+}
 
 const STYLES = [
   { value: 'painterly',  label: 'Painterly · warm' },
@@ -50,10 +274,10 @@ const QUANTITIES = [
 ] as const
 
 const BUDGETS = [
-  { value: 'under-200', range: 'Under $200',  note: 'Token or simple piece' },
-  { value: '200-400',   range: '$200 – $400', note: 'Standard character art' },
-  { value: '400-800',   range: '$400 – $800', note: 'Party portraits, packs' },
-  { value: '800-plus',  range: '$800+',       note: 'Large commissions' },
+  { value: 'under-100',  range: 'Under $100',   note: 'Token, item, monster bust' },
+  { value: '100-300',    range: '$100 – $300',  note: 'Character art, NPC starter pack' },
+  { value: '300-700',    range: '$300 – $700',  note: 'Party portrait, NPC campaign, reference sheet' },
+  { value: '700-plus',   range: '$700+',        note: 'Action scenes, maps, large commissions' },
 ] as const
 
 const SOURCES = [
@@ -74,39 +298,55 @@ const STEP_LABELS = [
 ]
 const TOTAL = 4
 
-/* ---------- Service icons (custom SVGs from the design) ---------- */
-const ServiceIcon = ({ kind }: { kind: typeof SERVICES[number]['value'] }) => {
-  const cls = 'w-5 h-5'
-  if (kind === 'character-art') return (
-    <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z" />
+/* ---------- Helpers ---------- */
+const findProduct = (bucket: BucketKey | '', productId: string): Product | undefined => {
+  if (!bucket) return undefined
+  return CATALOG[bucket].products.find((p) => p.id === productId)
+}
+
+const productPreviewNote = (p: Product): string => {
+  switch (p.mode) {
+    case 'range':   return p.rangeNote
+    case 'flat':    return p.flatNote
+    case 'pack':    return p.packNote
+    case 'bundle':  return p.bundleNote
+    case 'monthly': return p.monthlyNote
+    default:        return ''
+  }
+}
+
+/* ---------- Bucket icons (V2) ---------- */
+const BucketIcon = ({ kind, className = 'w-5 h-5' }: { kind: BucketKey; className?: string }) => {
+  if (kind === 'character') return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 21c0-4 4-7 8-7s8 3 8 7" />
     </svg>
   )
-  if (kind === 'vtt-token') return (
-    <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+  if (kind === 'party') return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <circle cx="9" cy="8" r="3" />
+      <circle cx="16" cy="8" r="3" />
+      <path d="M3 20c0-3 2-5 6-5s6 2 6 5M14 20c0-2 2-4 5-4s3 1 3 4" />
+    </svg>
+  )
+  if (kind === 'gm') return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <path d="M3 19l6-12 6 8 4-5 2 9z" />
+    </svg>
+  )
+  if (kind === 'tokens') return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
       <circle cx="12" cy="12" r="9" />
       <circle cx="12" cy="12" r="5" />
       <circle cx="12" cy="12" r="1.5" fill="currentColor" />
     </svg>
   )
-  if (kind === 'party-portrait') return (
-    <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <circle cx="9" cy="8" r="3" />
-      <circle cx="15" cy="8" r="3" />
-      <path d="M4 20c0-3 2-5 5-5s5 2 5 5M15 20c0-2 1-4 3-4s2 1 2 4" />
-    </svg>
-  )
-  if (kind === 'npc-pack') return (
-    <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <rect x="3" y="4" width="18" height="6" rx="1" />
-      <rect x="3" y="14" width="18" height="6" rx="1" />
-      <path d="M7 7h.01M7 17h.01" />
-    </svg>
-  )
+  /* subscription */
   return (
-    <svg viewBox="0 0 24 24" className={cls} fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="M12 20l9-9-3-3-9 9v3z" />
-      <path d="M16 8l-3-3" />
+    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="3" y="5" width="18" height="16" rx="2" />
+      <path d="M8 3v4M16 3v4M3 11h18" />
     </svg>
   )
 }
@@ -162,9 +402,17 @@ const ClockIcon = () => (
   </svg>
 )
 
+const ChevronSm = () => (
+  <svg viewBox="0 0 24 24" className="w-3 h-3 text-ink-300" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
+    <path d="M9 6l6 6-6 6" />
+  </svg>
+)
+
 /* ---------- State ---------- */
 type FormState = {
-  service: string
+  bucket: BucketKey | ''
+  product: string
+  tier: string
   styles: string[]
   description: string
   references: string[]
@@ -176,11 +424,14 @@ type FormState = {
   phone: string
   source: string
   budget: string
+  budget_notes: string
   termsAccepted: boolean
 }
 
 const initialState: FormState = {
-  service: 'character-art',
+  bucket: '',
+  product: '',
+  tier: '',
   styles: ['painterly'],
   description: '',
   references: ['', ''],
@@ -191,8 +442,17 @@ const initialState: FormState = {
   email: '',
   phone: '',
   source: '',
-  budget: '200-400',
+  budget: '100-300',
+  budget_notes: '',
   termsAccepted: false,
+}
+
+/* ---------- Reveal animation preset (V2 spec: 8px translate, 280ms, ease-soft) ---------- */
+const revealAnim = {
+  initial: { opacity: 0, y: 8 },
+  animate: { opacity: 1, y: 0 },
+  exit:    { opacity: 0, y: -4 },
+  transition: { duration: 0.28, ease: [0.4, 0, 0.2, 1] as [number, number, number, number] },
 }
 
 export default function OrderForm() {
@@ -246,10 +506,38 @@ export default function OrderForm() {
     setData((d) => ({ ...d, references: d.references.filter((_, idx) => idx !== i) }))
   }
 
+  /* ---------- V2 Step 1 handlers ---------- */
+  const pickBucket = (b: BucketKey) => {
+    setData((d) => ({ ...d, bucket: b, product: '', tier: '' }))
+    setErrors((e) => ({ ...e, bucket: '', product: '', tier: '' }))
+  }
+
+  const pickProduct = (productId: string) => {
+    const p = findProduct(data.bucket, productId)
+    if (!p) return
+    setData((d) => ({ ...d, product: productId, tier: '' }))
+    setErrors((e) => ({ ...e, product: '', tier: '' }))
+  }
+
+  const pickTier = (tierId: string) => {
+    setData((d) => ({ ...d, tier: tierId }))
+    setErrors((e) => ({ ...e, tier: '' }))
+  }
+
   /* ---------- Validation ---------- */
   const validateStep = (n: number): boolean => {
     const e: Record<string, string> = {}
-    if (n === 1 && !data.service) e.service = 'Pick a service'
+    if (n === 1) {
+      if (!data.bucket) {
+        e.bucket = 'Pick a service bucket'
+      } else if (!data.product) {
+        e.product = 'Pick a product inside that bucket'
+      } else {
+        const p = findProduct(data.bucket, data.product)
+        if (p?.mode === 'tiered' && !data.tier) e.tier = 'Pick a tier'
+        if (p?.mode === 'quote') e.product = 'Maps are quote-only. Use the link below to brief on the maps page.'
+      }
+    }
     if (n === 2 && (!data.description.trim() || data.description.trim().length < 10)) {
       e.description = 'Tell us a bit about the project (at least a sentence)'
     }
@@ -275,6 +563,20 @@ export default function OrderForm() {
     setSubmitting(true)
     setSubmitError(null)
     try {
+      /* Build a service_type string from bucket/product/tier so the existing
+       * /api/order endpoint (single string column) keeps working. Format:
+       *   bucket/product[/tier]
+       * Admin can split on `/` to recover the parts. */
+      const tierSuffix = data.tier ? `/${data.tier}` : ''
+      const serviceType = `${data.bucket}/${data.product}${tierSuffix}`
+
+      /* Prepend the budget context to notes so the API folds it into
+       * internal_notes (route.ts inlines `Client notes: ${notes}` already). */
+      const notesPayload = [
+        data.budget_notes.trim() ? `[Budget context]\n${data.budget_notes.trim()}` : '',
+        data.notes.trim(),
+      ].filter(Boolean).join('\n\n') || undefined
+
       const res = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -282,14 +584,14 @@ export default function OrderForm() {
           customer_name: data.name,
           customer_email: data.email,
           customer_phone: data.phone || undefined,
-          service_type: data.service,
+          service_type: serviceType,
           style: data.styles.length ? data.styles.join(', ') : undefined,
           description: data.description,
           reference_links: data.references.filter(Boolean).join('\n') || undefined,
           budget: data.budget || undefined,
           deadline: data.deadline || undefined,
           quantity: data.quantity || undefined,
-          notes: data.notes || undefined,
+          notes: notesPayload,
           source: data.source || undefined,
         }),
       })
@@ -319,7 +621,13 @@ export default function OrderForm() {
   }
 
   /* ---------- Derived ---------- */
-  const selectedService = SERVICES.find((s) => s.value === data.service)
+  const selectedBucket = data.bucket ? CATALOG[data.bucket] : null
+  const selectedProduct = findProduct(data.bucket, data.product)
+  const selectedTier =
+    selectedProduct?.mode === 'tiered'
+      ? selectedProduct.tiers.find((t) => t.id === data.tier)
+      : undefined
+
   const selectedBudget = BUDGETS.find((b) => b.value === data.budget)
   const selectedStyles = data.styles.map((v) => STYLES.find((s) => s.value === v)?.label).filter(Boolean) as string[]
   const formattedDeadline = data.deadline
@@ -327,6 +635,17 @@ export default function OrderForm() {
     : ''
   const nonEmptyRefs = data.references.filter(Boolean)
   const quantityLabel = QUANTITIES.find((q) => q.value === data.quantity)?.label
+
+  /* Review-card "Service" line, e.g. "Character work · Character Portrait · Standard $90" */
+  const serviceReviewLine = (() => {
+    if (!selectedBucket || !selectedProduct) return '—'
+    const parts = [selectedBucket.label, selectedProduct.name]
+    if (selectedTier) parts.push(`${selectedTier.name} · ${selectedTier.price}`)
+    else if (selectedProduct.mode !== 'tiered' && selectedProduct.mode !== 'quote') {
+      parts.push(productPreviewNote(selectedProduct))
+    }
+    return parts.join(' · ')
+  })()
 
   return (
     <>
@@ -411,10 +730,10 @@ export default function OrderForm() {
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               >
 
-                {/* ============== STEP 1 ============== */}
+                {/* ============== STEP 1 — V2 bucket → product → tier ============== */}
                 {step === 1 && (
                   <>
-                    <div className="pb-5 mb-9 border-b border-border-light">
+                    <div className="pb-5 mb-7 border-b border-border-light">
                       <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-gold-700 mb-2">
                         Step 01 of 04
                       </div>
@@ -422,73 +741,316 @@ export default function OrderForm() {
                         What do you <em>need</em>?
                       </h2>
                       <p className="text-[1.0625rem] text-ink-500 leading-[1.6] max-w-[56ch]">
-                        Pick the service that fits. Not sure? Start with Character Art, we&rsquo;ll talk through the rest.
+                        Pick a service bucket. We&rsquo;ll narrow it down to the specific product in two clicks.
                       </p>
                     </div>
 
-                    {/* Service grid — 3 col desktop, 2 col tablet, 1 col mobile */}
-                    <div className="mb-9">
+                    {/* Crumb trail: bucket › product › tier */}
+                    <div className="flex flex-wrap items-center gap-2 text-[0.8125rem] text-ink-500 mb-6">
+                      <span
+                        className={cn(
+                          'inline-flex items-center gap-1.5',
+                          !selectedBucket && 'text-ink-300',
+                        )}
+                      >
+                        <strong
+                          className={cn(
+                            'font-display font-semibold',
+                            selectedBucket ? 'text-ink-900' : 'text-ink-300 font-medium',
+                          )}
+                        >
+                          {selectedBucket ? selectedBucket.label : 'Pick a bucket'}
+                        </strong>
+                      </span>
+                      <ChevronSm />
+                      <span
+                        className={cn(
+                          'inline-flex items-center gap-1.5',
+                          !selectedProduct && 'text-ink-300',
+                        )}
+                      >
+                        <strong
+                          className={cn(
+                            'font-display font-semibold',
+                            selectedProduct ? 'text-ink-900' : 'text-ink-300 font-medium',
+                          )}
+                        >
+                          {selectedProduct ? selectedProduct.name : 'Pick a product'}
+                        </strong>
+                      </span>
+                      <ChevronSm />
+                      <span
+                        className={cn(
+                          'inline-flex items-center gap-1.5',
+                          !(selectedTier || (selectedProduct && selectedProduct.mode !== 'tiered' && selectedProduct.mode !== 'quote')) &&
+                            'text-ink-300',
+                        )}
+                      >
+                        <strong
+                          className={cn(
+                            'font-display font-semibold',
+                            (selectedTier || (selectedProduct && selectedProduct.mode !== 'tiered' && selectedProduct.mode !== 'quote'))
+                              ? 'text-ink-900'
+                              : 'text-ink-300 font-medium',
+                          )}
+                        >
+                          {selectedTier
+                            ? `${selectedTier.name} · ${selectedTier.price}`
+                            : selectedProduct && selectedProduct.mode !== 'tiered' && selectedProduct.mode !== 'quote'
+                              ? 'Ready'
+                              : 'Pick a tier'}
+                        </strong>
+                      </span>
+                    </div>
+
+                    {/* ============ 1. BUCKET GRID ============ */}
+                    <div className="mb-7">
                       <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-1">
-                        Service type
+                        Service bucket
                       </div>
                       <p className="text-sm text-ink-500 mb-4">
-                        Choose one. You can refine details in the next step.
+                        Five buckets, plus commercial which has its own landing page.
                       </p>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                        {SERVICES.map((s) => {
-                          const checked = data.service === s.value
+
+                      {/* 3-col desktop, 2-col tablet, 1-col mobile; row 2 = subscription spans 2 cols */}
+                      <div
+                        className="grid gap-3 sm:gap-4"
+                        style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}
+                        role="radiogroup"
+                        aria-label="Service bucket"
+                      >
+                        {BUCKET_ORDER.map((key) => {
+                          const meta = CATALOG[key]
+                          const checked = data.bucket === key
                           return (
                             <label
-                              key={s.value}
+                              key={key}
                               className={cn(
-                                'relative cursor-pointer rounded-lg p-5 transition-all bg-parchment-50',
+                                'relative cursor-pointer rounded-xl p-5 transition-all flex flex-col gap-3 min-h-[188px] bg-parchment-50',
                                 checked
-                                  ? 'border-[1.5px] border-burgundy-700 shadow-[0_4px_16px_rgba(107,31,42,0.12)]'
-                                  : 'border-[1.5px] border-border-light hover:border-border-medium hover:shadow-sm',
+                                  ? 'border-[1.5px] border-burgundy-700 shadow-[0_0_0_3px_rgba(107,31,42,0.12),0_4px_16px_rgba(0,0,0,0.08)]'
+                                  : 'border-[1.5px] border-border-light hover:border-border-medium hover:-translate-y-0.5 hover:shadow-md',
                               )}
                             >
                               <input
                                 type="radio"
-                                name="service"
-                                value={s.value}
+                                name="bucket"
+                                value={key}
                                 checked={checked}
-                                onChange={() => set('service', s.value)}
+                                onChange={() => pickBucket(key)}
                                 className="sr-only"
                               />
-                              {/* Check chip top-right */}
+                              {/* Check chip */}
                               <span
                                 className={cn(
-                                  'absolute top-3 right-3 w-5 h-5 rounded-full inline-flex items-center justify-center transition-all',
-                                  checked ? 'bg-burgundy-700 text-cream-50 opacity-100 scale-100' : 'opacity-0 scale-75',
+                                  'absolute top-3.5 right-3.5 w-[22px] h-[22px] rounded-full inline-flex items-center justify-center transition-all',
+                                  checked ? 'bg-burgundy-700 text-cream-50 opacity-100 scale-100' : 'opacity-0 scale-50',
                                 )}
                                 aria-hidden="true"
                               >
-                                <CheckSm />
+                                <CheckSm className="w-3 h-3" />
                               </span>
-                              {/* Icon */}
-                              <span className="inline-flex w-10 h-10 rounded-md bg-gold-100 text-gold-700 items-center justify-center mb-3">
-                                <ServiceIcon kind={s.value} />
+                              {/* Gradient icon block */}
+                              <span
+                                className="inline-flex w-10 h-10 rounded-md items-center justify-center text-cream-50 mb-1"
+                                style={{ background: BUCKET_GRADIENTS[key] }}
+                              >
+                                <BucketIcon kind={key} />
                               </span>
-                              <div className="font-display text-[1.0625rem] font-semibold text-ink-900 leading-tight">
-                                {s.label}
-                              </div>
-                              <div className="font-body text-[0.6875rem] font-bold tracking-[0.15em] uppercase text-gold-700 mt-1 mb-2">
-                                {s.price}
-                              </div>
-                              <p className="text-[0.8125rem] text-ink-500 leading-[1.5]">
-                                {s.desc}
-                              </p>
+                              <span className="font-display text-[1.25rem] font-semibold text-ink-900 leading-tight tracking-tight">
+                                {meta.label}
+                              </span>
+                              <span className="text-[0.8125rem] text-ink-500 leading-[1.45]">
+                                {meta.helper}
+                              </span>
+                              <span className="mt-auto pt-2.5 border-t border-dashed border-border-light font-body text-[0.6875rem] tracking-[0.04em] text-ink-500 leading-[1.4]">
+                                <strong className="font-semibold text-ink-700">{meta.countLine}</strong> · {meta.fromLine}
+                              </span>
                             </label>
                           )
                         })}
                       </div>
-                      {errors.service && (
-                        <p className="text-sm text-burgundy-700 mt-3">{errors.service}</p>
+                      {errors.bucket && (
+                        <p className="text-sm text-burgundy-700 mt-3">{errors.bucket}</p>
                       )}
+
+                      {/* Commercial nudge */}
+                      <div className="mt-5 px-[18px] py-[14px] rounded-md bg-parchment-100 border border-dashed border-border-medium text-[0.875rem] text-ink-700">
+                        <strong className="font-semibold">Doing commercial work?</strong>{' '}
+                        Publishers, indie game studios, and Kickstarter campaigns start at the{' '}
+                        <Link
+                          href="/commercial"
+                          className="text-burgundy-700 underline underline-offset-[3px] hover:text-burgundy-500"
+                        >
+                          commercial landing page
+                        </Link>{' '}
+                        instead.
+                      </div>
                     </div>
 
-                    {/* Style chips */}
-                    <div>
+                    {/* ============ 2. REVEAL — PRODUCT CHIPS + TIER PICKER ============ */}
+                    <AnimatePresence initial={false} mode="wait">
+                      {selectedBucket && (
+                        <motion.div
+                          key={`reveal-${data.bucket}`}
+                          {...revealAnim}
+                          className="mt-8"
+                        >
+                          {/* Product picker head */}
+                          <div className="flex items-baseline justify-between gap-5 mb-4 pb-3.5 border-b border-dashed border-border-light">
+                            <h3 className="font-display text-[1.25rem] font-semibold text-ink-900">
+                              Now pick a{' '}
+                              <em
+                                className="not-italic font-display italic font-medium text-burgundy-700"
+                                dangerouslySetInnerHTML={{ __html: selectedBucket.label }}
+                              />
+                            </h3>
+                            <span className="text-[0.8125rem] text-ink-500">{selectedBucket.helper}</span>
+                          </div>
+
+                          {/* Product chips */}
+                          <div
+                            className="flex flex-wrap gap-2.5"
+                            role="radiogroup"
+                            aria-label="Product within bucket"
+                          >
+                            {selectedBucket.products.map((p) => {
+                              const checked = data.product === p.id
+                              return (
+                                <label key={p.id} className="relative cursor-pointer">
+                                  <input
+                                    type="radio"
+                                    name="product-pick"
+                                    value={p.id}
+                                    checked={checked}
+                                    onChange={() => pickProduct(p.id)}
+                                    className="sr-only"
+                                  />
+                                  <span
+                                    className={cn(
+                                      'inline-flex items-center gap-2.5 px-[18px] py-3 rounded-full border-[1.5px] transition-all font-body text-[0.9375rem]',
+                                      checked
+                                        ? 'bg-burgundy-700 border-burgundy-700 text-cream-50 shadow-[0_4px_12px_rgba(107,31,42,0.18)]'
+                                        : 'bg-parchment-50 border-border-medium text-ink-700 hover:border-burgundy-700 hover:text-ink-900',
+                                    )}
+                                  >
+                                    <span>{p.name}</span>
+                                    <small
+                                      className={cn(
+                                        'text-[0.75rem] font-medium',
+                                        checked ? 'text-gold-300' : 'text-ink-500',
+                                      )}
+                                    >
+                                      {p.sub}
+                                    </small>
+                                  </span>
+                                </label>
+                              )
+                            })}
+                          </div>
+                          {errors.product && (
+                            <p className="text-sm text-burgundy-700 mt-3">{errors.product}</p>
+                          )}
+
+                          {/* ===== Mode-aware second-level UI ===== */}
+                          <AnimatePresence initial={false} mode="wait">
+                            {selectedProduct && (
+                              <motion.div
+                                key={`mode-${selectedProduct.id}`}
+                                {...revealAnim}
+                                transition={{ ...revealAnim.transition, duration: 0.24 }}
+                                className="mt-6"
+                              >
+                                {/* --- Tiered product: 3-up tier grid --- */}
+                                {selectedProduct.mode === 'tiered' && (
+                                  <>
+                                    <div className="flex items-baseline justify-between gap-5 mb-4 pb-3.5 border-b border-dashed border-border-light">
+                                      <h3 className="font-display text-[1.25rem] font-semibold text-ink-900">
+                                        And the <em className="not-italic font-display italic font-medium text-burgundy-700">tier</em>?
+                                      </h3>
+                                      <span className="text-[0.8125rem] text-ink-500">Same character, different finish.</span>
+                                    </div>
+                                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                      {selectedProduct.tiers.map((t) => {
+                                        const checked = data.tier === t.id
+                                        return (
+                                          <label
+                                            key={t.id}
+                                            className={cn(
+                                              'relative cursor-pointer rounded-lg p-[18px_20px] flex flex-col gap-1 transition-all bg-parchment-50',
+                                              checked
+                                                ? t.featured
+                                                  ? 'border-[1.5px] border-gold-500 bg-parchment-100 shadow-[0_0_0_3px_var(--gold-100,rgba(232,200,128,0.3))]'
+                                                  : 'border-[1.5px] border-burgundy-700 bg-parchment-100 shadow-[0_0_0_3px_rgba(107,31,42,0.12)]'
+                                                : 'border-[1.5px] border-border-medium hover:border-burgundy-700',
+                                            )}
+                                          >
+                                            <input
+                                              type="radio"
+                                              name="tier-pick"
+                                              value={t.id}
+                                              checked={checked}
+                                              onChange={() => pickTier(t.id)}
+                                              className="sr-only"
+                                            />
+                                            {t.featured && (
+                                              <span className="absolute -top-2.5 right-3.5 bg-gold-500 text-ink-900 text-[0.625rem] font-bold tracking-[0.1em] uppercase px-2.5 py-1 rounded-full">
+                                                Most picked
+                                              </span>
+                                            )}
+                                            <span className="font-display text-[1.0625rem] font-semibold text-ink-900">
+                                              {t.name}
+                                            </span>
+                                            <span className="font-display text-[1.5rem] font-semibold text-burgundy-700 tracking-tight">
+                                              {t.price}
+                                            </span>
+                                            <span className="text-[0.8125rem] text-ink-500 leading-[1.45]">
+                                              {t.note}
+                                            </span>
+                                          </label>
+                                        )
+                                      })}
+                                    </div>
+                                    {errors.tier && (
+                                      <p className="text-sm text-burgundy-700 mt-3">{errors.tier}</p>
+                                    )}
+                                    {selectedProduct.footnote && (
+                                      <p className="mt-3 text-[0.8125rem] italic text-ink-500">
+                                        {selectedProduct.footnote}
+                                      </p>
+                                    )}
+                                  </>
+                                )}
+
+                                {/* --- Quote-only product (battle map / world map): deep-link --- */}
+                                {selectedProduct.mode === 'quote' && (
+                                  <div className="px-[18px] py-[14px] rounded-md bg-parchment-100 border border-dashed border-border-medium text-[0.875rem] text-ink-700">
+                                    {selectedProduct.quoteNote}{' '}
+                                    <Link
+                                      href={selectedProduct.href}
+                                      className="text-burgundy-700 underline underline-offset-[3px] hover:text-burgundy-500 font-semibold"
+                                    >
+                                      Go to the maps brief →
+                                    </Link>
+                                  </div>
+                                )}
+
+                                {/* --- Range / Flat / Pack / Bundle / Monthly: inline preview --- */}
+                                {selectedProduct.mode !== 'tiered' && selectedProduct.mode !== 'quote' && (
+                                  <div className="px-[18px] py-[14px] rounded-md bg-parchment-100 border border-dashed border-border-medium text-[0.875rem] text-ink-700">
+                                    <strong className="font-semibold text-ink-900">{selectedProduct.name}:</strong>{' '}
+                                    {productPreviewNote(selectedProduct)}
+                                  </div>
+                                )}
+                              </motion.div>
+                            )}
+                          </AnimatePresence>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+
+                    {/* Style chips — still on Step 1 */}
+                    <div className="mt-9">
                       <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-1">
                         Style preference
                       </div>
@@ -751,8 +1313,11 @@ export default function OrderForm() {
 
                     {/* Budget cards */}
                     <div>
-                      <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-1">
-                        Budget range
+                      <div className="flex items-center justify-between flex-wrap gap-2 mb-1">
+                        <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700">
+                          Budget range
+                        </div>
+                        <USDDisclaimer variant="inline" />
                       </div>
                       <p className="text-sm text-ink-500 mb-4">
                         Helps us match scope to what you&rsquo;d like to invest. We&rsquo;ll confirm in the quote.
@@ -785,6 +1350,27 @@ export default function OrderForm() {
                         })}
                       </div>
                     </div>
+
+                    {/* Budget context textarea (V2 addition) */}
+                    <div className="mt-6">
+                      <label
+                        htmlFor="of-budget-context"
+                        className="block font-body text-[0.875rem] font-semibold text-ink-900 mb-1"
+                      >
+                        Anything else about your budget?{' '}
+                        <span className="font-normal text-ink-400">(optional)</span>
+                      </label>
+                      <p className="text-[0.8125rem] text-ink-500 leading-[1.5] mb-2.5">
+                        Returning client, student, multi-piece commission, gift, charity, anything else worth knowing. The studio reads this before quoting and may offer a custom arrangement.
+                      </p>
+                      <textarea
+                        id="of-budget-context"
+                        value={data.budget_notes}
+                        onChange={(e) => set('budget_notes', e.target.value)}
+                        placeholder="Returning client, student, multi-piece, charity, etc. — anything that should factor into the quote."
+                        className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md px-4 py-3 font-body text-[0.9375rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors min-h-[88px] resize-y"
+                      />
+                    </div>
                   </>
                 )}
 
@@ -807,8 +1393,8 @@ export default function OrderForm() {
                     <div className="flex flex-col gap-4 mb-7">
                       {/* Card 1: What you need */}
                       <ReviewCard title="What you need" onEdit={() => jumpTo(1)}>
-                        <Row dt="Service" dd={selectedService ? `${selectedService.label} · ${selectedService.price}` : '—'} />
-                        <Row dt="Style" dd={selectedStyles.length ? selectedStyles.join(' · ') : '—'} empty={!selectedStyles.length} />
+                        <Row dt="Service" dd={serviceReviewLine} empty={!selectedProduct} />
+                        <Row dt="Style" dd={selectedStyles.length ? selectedStyles.join(' · ') : ''} empty={!selectedStyles.length} />
                       </ReviewCard>
 
                       {/* Card 2: Project details */}
@@ -836,6 +1422,7 @@ export default function OrderForm() {
                         <Row dt="Email" dd={data.email} empty={!data.email} emptyText="—" />
                         <Row dt="Phone" dd={data.phone} empty={!data.phone} emptyText="Not provided" />
                         <Row dt="Budget" dd={selectedBudget?.range || '—'} />
+                        <Row dt="Budget notes" dd={data.budget_notes} empty={!data.budget_notes} emptyText="None" />
                         <Row dt="How found" dd={data.source} empty={!data.source} emptyText="—" />
                       </ReviewCard>
                     </div>
@@ -918,7 +1505,7 @@ export default function OrderForm() {
               <ol className="flex flex-col gap-4 mb-6">
                 {[
                   { strong: 'Within 48 hours', body: 'We review and send a fixed quote with timeline.' },
-                  { strong: 'You approve & deposit', body: '25% to hold your slot. Refundable until first sketch.' },
+                  { strong: 'You approve & deposit', body: '30% to hold your slot. Refundable until first sketch.' },
                   { strong: 'Work begins', body: 'Sketches, color blocks, final paint. Updates every 3 days.' },
                 ].map((s, i) => (
                   <li key={i} className="flex gap-3 items-start">

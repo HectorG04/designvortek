@@ -20,14 +20,14 @@ import { fetchFeaturedPieces } from '@/lib/portfolio-pieces-server'
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Design Vortex — Premium TTRPG, Character Art & VTT Token Commissions',
+  title: 'Design Vortex — Hand-painted Character Art, VTT Tokens & Commissions',
   description:
-    'Painterly D&D character portraits, VTT tokens, party illustrations and bespoke art — hand-painted by humans, never AI. 7–14 day turnaround. Commissions from $80.',
+    'Hand-painted TTRPG character portraits, VTT tokens, party illustrations, NPC packs, maps and bespoke art. Commissions from $25. Genre-agnostic, hand-drawn, never AI.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Design Vortex — Premium TTRPG & Character Art Commissions',
+    title: 'Design Vortex — Hand-painted Character Art & Commissions',
     description:
-      'Painterly D&D character portraits, VTT tokens, party illustrations and bespoke art — hand-painted, never AI.',
+      'Hand-painted TTRPG character portraits, tokens, party illustrations, NPC packs and bespoke art. Never AI.',
     url: SITE_URL,
     type: 'website',
   },

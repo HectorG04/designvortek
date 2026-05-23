@@ -58,6 +58,9 @@ export type Database = {
           status: string
           quoted_price: number | null
           internal_notes: string | null
+          adjustment_label: string | null
+          adjustment_amount: number | null
+          adjustment_reason: string | null
         }
         Insert: {
           id?: number
@@ -75,6 +78,9 @@ export type Database = {
           status?: string
           quoted_price?: number | null
           internal_notes?: string | null
+          adjustment_label?: string | null
+          adjustment_amount?: number | null
+          adjustment_reason?: string | null
         }
         Update: {
           id?: number
@@ -92,6 +98,9 @@ export type Database = {
           status?: string
           quoted_price?: number | null
           internal_notes?: string | null
+          adjustment_label?: string | null
+          adjustment_amount?: number | null
+          adjustment_reason?: string | null
         }
         Relationships: []
       }
@@ -227,51 +236,87 @@ export type Database = {
           created_at: string
           updated_at: string
           slug: string
-          title: string
-          subtitle: string | null
-          description: string
-          icon_name: string | null
-          features: string[]
-          starting_price: number
-          turnaround_days: string | null
-          tier_data: Json | null
-          hero_image: string | null
+          name: string
+          bucket: string
+          eyebrow: string | null
+          lede: string | null
+          description: string | null
+          pricing_mode: string
+          pricing: Json
+          turnaround_low_days: number | null
+          turnaround_high_days: number | null
+          revisions_included: number | null
+          resolution: string | null
+          included: Json
+          examples: Json
+          faq: Json
+          bundle_with_slugs: string[]
+          bundle_uplift_cents: number | null
+          genre_tags: string[]
+          is_published: boolean
+          is_featured_homepage: boolean
+          featured_order: number | null
           sort_order: number
-          is_active: boolean
+          seo_title: string | null
+          seo_description: string | null
         }
         Insert: {
           id?: number
           created_at?: string
           updated_at?: string
           slug: string
-          title: string
-          subtitle?: string | null
-          description: string
-          icon_name?: string | null
-          features?: string[]
-          starting_price: number
-          turnaround_days?: string | null
-          tier_data?: Json | null
-          hero_image?: string | null
+          name: string
+          bucket: string
+          eyebrow?: string | null
+          lede?: string | null
+          description?: string | null
+          pricing_mode?: string
+          pricing?: Json
+          turnaround_low_days?: number | null
+          turnaround_high_days?: number | null
+          revisions_included?: number | null
+          resolution?: string | null
+          included?: Json
+          examples?: Json
+          faq?: Json
+          bundle_with_slugs?: string[]
+          bundle_uplift_cents?: number | null
+          genre_tags?: string[]
+          is_published?: boolean
+          is_featured_homepage?: boolean
+          featured_order?: number | null
           sort_order?: number
-          is_active?: boolean
+          seo_title?: string | null
+          seo_description?: string | null
         }
         Update: {
           id?: number
           created_at?: string
           updated_at?: string
           slug?: string
-          title?: string
-          subtitle?: string | null
-          description?: string
-          icon_name?: string | null
-          features?: string[]
-          starting_price?: number
-          turnaround_days?: string | null
-          tier_data?: Json | null
-          hero_image?: string | null
+          name?: string
+          bucket?: string
+          eyebrow?: string | null
+          lede?: string | null
+          description?: string | null
+          pricing_mode?: string
+          pricing?: Json
+          turnaround_low_days?: number | null
+          turnaround_high_days?: number | null
+          revisions_included?: number | null
+          resolution?: string | null
+          included?: Json
+          examples?: Json
+          faq?: Json
+          bundle_with_slugs?: string[]
+          bundle_uplift_cents?: number | null
+          genre_tags?: string[]
+          is_published?: boolean
+          is_featured_homepage?: boolean
+          featured_order?: number | null
           sort_order?: number
-          is_active?: boolean
+          seo_title?: string | null
+          seo_description?: string | null
         }
         Relationships: []
       }
