@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import Hero from '@/components/home/Hero'
@@ -15,7 +15,7 @@ import CompassDivider from '@/components/decor/CompassDivider'
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from '@/lib/constants'
 import { fetchFeaturedPieces } from '@/lib/portfolio-pieces-server'
 
-/* ISR â€” homepage rebuilds at most every 60 seconds so admin portfolio
+/* ISR — homepage rebuilds at most every 60 seconds so admin portfolio
  * edits show up in the strip without a redeploy. */
 export const revalidate = 60
 
@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 }
 
 /**
- * Homepage â€” the real one.
+ * Homepage — the real one.
  *
  * Sections in order:
  *   1. Hero            (dark tome, fold)
@@ -44,15 +44,15 @@ export const metadata: Metadata = {
  *   5. Process         (4-step horizontal)
  *   6. Testimonials    (3-card row)
  *   7. Blog preview    (3 latest articles)
- *   8. Availability    (slot widget â€” signature feature)
+ *   8. Availability    (slot widget — signature feature)
  *   9. FAQ             (6-item accordion + FAQPage JSON-LD)
  *  10. CTA closer      (dark tome bookend)
  */
 export default async function HomePage() {
-  /* Featured pieces for the portfolio strip â€” fetched server-side so the
+  /* Featured pieces for the portfolio strip — fetched server-side so the
    * strip stays a static SSG snapshot that updates with ISR. */
   const featuredPieces = await fetchFeaturedPieces(8)
-  // Organization JSON-LD â€” Google understands this as the canonical brand entity
+  // Organization JSON-LD — Google understands this as the canonical brand entity
   const orgSchema = {
     '@context': 'https://schema.org',
     '@type': 'Organization',

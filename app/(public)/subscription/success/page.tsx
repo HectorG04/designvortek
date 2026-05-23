@@ -1,10 +1,10 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 
 export const metadata: Metadata = {
-  title: 'Subscription started Â· Design Vortex',
+  title: 'Subscription started · Design Vortex',
   description: 'Your subscription is active. Welcome to the campaign companion.',
   robots: { index: false, follow: false },
 }
@@ -44,7 +44,7 @@ export default async function SubscriptionSuccessPage({ searchParams }: PageProp
                   era, lighting language.
                 </li>
                 <li>
-                  Your first cycle ships on the <strong>15th</strong> â€” tokens, NPCs, and (GM
+                  Your first cycle ships on the <strong>15th</strong> — tokens, NPCs, and (GM
                   tier) a battle map.
                 </li>
               </ol>

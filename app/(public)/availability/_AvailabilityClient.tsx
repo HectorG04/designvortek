@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
@@ -10,7 +10,7 @@ import { LinkButton } from '@/components/ui/Button'
 import PaperTexture from '@/components/decor/PaperTexture'
 import { cn } from '@/lib/utils'
 
-/* Slot data â€” May, June (full + waitlist), July (mostly open) */
+/* Slot data — May, June (full + waitlist), July (mostly open) */
 type Slot = { num: string; booked: boolean }
 type MonthData = {
   key: string
@@ -56,7 +56,7 @@ const MONTHS: MonthData[] = [
       { num: '04', booked: true },
       { num: '05', booked: true },
     ],
-    metaSuffix: 'waitlist of 4 Â· weâ€™ll reach out if a slot opens',
+    metaSuffix: 'waitlist of 4 · we’ll reach out if a slot opens',
     ctaLabel: 'Join June waitlist',
   },
   {
@@ -196,7 +196,7 @@ export default function AvailabilityClient() {
 
                     <div className="text-center text-sm text-ink-500 leading-relaxed mb-5">
                       <span className="font-semibold text-ink-700">{booked} booked</span>
-                      {' Â· '}{open} remaining Â· {m.metaSuffix}
+                      {' · '}{open} remaining · {m.metaSuffix}
                     </div>
 
                     <div className="mt-auto flex justify-center">
@@ -232,7 +232,7 @@ export default function AvailabilityClient() {
                   paint, and revisions. No overlap, no juggling, no rushed work.
                 </p>
                 <p className="text-ink-500 leading-relaxed">
-                  That&rsquo;s why we&rsquo;re worth booking ahead â€” and why the slots fill up.
+                  That&rsquo;s why we&rsquo;re worth booking ahead — and why the slots fill up.
                 </p>
               </div>
 
@@ -275,7 +275,7 @@ export default function AvailabilityClient() {
                   This month&rsquo;s full. <em className="italic font-medium text-gold-glow">Next month&rsquo;s coming</em>.
                 </h2>
                 <p className="text-cream-200 leading-relaxed">
-                  Drop your email and we&rsquo;ll reach out the moment a slot opens â€” plus give you first pick
+                  Drop your email and we&rsquo;ll reach out the moment a slot opens — plus give you first pick
                   when next month&rsquo;s slots release.
                 </p>
               </div>
@@ -284,7 +284,7 @@ export default function AvailabilityClient() {
                 {submitted ? (
                   <div className="bg-forest-700/30 border border-forest-500/50 rounded-lg px-5 py-4 text-cream-50 flex items-center gap-3">
                     <Check size={20} strokeWidth={2} className="text-gold-glow" />
-                    <span>Thanks â€” you&rsquo;re on the list.</span>
+                    <span>Thanks — you&rsquo;re on the list.</span>
                   </div>
                 ) : (
                   <form onSubmit={handleWaitlist} className="flex flex-col sm:flex-row gap-3">
@@ -302,7 +302,7 @@ export default function AvailabilityClient() {
                       disabled={loading}
                       className="bg-gold-500 text-ink-900 px-6 py-3 rounded-md text-xs font-semibold uppercase tracking-[0.12em] hover:bg-gold-300 transition-colors disabled:opacity-60"
                     >
-                      {loading ? 'â€¦' : 'Join waitlist'}
+                      {loading ? '…' : 'Join waitlist'}
                     </button>
                   </form>
                 )}

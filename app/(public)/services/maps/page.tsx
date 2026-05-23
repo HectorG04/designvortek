@@ -1,19 +1,19 @@
-﻿/* =====================================================================
-   /services/maps â€” Battle maps & world maps Â· quote-only landing.
+/* =====================================================================
+   /services/maps — Battle maps & world maps · quote-only landing.
 
    Literal port of:
      Claude Design Final/Claude designs New Screens and flow V2/Maps.html
 
    Sections in source order:
      1. Hero                         (<PageHero>)
-     2. Two product cards            (Battle Map Â· World Map)
+     2. Two product cards            (Battle Map · World Map)
      3. Four pricing factors         (parchment-100 band)
      4. Editorial / SEO long-form    (sticky-side TOC + body)
      5. Embedded quote-brief form    (POST /api/inquiry, anchor #map-brief)
      6. Map FAQ (4 questions)
      7. Dark CTA strip (tome-950)
 
-   Cartographic tone â€” older-feel typography, ink-wash placeholder swatches,
+   Cartographic tone — older-feel typography, ink-wash placeholder swatches,
    chip-style radio groups for map_type and tone. No hourly pricing here;
    quote-only by design. All Tailwind utilities reference brand tokens
    declared in app/globals.css (no globals.css edits in this port).
@@ -31,13 +31,13 @@ import Button from '@/components/ui/Button'
 import PaperTexture from '@/components/decor/PaperTexture'
 
 export const metadata: Metadata = {
-  title: 'Battle maps & world maps Â· Design Vortek',
+  title: 'Battle maps & world maps · Design Vortek',
   description:
     "Hand-drawn battle maps and region/world maps for D&D and other tabletop games. Gridded, VTT-ready, quote-based pricing. Send a brief and the studio will send a quote.",
   alternates: { canonical: '/services/maps' },
 }
 
-/* ds-ph-scene placeholder gradient â€” forest â†’ burgundy â†’ tome,
+/* ds-ph-scene placeholder gradient — forest â†’ burgundy â†’ tome,
    gold ellipse glow at the base. Lifted verbatim from design-system.css. */
 const PH_SCENE_BG =
   'radial-gradient(ellipse at 50% 80%, rgba(232,200,128,0.4), transparent 60%), linear-gradient(180deg, #1F4D3A 0%, #6B1F2A 60%, #1a130c 100%)'
@@ -67,7 +67,7 @@ const PlusIcon = () => (
 /* ----- product card data ----- */
 const PRODUCTS = [
   {
-    label: 'BATTLE MAP Â· 16Ã—20 Â· GRIDDED',
+    label: 'BATTLE MAP · 16×20 · GRIDDED',
     filter: 'none',
     eyebrow: 'for the encounter',
     name: 'Battle Map',
@@ -80,7 +80,7 @@ const PRODUCTS = [
     fromNote: 'scoped by size & detail',
   },
   {
-    label: 'WORLD MAP Â· 12 SETTLEMENTS Â· LABELED',
+    label: 'WORLD MAP · 12 SETTLEMENTS · LABELED',
     filter: 'hue-rotate(40deg) saturate(0.85)',
     eyebrow: 'for the campaign atlas',
     name: 'World / Region Map',
@@ -96,7 +96,7 @@ const PRODUCTS = [
 
 /* ----- pricing-factors data ----- */
 const FACTORS = [
-  { num: '01', title: 'Size & print scale', body: 'A 16Ã—20 battle map at 300dpi is different work from a 24Ã—36 city spread. Bigger usually means more detail to fill.' },
+  { num: '01', title: 'Size & print scale', body: 'A 16×20 battle map at 300dpi is different work from a 24×36 city spread. Bigger usually means more detail to fill.' },
   { num: '02', title: 'Detail density',     body: 'Empty fields are quick. Dungeons stuffed with furniture, traps, and elevation changes take much longer.' },
   { num: '03', title: 'Color vs ink-wash',  body: 'Full color rendered maps cost more than a clean ink-and-wash treatment. Both are offered at different price points.' },
   { num: '04', title: 'Labels & VTT prep',  body: 'Hand-lettered labels look gorgeous and take time. Digital labels are faster. VTT exports (gridded, scaled, tagged) add a small line item.' },
@@ -114,11 +114,11 @@ const TOC = [
 const FAQ = [
   {
     q: 'How long does a battle map take?',
-    a: 'A standard 16Ã—20 battle map runs about 2 to 3 weeks. Bigger spreads, multi-level dungeons, and heavy detail push toward 4 weeks. Quote turnaround is 48 hours so youâ€™ll know the timeline before committing.',
+    a: 'A standard 16×20 battle map runs about 2 to 3 weeks. Bigger spreads, multi-level dungeons, and heavy detail push toward 4 weeks. Quote turnaround is 48 hours so you’ll know the timeline before committing.',
   },
   {
     q: 'Can you match my existing campaign art?',
-    a: 'If the studio painted the character art, yes. If youâ€™re bringing in art from another artist or AI tools, the studio will work to a complementary palette and feel but wonâ€™t trace or copy another artistâ€™s linework. Reference is welcome.',
+    a: 'If the studio painted the character art, yes. If you’re bringing in art from another artist or AI tools, the studio will work to a complementary palette and feel but won’t trace or copy another artist’s linework. Reference is welcome.',
   },
   {
     q: 'Hand-lettered labels or digital?',
@@ -148,7 +148,12 @@ const TONE_OPTIONS = [
 
 /* ===================================================================== */
 
-export default function MapsPage() {
+interface MapsPageProps {
+  searchParams: Promise<{ sent?: string; error?: string }>
+}
+
+export default async function MapsPage({ searchParams }: MapsPageProps) {
+  const { sent, error } = await searchParams
   return (
     <>
       <SiteHeader />
@@ -167,7 +172,7 @@ export default function MapsPage() {
 
         {/* Hero */}
         <PageHero
-          eyebrow="GM / world-building Â· Maps"
+          eyebrow="GM / world-building · Maps"
           align="left"
           className="pt-6 pb-16"
           title={
@@ -187,7 +192,7 @@ export default function MapsPage() {
                   key={p.name}
                   className="bg-parchment-50 border border-border-light rounded-2xl overflow-hidden flex flex-col transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-[3px] hover:shadow-md"
                 >
-                  {/* Image placeholder â€” ds-ph-scene gradient */}
+                  {/* Image placeholder — ds-ph-scene gradient */}
                   <div
                     className="relative aspect-[16/10]"
                     style={{ background: PH_SCENE_BG, filter: p.filter }}
@@ -214,7 +219,7 @@ export default function MapsPage() {
                       ))}
                     </ul>
 
-                    {/* Foot â€” price block + CTA */}
+                    {/* Foot — price block + CTA */}
                     <div className="mt-auto pt-[18px] border-t border-dashed border-border-light flex flex-wrap items-center justify-between gap-3.5">
                       <div>
                         <span className="font-display text-2xl font-semibold text-burgundy-700 leading-[1.1] whitespace-nowrap">
@@ -233,14 +238,14 @@ export default function MapsPage() {
               ))}
             </div>
 
-            {/* USD disclaimer â€” centered below the product grid */}
+            {/* USD disclaimer — centered below the product grid */}
             <div className="text-center mt-[18px]">
               <USDDisclaimer variant="inline" />
             </div>
           </Container>
         </section>
 
-        {/* ===== Pricing depends on â€” 4 factors (parchment-100 band) ===== */}
+        {/* ===== Pricing depends on — 4 factors (parchment-100 band) ===== */}
         <section className="bg-parchment-100 py-16 md:py-24">
           <Container>
             <SectionHead
@@ -348,7 +353,7 @@ export default function MapsPage() {
                   <p className="text-ink-700 text-base leading-[1.7] mb-3.5 max-w-[64ch]">
                     Every map starts with a thumbnail sketch and ends with hand-painted detail. No AI generators, no asset packs assembled into a mosaic, no traced reference. That choice costs more time and shows up in the finish. It also means the map is unique to your campaign and free of the legal mess that comes with generated work.
                   </p>
-                  {/* SEO callout â€” gold-accent left border, italic Cormorant */}
+                  {/* SEO callout — gold-accent left border, italic Cormorant */}
                   <p
                     className="bg-parchment-100 border border-border-light border-l-4 border-l-gold-500 rounded-md px-[22px] py-[18px] mt-3.5 font-display italic text-[1.0625rem] text-ink-700 leading-[1.55] max-w-[56ch]"
                   >
@@ -377,6 +382,26 @@ export default function MapsPage() {
         {/* ===== Quote brief form (parchment-100 band, anchor #map-brief) ===== */}
         <section id="map-brief" className="bg-parchment-100 py-16 md:py-24 scroll-mt-24">
           <Container>
+            {/* Submission feedback banner — rendered after the /api/inquiry
+                redirect lands back here with ?sent=1 or ?error=… */}
+            {sent === '1' && (
+              <div className="max-w-[920px] mx-auto mb-6 rounded-xl border border-forest-500/40 bg-forest-100/60 px-5 py-4 text-forest-700 text-[0.9375rem] flex items-start gap-3">
+                <svg viewBox="0 0 24 24" className="w-5 h-5 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+                  <path d="M5 12l5 5L20 7" />
+                </svg>
+                <span>
+                  <strong className="font-semibold">Brief received.</strong>{' '}
+                  We&rsquo;ll reply within 48 hours with a fixed quote and turnaround estimate. Check your inbox for the confirmation.
+                </span>
+              </div>
+            )}
+            {error && (
+              <div className="max-w-[920px] mx-auto mb-6 rounded-xl border border-burgundy-500/40 bg-burgundy-100/60 px-5 py-4 text-burgundy-700 text-[0.9375rem]" role="alert">
+                <strong className="font-semibold">Something went wrong:</strong>{' '}
+                {error === '1' ? 'Please try again, or email hello@designvortex.co.' : decodeURIComponent(error)}
+              </div>
+            )}
+
             <form
               action="/api/inquiry"
               method="POST"
@@ -415,7 +440,7 @@ export default function MapsPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
                 <div className="flex flex-col gap-2">
                   <FieldLabel htmlFor="map-size">Estimated size or scope</FieldLabel>
-                  <TextInput id="map-size" name="size" type="text" placeholder="e.g. 16Ã—20, room scale, or 12 settlements" />
+                  <TextInput id="map-size" name="size" type="text" placeholder="e.g. 16×20, room scale, or 12 settlements" />
                 </div>
                 <div className="flex flex-col gap-2">
                   <FieldLabel htmlFor="map-deadline" optional>Deadline</FieldLabel>
@@ -468,7 +493,7 @@ export default function MapsPage() {
                 </div>
               </div>
 
-              {/* Foot â€” note + submit */}
+              {/* Foot — note + submit */}
               <div className="mt-7 pt-6 border-t border-dashed border-border-light flex flex-wrap items-center justify-between gap-4">
                 <p className="text-[0.8125rem] text-ink-500 max-w-[36ch]">
                   No commitment until the quote comes back and you say yes. USD pricing.
@@ -568,7 +593,7 @@ export default function MapsPage() {
 }
 
 /* =====================================================================
-   Small form primitives â€” local to this file so the page is self-contained.
+   Small form primitives — local to this file so the page is self-contained.
    ===================================================================== */
 
 function FieldLabel({
@@ -602,7 +627,7 @@ function TextInput(props: React.InputHTMLAttributes<HTMLInputElement>) {
 }
 
 /**
- * ChipRadio â€” pill-shaped radio that visually toggles between
+ * ChipRadio — pill-shaped radio that visually toggles between
  * outlined (parchment) and filled (burgundy) on :checked. The native
  * <input> is visually hidden but kept focusable for keyboard / a11y.
  */

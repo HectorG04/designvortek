@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { Check, Clock, Mail, Sparkles } from 'lucide-react'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
@@ -20,7 +20,7 @@ const NEXT_STEPS = [
   {
     when: 'Within 24 hours',
     strong: 'Check your inbox',
-    body: `A confirmation just landed. If you don't see it in **ten minutes**, peek in spam â€” or email us directly at [hello@designvortex.co](mailto:hello@designvortex.co).`,
+    body: `A confirmation just landed. If you don't see it in **ten minutes**, peek in spam — or email us directly at [hello@designvortex.co](mailto:hello@designvortex.co).`,
     Icon: Mail,
   },
   {
@@ -62,7 +62,7 @@ export default function OrderSuccessPage() {
             and a 30% deposit holds your slot — refundable until the first sketch.
           </p>
 
-          {/* 3-step timeline â€” body copy via Markdown for bold time markers + email link */}
+          {/* 3-step timeline — body copy via Markdown for bold time markers + email link */}
           <div className="mt-14 max-w-3xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5 text-left">
             {NEXT_STEPS.map(({ when, strong, body, Icon }, i) => (
               <div

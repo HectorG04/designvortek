@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
@@ -16,7 +16,7 @@ import {
 } from '@/lib/portfolio-pieces'
 
 /* =====================================================================
-   PORTFOLIO INDEX â€” literal port of Portfolio.html.
+   PORTFOLIO INDEX — literal port of Portfolio.html.
    Hero â†’ sticky controls (filters + search + sort) â†’ masonry gallery â†’
    load-more row â†’ dark CTA strip.
 
@@ -161,19 +161,19 @@ export default function PortfolioMasonryClient({
               <em className="font-display italic font-medium text-burgundy-700">One craft.</em>
             </>
           }
-          description="Every commission since 2022 â€” character portraits, VTT tokens, NPC packs, party portraits, and the occasional book cover."
+          description="Every commission since 2022 — character portraits, VTT tokens, NPC packs, party portraits, and the occasional book cover."
           stat={
             <>
               <ClockIcon />
               <span>
                 <strong className="font-display text-base font-semibold text-ink-900">{CATEGORY_COUNTS.all} recent pieces</strong>
-                {' Â· '}updated as commissions wrap{' Â· '}last delivery {ALL_PIECES[0]?.delivered}
+                {' · '}updated as commissions wrap{' · '}last delivery {ALL_PIECES[0]?.delivered}
               </span>
             </>
           }
         />
 
-        {/* Sticky controls â€” sits at top: 76px (below fixed site header) */}
+        {/* Sticky controls — sits at top: 76px (below fixed site header) */}
         <div className="sticky top-[76px] z-10 border-y border-border-light backdrop-blur-md bg-parchment-50/[0.92] py-4 mb-12">
           <Container>
             <div className="flex flex-wrap items-center gap-5">
@@ -194,7 +194,7 @@ export default function PortfolioMasonryClient({
                           : 'bg-parchment-100 text-ink-700 border-border-light hover:bg-parchment-200 hover:border-border-medium',
                       )}
                     >
-                      {f.label} Â· {f.count}
+                      {f.label} · {f.count}
                     </button>
                   )
                 })}
@@ -207,7 +207,7 @@ export default function PortfolioMasonryClient({
                   type="search"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search by title or tagâ€¦"
+                  placeholder="Search by title or tag…"
                   className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-full pl-10 pr-3.5 py-2 font-body text-[0.875rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
                 />
               </div>
@@ -238,7 +238,7 @@ export default function PortfolioMasonryClient({
           </Container>
         </div>
 
-        {/* Gallery â€” CSS columns masonry */}
+        {/* Gallery — CSS columns masonry */}
         <Container>
           <div
             className="mb-14"
@@ -250,7 +250,7 @@ export default function PortfolioMasonryClient({
                 href={`/portfolio/${piece.slug}`}
                 className="group relative block mb-4 break-inside-avoid rounded-lg overflow-hidden border border-border-light bg-parchment-100 cursor-pointer transition-all duration-250 ease-[cubic-bezier(0.4,0,0.2,1)] hover:-translate-y-[3px] hover:shadow-lg hover:border-border-medium"
               >
-                {/* Gold corner flourishes â€” featured pieces only (per design HTML) */}
+                {/* Gold corner flourishes — featured pieces only (per design HTML) */}
                 {piece.featured && (
                   <>
                     <CornerTL />
@@ -260,7 +260,7 @@ export default function PortfolioMasonryClient({
                   </>
                 )}
 
-                {/* Quick view eye â€” always visible on featured, hover-only otherwise */}
+                {/* Quick view eye — always visible on featured, hover-only otherwise */}
                 <button
                   type="button"
                   aria-label="Quick view"
@@ -279,7 +279,7 @@ export default function PortfolioMasonryClient({
                   <EyeIcon />
                 </button>
 
-                {/* Image â€” real artwork via next/image, gradient backdrop
+                {/* Image — real artwork via next/image, gradient backdrop
                     for any letter-box edges when the source aspect doesn't
                     match the slot's `piece.aspect` perfectly. */}
                 <div
@@ -313,7 +313,7 @@ export default function PortfolioMasonryClient({
             ))}
           </div>
 
-          {/* Load more â€” hidden until we have more than the initial display */}
+          {/* Load more — hidden until we have more than the initial display */}
           {visibleItems.length < ALL_PIECES.length && (
             <div className="text-center mb-14">
               <Button variant="outline" size="md">
@@ -326,7 +326,7 @@ export default function PortfolioMasonryClient({
           </div>
         </Container>
 
-        {/* CTA strip â€” dark tome closer */}
+        {/* CTA strip — dark tome closer */}
         <section className="relative bg-tome-950 text-cream-50 py-20 text-center overflow-hidden">
           <PaperTexture variant="cream" opacity={0.5} />
           <div className="relative">

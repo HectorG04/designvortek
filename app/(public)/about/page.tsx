@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import PageHero from '@/components/layout/PageHero'
@@ -8,38 +8,38 @@ import Button from '@/components/ui/Button'
 import PaperTexture from '@/components/decor/PaperTexture'
 
 /* =====================================================================
-   ABOUT â€” literal port of About.html.
+   ABOUT — literal port of About.html.
 
    Structure (matches design HTML exactly):
      1. Hero
-     2. Artist intro (.ab-intro)  â€” 1fr 1.1fr grid, 4:5 portrait + bio
-     3. Values (.ab-values)       â€” 3 cards on parchment-100
-     4. Stats (.ab-stats)         â€” 4-up with vertical dividers
-     5. Behind the scenes (.ab-bts) â€” 5-tile grid on parchment-100
-     6. CTA strip                 â€” dark tome closer
+     2. Artist intro (.ab-intro)  — 1fr 1.1fr grid, 4:5 portrait + bio
+     3. Values (.ab-values)       — 3 cards on parchment-100
+     4. Stats (.ab-stats)         — 4-up with vertical dividers
+     5. Behind the scenes (.ab-bts) — 5-tile grid on parchment-100
+     6. CTA strip                 — dark tome closer
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'About Â· Design Vortex',
+  title: 'About · Design Vortex',
   description:
-    'The studio behind Design Vortex â€” a single artist, four years of commissions, 500+ characters brought to life. Meet the maker.',
+    'The studio behind Design Vortex — a single artist, four years of commissions, 500+ characters brought to life. Meet the maker.',
   alternates: { canonical: '/about' },
 }
 
 /* ---------- Values (matches Values section in About.html) ---------- */
 const VALUES = [
   {
-    num: '01 Â· Passion',
+    num: '01 · Passion',
     title: 'Passion first',
     body: "If a brief doesn't excite us, we don't take it. We'd rather turn down work than paint something we don't believe in. That's how every piece ends up portfolio-worthy.",
   },
   {
-    num: '02 Â· Quality',
+    num: '02 · Quality',
     title: 'Uncompromising craft',
     body: '4K final files. Two paint revisions. Process shared every three days. We treat each commission like the artwork is going on the wall of a gallery, because for our clients, it is.',
   },
   {
-    num: '03 Â· Clarity',
+    num: '03 · Clarity',
     title: 'Honest communication',
     body: "Pricing is fixed up front. Timelines are honored. If something's running late, you'll hear from us before the deadline. No vanishing artists, no missing updates, no surprises.",
   },
@@ -65,7 +65,7 @@ const PH_CHARACTER =
 
 /* ---------- BTS tiles (matches the 5-tile gallery) ---------- */
 const BTS_TILES = [
-  { label: 'THE DESK Â· STUDIO INTERIOR Â· 5:4', bg: PH_SCENE,     filter: 'none' },
+  { label: 'THE DESK · STUDIO INTERIOR · 5:4', bg: PH_SCENE,     filter: 'none' },
   { label: 'SKETCH',                            bg: PH_CHARACTER, filter: 'grayscale(1) brightness(1.1)' },
   { label: 'COLOR BLOCK',                       bg: PH_CHARACTER, filter: 'saturate(0.4)' },
   { label: 'FINAL',                             bg: PH_CHARACTER, filter: 'none' },
@@ -93,14 +93,14 @@ export default function AboutPage() {
               <em className="font-display italic font-medium text-burgundy-700">500+ stories.</em>
             </>
           }
-          description="Four years of painting characters for the people who care most about them. Here's how the studio came together â€” and why every commission still feels like the first."
+          description="Four years of painting characters for the people who care most about them. Here's how the studio came together — and why every commission still feels like the first."
         />
 
-        {/* Artist intro â€” .ab-intro: 1fr 1.1fr grid, gap 64px, items-center */}
+        {/* Artist intro — .ab-intro: 1fr 1.1fr grid, gap 64px, items-center */}
         <section className="pb-16 md:pb-24">
           <Container>
             <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-16 items-center">
-              {/* Portrait â€” 4:5, ds-ph-anime gradient, label bottom-left */}
+              {/* Portrait — 4:5, ds-ph-anime gradient, label bottom-left */}
               <div
                 className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-border-light"
                 style={{ background: PH_ANIME }}
@@ -109,7 +109,7 @@ export default function AboutPage() {
                   className="absolute bottom-5 left-5 px-2.5 py-1.5 rounded text-[0.6875rem] tracking-[0.1em] uppercase text-cream-50 bg-tome-950/65 backdrop-blur-md"
                   style={{ fontFamily: 'ui-monospace, "SF Mono", Menlo, monospace' }}
                 >
-                  THE ARTIST Â· STUDIO Â· 4:5
+                  THE ARTIST · STUDIO · 4:5
                 </span>
               </div>
 
@@ -123,28 +123,28 @@ export default function AboutPage() {
                   I started Design Vortex with one rule: <em>every piece, by hand</em>.
                 </h2>
                 <div className="font-accent text-2xl text-burgundy-700 mb-6">
-                  â€” and stuck to it
+                  — and stuck to it
                 </div>
                 <div className="space-y-4 max-w-[56ch]">
                   <p className="text-[1.0625rem] text-ink-700 leading-[1.75]">
                     I&apos;ve been painting digitally for fourteen years, but Design Vortex started in 2022 after a friend asked me to paint her D&amp;D character. She cried when she saw it. So did I.
                   </p>
                   <p className="text-[1.0625rem] text-ink-700 leading-[1.75]">
-                    That commission became a side hustle. The side hustle became a studio. Four years later I take five commissions a month â€” just enough to give each one the time and care it deserves, not so many that quality slips.
+                    That commission became a side hustle. The side hustle became a studio. Four years later I take five commissions a month — just enough to give each one the time and care it deserves, not so many that quality slips.
                   </p>
                   <p className="text-[1.0625rem] text-ink-700 leading-[1.75]">
                     I don&apos;t use AI. I don&apos;t outsource. I don&apos;t trace. Every brushstroke on every piece comes from a human looking carefully at your reference, your description, and the character you&apos;ve spent years inhabiting.
                   </p>
                 </div>
                 <div className="font-accent text-[1.75rem] text-gold-700 mt-4">
-                  â€” Theo, founder &amp; artist
+                  — Theo, founder &amp; artist
                 </div>
               </div>
             </div>
           </Container>
         </section>
 
-        {/* Values â€” bg parchment-100, 3-card grid */}
+        {/* Values — bg parchment-100, 3-card grid */}
         <section className="bg-parchment-100 py-16 md:py-24">
           <Container>
             <div className="mb-12 max-w-[640px]">
@@ -182,7 +182,7 @@ export default function AboutPage() {
           </Container>
         </section>
 
-        {/* Stats â€” 4-up with vertical dividers, max-width 980px */}
+        {/* Stats — 4-up with vertical dividers, max-width 980px */}
         <section className="py-16 md:py-24">
           <Container>
             <div className="text-center mb-12">
@@ -222,7 +222,7 @@ export default function AboutPage() {
           </Container>
         </section>
 
-        {/* Behind the scenes â€” bg parchment-100, 5-tile gallery */}
+        {/* Behind the scenes — bg parchment-100, 5-tile gallery */}
         <section className="bg-parchment-100 py-16 md:py-24">
           <Container>
             <div className="mb-12 max-w-[640px]">
@@ -234,11 +234,11 @@ export default function AboutPage() {
                 Inside the <em>studio</em>
               </h2>
               <p className="text-[1.0625rem] text-ink-500 leading-[1.6] max-w-[56ch]">
-                The desk, the tools, the sketches that didn&apos;t make it â€” the unglamorous truth behind every painted portrait.
+                The desk, the tools, the sketches that didn&apos;t make it — the unglamorous truth behind every painted portrait.
               </p>
             </div>
 
-            {/* .ab-bts â€” 1.4fr 1fr 1fr Ã— 2 rows, first tile spans 2 rows */}
+            {/* .ab-bts — 1.4fr 1fr 1fr × 2 rows, first tile spans 2 rows */}
             <div className="grid grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr] md:grid-rows-2 md:[grid-auto-rows:200px] gap-3">
               {BTS_TILES.map((tile, i) => (
                 <div
@@ -260,7 +260,7 @@ export default function AboutPage() {
           </Container>
         </section>
 
-        {/* CTA strip â€” dark tome closer (matches .pg-cta-strip) */}
+        {/* CTA strip — dark tome closer (matches .pg-cta-strip) */}
         <section className="relative bg-tome-950 text-cream-50 py-20 text-center overflow-hidden">
           <PaperTexture variant="cream" opacity={0.5} />
           <div className="relative">

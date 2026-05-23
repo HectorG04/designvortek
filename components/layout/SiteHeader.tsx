@@ -78,12 +78,14 @@ export default function SiteHeader({ transparent = false }: SiteHeaderProps) {
 
   return (
     <>
-      {/* Skip-to-content — sr-only by default, visible on focus.
-          Targets the main element each public page renders, so
-          keyboard users can bypass the sticky header chrome. */}
+      {/* Skip-to-content — keyboard-only, slides in on :focus.
+          Uses inline-positioned styles rather than Tailwind's sr-only
+          because sr-only's `clip-path: inset(50%)` was getting rendered
+          visibly during route transitions in Next 16. Off-screen via
+          transform; only the focus state moves it on. */}
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-burgundy-700 focus:text-cream-50 focus:px-4 focus:py-2 focus:rounded-md focus:text-sm focus:font-semibold focus:shadow-lg"
+        className="fixed left-3 top-3 z-[100] bg-burgundy-700 text-cream-50 px-4 py-2 rounded-md text-sm font-semibold shadow-lg transition-transform duration-150 ease-out -translate-y-[200%] focus:translate-y-0 focus-visible:translate-y-0 focus:outline-2 focus:outline-gold-500 focus:outline-offset-2"
       >
         Skip to content
       </a>

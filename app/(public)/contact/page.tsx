@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
@@ -8,10 +8,10 @@ import SectionLabel from '@/components/ui/SectionLabel'
 import ContactFormCard from './_ContactFormCard'
 
 /* =====================================================================
-   CONTACT â€” literal port of Contact.html.
+   CONTACT — literal port of Contact.html.
 
    Structure (matches design HTML exactly):
-     1. Hero â€” eyebrow "Contact", title "Say <em>hello</em>"
+     1. Hero — eyebrow "Contact", title "Say <em>hello</em>"
      2. .ct-grid: 1fr 1.2fr two-column
         - Left: eyebrow "Get in touch" + h3 "Four ways to reach us" + 4
                 .ct-method cards (Email, Commission brief, Instagram,
@@ -21,11 +21,11 @@ import ContactFormCard from './_ContactFormCard'
 
    NOTE: Earlier version had inverted columns (form-left, info-right), a
    "Get in touch" hero (not "Say hello"), 3-icon grid for socials, stats
-   cards, and an FAQ teaser block â€” none of which are in the design.
+   cards, and an FAQ teaser block — none of which are in the design.
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'Contact Â· Design Vortex',
+  title: 'Contact · Design Vortex',
   description:
     'Ask a question, send a note, or start a conversation. We reply within 48 hours, every weekday.',
   alternates: { canonical: '/contact' },
@@ -121,7 +121,7 @@ export default function ContactPage() {
           description="Got a question, an idea, or just want to talk shop? Drop us a line. We reply within 48 hours on weekdays."
         />
 
-        {/* Methods + Form â€” .ct-grid 1fr 1.2fr, max 1080px */}
+        {/* Methods + Form — .ct-grid 1fr 1.2fr, max 1080px */}
         <section className="pb-16 md:pb-24">
           <Container>
             <div className="mx-auto max-w-[1080px] grid lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-14 items-start">
@@ -164,7 +164,7 @@ export default function ContactPage() {
                     return (
                       <Wrapper key={m.title}>
                         <div className="flex gap-4 items-start">
-                          {/* Icon â€” 44Ã—44 rounded-md gold-100 bg + gold-700 text */}
+                          {/* Icon — 44×44 rounded-md gold-100 bg + gold-700 text */}
                           <span className="inline-flex w-11 h-11 rounded-md bg-gold-100 text-gold-700 items-center justify-center flex-shrink-0">
                             <m.Icon />
                           </span>
@@ -185,10 +185,10 @@ export default function ContactPage() {
                   })}
                 </div>
 
-                {/* Response time note â€” parchment-200 box */}
+                {/* Response time note — parchment-200 box */}
                 <div className="mt-6 px-5 py-4 bg-parchment-200 rounded-md text-sm text-ink-700 leading-[1.55]">
                   <strong className="font-display text-ink-900">Response time:</strong>{' '}
-                  within 48 hours, Monâ€“Fri. Based in EST. We sleep on weekends â€” usually.
+                  within 48 hours, Mon–Fri. Based in EST. We sleep on weekends — usually.
                 </div>
               </div>
 

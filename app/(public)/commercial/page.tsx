@@ -1,19 +1,19 @@
-﻿/* =====================================================================
-   COMMERCIAL â€” literal port of `Commercial.html` from
+/* =====================================================================
+   COMMERCIAL — literal port of `Commercial.html` from
    `Claude Design Final/Claude designs New Screens and flow V2/`.
 
    Publisher entry point. B2B-tone "talk to us" framing.
 
    Structure (matches design HTML exactly):
      1. Hero with 3 reassurance pills
-     2. Who this is for â€” 4 cards (.com-who)
-     3. How it's priced â€” 3-row breakdown with +40% licensing math
-        (.com-pricing-row Â· dashed-border separators Â· USD chip below)
-     4. Retainer block â€” dark tome (.pr-custom)
-     5. NDA reassurance card (.com-reassure â€” gold-left-border)
-     6. Recent commercial work â€” 3 portfolio placeholder cards
+     2. Who this is for — 4 cards (.com-who)
+     3. How it's priced — 3-row breakdown with +40% licensing math
+        (.com-pricing-row · dashed-border separators · USD chip below)
+     4. Retainer block — dark tome (.pr-custom)
+     5. NDA reassurance card (.com-reassure — gold-left-border)
+     6. Recent commercial work — 3 portfolio placeholder cards
      7. FAQ accordion (publishers' questions, 5 items)
-     8. CTA strip â€” dark tome closer (.pg-cta-strip)
+     8. CTA strip — dark tome closer (.pg-cta-strip)
    ===================================================================== */
 
 import type { Metadata } from 'next'
@@ -28,7 +28,7 @@ import USDDisclaimer from '@/components/ui/USDDisclaimer'
 import PaperTexture from '@/components/decor/PaperTexture'
 
 export const metadata: Metadata = {
-  title: 'Commercial & publisher commissions Â· Design Vortek',
+  title: 'Commercial & publisher commissions · Design Vortek',
   description:
     'Hand-painted illustration for tabletop publishers, indie games, Kickstarter campaigns, and merch. Commercial licensing handled transparently at +40% of the job price.',
   alternates: { canonical: '/commercial' },
@@ -117,7 +117,7 @@ const WHO = [
 interface PricingRow {
   label: string
   em: string
-  /** Description body â€” may include an inline link rendered as <a> */
+  /** Description body — may include an inline link rendered as <a> */
   body: React.ReactNode
   value: React.ReactNode
 }
@@ -171,20 +171,20 @@ const PRICING_ROWS: PricingRow[] = [
 /* ---------- Recent commercial work (3 placeholder cards, .ds-ph-scene) ---------- */
 const RECENT_WORK = [
   {
-    title: 'Hollow Crowns â€” cover & chapter art',
-    meta: 'Greyhawk Press Â· 14 interior pieces Â· 2025',
-    badge: 'Cover Â· indie RPG',
+    title: 'Hollow Crowns — cover & chapter art',
+    meta: 'Greyhawk Press · 14 interior pieces · 2025',
+    badge: 'Cover · indie RPG',
     filter: 'none',
   },
   {
-    title: 'Ironroot â€” stretch-goal illustrations',
-    meta: 'Client name held under NDA Â· 2025',
+    title: 'Ironroot — stretch-goal illustrations',
+    meta: 'Client name held under NDA · 2025',
     badge: 'Kickstarter',
     filter: 'hue-rotate(40deg)',
   },
   {
     title: 'Twin Moons apparel run',
-    meta: 'Riverpine Studio Â· 6 designs Â· 2024',
+    meta: 'Riverpine Studio · 6 designs · 2024',
     badge: 'Merch line',
     filter: 'hue-rotate(-50deg) saturate(1.1)',
   },
@@ -222,7 +222,7 @@ export default function CommercialPage() {
 
         {/* 01 Hero */}
         <PageHero
-          eyebrow="Commercial Â· Publisher Â· Studios"
+          eyebrow="Commercial · Publisher · Studios"
           title={
             <>
               For the work that{' '}
@@ -278,7 +278,7 @@ export default function CommercialPage() {
           </Container>
         </section>
 
-        {/* 03 How it's priced â€” 3-row breakdown with +40% math */}
+        {/* 03 How it's priced — 3-row breakdown with +40% math */}
         <section className="bg-parchment-100 py-16 md:py-24">
           <Container>
             <SectionHead
@@ -327,7 +327,7 @@ export default function CommercialPage() {
           </Container>
         </section>
 
-        {/* 04 Retainer block â€” dark tome (.pr-custom) */}
+        {/* 04 Retainer block — dark tome (.pr-custom) */}
         <section className="py-16 md:py-24">
           <Container>
             <div className="relative overflow-hidden bg-tome-950 text-cream-50 rounded-3xl px-7 py-9 md:px-12 md:py-14 grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 items-center">
@@ -422,7 +422,7 @@ export default function CommercialPage() {
                   key={work.title}
                   className="relative bg-parchment-100 border border-border-light rounded-2xl overflow-hidden transition-all duration-250 hover:-translate-y-1 hover:shadow-lg hover:border-border-medium"
                 >
-                  {/* Placeholder image area â€” ds-ph-scene gradient + badge */}
+                  {/* Placeholder image area — ds-ph-scene gradient + badge */}
                   <div
                     className="relative flex items-start p-3 aspect-[4/3]"
                     style={{ background: PH_SCENE, filter: work.filter }}
@@ -517,7 +517,7 @@ export default function CommercialPage() {
           </Container>
         </section>
 
-        {/* 08 CTA strip â€” dark tome closer */}
+        {/* 08 CTA strip — dark tome closer */}
         <section className="relative bg-tome-950 text-cream-50 py-16 md:py-20 text-center overflow-hidden">
           <PaperTexture variant="cream" opacity={0.5} />
           <div className="relative">

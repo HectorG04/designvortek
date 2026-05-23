@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import ProtectedImage from '@/components/ui/ProtectedImage'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -12,7 +12,7 @@ import Markdown from '@/components/ui/Markdown'
 import { cn } from '@/lib/utils'
 
 /* =====================================================================
-   PORTFOLIO DETAIL â€” literal port of Portfolio Detail.html.
+   PORTFOLIO DETAIL — literal port of Portfolio Detail.html.
    Server component for generateMetadata + generateStaticParams +
    CreativeWork JSON-LD. Three demo slugs hardcoded.
    ===================================================================== */
@@ -30,11 +30,11 @@ import { fetchAllSlugs, fetchPieceBySlug } from '@/lib/portfolio-pieces-server'
  * portfolio_pieces table become visible within a minute without a deploy. */
 export const revalidate = 60
 
-/* Related-pieces lookup (kept lean â€” three siblings per piece) */
+/* Related-pieces lookup (kept lean — three siblings per piece) */
 const RELATED: Array<{ slug: string; title: string; category: string; gradient: string; meta: string }> = [
-  { slug: 'aldric-half-elf-paladin',   title: 'Aldric Â· half-elf paladin',     category: 'Character Art', gradient: 'from-amber-900 via-yellow-700 to-orange-600', meta: 'Painterly Â· Mar 2026' },
-  { slug: 'drowned-captain-veska',     title: 'Drowned Captain Veska',          category: 'Character Art', gradient: 'from-slate-800 via-teal-700 to-emerald-600',  meta: 'Painterly Â· Feb 2026' },
-  { slug: 'brennen-bardic-dropout',    title: 'Brennen Â· bardic dropout',       category: 'Character Art', gradient: 'from-amber-800 via-rose-700 to-pink-600',     meta: 'Painterly Â· Jan 2026' },
+  { slug: 'aldric-half-elf-paladin',   title: 'Aldric · half-elf paladin',     category: 'Character Art', gradient: 'from-amber-900 via-yellow-700 to-orange-600', meta: 'Painterly · Mar 2026' },
+  { slug: 'drowned-captain-veska',     title: 'Drowned Captain Veska',          category: 'Character Art', gradient: 'from-slate-800 via-teal-700 to-emerald-600',  meta: 'Painterly · Feb 2026' },
+  { slug: 'brennen-bardic-dropout',    title: 'Brennen · bardic dropout',       category: 'Character Art', gradient: 'from-amber-800 via-rose-700 to-pink-600',     meta: 'Painterly · Jan 2026' },
 ]
 
 /* =====================================================================
@@ -57,16 +57,16 @@ export async function generateMetadata(
   const { slug } = await params
   const piece = await fetchPieceBySlug(slug)
   if (!piece) {
-    return { title: 'Portfolio piece not found Â· Design Vortex' }
+    return { title: 'Portfolio piece not found · Design Vortex' }
   }
   const first = stripMarkdown(piece.description[0])
   const desc = first.length > 160 ? first.slice(0, 157) + '...' : first
   return {
-    title: `${piece.title} Â· ${piece.category} Â· Design Vortex`,
+    title: `${piece.title} · ${piece.category} · Design Vortex`,
     description: desc,
     alternates: { canonical: `/portfolio/${piece.slug}` },
     openGraph: {
-      title: `${piece.title} Â· ${piece.category}`,
+      title: `${piece.title} · ${piece.category}`,
       description: desc,
       type: 'article',
     },
@@ -141,7 +141,7 @@ export default async function PortfolioDetailPage({
             <div className="grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-16">
               {/* Left: hero image + thumb gallery */}
               <div>
-                {/* HERO â€” real artwork via next/image when heroImage is set,
+                {/* HERO — real artwork via next/image when heroImage is set,
                     otherwise the original gradient placeholder. Gradient is
                     always rendered as the backdrop so transparent edges and
                     letter-box bars (for non-4:5 sources) tint correctly. */}
@@ -154,7 +154,7 @@ export default async function PortfolioDetailPage({
                   {piece.heroImage ? (
                     <ProtectedImage
                       src={piece.heroImage}
-                      alt={`${piece.title} â€” hand-painted portrait`}
+                      alt={`${piece.title} — hand-painted portrait`}
                       fill
                       sizes="(min-width: 1024px) 56vw, 100vw"
                       className="object-contain"
@@ -174,7 +174,7 @@ export default async function PortfolioDetailPage({
                   </button>
                 </div>
 
-                {/* PROCESS THUMBS â€” iterate piece.processImages when set
+                {/* PROCESS THUMBS — iterate piece.processImages when set
                     (each entry = real stage), otherwise fall back to the
                     legacy 4 gradient-filtered placeholder squares. */}
                 <div className="grid grid-cols-4 gap-3 mt-4">
@@ -192,7 +192,7 @@ export default async function PortfolioDetailPage({
                       >
                         <ProtectedImage
                           src={thumb.src}
-                          alt={`${piece.title} â€” ${thumb.label.toLowerCase()} stage`}
+                          alt={`${piece.title} — ${thumb.label.toLowerCase()} stage`}
                           fill
                           sizes="(min-width: 1024px) 140px, 22vw"
                           className="object-cover"
@@ -246,7 +246,7 @@ export default async function PortfolioDetailPage({
                 </h1>
                 <div className="font-accent text-2xl text-burgundy-700 mt-2">{piece.client}</div>
 
-                {/* Description â€” rendered via Markdown so **bold** + [links] survive */}
+                {/* Description — rendered via Markdown so **bold** + [links] survive */}
                 <div className="mt-6 space-y-4 text-ink-700 leading-[1.7] [&_p]:mb-0">
                   {piece.description.map((md, i) => (
                     <Markdown key={i}>{md}</Markdown>
@@ -298,7 +298,7 @@ export default async function PortfolioDetailPage({
           </Container>
         </section>
 
-        {/* From the artist â€” pull-quote */}
+        {/* From the artist — pull-quote */}
         <section className="pb-20">
           <Container narrow>
             <figure className="relative bg-parchment-100 border border-border-light rounded-2xl p-10 md:p-14 text-center">
@@ -307,7 +307,7 @@ export default async function PortfolioDetailPage({
                 <Markdown className="inline">{piece.artistNote}</Markdown>
                 <span className="text-burgundy-700">&rdquo;</span>
               </blockquote>
-              <figcaption className="font-accent text-xl text-burgundy-700 mt-5">â€” from the studio</figcaption>
+              <figcaption className="font-accent text-xl text-burgundy-700 mt-5">— from the studio</figcaption>
             </figure>
           </Container>
         </section>
