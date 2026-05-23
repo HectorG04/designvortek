@@ -46,7 +46,7 @@ const STEPS: Step[] = [
   {
     num: '02',
     title: 'Quote',
-    body: 'Within 48 hours of your brief, you get a **fixed quote** â€” not an estimate. Scope, timeline, total. A 25% deposit holds your slot (fully refundable until first sketch). The remaining 75% lands on delivery.',
+    body: 'Within 48 hours of your brief, you get a **fixed quote** — not an estimate. Scope, timeline, total. A 30% deposit holds your slot (fully refundable until first sketch). The remaining 70% lands on delivery.',
     note: 'No hourly games. No surprises. The price you approve is the price you pay.',
   },
   {
