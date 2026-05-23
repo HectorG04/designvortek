@@ -178,9 +178,9 @@ export default function FaqPage() {
         />
 
         <PageHero
-          eyebrow="Frequently asked"
-          title={<>Quick answers, no <em className="font-display italic font-medium text-burgundy-700">fluff</em></>}
-          description="Pricing, process, revisions, licensing, refunds. If you've thought it, someone's asked it â€” and the answer's here."
+          eyebrow="FAQ"
+          title={<>Every question, <em className="font-display italic font-medium text-burgundy-700">answered</em></>}
+          description="Pricing, process, revisions, rights, refunds. If you've thought it, someone's asked it — and we've answered it here."
         />
 
         {/* Search bar â€” matches .fq-search: 560px max, 1.5px border, parchment-100 bg, 14px/50px padding */}
