@@ -221,7 +221,17 @@ export const PERSONAS: readonly Persona[] = [
    pulls the 8 featured pieces from there directly. Keep this list
    aligned with the `category` literal union in PortfolioPiece.
    ===================================================================== */
-export const PORTFOLIO_CATEGORIES = ['All', 'Character Art', 'Tokens', 'Portraits', 'Anime', 'Custom']
+export const PORTFOLIO_CATEGORIES = [
+  'All',
+  'Character Art',
+  'Tokens',
+  'Portraits',
+  'Anime',
+  'Custom',
+  'Weapons & Assets',
+  'Character Sheets',
+  'Emotes',
+]
 
 /* =====================================================================
    PROCESS STEPS

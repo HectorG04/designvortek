@@ -39,10 +39,10 @@
 export interface PortfolioPiece {
   slug: string
   title: string
-  /** One of the studio's 5 portfolio buckets. Short forms ('Custom' not
+  /** One of the studio's portfolio buckets. Short forms ('Custom' not
    *  'Custom Projects', 'Tokens' not 'VTT Tokens', 'Portraits' not
    *  'Party Portraits') so the chip labels read clean. */
-  category: 'Character Art' | 'Tokens' | 'Portraits' | 'Anime' | 'Custom'
+  category: 'Character Art' | 'Tokens' | 'Portraits' | 'Anime' | 'Custom' | 'Weapons & Assets' | 'Character Sheets' | 'Emotes'
   client: string
   /** Two markdown paragraphs. */
   description: string[]
@@ -69,11 +69,14 @@ export interface PortfolioPiece {
 
 /* ---------- Slug â†’ filter-key map (for the masonry's filter chips) ---------- */
 export const CATEGORY_FILTER_KEYS: Record<PortfolioPiece['category'], string> = {
-  'Character Art': 'character-art',
-  'Tokens':        'vtt-tokens',
-  'Portraits':     'party-portraits',
-  'Anime':         'anime',
-  'Custom':        'custom',
+  'Character Art':    'character-art',
+  'Tokens':           'vtt-tokens',
+  'Portraits':        'party-portraits',
+  'Anime':            'anime',
+  'Custom':           'custom',
+  'Weapons & Assets': 'weapons-assets',
+  'Character Sheets': 'character-sheets',
+  'Emotes':           'emotes',
 }
 
 /* ---------- The data ---------- */
@@ -733,6 +736,145 @@ export const PORTFOLIO_PIECES: Record<string, PortfolioPiece> = {
       { src: '/images/portfolio/wolf-shonen-fanart/process-3.webp', label: 'COLOR V2' },
     ],
     artistNote: "Album covers live or die at thumbnail size. The glasses had to survive the crop.",
+  },
+
+  'alex-token-pack': {
+    slug: 'alex-token-pack',
+    title: "Alex's Four-Token Cardboard Set",
+    category: 'Tokens',
+    client: 'commissioned by Alex Q.',
+    description: [
+      "A **four-card token set** painted for tabletop play. Each piece is one character (Angel, Minion, Soldier, Zombie) framed and finished for **3.5\" by 2.5\" cardstock prints** the table can pass around during a session.",
+      "Alex came in with a Magic: the Gathering brief, referencing the Phyrexian Processor card for the Minion silhouette and three other Scryfall plates as anchors for the rest. The ask was straightforward: less detail than the source cards, but each character clearly its own frame so they could be cut and laminated. The Soldier and Zombie went all the way to finish. The Angel stayed at sketch by request.",
+    ],
+    tools: 'Procreate · Photoshop · Clip Studio Paint',
+    hours: '14h across 9 days',
+    style: 'Painterly · table-ready tokens',
+    resolution: '750 × 1050 px (per card)',
+    revisions: '1 of 2 used',
+    delivered: 'November 18, 2025',
+    tags: ['Tokens', 'D&D 5e', 'MTG-inspired', 'Cardstock print', 'Four-card set', 'Tabletop'],
+    gradient: 'from-rose-950 via-burgundy-700 to-amber-800',
+    aspect: '3/4',
+    featured: true,
+    heroImage: '/images/portfolio/alex-token-pack/hero.webp',
+    processImages: [
+      { src: '/images/portfolio/alex-token-pack/hero.webp',      label: 'MINION (FINAL)' },
+      { src: '/images/portfolio/alex-token-pack/process-1.webp', label: 'ZOMBIE (FINAL)' },
+      { src: '/images/portfolio/alex-token-pack/process-2.webp', label: 'SOLDIER (FINAL)' },
+      { src: '/images/portfolio/alex-token-pack/process-3.webp', label: 'ANGEL (SKETCH)' },
+    ],
+    artistNote: "Cardstock tokens have a different finish requirement than VTT tokens. Less rendering, more silhouette, because the print bed flattens contrast.",
+  },
+
+  'reborns-ray-gun': {
+    slug: 'reborns-ray-gun',
+    title: 'PRECYZJA Ray Gun, Patent Blueprint',
+    category: 'Weapons & Assets',
+    client: 'commissioned by the Reborns project',
+    description: [
+      "A **retro-futuristic energy weapon** rendered as a 1900s technical patent. The brief asked for the look of an official J.M. Browning Colt 1911 plate, but for a ray gun that bridges 19th-century mechanical engineering and a far-future plasma weapon.",
+      "The silhouette pulls from a Fubbles bubble gun (curved frame, high-arched handle), the muzzle adapts the flared bell of an antique brass flare gun, and the trigger is lifted from a vintage Precyzja pistol. Internal callouts label the **Beam Focusing Cone, Plasma Compression Chamber, Magnetic Field Coils** and **Removable Fusion Cell** in the same hand the original patent drafters used.",
+    ],
+    tools: 'Procreate · Photoshop · Krita',
+    hours: '11h across 7 days',
+    style: 'Patent blueprint · monochrome ink',
+    resolution: '4096 × 2896 px',
+    revisions: '2 of 3 used',
+    delivered: 'October 04, 2025',
+    tags: ['Weapon design', 'Concept art', 'Sci-fi', 'Patent blueprint', 'Indie game', 'Reborns'],
+    gradient: 'from-slate-800 via-zinc-700 to-amber-900',
+    aspect: '3/2',
+    featured: true,
+    heroImage: '/images/portfolio/reborns-ray-gun/hero.webp',
+    processImages: [
+      { src: '/images/portfolio/reborns-ray-gun/hero.webp',      label: 'FINAL COLOR' },
+      { src: '/images/portfolio/reborns-ray-gun/process-1.webp', label: 'BLUEPRINT SKETCH' },
+    ],
+    artistNote: "Patent drawings live or die on the callout discipline. Every label has to point at exactly one part, with the line angle picked so the words read flat.",
+  },
+
+  'reborns-weapon-2': {
+    slug: 'reborns-weapon-2',
+    title: 'Reborns Sci-Fi Sidearm, Triangular',
+    category: 'Weapons & Assets',
+    client: 'commissioned by the Reborns project',
+    description: [
+      "A **second sidearm** for the same Reborns motion-capture project. The reference was a chunky Nerf-style prop used on set. The ask was to push it away from toy proportions and into something that reads as a real weapon from a far-off planet.",
+      "Most of the design work was on the front profile. Looking down the barrel had to suggest a triangular core, the kind of shape you would only see on a weapon engineered around an alien power source. The body kept some of the Nerf-honest curves because they read well in motion, but the muzzle, sight rail and grip got sharpened into something the actor could hold seriously.",
+    ],
+    tools: 'Procreate · Photoshop · Krita',
+    hours: '8h across 5 days',
+    style: 'Sci-fi · weapon concept',
+    resolution: '4096 × 2896 px',
+    revisions: '1 of 2 used',
+    delivered: 'November 02, 2025',
+    tags: ['Weapon design', 'Concept art', 'Sci-fi', 'Motion capture prop', 'Indie game', 'Reborns'],
+    gradient: 'from-zinc-800 via-stone-700 to-orange-900',
+    aspect: '3/2',
+    featured: false,
+    heroImage: '/images/portfolio/reborns-weapon-2/hero.webp',
+    processImages: [
+      { src: '/images/portfolio/reborns-weapon-2/hero.webp',      label: 'FINAL' },
+      { src: '/images/portfolio/reborns-weapon-2/process-1.webp', label: 'SKETCH' },
+    ],
+    artistNote: "When the client says 'don't make it a toy' but starts from a Nerf reference, the trick is keeping the silhouette that worked on camera and rebuilding only the parts that read plastic.",
+  },
+
+  'magnet-character-sheet': {
+    slug: 'magnet-character-sheet',
+    title: 'Magnet, Half-Elf Reference Sheet',
+    category: 'Character Sheets',
+    client: 'commissioned by Eden M.',
+    description: [
+      "A **full character reference sheet** for a half-elf with **silver iris eyes, ginger hair, brass goggles** and a pair of flask-magazine potion rifles. The brief came in built on a Hero Forge base and asked for a leaning pose against a wall, somewhere a bounty board would sit beside her.",
+      "Eden was bouncing between hair colors when the brief landed (auburn, blonde, ginger were all options). Ginger won because the goggles needed a warm tone to land against the brick background. The flask-pistols were the brief's anchor detail and got the most rendering time. The job-board wall behind her ended up as a quiet pin-cluttered cork panel so the eye stays on Magnet.",
+    ],
+    tools: 'Procreate · Photoshop · Krita',
+    hours: '18h across 13 days',
+    style: 'Painterly · reference sheet',
+    resolution: '4096 × 2896 px',
+    revisions: '2 of 3 used',
+    delivered: 'January 19, 2026',
+    tags: ['Character Sheet', 'Reference Sheet', 'D&D 5e', 'Half-elf', 'Hero Forge', 'Flask weapons'],
+    gradient: 'from-amber-900 via-orange-700 to-rose-800',
+    aspect: '3/2',
+    featured: true,
+    heroImage: '/images/portfolio/magnet-character-sheet/hero.webp',
+    processImages: [
+      { src: '/images/portfolio/magnet-character-sheet/hero.webp',      label: 'FINAL COLOR' },
+      { src: '/images/portfolio/magnet-character-sheet/process-1.webp', label: 'SKETCH V1' },
+    ],
+    artistNote: "Reference sheets fight themselves. The challenge is keeping the silhouette readable when the brief is asking for a hundred small details at once.",
+  },
+
+  'celeste-emote-pack': {
+    slug: 'celeste-emote-pack',
+    title: 'Celeste, Ten-Emote Stream Pack',
+    category: 'Emotes',
+    client: 'commissioned by Celeste P.',
+    description: [
+      "A **ten-emote pack** covering four characters from Celeste's stream cast: **Daegon, Dewa, Lorene and Poppy**. Each emote was scoped to a specific reaction, from Daegon getting hit by Poppy's hammer to Lorene laying defeated after a Magic match.",
+      "The brief came in with Twitch-template references and a per-character emotion list. The sketch sheet was approved in one round, which let the rest of the time go into painting each emote at the size it would actually display (32px, 64px and 128px). The colors were tuned so the four characters stay visually distinct even at the small chat-icon scale.",
+    ],
+    tools: 'Procreate · Photoshop · Clip Studio Paint',
+    hours: '15h across 11 days',
+    style: 'Stream emote · four-character pack',
+    resolution: '1024 × 1024 px (per emote)',
+    revisions: '1 of 2 used',
+    delivered: 'December 12, 2025',
+    tags: ['Emotes', 'Twitch', 'Discord', 'Ten-pack', 'Stream pack', 'Character icons'],
+    gradient: 'from-pink-900 via-rose-700 to-violet-700',
+    aspect: '3/2',
+    featured: true,
+    heroImage: '/images/portfolio/celeste-emote-pack/hero.webp',
+    processImages: [
+      { src: '/images/portfolio/celeste-emote-pack/hero.webp',      label: 'SKETCH SHEET (ALL TEN)' },
+      { src: '/images/portfolio/celeste-emote-pack/process-1.webp', label: 'EMOTE · POPPY' },
+      { src: '/images/portfolio/celeste-emote-pack/process-2.webp', label: 'EMOTE · DEWA' },
+      { src: '/images/portfolio/celeste-emote-pack/process-3.webp', label: 'EMOTE · LORENE' },
+    ],
+    artistNote: "Emotes are the only commission that has to survive being shrunk to 32 pixels. The whole composition gets pre-flattened in the artist's head before the first stroke.",
   },
 }
 

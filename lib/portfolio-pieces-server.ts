@@ -95,7 +95,7 @@ function rowToPiece(row: PortfolioRow): PortfolioPiece | null {
       ? `${row.hours_spent}h`
       : ((meta.hoursText as string) ?? '')
 
-  const VALID_CATEGORIES = ['Character Art', 'Tokens', 'Portraits', 'Anime', 'Custom'] as const
+  const VALID_CATEGORIES = ['Character Art', 'Tokens', 'Portraits', 'Anime', 'Custom', 'Weapons & Assets', 'Character Sheets', 'Emotes'] as const
   const category = (VALID_CATEGORIES.includes(row.category as PortfolioPiece['category'])
     ? row.category
     : 'Character Art') as PortfolioPiece['category']
