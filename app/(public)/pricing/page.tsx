@@ -41,7 +41,7 @@ export const revalidate = 60
 export const metadata: Metadata = {
   title: 'Pricing · Design Vortex',
   description:
-    'Transparent flat-rate pricing across every service. Character portraits from $60, full-body from $120, reference sheets $250–$450, NPC packs from $220, monthly subscriptions from $30. No surprises.',
+    'Transparent flat-rate pricing across every service. Character portraits from $60, full-body from $120, reference sheets $250–$450, NPC packs from $220, monthly subscriptions from $75 (6 months minimum). No surprises.',
   alternates: { canonical: '/pricing' },
 }
 
@@ -65,7 +65,7 @@ const INDEX_CARDS = [
   { label: 'Group work',     name: 'Party portrait',  price: 'From $350',     anchor: 'party-portrait' },
   { label: 'Campaign',       name: 'NPC pack',        price: 'From $220',     anchor: 'npc-pack' },
   { label: 'Campaign',       name: 'Battle map',      price: 'From $150',     anchor: 'battle-map' },
-  { label: 'Monthly',        name: 'Subscription',    price: 'From $30 / mo', anchor: 'subscription' },
+  { label: 'Monthly',        name: 'Subscription',    price: 'From $75 / mo', anchor: 'subscription' },
 ]
 
 const FAQ: { q: string; a: string }[] = [

@@ -46,7 +46,11 @@ Two rounds of revisions are baked into every commission across every tier. One a
 
 ### 3.4 Subscriptions
 
-Subscription tiers ([Campaign Companion](/subscription) and the GM tier) are **paid monthly upfront**. There is no deposit refund model. To stop billing, cancel before the **10th of the month** and the next cycle will not charge. Already-paid months are not refunded once the month's drop has begun.
+Subscription tiers ([Campaign Companion](/subscription) at $75/month and the GM tier at $150/month) carry a **6-month minimum commitment**, paid monthly upfront. There is no deposit refund model.
+
+Within the 6-month window you may **pause up to 2 cycles** rather than cancel — the minimum is paid cycles, not calendar months. After the sixth paid cycle, cancel any time before the **10th of the month** and the next cycle will not charge. Already-paid months are not refunded once that month's drop has begun.
+
+Early termination of the 6-month commitment is only granted in exceptional circumstances (medical, bereavement, studio-side delays) at our discretion.
 
 ## 4. How to request a refund
 

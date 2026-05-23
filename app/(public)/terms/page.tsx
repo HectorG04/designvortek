@@ -65,7 +65,9 @@ We retain the right to display the commissioned work in our portfolio, on social
 
 ### 5.4 Subscription terms
 
-For subscription tiers ([Campaign Companion](/subscription) and the GM tier), the **first month is paid upfront in full** (no deposit model). Cancel before the **10th of the month** to skip the next cycle. Style guides are held for **12 months** after the last paid cycle.
+Subscription tiers ([Campaign Companion](/subscription) at **$75/month** and the GM tier at **$150/month**) carry a **6-month minimum commitment** so the studio can reserve a steady cadence of work for your campaign. The first month is paid upfront in full (no deposit model) and each subsequent cycle bills on the same day.
+
+Within the 6-month window you may **pause up to 2 cycles** if your campaign goes on hiatus — the minimum is paid cycles, not calendar months. After the sixth paid cycle the subscription becomes month-to-month: cancel before the **10th of the month** to skip the next cycle. Style guides are held for **12 months** after the last paid cycle.
 
 ## 6. Timeline
 

@@ -7,7 +7,7 @@
    Sections (mirrors the source HTML 1:1):
      01  Hero (PageHero) with reassurance pills
      02  How it works â€” 4-step horizontal strip
-     03  Two tiers â€” $30 Companion / $75 GM (featured)
+     03  Two tiers — $75 Companion / $150 GM (featured) · 6 months minimum
      04  Cadence callout â€” dark tome card, ships 15th
      05  What's NOT included â€” 3 honesty cards
      06  FAQ â€” 6 items, side+list layout
@@ -80,7 +80,7 @@ const COMPANION_FEATURES = [
   '10 hand-painted tokens',
   '2 NPC portraits, simpler render',
   'VTT-ready 512 + 1024 exports',
-  'Cancel or pause any cycle',
+  '6 months minimum · pause up to 2 cycles',
   'Swap items mid-cycle if your plan changes',
 ]
 
@@ -90,7 +90,7 @@ const GM_FEATURES = [
   '1 battle map (standard size, gridded)',
   'Style continuity across the campaign',
   'Priority response on briefs',
-  'Cancel, pause, or swap any cycle',
+  '6 months minimum · pause up to 2 cycles',
 ]
 
 const NOT_INCLUDED = [
@@ -235,8 +235,8 @@ export default function SubscriptionPage() {
                 tierSlug="subscription-companion"
                 name="Companion"
                 best="active GMs with a token-hungry table"
-                price="$30"
-                priceNote="10 tokens + 2 NPCs"
+                price="$75"
+                priceNote="10 tokens + 2 NPCs · 6 mo min"
                 features={COMPANION_FEATURES}
                 ctaLabel="Start Companion"
                 ctaVariant="outline"
@@ -249,8 +249,8 @@ export default function SubscriptionPage() {
                 flag="Most picked"
                 name="GM tier"
                 best="long-form campaigns that need a steady drip"
-                price="$75"
-                priceNote="tokens + NPCs + 1 map"
+                price="$150"
+                priceNote="tokens + NPCs + 1 map · 6 mo min"
                 features={GM_FEATURES}
                 ctaLabel="Start GM tier"
                 ctaVariant="primary"

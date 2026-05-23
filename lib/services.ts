@@ -748,14 +748,14 @@ export const SERVICES: readonly ServiceProduct[] = [
     name: 'Campaign Companion',
     bucket: 'subscription',
     eyebrow: 'monthly drip',
-    lede: 'Ten tokens plus two NPCs every month, painted to a campaign style guide we set up once. For GMs whose tables eat through references between sessions.',
+    lede: 'Ten tokens plus two NPCs every month, painted to a campaign style guide we set up once. For GMs whose tables eat through references between sessions. Six-month minimum commitment so the studio can plan a steady cadence.',
     pricingMode: 'monthly_recurring',
     pricing: {
       mode: 'monthly_recurring',
       monthly: {
-        monthly_price: 30,
+        monthly_price: 75,
         included: ['10 tokens', '2 NPCs'],
-        cadence: 'Ships on the 15th of each month',
+        cadence: 'Ships on the 15th of each month · 6 months minimum',
       },
     },
     revisionsIncluded: 1,
@@ -763,7 +763,7 @@ export const SERVICES: readonly ServiceProduct[] = [
     included: [
       { name: '10 tokens + 2 NPCs / month',  body: 'Mix of player tokens, NPC tokens, and supporting character portraits.' },
       { name: 'Locked style guide',          body: 'We set palette, era, and lighting in your first month and hold the line on every later piece.' },
-      { name: 'Pause anytime',               body: 'Pause for a month if your campaign is on break. Cancel before the next cycle.' },
+      { name: '6 months minimum',            body: "Subscriptions run for six full cycles so the studio can plan a steady cadence. You can pause within that window if life happens, but cancellation comes after the sixth paid cycle." },
       { name: 'First-month payment upfront', body: 'No deposit model. You pay the month, you get the month\'s drop.' },
     ],
     examples: [
@@ -774,7 +774,9 @@ export const SERVICES: readonly ServiceProduct[] = [
     faq: [
       { q: "What if I don't use my monthly allotment?", a: "Unused slots don't roll over. Use them or lose them. Most subscribers use 80% or more each month." },
       { q: 'Can I swap a token for an NPC?',            a: 'Yes. One NPC counts as roughly 3 tokens of slot. We work it out at your monthly check-in.' },
-      { q: 'How do I cancel?',                          a: 'Email us before the 10th of the month and your next cycle will not bill.' },
+      { q: 'Why a 6-month minimum?',                    a: 'Subscriptions exist so the studio can reserve a steady cadence of work for your table. Six months lets us lock in the style guide, hold capacity, and keep per-piece rates low. After the sixth cycle you can pause or cancel any time.' },
+      { q: 'Can I pause during the 6 months?',          a: 'Yes — pause up to two cycles within the commitment window if your campaign goes on hiatus. The minimum is paid cycles, not calendar months.' },
+      { q: 'How do I cancel after the 6 months?',       a: 'Email us before the 10th of the month and your next cycle will not bill.' },
     ],
     bundleWithSlugs: [],
     genreTags: [],
@@ -788,14 +790,14 @@ export const SERVICES: readonly ServiceProduct[] = [
     name: 'Campaign Companion · GM Tier',
     bucket: 'subscription',
     eyebrow: 'the campaign keeper',
-    lede: 'Tokens, NPCs, and one battle map every month. Built for long-form campaigns that need a steady drip of art without thinking about it.',
+    lede: 'Tokens, NPCs, and one battle map every month. Built for long-form campaigns that need a steady drip of art without thinking about it. Six-month minimum commitment so the studio can plan a steady cadence.',
     pricingMode: 'monthly_recurring',
     pricing: {
       mode: 'monthly_recurring',
       monthly: {
-        monthly_price: 75,
+        monthly_price: 150,
         included: ['~15 tokens', '3 NPCs', '1 battle map'],
-        cadence: 'Ships on the 15th of each month',
+        cadence: 'Ships on the 15th of each month · 6 months minimum',
       },
     },
     revisionsIncluded: 1,
@@ -803,8 +805,8 @@ export const SERVICES: readonly ServiceProduct[] = [
     included: [
       { name: 'Everything in Companion plus more', body: 'Bigger token and NPC allotment, plus a standard battle map every month.' },
       { name: 'Map size baseline',                 body: '30×40 or smaller fits the included scope. Larger maps quoted separately at retainer-friendly rates.' },
+      { name: '6 months minimum',                  body: "Subscriptions run for six full cycles so the studio can plan a steady cadence. Pause up to two cycles within the window if your campaign goes on hiatus. Cancellation comes after the sixth paid cycle." },
       { name: 'Same style guide model',            body: 'Set up once. Every piece stays in style for the duration of your campaign.' },
-      { name: 'Pause or cancel anytime',           body: 'Same flexibility as the Companion tier.' },
     ],
     examples: [
       { title: 'Active subscriber: Strahd long-form', meta: 'Started Q3 2025', gradient: 'from-burgundy-900 via-red-800 to-rose-700' },
@@ -814,6 +816,8 @@ export const SERVICES: readonly ServiceProduct[] = [
     faq: [
       { q: "What counts as a 'battle map'?",                 a: 'Standard battle map up to 30×40 squares. Larger maps come out of separate retainer-friendly quotes.' },
       { q: 'Can the GM tier replace a custom NPC pack?',     a: 'Often, yes. Three NPCs per month is close to a 6-month custom NPC pack at a fraction of the upfront cost.' },
+      { q: 'Why a 6-month minimum?',                         a: 'GM tier reserves a meaningful chunk of monthly studio capacity, including a battle map. Six months lets us plan around your campaign so quality stays consistent. After the sixth cycle you can pause or cancel any time.' },
+      { q: 'Can I pause during the 6 months?',               a: 'Yes — pause up to two cycles within the commitment window. The minimum is paid cycles, not calendar months.' },
       { q: 'Can I pause without losing my style guide?',     a: 'Yes. We hold style guides for 12 months after the last paid cycle.' },
     ],
     bundleWithSlugs: [],

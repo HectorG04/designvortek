@@ -39,7 +39,7 @@ const FAQS: FaqItem[] = [
   {
     category: 'pricing',
     q: 'How much does a commission cost?',
-    a: `Commissions range from **$25 for converting your existing art into a VTT token** all the way to **$900+ for an action scene illustration**. Character bust portraits start at $60. Full-body character art from $120. NPC packs from $220 for five. Subscriptions from $30/month.
+    a: `Commissions range from **$25 for converting your existing art into a VTT token** all the way to **$900+ for an action scene illustration**. Character bust portraits start at $60. Full-body character art from $120. NPC packs from $220 for five. Subscriptions from **$75/month** (Companion) or **$150/month** (GM tier), with a **6-month minimum commitment** so the studio can plan a steady cadence.
 
 All prices are USD. Every quote is fixed up front. See the full [pricing breakdown](/pricing).`,
   },
