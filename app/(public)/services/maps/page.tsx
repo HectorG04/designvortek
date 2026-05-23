@@ -27,6 +27,7 @@ import PageHero from '@/components/layout/PageHero'
 import Container from '@/components/ui/Container'
 import SectionHead from '@/components/ui/SectionHead'
 import USDDisclaimer from '@/components/ui/USDDisclaimer'
+import Button from '@/components/ui/Button'
 import PaperTexture from '@/components/decor/PaperTexture'
 
 export const metadata: Metadata = {
@@ -216,26 +217,25 @@ export default function MapsPage() {
                     {/* Foot — price block + CTA */}
                     <div className="mt-auto pt-[18px] border-t border-dashed border-border-light flex flex-wrap items-center justify-between gap-3.5">
                       <div>
-                        <div className="flex flex-wrap items-baseline gap-2">
-                          <span className="font-display text-2xl font-semibold text-burgundy-700 leading-[1.1] whitespace-nowrap">
-                            {p.from}
-                          </span>
-                          <USDDisclaimer variant="inline" />
-                        </div>
+                        <span className="font-display text-2xl font-semibold text-burgundy-700 leading-[1.1] whitespace-nowrap">
+                          {p.from}
+                        </span>
                         <span className="block font-body text-[0.6875rem] font-medium text-ink-500 uppercase tracking-[0.08em] mt-1">
                           {p.fromNote}
                         </span>
                       </div>
-                      <a
-                        href="#map-brief"
-                        className="inline-flex items-center justify-center gap-2 font-body font-semibold uppercase tracking-[0.12em] rounded-full border-[1.5px] border-transparent transition-all duration-250 ease-out whitespace-nowrap bg-burgundy-700 text-cream-50 hover:bg-burgundy-500 hover:shadow-md hover:-translate-y-px active:bg-burgundy-900 px-7 py-[14px] text-xs"
-                      >
+                      <Button href="#map-brief" variant="primary" size="md">
                         Request a quote
-                      </a>
+                      </Button>
                     </div>
                   </div>
                 </article>
               ))}
+            </div>
+
+            {/* USD disclaimer — centered below the product grid */}
+            <div className="text-center mt-[18px]">
+              <USDDisclaimer variant="inline" />
             </div>
           </Container>
         </section>
@@ -415,7 +415,7 @@ export default function MapsPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
                 <div className="flex flex-col gap-2">
                   <FieldLabel htmlFor="map-size">Estimated size or scope</FieldLabel>
-                  <TextInput id="map-size" name="scope" type="text" placeholder="e.g. 16×20, room scale, or 12 settlements" />
+                  <TextInput id="map-size" name="size" type="text" placeholder="e.g. 16×20, room scale, or 12 settlements" />
                 </div>
                 <div className="flex flex-col gap-2">
                   <FieldLabel htmlFor="map-deadline" optional>Deadline</FieldLabel>
@@ -449,9 +449,10 @@ export default function MapsPage() {
                 <FieldLabel htmlFor="map-refs" optionalText="optional, one per line">Reference links</FieldLabel>
                 <textarea
                   id="map-refs"
-                  name="reference_urls"
+                  name="references"
                   placeholder="Pinterest boards, existing maps you like, mood images."
-                  className="w-full bg-parchment-50 border-[1.5px] border-border-medium rounded-md px-4 py-3 font-body text-[0.9375rem] text-ink-900 transition-colors duration-150 ease-out min-h-[80px] resize-y placeholder:text-ink-400 focus:outline-none focus:border-burgundy-700 focus:shadow-[0_0_0_3px_rgba(107,31,42,0.10)]"
+                  style={{ minHeight: '80px' }}
+                  className="w-full bg-parchment-50 border-[1.5px] border-border-medium rounded-md px-4 py-3 font-body text-[0.9375rem] text-ink-900 transition-colors duration-150 ease-out resize-y placeholder:text-ink-400 focus:outline-none focus:border-burgundy-700 focus:shadow-[0_0_0_3px_rgba(107,31,42,0.10)]"
                 />
               </div>
 
@@ -472,13 +473,10 @@ export default function MapsPage() {
                 <p className="text-[0.8125rem] text-ink-500 max-w-[36ch]">
                   No commitment until the quote comes back and you say yes. USD pricing.
                 </p>
-                <button
-                  type="submit"
-                  className="inline-flex items-center justify-center gap-2 font-body font-semibold uppercase tracking-[0.12em] rounded-full border-[1.5px] border-transparent transition-all duration-250 ease-out whitespace-nowrap bg-burgundy-700 text-cream-50 hover:bg-burgundy-500 hover:shadow-md hover:-translate-y-px active:bg-burgundy-900 px-9 py-[18px] text-[0.8125rem] cursor-pointer"
-                >
+                <Button type="submit" variant="primary" size="lg">
                   Send map brief
                   <ArrowRight />
-                </button>
+                </Button>
               </div>
             </form>
           </Container>
@@ -552,18 +550,12 @@ export default function MapsPage() {
                 Five fields, two minutes. Quote back within 48 hours.
               </p>
               <div className="flex flex-wrap justify-center gap-3">
-                <a
-                  href="#map-brief"
-                  className="inline-flex items-center justify-center gap-2 font-body font-semibold uppercase tracking-[0.12em] rounded-full border-[1.5px] border-transparent transition-all duration-250 ease-out whitespace-nowrap bg-gold-500 text-ink-900 hover:bg-gold-300 hover:shadow-[0_8px_24px_rgba(201,160,74,0.32)] hover:-translate-y-px px-9 py-[18px] text-[0.8125rem]"
-                >
+                <Button href="#map-brief" variant="gold" size="lg">
                   Send a brief <ArrowRight />
-                </a>
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center justify-center gap-2 font-body font-semibold uppercase tracking-[0.12em] rounded-full border-[1.5px] border-cream-200 text-cream-50 transition-all duration-250 ease-out whitespace-nowrap hover:bg-cream-50 hover:text-ink-900 hover:border-cream-50 px-9 py-[18px] text-[0.8125rem]"
-                >
+                </Button>
+                <Button href="/contact" variant="outline-cream" size="lg">
                   Talk to the studio
-                </Link>
+                </Button>
               </div>
             </Container>
           </div>

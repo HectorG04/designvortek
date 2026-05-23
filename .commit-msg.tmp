@@ -1,0 +1,69 @@
+Audit all 7 V2 ports against V2Updated designs — match 100%
+
+Ran section-by-section audits of every page ported in the Phase 4/5 work,
+fixing every mismatch found against the canonical V2Updated HTML in
+`Claude Design Final/V2Updated/`.
+
+/subscription — 5 fixes
+- How-it-works container padding (28/40 → 36/40 baseline)
+- Removed duplicate USDDisclaimer below tier grid (design has it inside each tier card only)
+- In-card USD chip styling (centered, padding 14/6, text-xs, border)
+- Cadence callout padding (24/28 mobile, 36/28 desktop)
+- Hero reassurance pill row spacing (18px via -mt-3.5 inside PageHero children)
+
+/commercial — 2 fixes
+- Metadata description copy ("base" removed)
+- Section 02 padding (added top padding to match design)
+
+/services/maps — 5 fixes
+- Form field name="scope" → name="size"
+- Form field name="reference_urls" → name="references"
+- References textarea min-height explicit inline 80px
+- USDDisclaimer placement (single centered chip below product grid, not inline per card)
+- Replaced 3 inline-styled buttons with shared Button component
+
+/services/[slug] (Service Detail v2) — already audited and fixed in previous commit
+- See commit 67ee379 for the 7 structural fixes (bucket-level sections, .bd-bundle callout, etc.)
+
+/order — 9 fixes
+Step 1:
+- BucketEntry gained cardName (short) and desc (per-card description) fields
+- Bucket icon background solid burgundy-700 (flips gold on check)
+- Bucket grid layout repeat(3,1fr) with card-5 spanning cols-2/3 on lg
+- Crumb chevron literal › character (not SVG)
+- Style preference helper copy
+Step 2:
+- Description placeholder restored "Holds a glass orb that catches the light."
+Step 3:
+- Budget context label style (uppercase tracked, of-label pattern)
+- Optional marker format (inline "optional", not parens)
+- Placeholder copy ("e.g. This is my fourth commission this year…")
+
+/admin/services — 5 fixes
+- Bucket label "Tokens (standalone)" (local override, kept lib labels for public)
+- Bucket label "Commercial / publisher" (local override)
+- Display order: commercial before subscription on admin list
+- Reorder icon only on first bucket
+- Removed Phase 5 info banner (not in design)
+
+/admin/services/[id]/edit — 5 fixes
+- Chip label "Pack with quantity" → "Pack-with-quantity"
+- Percentage uplift panel: removed extra label field
+- Monthly recurring "What's included" reverted to textarea (newline-split)
+- Genre tags: added 7 preset toggleable chips (Fantasy / D&D 5e / Sci-fi / Horror / Cyberpunk / Modern / Historical) alongside the typed input
+- Cleanup of orphaned helpers
+
+/admin/orders/[id] — significant restructure
+- Quote builder Base price row reshaped to .adm-quote-row pattern (inline label + 120px input)
+- Custom adjustment block: gold dashed border, gold-700 SVG, ink-900 heading, ink-500 muted em hint
+- Total quote bar: full-bleed -mx-6, gold-100 bg, rounded-b-xl flush to card bottom
+- "Send quote" button now burgundy primary (matches .dv-btn-primary, not gold)
+- Header actions gained primary "Send quote" anchor button (jumps to #quote-builder)
+- Commission brief field order matches design
+- New Communication thread section (auto-receipt entry + disabled reply textarea + "Send reply" disabled button)
+- Quick actions expanded from 2 → 4 (Send quote email, Schedule call disabled, Move to portfolio disabled, Archive order posts status=closed)
+- New Customer history sidebar card (avatar + initials, prior orders count + total spent via extra Supabase query, first seen month/year, View customer profile link)
+
+VERIFICATION
+- npx tsc --noEmit exits 0
+- npx next build exits 0, 83 pages generated

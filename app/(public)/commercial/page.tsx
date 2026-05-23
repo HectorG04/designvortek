@@ -30,7 +30,7 @@ import PaperTexture from '@/components/decor/PaperTexture'
 export const metadata: Metadata = {
   title: 'Commercial & publisher commissions · Design Vortek',
   description:
-    'Hand-painted illustration for tabletop publishers, indie games, Kickstarter campaigns, and merch. Commercial licensing handled transparently at +40% of the base job price.',
+    'Hand-painted illustration for tabletop publishers, indie games, Kickstarter campaigns, and merch. Commercial licensing handled transparently at +40% of the job price.',
   alternates: { canonical: '/commercial' },
 }
 
@@ -249,7 +249,7 @@ export default function CommercialPage() {
         </PageHero>
 
         {/* 02 Who this is for */}
-        <section className="pb-16 md:pb-24">
+        <section className="py-16 md:py-24">
           <Container>
             <SectionHead
               eyebrow="Who this is for"

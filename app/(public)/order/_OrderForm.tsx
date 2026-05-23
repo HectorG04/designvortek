@@ -47,8 +47,14 @@ type Product =
 type BucketKey = 'character' | 'party' | 'gm' | 'tokens' | 'subscription'
 
 type BucketEntry = {
+  /** Long label used in the reveal head + crumb trail ("Character work") */
   label: string
+  /** Short name shown on the bucket card itself ("Character") */
+  cardName: string
   tagline: string
+  /** Short blurb shown on the bucket card body */
+  desc: string
+  /** Short blurb shown in the reveal head sub */
   helper: string
   fromLine: string
   countLine: string
@@ -62,7 +68,9 @@ type BucketEntry = {
 const CATALOG: Record<BucketKey, BucketEntry> = {
   character: {
     label: 'Character work',
+    cardName: 'Character',
     tagline: 'your hero, painted',
+    desc: 'Single-figure portraits, full-body art, reference sheets, character+token bundles.',
     helper: 'Single-figure pieces, reference sheets, and the matching-token bundle.',
     fromLine: 'from $60',
     countLine: '4 products',
@@ -107,7 +115,9 @@ const CATALOG: Record<BucketKey, BucketEntry> = {
   },
   party: {
     label: 'Party work',
+    cardName: 'Party',
     tagline: 'the whole gang',
+    desc: 'Group compositions, matched portrait sets, action scenes for the whole table.',
     helper: 'Group compositions and action scenes.',
     fromLine: 'from $220',
     countLine: '3 products',
@@ -141,7 +151,9 @@ const CATALOG: Record<BucketKey, BucketEntry> = {
   },
   gm: {
     label: 'GM & world-building',
+    cardName: 'GM & world-building',
     tagline: 'for the campaign',
+    desc: 'NPC packs, monsters, items, battle maps, region maps. Anything behind the screen.',
     helper: 'Everything behind the screen.',
     fromLine: 'from $30',
     countLine: '5 products',
@@ -187,7 +199,9 @@ const CATALOG: Record<BucketKey, BucketEntry> = {
   },
   tokens: {
     label: 'Tokens',
+    cardName: 'Tokens (standalone)',
     tagline: 'tabletop-ready',
+    desc: 'Single tokens, token packs, or convert your existing art into VTT-ready tokens.',
     helper: 'For VTT play. Personal use included.',
     fromLine: 'from $25',
     countLine: '3 products',
@@ -217,7 +231,9 @@ const CATALOG: Record<BucketKey, BucketEntry> = {
   },
   subscription: {
     label: 'Subscription',
+    cardName: 'Subscription',
     tagline: 'campaign companion',
+    desc: 'Monthly tokens, NPCs, and maps. For active GMs running long-form campaigns.',
     helper: 'Monthly bundle, cancel any cycle.',
     fromLine: '$30 or $75 / mo',
     countLine: '2 tiers',
@@ -241,20 +257,6 @@ const CATALOG: Record<BucketKey, BucketEntry> = {
 }
 
 const BUCKET_ORDER: BucketKey[] = ['character', 'party', 'gm', 'tokens', 'subscription']
-
-/* Design-spec gradients matching .ds-ph-* (same palette as services/page.tsx) */
-const BUCKET_GRADIENTS: Record<BucketKey, string> = {
-  character:
-    'radial-gradient(ellipse at 30% 20%, rgba(232,200,128,0.6), transparent 55%), radial-gradient(ellipse at 70% 80%, rgba(107,31,42,0.6), transparent 60%), linear-gradient(135deg, #2a1810, #3e1218 60%, #1a130c)',
-  party:
-    'radial-gradient(ellipse at 20% 40%, rgba(201,160,74,0.5), transparent 50%), radial-gradient(ellipse at 80% 60%, rgba(31,77,58,0.6), transparent 55%), linear-gradient(160deg, #3e1218, #6B1F2A, #1F4D3A)',
-  gm:
-    'radial-gradient(ellipse at 50% 80%, rgba(232,200,128,0.4), transparent 60%), linear-gradient(180deg, #1F4D3A 0%, #6B1F2A 60%, #1a130c 100%)',
-  tokens:
-    'radial-gradient(circle at 50% 50%, rgba(212,162,76,0.5), transparent 50%), radial-gradient(circle at 50% 50%, rgba(107,31,42,0.8), transparent 70%), linear-gradient(135deg, #1a130c, #251A10)',
-  subscription:
-    'radial-gradient(ellipse at 50% 50%, rgba(232,200,128,0.5), transparent 55%), linear-gradient(140deg, #1F4D3A 0%, #2a1810 70%, #6B1F2A 100%)',
-}
 
 const STYLES = [
   { value: 'painterly',  label: 'Painterly · warm' },
@@ -399,12 +401,6 @@ const ClockIcon = () => (
   <svg viewBox="0 0 24 24" className="w-5 h-5 text-gold-700" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <circle cx="12" cy="12" r="9" />
     <path d="M12 7v5l3 3" />
-  </svg>
-)
-
-const ChevronSm = () => (
-  <svg viewBox="0 0 24 24" className="w-3 h-3 text-ink-300" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
-    <path d="M9 6l6 6-6 6" />
   </svg>
 )
 
@@ -745,8 +741,8 @@ export default function OrderForm() {
                       </p>
                     </div>
 
-                    {/* Crumb trail: bucket › product › tier */}
-                    <div className="flex flex-wrap items-center gap-2 text-[0.8125rem] text-ink-500 mb-6">
+                    {/* Crumb trail: bucket › product › tier (text-arrow chevrons per spec) */}
+                    <div className="flex flex-wrap items-center gap-3 text-[0.8125rem] text-ink-500 mb-6">
                       <span
                         className={cn(
                           'inline-flex items-center gap-1.5',
@@ -762,7 +758,7 @@ export default function OrderForm() {
                           {selectedBucket ? selectedBucket.label : 'Pick a bucket'}
                         </strong>
                       </span>
-                      <ChevronSm />
+                      <span aria-hidden="true" className="text-ink-300">›</span>
                       <span
                         className={cn(
                           'inline-flex items-center gap-1.5',
@@ -778,7 +774,7 @@ export default function OrderForm() {
                           {selectedProduct ? selectedProduct.name : 'Pick a product'}
                         </strong>
                       </span>
-                      <ChevronSm />
+                      <span aria-hidden="true" className="text-ink-300">›</span>
                       <span
                         className={cn(
                           'inline-flex items-center gap-1.5',
@@ -812,10 +808,15 @@ export default function OrderForm() {
                         Five buckets, plus commercial which has its own landing page.
                       </p>
 
-                      {/* 3-col desktop, 2-col tablet, 1-col mobile; row 2 = subscription spans 2 cols */}
+                      {/* 3-col desktop with row-2 = [card-4 spans col-1][card-5 spans col-2&3].
+                          2-col tablet (card-5 spans 2). 1-col mobile. */}
                       <div
-                        className="grid gap-3 sm:gap-4"
-                        style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))' }}
+                        className={cn(
+                          'grid gap-3 sm:gap-4',
+                          'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+                          '[&>*:nth-child(4)]:sm:col-auto [&>*:nth-child(4)]:lg:col-start-1 [&>*:nth-child(4)]:lg:col-end-2',
+                          '[&>*:nth-child(5)]:sm:col-span-2 [&>*:nth-child(5)]:lg:col-start-2 [&>*:nth-child(5)]:lg:col-end-4',
+                        )}
                         role="radiogroup"
                         aria-label="Service bucket"
                       >
@@ -850,18 +851,22 @@ export default function OrderForm() {
                               >
                                 <CheckSm className="w-3 h-3" />
                               </span>
-                              {/* Gradient icon block */}
+                              {/* Solid burgundy icon block — flips to gold when checked */}
                               <span
-                                className="inline-flex w-10 h-10 rounded-md items-center justify-center text-cream-50 mb-1"
-                                style={{ background: BUCKET_GRADIENTS[key] }}
+                                className={cn(
+                                  'inline-flex w-10 h-10 rounded-md items-center justify-center mb-1 transition-colors',
+                                  checked
+                                    ? 'bg-gold-500 text-ink-900'
+                                    : 'bg-burgundy-700 text-cream-50',
+                                )}
                               >
                                 <BucketIcon kind={key} />
                               </span>
                               <span className="font-display text-[1.25rem] font-semibold text-ink-900 leading-tight tracking-tight">
-                                {meta.label}
+                                {meta.cardName}
                               </span>
                               <span className="text-[0.8125rem] text-ink-500 leading-[1.45]">
-                                {meta.helper}
+                                {meta.desc}
                               </span>
                               <span className="mt-auto pt-2.5 border-t border-dashed border-border-light font-body text-[0.6875rem] tracking-[0.04em] text-ink-500 leading-[1.4]">
                                 <strong className="font-semibold text-ink-700">{meta.countLine}</strong> · {meta.fromLine}
@@ -900,10 +905,9 @@ export default function OrderForm() {
                           <div className="flex items-baseline justify-between gap-5 mb-4 pb-3.5 border-b border-dashed border-border-light">
                             <h3 className="font-display text-[1.25rem] font-semibold text-ink-900">
                               Now pick a{' '}
-                              <em
-                                className="not-italic font-display italic font-medium text-burgundy-700"
-                                dangerouslySetInnerHTML={{ __html: selectedBucket.label }}
-                              />
+                              <em className="not-italic font-display italic font-medium text-burgundy-700">
+                                {selectedBucket.label}
+                              </em>
                             </h3>
                             <span className="text-[0.8125rem] text-ink-500">{selectedBucket.helper}</span>
                           </div>
@@ -1055,7 +1059,7 @@ export default function OrderForm() {
                         Style preference
                       </div>
                       <p className="text-sm text-ink-500 mb-4">
-                        Optional. We&rsquo;ll discuss style in detail before starting. Skip if undecided.
+                        Optional. The studio will discuss style in detail before starting.
                       </p>
                       <div className="flex flex-wrap gap-2">
                         {STYLES.map((s) => {
@@ -1108,7 +1112,7 @@ export default function OrderForm() {
                           value={data.description}
                           onChange={(e) => set('description', e.target.value)}
                           maxLength={1500}
-                          placeholder="e.g. Lyra Vexweaver — tiefling sorceress, level 9. Tall, lean, soft purple skin with darker freckles, gold horns swept back. Wears a tattered violet robe with constellations stitched in silver thread. Painterly style, warm dramatic lighting, dark mossy forest in the background. Vibe: melancholy but powerful — she's just lost her familiar."
+                          placeholder="e.g. Lyra Vexweaver — tiefling sorceress, level 9. Tall, lean, soft purple skin with darker freckles, gold horns swept back. Wears a tattered violet robe with constellations stitched in silver thread. Holds a glass orb that catches the light. Painterly style, warm dramatic lighting, dark mossy forest in the background. Vibe: melancholy but powerful — she's just lost her familiar."
                           className={cn(
                             'w-full bg-parchment-50 border-[1.5px] rounded-md px-4 py-3 pr-24 font-body text-[1rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors min-h-[180px] resize-y',
                             errors.description ? 'border-burgundy-500' : 'border-border-light',
@@ -1351,14 +1355,15 @@ export default function OrderForm() {
                       </div>
                     </div>
 
-                    {/* Budget context textarea (V2 addition) */}
+                    {/* Budget context textarea (V2 addition) — uppercase .of-label style,
+                        matches the rest of the form's "label + optional inline" pattern. */}
                     <div className="mt-6">
                       <label
                         htmlFor="of-budget-context"
-                        className="block font-body text-[0.875rem] font-semibold text-ink-900 mb-1"
+                        className="block font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-ink-700 mb-2"
                       >
                         Anything else about your budget?{' '}
-                        <span className="font-normal text-ink-400">(optional)</span>
+                        <span className="font-normal text-ink-400 normal-case tracking-normal">optional</span>
                       </label>
                       <p className="text-[0.8125rem] text-ink-500 leading-[1.5] mb-2.5">
                         Returning client, student, multi-piece commission, gift, charity, anything else worth knowing. The studio reads this before quoting and may offer a custom arrangement.
@@ -1367,7 +1372,7 @@ export default function OrderForm() {
                         id="of-budget-context"
                         value={data.budget_notes}
                         onChange={(e) => set('budget_notes', e.target.value)}
-                        placeholder="Returning client, student, multi-piece, charity, etc. — anything that should factor into the quote."
+                        placeholder="e.g. This is my fourth commission this year and I'm hoping to bundle this with a token pack. Or: I'm a student, but I've been saving for this since the campaign started."
                         className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md px-4 py-3 font-body text-[0.9375rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors min-h-[88px] resize-y"
                       />
                     </div>

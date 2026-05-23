@@ -96,7 +96,7 @@ const PRICING_MODES = [
   { value: 'tiered',            name: 'Tiered',             desc: 'Basic / Standard / Premium'  },
   { value: 'range',             name: 'Range',              desc: 'From $X to $Y'                },
   { value: 'per_extra',         name: 'Per-extra',          desc: 'Base + per member'            },
-  { value: 'pack_with_qty',     name: 'Pack with quantity', desc: 'Multiple qty rows'            },
+  { value: 'pack_with_qty',     name: 'Pack-with-quantity', desc: 'Multiple qty rows'            },
   { value: 'pct_uplift',        name: 'Percentage uplift',  desc: '+X% of base job'              },
   { value: 'monthly_recurring', name: 'Monthly recurring',  desc: '$X / month'                   },
   { value: 'flat',              name: 'Flat fee',           desc: 'Single price'                 },
@@ -434,6 +434,19 @@ function bucketLabel(slug: string): string {
   return BUCKETS.find((b) => b.slug === slug)?.label ?? slug
 }
 
+/* Genre tag presets shown as toggleable chips in the right sidebar.
+   Matches the V2 design exactly; the user can still type custom tags
+   via the inline input below. */
+const GENRE_TAG_PRESETS = [
+  'Fantasy',
+  'D&D 5e',
+  'Sci-fi',
+  'Horror',
+  'Cyberpunk',
+  'Modern',
+  'Historical',
+] as const
+
 /* =====================================================================
    COMPONENT
    ===================================================================== */
@@ -544,32 +557,6 @@ export default function ServiceForm({
     setPricingByMode((prev) => ({
       ...prev,
       pack_with_qty: { packs: prev.pack_with_qty.packs.filter((_, i) => i !== idx) },
-    }))
-  }
-
-  /* Monthly included helpers */
-  const setMonthlyIncluded = (idx: number, value: string) => {
-    setPricingByMode((prev) => ({
-      ...prev,
-      monthly_recurring: {
-        ...prev.monthly_recurring,
-        included: prev.monthly_recurring.included.map((s, i) => (i === idx ? value : s)),
-      },
-    }))
-  }
-  const addMonthlyIncluded = () => {
-    setPricingByMode((prev) => ({
-      ...prev,
-      monthly_recurring: { ...prev.monthly_recurring, included: [...prev.monthly_recurring.included, ''] },
-    }))
-  }
-  const removeMonthlyIncluded = (idx: number) => {
-    setPricingByMode((prev) => ({
-      ...prev,
-      monthly_recurring: {
-        ...prev.monthly_recurring,
-        included: prev.monthly_recurring.included.filter((_, i) => i !== idx),
-      },
     }))
   }
 
@@ -979,15 +966,6 @@ export default function ServiceForm({
                       </select>
                     </Field>
                   </div>
-                  <Field label="Customer-facing label" className="mb-0">
-                    <input
-                      type="text"
-                      value={pricingByMode.pct_uplift.label}
-                      onChange={(e) => setPricingByMode((p) => ({ ...p, pct_uplift: { ...p.pct_uplift, label: e.target.value } }))}
-                      placeholder="of base job price"
-                      className={inputClass}
-                    />
-                  </Field>
                   <Field label="Customer-facing note" className="mb-0">
                     <textarea
                       value={pricingByMode.pct_uplift.note}
@@ -1020,30 +998,23 @@ export default function ServiceForm({
                       />
                     </Field>
                   </div>
-                  <div>
-                    <label className="block text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-700 mb-2">
-                      What&apos;s included (monthly allotment)
-                    </label>
-                    <div className="flex flex-col gap-1.5">
-                      {pricingByMode.monthly_recurring.included.map((row, idx) => (
-                        <div key={idx} className="flex gap-2 items-center">
-                          <input
-                            type="text"
-                            value={row}
-                            onChange={(e) => setMonthlyIncluded(idx, e.target.value)}
-                            placeholder="e.g. 10 hand-painted tokens"
-                            className="flex-1 bg-parchment-50 border border-border-light rounded-sm px-2.5 py-1.5 text-[0.8125rem] text-ink-900 focus:outline-none focus:border-burgundy-500"
-                          />
-                          <IconButton onClick={() => removeMonthlyIncluded(idx)} small title="Remove">
-                            <X size={12} strokeWidth={1.8} />
-                          </IconButton>
-                        </div>
-                      ))}
-                    </div>
-                    <div className="mt-2">
-                      <AddRowButton onClick={addMonthlyIncluded} label="Add included item" small />
-                    </div>
-                  </div>
+                  <Field label="What's included (monthly allotment)" hint="One item per line. Bullets render in the public detail page." className="mb-0">
+                    <textarea
+                      value={pricingByMode.monthly_recurring.included.join('\n')}
+                      onChange={(e) =>
+                        setPricingByMode((p) => ({
+                          ...p,
+                          monthly_recurring: {
+                            ...p.monthly_recurring,
+                            included: e.target.value.split('\n'),
+                          },
+                        }))
+                      }
+                      rows={4}
+                      placeholder="e.g. 10 hand-painted tokens · 2 NPC portraits · VTT-ready exports · cancel any cycle"
+                      className={inputClass + ' min-h-[80px] resize-y'}
+                    />
+                  </Field>
                 </div>
               )}
 
@@ -1421,22 +1392,49 @@ export default function ServiceForm({
           <SvceCard>
             <SvceCardHead title="Genre tags" hint="Filter on portfolio" />
             <div className="flex flex-wrap gap-1.5">
-              {genreTags.map((tag) => (
-                <span
-                  key={tag}
-                  className="inline-flex items-center gap-1 px-2.5 py-1 text-[0.75rem] bg-burgundy-700 text-cream-50 rounded-full"
-                >
-                  {tag}
+              {/* Preset chips (toggleable) */}
+              {GENRE_TAG_PRESETS.map((preset) => {
+                const isActive = genreTags.includes(preset)
+                return (
                   <button
                     type="button"
-                    onClick={() => removeGenreTag(tag)}
-                    className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full hover:bg-burgundy-900 transition-colors"
-                    title={`Remove ${tag}`}
+                    key={preset}
+                    onClick={() =>
+                      isActive
+                        ? removeGenreTag(preset)
+                        : setGenreTags([...genreTags, preset])
+                    }
+                    className={
+                      'inline-flex items-center gap-1 px-2.5 py-1 text-[0.75rem] rounded-full border transition-colors cursor-pointer ' +
+                      (isActive
+                        ? 'bg-burgundy-700 text-cream-50 border-burgundy-700'
+                        : 'bg-parchment-200 text-ink-700 border-transparent hover:border-burgundy-500')
+                    }
                   >
-                    <X size={10} strokeWidth={2} />
+                    {preset}
                   </button>
-                </span>
-              ))}
+                )
+              })}
+              {/* Custom tags (typed by user, removable) */}
+              {genreTags
+                .filter((t) => !(GENRE_TAG_PRESETS as readonly string[]).includes(t))
+                .map((tag) => (
+                  <span
+                    key={tag}
+                    className="inline-flex items-center gap-1 px-2.5 py-1 text-[0.75rem] bg-burgundy-700 text-cream-50 rounded-full"
+                  >
+                    {tag}
+                    <button
+                      type="button"
+                      onClick={() => removeGenreTag(tag)}
+                      className="inline-flex items-center justify-center w-3.5 h-3.5 rounded-full hover:bg-burgundy-900 transition-colors"
+                      title={`Remove ${tag}`}
+                    >
+                      <X size={10} strokeWidth={2} />
+                    </button>
+                  </span>
+                ))}
+              {/* Inline "+ tag" input */}
               <input
                 type="text"
                 value={genreTagDraft}
@@ -1446,7 +1444,10 @@ export default function ServiceForm({
                     e.preventDefault()
                     addGenreTag()
                   } else if (e.key === 'Backspace' && genreTagDraft === '' && genreTags.length > 0) {
-                    removeGenreTag(genreTags[genreTags.length - 1])
+                    const last = genreTags[genreTags.length - 1]
+                    if (!(GENRE_TAG_PRESETS as readonly string[]).includes(last)) {
+                      removeGenreTag(last)
+                    }
                   }
                 }}
                 placeholder="+ tag"

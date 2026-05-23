@@ -23,7 +23,6 @@ import Container from '@/components/ui/Container'
 import SectionHead from '@/components/ui/SectionHead'
 import SectionLabel from '@/components/ui/SectionLabel'
 import Button from '@/components/ui/Button'
-import USDDisclaimer from '@/components/ui/USDDisclaimer'
 import PaperTexture from '@/components/decor/PaperTexture'
 
 export const metadata: Metadata = {
@@ -185,7 +184,7 @@ export default function SubscriptionPage() {
           }
           description="For active GMs who burn through tokens and NPCs faster than the players burn through hit points. Hand-painted, delivered the 15th of every month, pause whenever the table goes on hiatus."
         >
-          <ul className="flex flex-wrap gap-2.5 justify-center list-none p-0 m-0">
+          <ul className="-mt-3.5 flex flex-wrap gap-2.5 justify-center list-none p-0">
             {['Cancel any time', 'Pause for a month', 'Every piece by hand'].map((label) => (
               <li key={label}>
                 <span className="inline-flex items-center gap-1.5 bg-parchment-50 border border-border-light rounded-full px-3 py-1.5 text-[0.8125rem] text-ink-700">
@@ -205,7 +204,7 @@ export default function SubscriptionPage() {
               title={<>Four steps, <em>then we paint</em></>}
             />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-6 bg-parchment-100 border border-border-light rounded-2xl p-7 md:p-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-6 bg-parchment-100 border border-border-light rounded-2xl px-9 py-10">
               {HOWTO_STEPS.map((step) => (
                 <div key={step.n}>
                   <div className="w-8 h-8 rounded-full bg-parchment-50 border-[1.5px] border-gold-500 text-gold-700 font-display text-[1.0625rem] font-semibold inline-flex items-center justify-center mb-3.5">
@@ -255,18 +254,13 @@ export default function SubscriptionPage() {
               />
 
             </div>
-
-            {/* USD disclaimer beneath tier grid */}
-            <div className="mt-6 flex justify-center">
-              <USDDisclaimer variant="block" />
-            </div>
           </Container>
         </section>
 
         {/* 04 — Cadence callout */}
         <section className="pt-8 pb-16 md:pb-24">
           <Container>
-            <div className="relative overflow-hidden rounded-2xl bg-tome-950 text-cream-50 px-7 md:px-9 py-7 md:py-7 flex flex-col md:flex-row items-start md:items-center gap-6">
+            <div className="relative overflow-hidden rounded-2xl bg-tome-950 text-cream-50 px-6 py-6 md:px-9 md:py-7 flex flex-col md:flex-row items-start md:items-center gap-6">
               {/* Soft gold radial glow */}
               <div
                 aria-hidden="true"
@@ -491,7 +485,7 @@ function TierCard({
         </Button>
       </div>
 
-      <span className="inline-flex items-center gap-1.5 self-start rounded-full bg-parchment-200 px-2.5 py-1 text-[0.6875rem] font-medium tracking-[0.01em] text-ink-500 whitespace-nowrap">
+      <span className="mt-3 mx-auto flex w-fit items-center gap-1.5 rounded-full bg-parchment-200 border border-black/[0.04] px-3.5 py-1.5 text-xs font-medium tracking-[0.01em] text-ink-500 whitespace-nowrap leading-none">
         <DollarIcon className="w-[11px] h-[11px] text-gold-700" />
         USD · international cards billed at current rate
       </span>

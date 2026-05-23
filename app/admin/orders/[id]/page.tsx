@@ -12,8 +12,8 @@ import {
   CalendarDays,
   ExternalLink,
   Send,
-  Clock,
-  FileText,
+  ImageIcon,
+  Trash2,
 } from 'lucide-react'
 import { updateOrderNotes, updateOrderStatus, sendQuote } from './_actions'
 
@@ -62,6 +62,34 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
   const orderRef = formatOrderRef(order.id, order.created_at)
   const referenceLinks = parseLinks(order.reference_links)
 
+  const basePrice = Number(order.quoted_price ?? 0)
+  const adjAmount = Number(order.adjustment_amount ?? 0)
+  const hasPricing = (order.quoted_price ?? null) !== null || (order.adjustment_amount ?? null) !== null
+  const totalQuote = basePrice + adjAmount
+
+  // Customer history: count prior orders by email (excluding this one).
+  const { data: priorOrders } = await admin
+    .from('commission_orders')
+    .select('id, created_at, quoted_price')
+    .eq('customer_email', order.customer_email)
+    .neq('id', order.id)
+    .order('created_at', { ascending: true })
+
+  const priorCount = priorOrders?.length ?? 0
+  const totalSpent = (priorOrders ?? []).reduce(
+    (sum, o) => sum + Number(o.quoted_price ?? 0),
+    0,
+  )
+  const firstSeenIso = priorOrders && priorOrders.length > 0
+    ? priorOrders[0].created_at
+    : order.created_at
+  const customerInitials = order.customer_name
+    .split(/\s+/)
+    .map((s: string) => s.charAt(0))
+    .join('')
+    .slice(0, 2)
+    .toUpperCase()
+
   return (
     <AdminShell
       user={{ email, initials }}
@@ -83,6 +111,13 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
           >
             <Mail size={14} strokeWidth={1.8} />
             Email customer
+          </a>
+          <a
+            href="#quote-builder"
+            className="hidden sm:inline-flex items-center gap-1.5 bg-burgundy-700 text-cream-50 hover:bg-burgundy-500 transition-colors px-4 py-2 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em]"
+          >
+            <Send size={14} strokeWidth={1.8} />
+            Send quote
           </a>
         </div>
       }
@@ -166,15 +201,11 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
                 {order.service_type}
                 {order.style && <> · {order.style}</>}
               </BriefRow>
-              <BriefRow label="Budget">
-                {order.budget || <Muted>— not specified —</Muted>}
-              </BriefRow>
-              <BriefRow label="Deadline">
-                {order.deadline ? (
-                  fmtDate(order.deadline)
-                ) : (
-                  <Muted>— flexible —</Muted>
-                )}
+              {order.style && <BriefRow label="Style">{order.style}</BriefRow>}
+              <BriefRow label="Description">
+                <div className="whitespace-pre-line text-ink-900 leading-relaxed">
+                  {order.description}
+                </div>
               </BriefRow>
               <BriefRow label="References">
                 {referenceLinks.length > 0 ? (
@@ -196,10 +227,15 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
                   <Muted>— none provided —</Muted>
                 )}
               </BriefRow>
-              <BriefRow label="Description">
-                <div className="whitespace-pre-line text-ink-900 leading-relaxed">
-                  {order.description}
-                </div>
+              <BriefRow label="Budget">
+                {order.budget || <Muted>— not specified —</Muted>}
+              </BriefRow>
+              <BriefRow label="Deadline">
+                {order.deadline ? (
+                  fmtDate(order.deadline)
+                ) : (
+                  <Muted>— flexible —</Muted>
+                )}
               </BriefRow>
             </dl>
           </section>
@@ -241,27 +277,54 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
             </form>
           </section>
 
-          {/* Activity log */}
+          {/* Communication thread (placeholder until email log lands) */}
           <section className="bg-parchment-100 border border-border-light rounded-xl px-6 py-6">
-            <h2 className="font-display text-[1.125rem] font-semibold text-ink-900 mb-4">
-              Activity
-            </h2>
-            <ul className="flex flex-col gap-0">
-              <TimelineItem
-                icon={FileText}
-                tone="gold"
-                title="Brief submitted"
-                meta={`${fmtDate(order.created_at)} · ${fmtAgo(order.created_at)}`}
+            <div className="flex items-center justify-between mb-3.5">
+              <h2 className="font-display text-[1.125rem] font-semibold text-ink-900">
+                Communication
+              </h2>
+              <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500">
+                View full thread
+              </span>
+            </div>
+            <div className="flex gap-3 pb-3 border-b border-dashed border-border-light">
+              <span className="w-8 h-8 rounded-full bg-burgundy-100 text-burgundy-700 flex items-center justify-center flex-shrink-0">
+                <Mail size={14} strokeWidth={1.8} />
+              </span>
+              <div className="flex-1 text-[0.875rem] text-ink-700 leading-[1.55]">
+                <div className="flex justify-between items-baseline mb-1">
+                  <strong className="text-ink-900 font-display text-base font-semibold">
+                    Brief auto-receipt sent
+                  </strong>
+                  <span className="text-[0.75rem] text-ink-500">{fmtAgo(order.created_at)}</span>
+                </div>
+                <span>
+                  &ldquo;Thanks for your brief, {order.customer_name.split(' ')[0]} — we&rsquo;ll
+                  send a fixed quote within 48 hours.&rdquo;
+                </span>
+              </div>
+            </div>
+            <div className="mt-4">
+              <textarea
+                disabled
+                placeholder={`Reply to ${order.customer_name.split(' ')[0]}…  (email thread coming soon)`}
+                className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md px-3.5 py-2.5 text-[0.9375rem] text-ink-700 placeholder:text-ink-500 min-h-[80px] resize-y opacity-70 cursor-not-allowed"
               />
-              {order.updated_at && order.updated_at !== order.created_at && (
-                <TimelineItem
-                  icon={Clock}
-                  tone="burgundy"
-                  title="Order updated"
-                  meta={`${fmtDate(order.updated_at)} · ${fmtAgo(order.updated_at)}`}
-                />
-              )}
-            </ul>
+              <div className="flex justify-between items-center mt-2.5">
+                <div className="text-[0.75rem] text-ink-500">
+                  Replies will send from{' '}
+                  <strong className="text-ink-700">theo@designvortek.com</strong> via Resend
+                </div>
+                <button
+                  type="button"
+                  disabled
+                  className="inline-flex items-center gap-1.5 bg-burgundy-700/60 text-cream-50 px-4 py-2 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em] cursor-not-allowed"
+                >
+                  Send reply
+                  <Send size={12} strokeWidth={1.8} />
+                </button>
+              </div>
+            </div>
           </section>
         </div>
 
@@ -302,27 +365,32 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
               })}
             </div>
             <p className="text-xs text-ink-500 mt-3 leading-relaxed">
-              Click any state to change. Customer notifications can be wired in later.
+              Click any state to change. Customer gets an email on every transition.
             </p>
           </section>
 
           {/* Quote builder */}
-          <section className="bg-parchment-100 border border-border-light rounded-xl px-6 py-6 overflow-hidden">
+          <section
+            id="quote-builder"
+            className="bg-parchment-100 border border-border-light rounded-xl px-6 pt-6 pb-0 overflow-hidden scroll-mt-24"
+          >
             <div className="flex items-center justify-between mb-3">
               <h2 className="font-display text-[1.125rem] font-semibold text-ink-900">
                 Quote builder
               </h2>
             </div>
-            <form action={sendQuote} className="flex flex-col gap-3">
+            <form action={sendQuote} className="flex flex-col">
               <input type="hidden" name="id" value={order.id} />
 
-              {/* Base price */}
-              <label className="flex flex-col gap-1.5">
-                <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500">
-                  Base price (USD)
-                </span>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-500 font-semibold">
+              {/* Base price row — matches .adm-quote-row layout from design */}
+              <div className="flex items-center gap-2.5 py-3">
+                <div className="flex-1">
+                  <span className="text-ink-500 text-[0.8125rem]">
+                    Base price{order.service_type ? ` (${order.service_type})` : ''}
+                  </span>
+                </div>
+                <div className="relative w-[120px] flex-shrink-0">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-500 font-semibold pointer-events-none">
                     $
                   </span>
                   <input
@@ -332,44 +400,43 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
                     step="1"
                     defaultValue={order.quoted_price ?? ''}
                     placeholder="320"
-                    className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md pl-7 pr-3 py-2.5 text-base text-ink-900 font-mono placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 focus:ring-[3px] focus:ring-burgundy-100 transition-all"
+                    className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md pl-6 pr-3 py-2.5 text-base text-ink-900 font-mono placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 focus:ring-[3px] focus:ring-burgundy-100 transition-all"
                   />
                 </div>
-              </label>
+              </div>
 
-              {/* Custom adjustment block — gold dashed border, sits between
-                  base price and total. Three fields: label (customer-visible),
-                  amount (signed), reason (admin-only). */}
-              <div className="border-[1.5px] border-dashed border-gold-300 bg-gold-100/40 rounded-md p-3.5 flex flex-col gap-2.5">
-                <div className="flex items-center gap-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-gold-700">
+              {/* Custom adjustment block — gold dashed border per .adm-adjust */}
+              <div className="bg-parchment-50 border border-dashed border-gold-500 rounded-md p-4 my-2.5 flex flex-col gap-2.5">
+                <div className="flex items-center gap-2 text-[0.8125rem] font-semibold text-ink-900 tracking-[0.01em]">
                   <svg
                     viewBox="0 0 24 24"
-                    width="12"
-                    height="12"
+                    width="14"
+                    height="14"
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="2"
                     strokeLinecap="round"
+                    className="text-gold-700 flex-shrink-0"
                     aria-hidden="true"
                   >
                     <path d="M19 5L5 19M9 5h10v10" />
                   </svg>
                   <span>Custom adjustment</span>
-                  <em className="not-italic font-normal text-ink-500 normal-case tracking-normal text-[0.6875rem]">
+                  <span className="ml-auto not-italic text-ink-500 text-[0.6875rem] font-medium tracking-normal">
                     optional · discount or surcharge
-                  </em>
+                  </span>
                 </div>
 
-                <div className="flex gap-2">
+                <div className="flex gap-2.5 items-stretch">
                   <input
                     type="text"
                     name="adjustment_label"
                     defaultValue={order.adjustment_label ?? ''}
-                    placeholder="Label shown to customer · e.g. Returning client"
-                    className="flex-1 min-w-0 bg-parchment-50 border-[1.5px] border-border-light rounded-md px-3 py-2 text-[0.875rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-gold-500 focus:ring-[3px] focus:ring-gold-100 transition-all"
+                    placeholder="Label shown to customer · e.g. Returning client, multi-piece bundle"
+                    className="flex-1 min-w-0 bg-parchment-50 border border-border-medium rounded-md px-3 py-2.5 text-[0.875rem] text-ink-900 placeholder:text-ink-400 placeholder:text-[0.8125rem] focus:outline-none focus:border-gold-500 focus:ring-[3px] focus:ring-gold-100 transition-all"
                   />
-                  <div className="relative w-[100px] flex-shrink-0">
-                    <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-ink-500 font-semibold text-sm">
+                  <div className="relative w-[120px] flex-shrink-0">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-500 font-semibold pointer-events-none">
                       $
                     </span>
                     <input
@@ -378,7 +445,7 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
                       defaultValue={order.adjustment_amount ?? ''}
                       placeholder="±0"
                       inputMode="numeric"
-                      className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md pl-6 pr-2 py-2 text-[0.875rem] text-ink-900 font-mono placeholder:text-ink-400 focus:outline-none focus:border-gold-500 focus:ring-[3px] focus:ring-gold-100 transition-all"
+                      className="w-full h-full bg-parchment-50 border-[1.5px] border-border-light rounded-md pl-6 pr-3 py-2.5 text-base text-ink-900 font-mono placeholder:text-ink-400 focus:outline-none focus:border-gold-500 focus:ring-[3px] focus:ring-gold-100 transition-all"
                     />
                   </div>
                 </div>
@@ -388,44 +455,35 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
                   defaultValue={order.adjustment_reason ?? ''}
                   rows={2}
                   placeholder="Internal note · why this adjustment? (private, not sent to customer)"
-                  className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md px-3 py-2 text-[0.8125rem] text-ink-700 placeholder:text-ink-400 focus:outline-none focus:border-gold-500 focus:ring-[3px] focus:ring-gold-100 transition-all resize-y min-h-[52px]"
+                  className="w-full bg-white/55 border border-border-medium rounded-md px-3 py-2.5 text-[0.8125rem] text-ink-700 placeholder:text-ink-400 focus:outline-none focus:border-gold-500 focus:ring-[3px] focus:ring-gold-100 transition-all resize-y min-h-[56px] leading-[1.5]"
                 />
               </div>
 
-              {/* Total quote row — gold strip at the bottom of the card.
-                  Computed server-side from quoted_price + adjustment_amount
-                  for display; the form posts the raw inputs and the action
-                  saves them separately so future edits remain easy. */}
+              <button
+                type="submit"
+                className="inline-flex items-center justify-center gap-1.5 bg-burgundy-700 text-cream-50 hover:bg-burgundy-500 transition-colors px-4 py-2.5 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em] mt-2 mb-3 self-end"
+              >
+                <Send size={14} strokeWidth={1.8} />
+                Send quote
+              </button>
+              <p className="text-xs text-ink-500 leading-relaxed mb-4">
+                Sending a quote sets status to{' '}
+                <strong className="text-ink-700">Quoted</strong>. The custom adjustment label
+                appears on the customer&apos;s quote email; the internal note stays private.
+              </p>
+
+              {/* Total quote bar — gold strip flush to the card bottom. */}
               <div
-                className="flex items-center justify-between bg-gold-100 px-6 py-3.5 -mx-6 -mb-6 mt-1 border-t border-border-light"
+                className="flex items-center justify-between bg-gold-100 -mx-6 px-6 py-3.5 rounded-b-xl"
                 aria-label="Total quote"
               >
                 <span className="font-display text-base font-semibold text-ink-900">
                   Total quote
                 </span>
                 <span className="font-display text-[1.75rem] font-semibold text-burgundy-700 tracking-[-0.015em]">
-                  {(() => {
-                    const base = order.quoted_price ?? 0
-                    const adj = order.adjustment_amount ?? 0
-                    const total = base + adj
-                    if (base === 0 && adj === 0) return '—'
-                    return `$${total}`
-                  })()}
+                  {hasPricing ? `$${totalQuote}` : '—'}
                 </span>
               </div>
-
-              <button
-                type="submit"
-                className="inline-flex items-center justify-center gap-1.5 bg-gold-500 text-ink-900 hover:bg-gold-300 hover:shadow-[0_8px_24px_rgba(201,160,74,0.32)] transition-all px-4 py-2.5 rounded-full text-[0.6875rem] font-semibold uppercase tracking-[0.12em] mt-7"
-              >
-                <Send size={14} strokeWidth={1.8} />
-                Send quote
-              </button>
-              <p className="text-xs text-ink-500 leading-relaxed">
-                Sending a quote sets status to{' '}
-                <strong className="text-ink-700">Quoted</strong>. The custom adjustment
-                appears on the customer&apos;s quote email; the internal note stays private.
-              </p>
             </form>
           </section>
 
@@ -439,19 +497,93 @@ export default async function OrderDetailPage({ params }: OrderDetailProps) {
             <div className="flex flex-col gap-2">
               <a
                 href={`mailto:${order.customer_email}?subject=Re: your commission brief (${orderRef})`}
-                className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-md text-sm text-ink-700 hover:bg-parchment-200 border border-border-light transition-colors"
+                className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-md text-sm text-ink-700 hover:bg-parchment-200 border border-border-light transition-colors w-full justify-start"
               >
                 <Mail size={14} strokeWidth={1.8} className="text-burgundy-700" />
-                Email customer
+                Send quote email
               </a>
               <span
                 aria-disabled="true"
-                className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-md text-sm text-ink-500 border border-dashed border-border-light cursor-not-allowed select-none"
+                className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-md text-sm text-ink-500 hover:bg-parchment-200 transition-colors w-full justify-start cursor-not-allowed select-none"
               >
-                <CalendarDays size={14} strokeWidth={1.8} className="text-ink-400" />
-                Schedule call (soon)
+                <CalendarDays size={14} strokeWidth={1.8} />
+                Schedule a call
               </span>
+              <span
+                aria-disabled="true"
+                className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-md text-sm text-ink-500 hover:bg-parchment-200 transition-colors w-full justify-start cursor-not-allowed select-none"
+              >
+                <ImageIcon size={14} strokeWidth={1.8} />
+                Move to portfolio
+              </span>
+              <form action={updateOrderStatus}>
+                <input type="hidden" name="id" value={order.id} />
+                <input type="hidden" name="status" value="closed" />
+                <button
+                  type="submit"
+                  className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-md text-sm text-burgundy-700 hover:bg-parchment-200 transition-colors w-full justify-start"
+                >
+                  <Trash2 size={14} strokeWidth={1.8} />
+                  Archive order
+                </button>
+              </form>
             </div>
+          </section>
+
+          {/* Customer history */}
+          <section className="bg-parchment-100 border border-border-light rounded-xl px-6 py-6">
+            <div className="flex items-center justify-between mb-3">
+              <h2 className="font-display text-[1.125rem] font-semibold text-ink-900">
+                About this customer
+              </h2>
+            </div>
+            <div className="flex gap-3 items-center mb-3.5">
+              <div className="w-11 h-11 rounded-full bg-burgundy-700 text-cream-50 flex items-center justify-center font-display text-base font-semibold flex-shrink-0">
+                {customerInitials}
+              </div>
+              <div className="min-w-0">
+                <div className="font-display text-[1.125rem] font-semibold text-ink-900 truncate">
+                  {order.customer_name}
+                </div>
+                <div className="text-[0.8125rem] text-ink-500 truncate">
+                  {order.customer_email}
+                  {order.customer_phone && <> · {order.customer_phone}</>}
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <div className="flex justify-between items-center py-2 border-b border-dashed border-border-light">
+                <span className="text-ink-500 text-[0.8125rem]">Past orders</span>
+                <span className="text-ink-900 text-[0.8125rem] font-medium">
+                  {priorCount === 0
+                    ? 'First-time customer'
+                    : `${priorCount} commission${priorCount === 1 ? '' : 's'}${
+                        totalSpent > 0 ? ` · $${totalSpent} spent` : ''
+                      }`}
+                </span>
+              </div>
+              <div className="flex justify-between items-center py-2 border-b border-dashed border-border-light">
+                <span className="text-ink-500 text-[0.8125rem]">First seen</span>
+                <span className="text-ink-900 text-[0.8125rem] font-medium">
+                  {fmtMonthYear(firstSeenIso)}
+                </span>
+              </div>
+              <div className="flex justify-between items-center py-2">
+                <span className="text-ink-500 text-[0.8125rem]">Email</span>
+                <a
+                  href={`mailto:${order.customer_email}`}
+                  className="text-burgundy-700 hover:text-burgundy-500 text-[0.8125rem] font-medium truncate max-w-[60%]"
+                >
+                  {order.customer_email}
+                </a>
+              </div>
+            </div>
+            <Link
+              href={`/admin/customers/${encodeURIComponent(order.customer_email)}`}
+              className="block text-center mt-3 text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-burgundy-700 hover:text-burgundy-500 transition-colors"
+            >
+              View customer profile →
+            </Link>
           </section>
         </div>
       </div>
@@ -480,38 +612,6 @@ function BriefRow({
 
 function Muted({ children }: { children: React.ReactNode }) {
   return <span className="italic text-ink-500">{children}</span>
-}
-
-function TimelineItem({
-  icon: Icon,
-  tone,
-  title,
-  meta,
-}: {
-  icon: React.ComponentType<{ size?: number; strokeWidth?: number; className?: string }>
-  tone: 'burgundy' | 'gold' | 'forest' | 'default'
-  title: string
-  meta: string
-}) {
-  const toneClasses: Record<typeof tone, string> = {
-    burgundy: 'bg-burgundy-100 text-burgundy-700',
-    gold: 'bg-gold-100 text-gold-700',
-    forest: 'bg-forest-500/[0.12] text-forest-700',
-    default: 'bg-parchment-200 text-ink-700',
-  }
-  return (
-    <li className="flex items-start gap-3 py-3 border-b border-dashed border-border-light last:border-b-0">
-      <span
-        className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${toneClasses[tone]}`}
-      >
-        <Icon size={14} strokeWidth={1.8} />
-      </span>
-      <div className="flex-1 min-w-0">
-        <div className="text-[0.9375rem] font-semibold text-ink-900">{title}</div>
-        <div className="text-[0.75rem] text-ink-500 mt-0.5">{meta}</div>
-      </div>
-    </li>
-  )
 }
 
 function formatOrderRef(id: number, createdAt: string) {
@@ -550,5 +650,12 @@ function fmtDate(iso: string) {
     year: 'numeric',
     month: 'short',
     day: 'numeric',
+  })
+}
+
+function fmtMonthYear(iso: string) {
+  return new Date(iso).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
   })
 }

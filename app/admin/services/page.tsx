@@ -20,7 +20,6 @@ import AdminShell from '@/components/admin/AdminShell'
 import {
   Plus,
   Pencil,
-  Info,
   GripVertical,
   User,
   Users,
@@ -29,7 +28,7 @@ import {
   BookOpen,
   CalendarDays,
 } from 'lucide-react'
-import { BUCKETS, type ServiceBucket, type PricingPayload } from '@/lib/services'
+import { type ServiceBucket, type PricingPayload } from '@/lib/services'
 
 export const metadata: Metadata = { title: 'Services' }
 
@@ -92,6 +91,31 @@ const BUCKET_ICON_BG: Record<ServiceBucket, string> = {
   'subscription':      'bg-burgundy-500',
 }
 
+/* Per-bucket display label — overrides the shared BUCKETS label to match
+   the V2 HTML's hand-tuned group names (the shared lib uses shorter
+   public-facing labels). */
+const BUCKET_DISPLAY_LABEL: Record<ServiceBucket, string> = {
+  'character-work':    'Character work',
+  'party-work':        'Party work',
+  'gm-world-building': 'GM & world-building',
+  'tokens':            'Tokens (standalone)',
+  'commercial':        'Commercial / publisher',
+  'subscription':      'Subscription',
+}
+
+/* Per-page bucket display order — the design HTML lists commercial as
+   Bucket 5 and subscription as Bucket 6, which is the reverse of the
+   public `BUCKETS` order (subscription first because commercial has its
+   own landing page on the public site). */
+const BUCKET_DISPLAY_ORDER: readonly ServiceBucket[] = [
+  'character-work',
+  'party-work',
+  'gm-world-building',
+  'tokens',
+  'commercial',
+  'subscription',
+]
+
 export default async function ServicesAdminPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -122,13 +146,21 @@ export default async function ServicesAdminPage() {
     ? 'No products yet — run the Phase 2 seed to populate the catalog'
     : `${bucketCount} bucket${bucketCount === 1 ? '' : 's'} · ${services.length} product${services.length === 1 ? '' : 's'} · ${draftCount} draft${draftCount === 1 ? '' : 's'}`
 
-  // Group by bucket using BUCKETS for label/tagline/order
+  // Group by bucket using the design-spec display order. The shared
+  // `BUCKETS` array puts subscription before commercial (because the
+  // public site routes commercial to its own landing page); the V2
+  // admin design instead lists commercial as Bucket 5 and subscription
+  // as Bucket 6, so we render in `BUCKET_DISPLAY_ORDER`.
   const grouped: Record<ServiceBucket, ServiceRow[]> = {} as Record<ServiceBucket, ServiceRow[]>
-  for (const b of BUCKETS) grouped[b.slug] = []
+  for (const slug of BUCKET_DISPLAY_ORDER) grouped[slug] = []
   for (const s of services) {
     const bucket = s.bucket as ServiceBucket
     if (grouped[bucket]) grouped[bucket].push(s)
   }
+
+  // First non-empty bucket gets the "Reorder" icon button (matches the
+  // V2 HTML where only Bucket 1 carries it).
+  const firstNonEmptyBucket = BUCKET_DISPLAY_ORDER.find((b) => grouped[b].length > 0)
 
   const filterChips: { label: string; count: number; active?: boolean }[] = [
     { label: 'All',          count: services.length, active: true },
@@ -153,20 +185,6 @@ export default async function ServicesAdminPage() {
         </Link>
       }
     >
-      {/* Phase 5 banner — shipping the polished services list */}
-      <div className="mb-6 flex items-start gap-3 rounded-xl border border-gold-300 bg-gold-100 px-4 py-3 text-sm text-ink-700">
-        <Info size={18} strokeWidth={1.6} className="mt-0.5 flex-shrink-0 text-gold-700" />
-        <div className="flex-1">
-          <p className="font-display text-base font-semibold text-ink-900">
-            Phase 5 services list · shipping
-          </p>
-          <p className="mt-0.5 text-[0.8125rem] leading-relaxed">
-            Bucket-grouped catalog with pricing-mode chips and drag handles. Drag-to-reorder and live
-            filter logic are tracked for follow-up; the chips and grip icons here are visual scaffolding only.
-          </p>
-        </div>
-      </div>
-
       {/* Toolbar: filter chips (visual-only) + group-by select (visual-only) */}
       <div className="flex flex-wrap items-center justify-between gap-4 bg-parchment-100 border border-border-light rounded-xl px-5 py-4 mb-4">
         <div className="flex flex-wrap items-center gap-2">
@@ -206,16 +224,18 @@ export default async function ServicesAdminPage() {
         <EmptyState />
       ) : (
         <div className="flex flex-col gap-[18px]">
-          {BUCKETS.map((bucket) => {
-            const products = grouped[bucket.slug] ?? []
+          {BUCKET_DISPLAY_ORDER.map((bucketSlug) => {
+            const products = grouped[bucketSlug] ?? []
             if (products.length === 0) return null
-            const Icon = BUCKET_ICONS[bucket.slug]
-            const iconBg = BUCKET_ICON_BG[bucket.slug]
+            const Icon = BUCKET_ICONS[bucketSlug]
+            const iconBg = BUCKET_ICON_BG[bucketSlug]
+            const label = BUCKET_DISPLAY_LABEL[bucketSlug]
             const minPrice = computeMinPrice(products)
-            const summary = bucketSummary(bucket.slug, products.length, minPrice)
+            const summary = bucketSummary(bucketSlug, products.length, minPrice)
+            const showReorder = bucketSlug === firstNonEmptyBucket
             return (
               <section
-                key={bucket.slug}
+                key={bucketSlug}
                 className="bg-parchment-100 border border-border-light rounded-xl overflow-hidden"
               >
                 {/* Group head */}
@@ -226,7 +246,7 @@ export default async function ServicesAdminPage() {
                     </div>
                     <div>
                       <div className="font-display text-[1.0625rem] font-semibold text-ink-900 tracking-tight leading-none">
-                        {bucket.label}
+                        {label}
                       </div>
                       <div className="text-[0.75rem] text-ink-500 mt-1 tracking-[0.04em]">
                         {summary}
@@ -234,15 +254,17 @@ export default async function ServicesAdminPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span
-                      className="inline-flex w-[30px] h-[30px] items-center justify-center rounded-sm text-ink-500 border border-transparent cursor-default"
-                      title="Reorder bucket (deferred)"
-                      aria-hidden
-                    >
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-4 h-4">
-                        <path d="M8 6v12M16 6v12M4 10h8M4 14h12" />
-                      </svg>
-                    </span>
+                    {showReorder && (
+                      <span
+                        className="inline-flex w-[30px] h-[30px] items-center justify-center rounded-sm text-ink-500 border border-transparent cursor-default"
+                        title="Reorder bucket (deferred)"
+                        aria-hidden
+                      >
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.8} className="w-4 h-4">
+                          <path d="M8 6v12M16 6v12M4 10h8M4 14h12" />
+                        </svg>
+                      </span>
+                    )}
                     <Link
                       href="/admin/services/new/edit"
                       className="inline-flex w-[30px] h-[30px] items-center justify-center rounded-sm text-ink-500 hover:bg-parchment-200 hover:text-burgundy-700 hover:border-border-light border border-transparent transition-colors"
