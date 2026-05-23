@@ -381,22 +381,25 @@ export default async function ServiceBucketDetailPage({ params }: PageProps) {
                 </p>
               </div>
 
+              {/* .sd-styles · grid: 4 cols desktop, 2 cols below 900px, gap 16px */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {STYLE_CARDS.map((style) => (
                   <article
                     key={style.name}
-                    className="bg-parchment-50 border border-border-light rounded-xl overflow-hidden transition-all duration-[250ms] hover:-translate-y-1 hover:shadow-md hover:border-border-medium"
+                    className="bg-parchment-50 border border-border-light rounded-lg overflow-hidden transition-all duration-[250ms] hover:-translate-y-[3px] hover:shadow-md hover:border-border-medium cursor-pointer"
                   >
+                    {/* .sd-style-img · aspect-ratio 4/5 (portrait, slightly taller than wide) */}
                     <div
-                      className="aspect-square"
+                      className="aspect-[4/5]"
                       aria-hidden="true"
                       style={{ background: style.gradient, filter: style.filter }}
                     />
-                    <div className="px-4 py-3.5 text-center">
-                      <div className="font-display text-base font-semibold text-ink-900 leading-tight">
+                    {/* .sd-style-body · padding 14px 18px 18px, left-aligned */}
+                    <div className="pt-[14px] px-[18px] pb-[18px]">
+                      <div className="font-display text-[1.125rem] font-semibold text-ink-900 leading-tight mb-0.5">
                         {style.name}
                       </div>
-                      <div className="text-[0.75rem] text-ink-500 mt-1">
+                      <div className="text-[0.8125rem] text-ink-500">
                         {style.note}
                       </div>
                     </div>
