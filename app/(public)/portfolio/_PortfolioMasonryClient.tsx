@@ -173,65 +173,82 @@ export default function PortfolioMasonryClient({
           }
         />
 
-        {/* Sticky controls — sits at top: 76px (below fixed site header) */}
+        {/* Sticky controls — sits at top: 76px (below fixed site header).
+            Chips scroll horizontally inside their own track (so they don't
+            wrap to a second line as the category list grows); search +
+            sort sit on the right at desktop, drop below on mobile. */}
         <div className="sticky top-[76px] z-10 border-y border-border-light backdrop-blur-md bg-parchment-50/[0.92] py-4 mb-12">
           <Container>
-            <div className="flex flex-wrap items-center gap-5">
+            <div className="flex flex-col md:flex-row md:items-center md:gap-5">
 
-              {/* Filters */}
-              <div className="flex flex-wrap gap-1.5 flex-1">
-                {FILTERS.map((f) => {
-                  const active = f.key === activeFilter
-                  return (
-                    <button
-                      key={f.key}
-                      type="button"
-                      onClick={() => setActiveFilter(f.key)}
-                      className={cn(
-                        'px-4 py-2 rounded-full font-body text-[0.8125rem] font-medium transition-all duration-150 border',
-                        active
-                          ? 'bg-burgundy-700 border-burgundy-700 text-cream-50'
-                          : 'bg-parchment-100 text-ink-700 border-border-light hover:bg-parchment-200 hover:border-border-medium',
-                      )}
-                    >
-                      {f.label} · {f.count}
-                    </button>
-                  )
-                })}
-              </div>
-
-              {/* Search */}
-              <div className="relative w-full sm:w-60 flex-shrink-0">
-                <SearchIcon />
-                <input
-                  type="search"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search by title or tag…"
-                  className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-full pl-10 pr-3.5 py-2 font-body text-[0.875rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+              {/* Filters — horizontal scroll with soft fade-edge on the
+                  right. Scrollbar hidden in webkit + firefox. Each chip is
+                  shrink-0 + whitespace-nowrap so they keep their shape. */}
+              <div className="relative flex-1 min-w-0 -mx-1">
+                <div className="flex gap-1.5 overflow-x-auto overflow-y-hidden px-1 py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                  {FILTERS.map((f) => {
+                    const active = f.key === activeFilter
+                    return (
+                      <button
+                        key={f.key}
+                        type="button"
+                        onClick={() => setActiveFilter(f.key)}
+                        className={cn(
+                          'flex-shrink-0 whitespace-nowrap px-4 py-2 rounded-full font-body text-[0.8125rem] font-medium transition-all duration-150 border',
+                          active
+                            ? 'bg-burgundy-700 border-burgundy-700 text-cream-50'
+                            : 'bg-parchment-100 text-ink-700 border-border-light hover:bg-parchment-200 hover:border-border-medium',
+                        )}
+                      >
+                        {f.label} · {f.count}
+                      </button>
+                    )
+                  })}
+                </div>
+                {/* Right-edge fade hint — only show on md+ where the
+                    chip track is narrower and overflow is real. */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-0 top-0 bottom-0 hidden md:block w-12 bg-gradient-to-l from-parchment-50/[0.92] via-parchment-50/[0.85] to-transparent"
                 />
               </div>
 
-              {/* Sort */}
-              <div className="inline-flex items-center gap-1.5 flex-shrink-0">
-                <label htmlFor="po-sort" className="font-body text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-ink-500">
-                  Sort
-                </label>
-                <select
-                  id="po-sort"
-                  value={sort}
-                  onChange={(e) => setSort(e.target.value as typeof sort)}
-                  className="appearance-none bg-parchment-50 border-[1.5px] border-border-light rounded-full pl-3.5 pr-9 py-2 font-body text-[0.875rem] text-ink-900 cursor-pointer focus:outline-none focus:border-burgundy-500 transition-colors bg-no-repeat bg-[right_0.75rem_center] bg-[length:1rem_1rem]"
-                  style={{
-                    backgroundImage:
-                      "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B5A48' stroke-width='1.6' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>\")",
-                  }}
-                >
-                  <option value="newest">Newest first</option>
-                  <option value="oldest">Oldest first</option>
-                  <option value="popular">Most popular</option>
-                  <option value="random">Random</option>
-                </select>
+              {/* Search + Sort group — stacks below chips on mobile,
+                  inline on the right at md+. */}
+              <div className="flex items-center gap-3 mt-3 md:mt-0 md:flex-shrink-0">
+                {/* Search */}
+                <div className="relative flex-1 md:w-60 md:flex-none">
+                  <SearchIcon />
+                  <input
+                    type="search"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    placeholder="Search by title or tag…"
+                    className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-full pl-10 pr-3.5 py-2 font-body text-[0.875rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
+                  />
+                </div>
+
+                {/* Sort */}
+                <div className="inline-flex items-center gap-1.5 flex-shrink-0">
+                  <label htmlFor="po-sort" className="font-body text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-ink-500 hidden sm:inline">
+                    Sort
+                  </label>
+                  <select
+                    id="po-sort"
+                    value={sort}
+                    onChange={(e) => setSort(e.target.value as typeof sort)}
+                    className="appearance-none bg-parchment-50 border-[1.5px] border-border-light rounded-full pl-3.5 pr-9 py-2 font-body text-[0.875rem] text-ink-900 cursor-pointer focus:outline-none focus:border-burgundy-500 transition-colors bg-no-repeat bg-[right_0.75rem_center] bg-[length:1rem_1rem]"
+                    style={{
+                      backgroundImage:
+                        "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B5A48' stroke-width='1.6' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>\")",
+                    }}
+                  >
+                    <option value="newest">Newest first</option>
+                    <option value="oldest">Oldest first</option>
+                    <option value="popular">Most popular</option>
+                    <option value="random">Random</option>
+                  </select>
+                </div>
               </div>
 
             </div>
