@@ -99,7 +99,7 @@ export default function SiteFooter() {
           <div className="flex flex-col gap-1.5 sm:col-span-2 lg:col-span-1">
             <Logo className="mb-3 text-burgundy-700" textClassName="text-ink-900" />
             <p className="mb-[18px] max-w-[32ch] text-sm leading-[1.6] text-ink-500">
-              Premium art commissions, since 2022. Every piece, by hand, by humans.
+              Premium art commissions, since 2024. Every piece, by hand, by humans.
             </p>
             <div className="flex items-center gap-2">
               {SOCIAL_LINKS.map(({ Icon, href, label }) => (

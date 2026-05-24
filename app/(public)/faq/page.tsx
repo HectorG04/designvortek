@@ -86,7 +86,7 @@ All prices are USD. Every quote is fixed up front. See the full [pricing breakdo
   {
     category: 'revisions',
     q: "What if I'm not happy with the result?",
-    a: `In four years and **500+ commissions**, this has happened twice. If the piece is genuinely off the brief, we refund the balance beyond the **30% deposit** (which covers our sketch work). Read the full [refund policy](/refunds).`,
+    a: `In two years and **200+ commissions**, this has happened twice. If the piece is genuinely off the brief, we refund the balance beyond the **30% deposit** (which covers our sketch work). Read the full [refund policy](/refunds).`,
   },
   {
     category: 'revisions',

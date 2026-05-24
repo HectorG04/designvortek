@@ -58,9 +58,9 @@ export interface BlogPost {
 
 /** Shared studio author byline. Future enhancement: per-author records. */
 export const STUDIO_AUTHOR: BlogAuthor = {
-  name: 'Theo · Design Vortex founder',
-  initials: 'T',
-  bio: 'Fourteen years painting characters, four years running this studio. Writes here about commissioning art, the painting process, and the occasional studio update.',
+  name: 'Hector G. · Design Vortex founder',
+  initials: 'H',
+  bio: 'Two years running Design Vortex. We write here about commissioning art, the painting process, and the occasional studio update.',
 }
 
 /* ----- 7 seeded posts. Bodies are markdown strings — single source
@@ -70,7 +70,7 @@ const HOW_TO_WRITE_COMMISSION_BRIEF_BODY = `Every commission begins with a brief
 
 This isn't because the second kind is bad. It's because the artist ends up filling in the gaps from their own imagination, and your character lives in *your* imagination, not theirs. The closer your brief gets to the picture in your head, the closer the final piece will land.
 
-So here's what fourteen years of taking briefs has taught me: the questions to answer, the parts to skip, and the words that always make the artist's job easier.
+So here's what two years of taking briefs has taught us: the questions to answer, the parts to skip, and the words that always make the studio's job easier.
 
 ## Start with the one-line pitch
 

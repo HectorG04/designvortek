@@ -15,7 +15,7 @@ import PortfolioMasonryClient from './_PortfolioMasonryClient'
 export const metadata: Metadata = {
   title: 'Portfolio · Design Vortex',
   description:
-    'Every commission since 2022. Character portraits, VTT tokens, NPC packs, party portraits, and custom illustration work — all hand-painted.',
+    'Every commission since 2024. Character portraits, VTT tokens, NPC packs, party portraits, and custom illustration work — all hand-painted.',
   alternates: { canonical: '/portfolio' },
 }
 

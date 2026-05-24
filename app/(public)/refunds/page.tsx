@@ -65,7 +65,7 @@ We will acknowledge within 48 hours and process eligible refunds within **7 busi
 
 If you're dissatisfied with our refund decision, please reply to our refund email and explain — most disputes resolve in a single back-and-forth. If we can't reach agreement, the matter is governed by the dispute clause in our [Terms of Service](/terms).
 
-We've had to invoke this policy formally **twice in 500+ commissions** over four years. We mention it not because it happens often, but because clear rules make for honest conversations.
+We've had to invoke this policy formally **twice in 200+ commissions** over two years. We mention it not because it happens often, but because clear rules make for honest conversations.
 
 ## 6. Chargebacks
 

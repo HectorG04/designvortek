@@ -115,7 +115,7 @@ export default function Hero() {
             >
               <span aria-hidden="true" className="h-px w-6 bg-gold-glow" />
               <span className="font-body text-[0.75rem] font-semibold uppercase tracking-[0.15em]">
-                Premium Art Commissions · Since 2022
+                Premium Art Commissions · Since 2024
               </span>
             </motion.div>
 
@@ -156,7 +156,7 @@ export default function Hero() {
             >
               <div className="inline-flex items-center gap-2">
                 <span className="font-display text-[1.5rem] font-semibold leading-none text-gold-glow">
-                  500+
+                  200+
                 </span>
                 <span>commissions delivered</span>
               </div>

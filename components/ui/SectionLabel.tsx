@@ -8,7 +8,7 @@ interface SectionLabelProps {
 
 /**
  * The "eyebrow" label that appears above section headings.
- * Examples: "Premium Art Commissions · Since 2022", "Our Services", "How It Works"
+ * Examples: "Premium Art Commissions · Since 2024", "Our Services", "How It Works"
  */
 export default function SectionLabel({
   children,

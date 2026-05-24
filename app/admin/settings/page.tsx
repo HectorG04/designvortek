@@ -135,7 +135,7 @@ function SiteTab() {
             <Input defaultValue="Design Vortex" />
           </Field>
           <Field label="Tagline">
-            <Input defaultValue="Premium art commissions, since 2022" />
+            <Input defaultValue="Premium art commissions, since 2024" />
           </Field>
         </Row2>
         <Row2>
@@ -147,7 +147,7 @@ function SiteTab() {
           </Field>
         </Row2>
         <Field label="Footer text">
-          <Textarea defaultValue="Premium art commissions, since 2022. Every piece, by hand, by humans." />
+          <Textarea defaultValue="Premium art commissions, since 2024. Every piece, by hand, by humans." />
         </Field>
       </Section>
 
@@ -191,7 +191,7 @@ function ProfileTab() {
       >
         <Row2>
           <Field label="Your name">
-            <Input defaultValue="Theo Vortek" />
+            <Input defaultValue="Hector G." />
           </Field>
           <Field label="Avatar URL">
             <Input placeholder="https://…/avatar.jpg" />
@@ -199,7 +199,7 @@ function ProfileTab() {
         </Row2>
         <Field label="Bio">
           <Textarea
-            defaultValue="Theo is the studio owner behind Design Vortex — a one-person commission studio specializing in TTRPG portraits, character art and bespoke illustration."
+            defaultValue="Hector G. is the founder of Design Vortex — a commission studio specializing in TTRPG portraits, character art and bespoke illustration. Every piece is painted by hand."
             rows={5}
           />
         </Field>

@@ -357,6 +357,6 @@ If you want to see the process, we share work-in-progress sketches and color blo
     q: "What if I'm not happy with the result?",
     a: `Two revisions are baked into every commission and we usually nail it well within that. If the piece is genuinely not what you wanted at the end, we refund the balance beyond the **30% deposit** (which covers our sketch work).
 
-In four years and 500+ commissions, this has happened twice. Full [refund policy](/refunds).`,
+In two years and 200+ commissions, this has happened twice. Full [refund policy](/refunds).`,
   },
 ] as const

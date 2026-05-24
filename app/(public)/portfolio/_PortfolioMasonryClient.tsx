@@ -183,11 +183,11 @@ export default function PortfolioMasonryClient({
           eyebrow="Portfolio"
           title={
             <>
-              Five hundred pieces.<br />
+              Two hundred pieces.<br />
               <em className="font-display italic font-medium text-burgundy-700">One craft.</em>
             </>
           }
-          description="Every commission since 2022 — character portraits, VTT tokens, NPC packs, party portraits, and the occasional book cover."
+          description="Every commission since 2024 — character portraits, VTT tokens, NPC packs, party portraits, and the occasional book cover."
           stat={
             <>
               <ClockIcon />

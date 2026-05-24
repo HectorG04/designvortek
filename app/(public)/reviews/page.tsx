@@ -24,7 +24,7 @@ import { formatReviewDate } from '@/lib/reviews'
 export const metadata: Metadata = {
   title: 'Reviews · Design Vortex',
   description:
-    'Real words from the clients who have worked with the studio since 2022. D&D players, dungeon masters, gift givers, and the occasional musician.',
+    'Real words from the clients who have worked with the studio since 2024. D&D players, dungeon masters, gift givers, and the occasional musician.',
   alternates: { canonical: '/reviews' },
 }
 

@@ -22,7 +22,7 @@ import PaperTexture from '@/components/decor/PaperTexture'
 export const metadata: Metadata = {
   title: 'About · Design Vortex',
   description:
-    'The studio behind Design Vortex — a single artist, four years of commissions, 500+ characters brought to life. Meet the maker.',
+    'The studio behind Design Vortex — two years of hand-painted commissions, 200+ characters brought to life. Meet the team.',
   alternates: { canonical: '/about' },
 }
 
@@ -47,10 +47,10 @@ const VALUES = [
 
 /* ---------- Stats (literal numbers + units from design HTML) ---------- */
 const STATS = [
-  { num: '500', em: '+', label: 'Commissions delivered' },
-  { num: '4.9', em: 'â˜…', label: 'Across 247 reviews' },
+  { num: '200', em: '+', label: 'Commissions delivered' },
+  { num: '4.9', em: '★', label: 'Across 247 reviews' },
   { num: '48',  em: 'h', label: 'Average response time' },
-  { num: '4',   em: 'yr', label: 'Studio anniversary' },
+  { num: '2',   em: 'yr', label: 'Studio anniversary' },
 ]
 
 /* ---------- ds-ph-* gradients (from design-system.css) ---------- */
@@ -89,11 +89,11 @@ export default function AboutPage() {
           eyebrow="About the studio"
           title={
             <>
-              A single artist.{' '}
-              <em className="font-display italic font-medium text-burgundy-700">500+ stories.</em>
+              Hand-painted craft.{' '}
+              <em className="font-display italic font-medium text-burgundy-700">200+ stories.</em>
             </>
           }
-          description="Four years of painting characters for the people who care most about them. Here's how the studio came together — and why every commission still feels like the first."
+          description="Two years of painting characters for the people who care most about them. Here's how the studio came together — and why every commission still feels like the first."
         />
 
         {/* Artist intro — .ab-intro: 1fr 1.1fr grid, gap 64px, items-center */}
@@ -115,29 +115,29 @@ export default function AboutPage() {
 
               {/* Text */}
               <div>
-                <SectionLabel>Meet the maker</SectionLabel>
+                <SectionLabel>Meet the team</SectionLabel>
                 <h2
                   className="font-display font-semibold text-ink-900 leading-[1.1] tracking-tight mt-3 mb-4 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700"
                   style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)' }}
                 >
-                  I started Design Vortex with one rule: <em>every piece, by hand</em>.
+                  We started Design Vortex with one rule: <em>every piece, by hand</em>.
                 </h2>
                 <div className="font-accent text-2xl text-burgundy-700 mb-6">
                   — and stuck to it
                 </div>
                 <div className="space-y-4 max-w-[56ch]">
                   <p className="text-[1.0625rem] text-ink-700 leading-[1.75]">
-                    I&apos;ve been painting digitally for fourteen years, but Design Vortex started in 2022 after a friend asked me to paint her D&amp;D character. She cried when she saw it. So did I.
+                    Design Vortex opened in 2024 after a friend asked us to paint her D&amp;D character. She cried when she saw it. So did we. That single commission became a side project, then a working studio — and the rule that started it stayed: every brushstroke, by hand.
                   </p>
                   <p className="text-[1.0625rem] text-ink-700 leading-[1.75]">
-                    That commission became a side hustle. The side hustle became a studio. Four years later I take five commissions a month — just enough to give each one the time and care it deserves, not so many that quality slips.
+                    Two years in, we take a fixed number of commissions each month — just enough to give every piece the time and care it deserves, not so many that quality slips. Over 200 painted characters later, the discipline still holds.
                   </p>
                   <p className="text-[1.0625rem] text-ink-700 leading-[1.75]">
-                    I don&apos;t use AI. I don&apos;t outsource. I don&apos;t trace. Every brushstroke on every piece comes from a human looking carefully at your reference, your description, and the character you&apos;ve spent years inhabiting.
+                    We don&apos;t use AI. We don&apos;t outsource. We don&apos;t trace. Every brushstroke on every piece comes from a human looking carefully at your reference, your description, and the character you&apos;ve spent years inhabiting.
                   </p>
                 </div>
                 <div className="font-accent text-[1.75rem] text-gold-700 mt-4">
-                  — Theo, founder &amp; artist
+                  — Hector G., founder
                 </div>
               </div>
             </div>
@@ -193,7 +193,7 @@ export default function AboutPage() {
                 className="font-display font-semibold text-ink-900 leading-[1.1] tracking-tight mt-3 max-w-[24ch] mx-auto [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700"
                 style={{ fontSize: 'clamp(2rem, 4vw, 2.75rem)' }}
               >
-                Four years, one studio, <em>a lot of brushstrokes</em>
+                Two years, one studio, <em>a lot of brushstrokes</em>
               </h2>
             </div>
 

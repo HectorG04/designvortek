@@ -95,7 +95,7 @@ export default async function OGImage() {
           }}
         >
           <div style={{ width: 36, height: 1, background: '#D4A24C' }} />
-          Premium Art Commissions · Since 2022
+          Premium Art Commissions · Since 2024
         </div>
 
         {/* Headline */}
@@ -129,7 +129,7 @@ export default async function OGImage() {
           }}
         >
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-            <span style={{ fontSize: 32, fontWeight: 600, color: '#D4A24C' }}>500+</span>
+            <span style={{ fontSize: 32, fontWeight: 600, color: '#D4A24C' }}>200+</span>
             commissions
           </div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
