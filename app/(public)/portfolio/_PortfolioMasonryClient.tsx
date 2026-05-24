@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import ProtectedImage from '@/components/ui/ProtectedImage'
 import SiteHeader from '@/components/layout/SiteHeader'
@@ -78,10 +78,15 @@ const EyeIcon = () => (
   </svg>
 )
 
-const SearchIcon = () => (
-  <svg viewBox="0 0 24 24" className="w-4 h-4 text-ink-400 pointer-events-none absolute left-3 top-1/2 -translate-y-1/2" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="11" cy="11" r="7" />
-    <path d="M21 21l-4.3-4.3" />
+const ChevronLeftIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M15 6l-6 6 6 6" />
+  </svg>
+)
+
+const ChevronRightIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    <path d="M9 6l6 6-6 6" />
   </svg>
 )
 
@@ -119,8 +124,34 @@ export default function PortfolioMasonryClient({
   counts: CATEGORY_COUNTS,
 }: PortfolioMasonryClientProps) {
   const [activeFilter, setActiveFilter] = useState<CategoryKey>('all')
-  const [search, setSearch] = useState('')
   const [sort, setSort] = useState<'newest' | 'oldest' | 'popular' | 'random'>('newest')
+
+  /* Horizontal-scroll plumbing for the chip track. We track whether
+   * there's more content to the left / right so the arrow buttons can
+   * hide themselves at the boundaries. Re-checks on scroll + resize. */
+  const chipScrollRef = useRef<HTMLDivElement>(null)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(false)
+
+  useEffect(() => {
+    const el = chipScrollRef.current
+    if (!el) return
+    const update = () => {
+      setCanScrollLeft(el.scrollLeft > 1)
+      setCanScrollRight(el.scrollLeft + el.clientWidth < el.scrollWidth - 1)
+    }
+    update()
+    el.addEventListener('scroll', update, { passive: true })
+    window.addEventListener('resize', update)
+    return () => {
+      el.removeEventListener('scroll', update)
+      window.removeEventListener('resize', update)
+    }
+  }, [])
+
+  const scrollChips = (delta: number) => {
+    chipScrollRef.current?.scrollBy({ left: delta, behavior: 'smooth' })
+  }
 
   const FILTERS = useMemo(
     () => FILTER_DEFINITIONS.map((f) => ({ ...f, count: CATEGORY_COUNTS[f.key] ?? 0 })),
@@ -128,7 +159,6 @@ export default function PortfolioMasonryClient({
   )
 
   const visibleItems = useMemo(() => {
-    const term = search.trim().toLowerCase()
     const sorted = [...ALL_PIECES].sort((a, b) => {
       const aTime = new Date(a.delivered).getTime()
       const bTime = new Date(b.delivered).getTime()
@@ -139,13 +169,9 @@ export default function PortfolioMasonryClient({
     })
     return sorted.filter((piece) => {
       if (activeFilter !== 'all' && CATEGORY_FILTER_KEYS[piece.category] !== activeFilter) return false
-      if (term) {
-        const haystack = [piece.title, piece.category, ...piece.tags].join(' ').toLowerCase()
-        if (!haystack.includes(term)) return false
-      }
       return true
     })
-  }, [ALL_PIECES, activeFilter, search, sort])
+  }, [ALL_PIECES, activeFilter, sort])
 
   return (
     <>
@@ -181,11 +207,60 @@ export default function PortfolioMasonryClient({
           <Container>
             <div className="flex flex-col md:flex-row md:items-center md:gap-5">
 
-              {/* Filters — horizontal scroll with soft fade-edge on the
-                  right. Scrollbar hidden in webkit + firefox. Each chip is
-                  shrink-0 + whitespace-nowrap so they keep their shape. */}
+              {/* Filters — horizontal scroll track flanked by chevron
+                  buttons that appear/disappear at the boundaries. Scrollbar
+                  hidden in both webkit + firefox. Each chip is shrink-0 +
+                  whitespace-nowrap so they keep their shape. */}
               <div className="relative flex-1 min-w-0 -mx-1">
-                <div className="flex gap-1.5 overflow-x-auto overflow-y-hidden px-1 py-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                {/* Left scroll button — only when there's content to the left */}
+                <button
+                  type="button"
+                  onClick={() => scrollChips(-240)}
+                  aria-label="Scroll filters left"
+                  className={cn(
+                    'absolute left-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-cream-50 border border-border-medium shadow-sm flex items-center justify-center text-ink-700 hover:bg-parchment-100 hover:text-burgundy-700 transition-all',
+                    canScrollLeft ? 'opacity-100' : 'opacity-0 pointer-events-none',
+                  )}
+                >
+                  <ChevronLeftIcon />
+                </button>
+
+                {/* Right scroll button — only when there's content to the right */}
+                <button
+                  type="button"
+                  onClick={() => scrollChips(240)}
+                  aria-label="Scroll filters right"
+                  className={cn(
+                    'absolute right-0 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-cream-50 border border-border-medium shadow-sm flex items-center justify-center text-ink-700 hover:bg-parchment-100 hover:text-burgundy-700 transition-all',
+                    canScrollRight ? 'opacity-100' : 'opacity-0 pointer-events-none',
+                  )}
+                >
+                  <ChevronRightIcon />
+                </button>
+
+                {/* Soft fade edges behind the buttons so chips don't
+                    visually collide with them. */}
+                <div
+                  aria-hidden="true"
+                  className={cn(
+                    'pointer-events-none absolute left-0 top-0 bottom-0 z-10 w-12 bg-gradient-to-r from-parchment-50/[0.92] via-parchment-50/[0.75] to-transparent transition-opacity',
+                    canScrollLeft ? 'opacity-100' : 'opacity-0',
+                  )}
+                />
+                <div
+                  aria-hidden="true"
+                  className={cn(
+                    'pointer-events-none absolute right-0 top-0 bottom-0 z-10 w-12 bg-gradient-to-l from-parchment-50/[0.92] via-parchment-50/[0.75] to-transparent transition-opacity',
+                    canScrollRight ? 'opacity-100' : 'opacity-0',
+                  )}
+                />
+
+                {/* The scrollable chip track — padded so the buttons
+                    don't cover the first/last chip. */}
+                <div
+                  ref={chipScrollRef}
+                  className="flex gap-1.5 overflow-x-auto overflow-y-hidden px-1 py-1 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+                >
                   {FILTERS.map((f) => {
                     const active = f.key === activeFilter
                     return (
@@ -205,50 +280,28 @@ export default function PortfolioMasonryClient({
                     )
                   })}
                 </div>
-                {/* Right-edge fade hint — only show on md+ where the
-                    chip track is narrower and overflow is real. */}
-                <div
-                  aria-hidden="true"
-                  className="pointer-events-none absolute right-0 top-0 bottom-0 hidden md:block w-12 bg-gradient-to-l from-parchment-50/[0.92] via-parchment-50/[0.85] to-transparent"
-                />
               </div>
 
-              {/* Search + Sort group — stacks below chips on mobile,
-                  inline on the right at md+. */}
-              <div className="flex items-center gap-3 mt-3 md:mt-0 md:flex-shrink-0">
-                {/* Search */}
-                <div className="relative flex-1 md:w-60 md:flex-none">
-                  <SearchIcon />
-                  <input
-                    type="search"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search by title or tag…"
-                    className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-full pl-10 pr-3.5 py-2 font-body text-[0.875rem] text-ink-900 placeholder:text-ink-400 focus:outline-none focus:border-burgundy-500 transition-colors"
-                  />
-                </div>
-
-                {/* Sort */}
-                <div className="inline-flex items-center gap-1.5 flex-shrink-0">
-                  <label htmlFor="po-sort" className="font-body text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-ink-500 hidden sm:inline">
-                    Sort
-                  </label>
-                  <select
-                    id="po-sort"
-                    value={sort}
-                    onChange={(e) => setSort(e.target.value as typeof sort)}
-                    className="appearance-none bg-parchment-50 border-[1.5px] border-border-light rounded-full pl-3.5 pr-9 py-2 font-body text-[0.875rem] text-ink-900 cursor-pointer focus:outline-none focus:border-burgundy-500 transition-colors bg-no-repeat bg-[right_0.75rem_center] bg-[length:1rem_1rem]"
-                    style={{
-                      backgroundImage:
-                        "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B5A48' stroke-width='1.6' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>\")",
-                    }}
-                  >
-                    <option value="newest">Newest first</option>
-                    <option value="oldest">Oldest first</option>
-                    <option value="popular">Most popular</option>
-                    <option value="random">Random</option>
-                  </select>
-                </div>
+              {/* Sort — stacks below chips on mobile, inline on the right at md+. */}
+              <div className="inline-flex items-center gap-1.5 flex-shrink-0 mt-3 md:mt-0">
+                <label htmlFor="po-sort" className="font-body text-[0.6875rem] font-semibold uppercase tracking-[0.1em] text-ink-500 hidden sm:inline">
+                  Sort
+                </label>
+                <select
+                  id="po-sort"
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value as typeof sort)}
+                  className="appearance-none bg-parchment-50 border-[1.5px] border-border-light rounded-full pl-3.5 pr-9 py-2 font-body text-[0.875rem] text-ink-900 cursor-pointer focus:outline-none focus:border-burgundy-500 transition-colors bg-no-repeat bg-[right_0.75rem_center] bg-[length:1rem_1rem]"
+                  style={{
+                    backgroundImage:
+                      "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B5A48' stroke-width='1.6' stroke-linecap='round'><path d='M6 9l6 6 6-6'/></svg>\")",
+                  }}
+                >
+                  <option value="newest">Newest first</option>
+                  <option value="oldest">Oldest first</option>
+                  <option value="popular">Most popular</option>
+                  <option value="random">Random</option>
+                </select>
               </div>
 
             </div>
