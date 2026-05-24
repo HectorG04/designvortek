@@ -6,6 +6,7 @@ import Container from '@/components/ui/Container'
 import SectionLabel from '@/components/ui/SectionLabel'
 import Button from '@/components/ui/Button'
 import PaperTexture from '@/components/decor/PaperTexture'
+import ProtectedImage from '@/components/ui/ProtectedImage'
 
 /* =====================================================================
    ABOUT — literal port of About.html.
@@ -100,17 +101,22 @@ export default function AboutPage() {
         <section className="pb-16 md:pb-24">
           <Container>
             <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-16 items-center">
-              {/* Portrait — 4:5, ds-ph-anime gradient, label bottom-left */}
+              {/* Founder portrait — real photo with object-cover so the
+                  source (landscape) fills the 4:5 portrait container by
+                  cropping equally from the sides. Gradient stays behind
+                  as a fallback if the image fails to load. */}
               <div
                 className="relative aspect-[4/5] rounded-2xl overflow-hidden border border-border-light"
                 style={{ background: PH_ANIME }}
               >
-                <span
-                  className="absolute bottom-5 left-5 px-2.5 py-1.5 rounded text-[0.6875rem] tracking-[0.1em] uppercase text-cream-50 bg-tome-950/65 backdrop-blur-md"
-                  style={{ fontFamily: 'ui-monospace, "SF Mono", Menlo, monospace' }}
-                >
-                  THE ARTIST · STUDIO · 4:5
-                </span>
+                <ProtectedImage
+                  src="/images/about/founder.webp"
+                  alt="Hector G., founder of Design Vortex, in the studio"
+                  fill
+                  sizes="(min-width: 1024px) 520px, 90vw"
+                  className="object-cover object-center"
+                  priority
+                />
               </div>
 
               {/* Text */}
