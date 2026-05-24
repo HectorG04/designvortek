@@ -8,6 +8,7 @@ import Button from '@/components/ui/Button'
 import Markdown from '@/components/ui/Markdown'
 import PaperTexture from '@/components/decor/PaperTexture'
 import USDDisclaimer from '@/components/ui/USDDisclaimer'
+import ProtectedImage from '@/components/ui/ProtectedImage'
 import {
   bucketLabel,
   fetchProductsByBucket,
@@ -16,6 +17,8 @@ import {
   type ServiceBucket,
   type ServiceProduct,
 } from '@/lib/services-server'
+import { fetchAllPieces } from '@/lib/portfolio-pieces-server'
+import type { PortfolioPiece } from '@/lib/portfolio-pieces'
 import { cn } from '@/lib/utils'
 
 /* =====================================================================
@@ -128,38 +131,52 @@ const BUCKET_COPY: Record<AllowedBucket, {
 }
 
 /* =====================================================================
-   Bucket-level examples — 3 cards shown in the "Recent {bucket} work"
-   section. Hardcoded per bucket (the design's intent is a curated trio
-   sampling across products in the bucket).
+   Bucket → portfolio categories. Drives the dynamic "Recent {bucket}
+   work" section by mapping a service bucket to the portfolio categories
+   that most naturally surface its product line. If a bucket has fewer
+   than 3 portfolio pieces in its mapped categories, the section pads
+   with the most recent pieces from anywhere — so the grid is never empty.
    ===================================================================== */
-interface BucketExampleCard {
-  title: string
-  badge: string
-  meta: string
-  gradient: string
-  filter?: string
+const BUCKET_PORTFOLIO_CATEGORIES: Record<AllowedBucket, PortfolioPiece['category'][]> = {
+  'character-work':    ['Character Art', 'Anime', 'Character Sheets', 'Portraits'],
+  'party-work':        ['Portraits'],
+  'gm-world-building': ['Custom', 'Weapons & Assets'],
+  'tokens':            ['Tokens', 'Emotes'],
 }
-const BUCKET_EXAMPLES: Record<AllowedBucket, BucketExampleCard[]> = {
-  'character-work': [
-    { title: 'Lyra · Tiefling Sorceror',  badge: 'Portrait · Premium', meta: 'Mar 2026', gradient: 'from-violet-900 via-purple-700 to-indigo-600' },
-    { title: 'Aldric · half-elf paladin', badge: 'Full-body · Standard', meta: 'Mar 2026', gradient: 'from-amber-950 via-orange-800 to-yellow-700' },
-    { title: 'Captain Veska · 4 views',   badge: 'Reference Sheet',    meta: 'Feb 2026', gradient: 'from-emerald-900 via-teal-700 to-cyan-600' },
-  ],
-  'party-work': [
-    { title: 'Stormwatch · 5 figures',        badge: 'Party · Premium',     meta: 'Mar 2026', gradient: 'from-emerald-900 via-teal-700 to-cyan-600' },
-    { title: 'Wedding party as adventurers',  badge: 'Party · Premium',     meta: 'Feb 2026', gradient: 'from-amber-700 via-burgundy-700 to-tome-900' },
-    { title: 'Saltbound crew · 4 PCs',        badge: 'Matched set',         meta: 'Mar 2026', gradient: 'from-violet-900 via-purple-700 to-indigo-600' },
-  ],
-  'gm-world-building': [
-    { title: 'Strahd · 8-NPC pack',           badge: 'NPC Pack · 10',      meta: 'Mar 2026', gradient: 'from-burgundy-900 via-red-800 to-rose-700' },
-    { title: 'Hexcrown council hall',         badge: 'Battle Map',         meta: 'Feb 2026', gradient: 'from-amber-950 via-orange-800 to-yellow-700' },
-    { title: 'The Hexcrown Coast',            badge: 'World Map',          meta: 'Mar 2026', gradient: 'from-emerald-900 via-teal-700 to-cyan-600' },
-  ],
-  tokens: [
-    { title: 'Drow ranger token',             badge: 'Single token',       meta: 'Mar 2026', gradient: 'from-violet-900 via-purple-700 to-indigo-600' },
-    { title: 'Adventuring party · 5 tokens',  badge: '5-pack',             meta: 'Mar 2026', gradient: 'from-emerald-900 via-teal-700 to-cyan-600' },
-    { title: 'Half-orc paladin token',        badge: 'Convert',            meta: 'Mar 2026', gradient: 'from-amber-950 via-orange-800 to-yellow-700' },
-  ],
+
+/** Pick the 3 most relevant portfolio pieces for a bucket. Priority:
+ *  1. Newest pieces from the bucket's mapped categories.
+ *  2. Pad with the newest pieces from anywhere if fewer than 3 match. */
+function pickBucketPieces(
+  allPieces: PortfolioPiece[],
+  bucket: AllowedBucket,
+  limit = 3,
+): PortfolioPiece[] {
+  const mapped = new Set<string>(BUCKET_PORTFOLIO_CATEGORIES[bucket])
+  const byDate = (a: PortfolioPiece, b: PortfolioPiece) =>
+    new Date(b.delivered || 0).getTime() - new Date(a.delivered || 0).getTime()
+
+  const primary = allPieces
+    .filter((p) => mapped.has(p.category))
+    .sort(byDate)
+    .slice(0, limit)
+
+  if (primary.length >= limit) return primary
+
+  const usedSlugs = new Set(primary.map((p) => p.slug))
+  const fallback = allPieces
+    .filter((p) => !usedSlugs.has(p.slug))
+    .sort(byDate)
+    .slice(0, limit - primary.length)
+
+  return [...primary, ...fallback]
+}
+
+function formatPieceDate(iso: string | undefined): string {
+  if (!iso) return ''
+  const d = new Date(iso)
+  if (Number.isNaN(d.getTime())) return ''
+  return d.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })
 }
 
 /* =====================================================================
@@ -258,12 +275,15 @@ export default async function ServiceBucketDetailPage({ params }: PageProps) {
   const { slug } = await params
   if (!isAllowedBucket(slug)) notFound()
 
-  const products = await fetchProductsByBucket(slug)
+  const [products, allPieces] = await Promise.all([
+    fetchProductsByBucket(slug),
+    fetchAllPieces(),
+  ])
   if (products.length === 0) notFound()
 
   const label = bucketLabel(slug)
   const copy = BUCKET_COPY[slug]
-  const examples = BUCKET_EXAMPLES[slug]
+  const examples = pickBucketPieces(allPieces, slug, 3)
   const faq = BUCKET_FAQ[slug]
 
   // The USD disclaimer renders inline after the FIRST tiered product
@@ -428,29 +448,44 @@ export default async function ServiceBucketDetailPage({ params }: PageProps) {
               </h2>
             </div>
 
+            {/* Dynamic: 3 real pieces from the portfolio. Prefers pieces in
+                this bucket's mapped categories; pads with newest pieces
+                from elsewhere if fewer than 3 match. */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {examples.map((ex) => (
-                <article
-                  key={ex.title}
-                  className="bg-parchment-50 border border-border-light rounded-xl overflow-hidden transition-all duration-[250ms] hover:-translate-y-1 hover:shadow-md"
+              {examples.map((piece) => (
+                <Link
+                  key={piece.slug}
+                  href={`/portfolio/${piece.slug}`}
+                  className="group block bg-parchment-50 border border-border-light rounded-xl overflow-hidden transition-all duration-[250ms] hover:-translate-y-1 hover:shadow-md hover:border-border-medium"
                 >
                   <div
-                    className={cn('relative aspect-[4/3] flex items-start p-3.5', `bg-gradient-to-br ${ex.gradient}`)}
-                    style={ex.filter ? { filter: ex.filter } : undefined}
+                    className={cn(
+                      'relative aspect-[4/3] flex items-start p-3.5 overflow-hidden',
+                      `bg-gradient-to-br ${piece.gradient}`,
+                    )}
                   >
-                    <span className="inline-block bg-parchment-50/[0.92] backdrop-blur-md border border-gold-300 text-ink-900 text-[0.625rem] tracking-[0.15em] uppercase font-bold px-2.5 py-[5px] rounded-full">
-                      {ex.badge}
+                    {piece.heroImage && (
+                      <ProtectedImage
+                        src={piece.heroImage}
+                        alt={piece.title}
+                        fill
+                        sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
+                        className="pointer-events-none object-cover transition-transform duration-[400ms] group-hover:scale-[1.03]"
+                      />
+                    )}
+                    <span className="relative z-10 inline-block bg-parchment-50/[0.92] backdrop-blur-md border border-gold-300 text-ink-900 text-[0.625rem] tracking-[0.15em] uppercase font-bold px-2.5 py-[5px] rounded-full">
+                      {piece.category}
                     </span>
                   </div>
                   <div className="px-5 py-4">
-                    <h4 className="font-display text-[1.0625rem] font-semibold text-ink-900 leading-tight">
-                      {ex.title}
+                    <h4 className="font-display text-[1.0625rem] font-semibold text-ink-900 leading-tight group-hover:text-burgundy-700 transition-colors">
+                      {piece.title}
                     </h4>
                     <div className="text-[0.75rem] text-ink-500 mt-1 font-mono">
-                      {ex.meta}
+                      {formatPieceDate(piece.delivered)}
                     </div>
                   </div>
-                </article>
+                </Link>
               ))}
             </div>
 
