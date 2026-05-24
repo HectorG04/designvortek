@@ -4,6 +4,7 @@ import { motion } from 'framer-motion'
 import Container from '@/components/ui/Container'
 import SectionHead from '@/components/ui/SectionHead'
 import { PROCESS_STEPS } from '@/lib/constants'
+import { getTurnaroundSummary } from '@/lib/services'
 
 const fadeUp = {
   hidden:  { opacity: 0, y: 24 },
@@ -56,22 +57,38 @@ export default function ProcessSteps() {
           </motion.div>
         </div>
 
-        {/* Footer stat strip */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-16 pt-8 border-t border-dashed border-border-light"
-        >
-          <span className="inline-flex items-baseline gap-2 text-[0.9375rem] text-ink-500">
-            Average turnaround{' '}
-            <strong className="font-display text-xl font-semibold text-ink-900">
-              7&ndash;14 days
-            </strong>
-          </span>
-        </motion.div>
+        {/* Footer stat strip — turnaround ranges pulled live from the
+            catalog so the line stays factual as products change. */}
+        <ProcessTurnaroundStat />
       </Container>
     </section>
   )
 }
+
+function ProcessTurnaroundStat() {
+  const t = getTurnaroundSummary()
+  return (
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, delay: 0.4 }}
+      className="text-center mt-16 pt-8 border-t border-dashed border-border-light"
+    >
+      <div className="flex flex-wrap items-baseline justify-center gap-x-6 gap-y-2 text-[0.9375rem] text-ink-500">
+        <span className="inline-flex items-baseline gap-2">
+          Tokens <strong className="font-display text-base font-semibold text-ink-900">{t.tokens}</strong>
+        </span>
+        <span className="hidden sm:inline text-ink-300">·</span>
+        <span className="inline-flex items-baseline gap-2">
+          Portraits <strong className="font-display text-base font-semibold text-ink-900">{t.portraits}</strong>
+        </span>
+        <span className="hidden sm:inline text-ink-300">·</span>
+        <span className="inline-flex items-baseline gap-2">
+          Party &amp; NPC packs <strong className="font-display text-base font-semibold text-ink-900">{t.partyAndPacks}</strong>
+        </span>
+      </div>
+    </motion.div>
+  )
+}
+

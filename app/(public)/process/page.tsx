@@ -7,6 +7,7 @@ import SectionLabel from '@/components/ui/SectionLabel'
 import Button from '@/components/ui/Button'
 import Markdown from '@/components/ui/Markdown'
 import PaperTexture from '@/components/decor/PaperTexture'
+import { getTurnaroundSummary } from '@/lib/services'
 
 /* =====================================================================
    PROCESS — literal port of Process.html.
@@ -122,17 +123,9 @@ export default function ProcessPage() {
               ))}
             </div>
 
-            {/* Timeline callout box */}
-            <div className="mt-16 p-8 bg-parchment-100 border border-border-light rounded-2xl text-center">
-              <SectionLabel>Timeline</SectionLabel>
-              <div className="font-display text-[2rem] font-semibold text-ink-900 leading-[1.1] tracking-tight mt-2 mb-3">
-                Average turnaround &mdash;{' '}
-                <em className="font-display italic font-medium text-burgundy-700">7 to 14 days</em>
-              </div>
-              <p className="text-ink-500 max-w-[50ch] mx-auto leading-[1.6]">
-                From brief approval to final delivery. Tokens are faster (3&ndash;7 days). Party portraits and NPC packs take 2&ndash;4 weeks.
-              </p>
-            </div>
+            {/* Timeline callout box — turnaround ranges computed live from
+                lib/services.ts so they stay factual as the catalog evolves. */}
+            <TimelineBox />
 
           </div>
         </section>
@@ -166,5 +159,28 @@ export default function ProcessPage() {
       </main>
       <SiteFooter />
     </>
+  )
+}
+
+/* =====================================================================
+   TimelineBox — pulls live turnaround ranges from lib/services.ts.
+   Headline reads "Turnaround varies by piece"; body lists the
+   per-category ranges so the page always reflects the real catalog.
+   ===================================================================== */
+function TimelineBox() {
+  const t = getTurnaroundSummary()
+  return (
+    <div className="mt-16 p-8 bg-parchment-100 border border-border-light rounded-2xl text-center">
+      <SectionLabel>Timeline</SectionLabel>
+      <div className="font-display text-[2rem] font-semibold text-ink-900 leading-[1.1] tracking-tight mt-2 mb-3">
+        Turnaround <em className="font-display italic font-medium text-burgundy-700">varies by piece</em>
+      </div>
+      <p className="text-ink-500 max-w-[60ch] mx-auto leading-[1.7]">
+        <strong className="text-ink-700">Tokens</strong> {t.tokens}.{' '}
+        <strong className="text-ink-700">Character portraits</strong> {t.portraits}.{' '}
+        <strong className="text-ink-700">Party portraits and NPC packs</strong> {t.partyAndPacks}.{' '}
+        <strong className="text-ink-700">Maps</strong> {t.maps}.
+      </p>
+    </div>
   )
 }

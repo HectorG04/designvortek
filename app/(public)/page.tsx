@@ -22,7 +22,7 @@ export const revalidate = 60
 export const metadata: Metadata = {
   title: 'Design Vortex — Premium art commissions for tabletop, anime & beyond',
   description:
-    'Painterly TTRPG portraits, VTT tokens, party illustrations and custom art — crafted by hand. Commissions from $60, monthly subscriptions from $75 (6 months min). 7–14 day turnaround.',
+    'Painterly TTRPG portraits, VTT tokens, party illustrations and custom art — crafted by hand. Commissions from $60, monthly subscriptions from $75 (6 months min). Turnaround from a few days to a few weeks depending on the piece.',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'Design Vortex — Premium art commissions for tabletop, anime & beyond',

@@ -953,3 +953,87 @@ export function formatBundleUplift(p: ServiceProduct): string | null {
   if (p.bundleUpliftCents == null) return null
   return `+$${(p.bundleUpliftCents / 100).toFixed(0)}`
 }
+
+/* --------------------------------------------------------------------
+   Turnaround summary — computed live from the actual product data so
+   every "average turnaround" stat on the site stays factual as the
+   catalog evolves.
+   -------------------------------------------------------------------- */
+
+export interface TurnaroundSummary {
+  /** Tokens (single, pack, convert). */
+  tokens: string
+  /** Character work (portrait, full-body, reference sheet) — excludes
+   *  the token-bundle add-on which has no turnaround of its own. */
+  portraits: string
+  /** Group + NPC work: party portraits, matched sets, action scenes,
+   *  NPC packs, monsters, items. */
+  partyAndPacks: string
+  /** Quote-only items (maps). */
+  maps: string
+  /** Short one-line inline summary for stat strips, e.g.
+   *  "Tokens 2-7 days · Portraits 5-21 days · Party & NPC packs 2-6 weeks". */
+  inline: string
+  /** Single-bucket lookup, useful in feature lists. */
+  byBucket: Record<ServiceBucket, string>
+}
+
+/* Renders a {low, high} day range as either "X-Y days" or "X-Y weeks"
+ * depending on whether both ends cleanly divide by 7 in the weeks band. */
+function fmtRange(low: number, high: number): string {
+  if (!Number.isFinite(low) || !Number.isFinite(high)) return 'By scope'
+  if (low >= 14 && high >= 14) {
+    const lowW = Math.round(low / 7)
+    const highW = Math.round(high / 7)
+    return `${lowW} to ${highW} weeks`
+  }
+  return `${low} to ${high} days`
+}
+
+function computeRange(products: readonly ServiceProduct[]) {
+  const lows = products
+    .map((p) => p.turnaroundLowDays)
+    .filter((n): n is number => typeof n === 'number')
+  const highs = products
+    .map((p) => p.turnaroundHighDays)
+    .filter((n): n is number => typeof n === 'number')
+  if (lows.length === 0 || highs.length === 0) return null
+  return { low: Math.min(...lows), high: Math.max(...highs) }
+}
+
+export function getTurnaroundSummary(): TurnaroundSummary {
+  const tokens     = SERVICES.filter((s) => s.bucket === 'tokens')
+  const portraits  = SERVICES.filter((s) => s.bucket === 'character-work')
+  const partyAndPacks = SERVICES.filter(
+    (s) =>
+      (s.bucket === 'party-work' || s.bucket === 'gm-world-building') &&
+      s.pricingMode !== 'quote_only',
+  )
+
+  const tRange = computeRange(tokens)
+  const pRange = computeRange(portraits)
+  const gRange = computeRange(partyAndPacks)
+
+  const tokensStr     = tRange ? fmtRange(tRange.low, tRange.high) : 'By scope'
+  const portraitsStr  = pRange ? fmtRange(pRange.low, pRange.high) : 'By scope'
+  const partyStr      = gRange ? fmtRange(gRange.low, gRange.high) : 'By scope'
+
+  /* Per-bucket short label (used in card feature lists). */
+  const byBucket = {} as Record<ServiceBucket, string>
+  for (const b of BUCKETS) {
+    const bucketProducts = SERVICES.filter(
+      (s) => s.bucket === b.slug && s.pricingMode !== 'quote_only' && s.pricingMode !== 'monthly_recurring',
+    )
+    const r = computeRange(bucketProducts)
+    byBucket[b.slug] = r ? fmtRange(r.low, r.high) : b.slug === 'subscription' ? 'Ships the 15th' : 'By scope'
+  }
+
+  return {
+    tokens: tokensStr,
+    portraits: portraitsStr,
+    partyAndPacks: partyStr,
+    maps: 'quoted per brief',
+    inline: `Tokens ${tokensStr} · Portraits ${portraitsStr} · Party & NPC packs ${partyStr} · Maps quoted per brief`,
+    byBucket,
+  }
+}
