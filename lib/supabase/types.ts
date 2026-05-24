@@ -471,6 +471,8 @@ export type Database = {
           read_time_minutes: number | null
           seo_title: string | null
           seo_description: string | null
+          is_pillar: boolean
+          pillar_genre: string | null
         }
         Insert: {
           id?: number
@@ -489,6 +491,8 @@ export type Database = {
           read_time_minutes?: number | null
           seo_title?: string | null
           seo_description?: string | null
+          is_pillar?: boolean
+          pillar_genre?: string | null
         }
         Update: {
           id?: number
@@ -507,6 +511,8 @@ export type Database = {
           read_time_minutes?: number | null
           seo_title?: string | null
           seo_description?: string | null
+          is_pillar?: boolean
+          pillar_genre?: string | null
         }
         Relationships: []
       }

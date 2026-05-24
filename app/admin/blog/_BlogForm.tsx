@@ -40,6 +40,8 @@ export interface BlogFormValues {
   read_time_minutes: string
   seo_title: string
   seo_description: string
+  is_pillar: boolean
+  pillar_genre: string
 }
 
 const CATEGORIES = [
@@ -48,6 +50,20 @@ const CATEGORIES = [
   'D&D',
   'Process',
   'Tutorials',
+]
+
+/* Mirrors lib/blog.ts GENRES exactly. Kept inline so the admin form
+ * (client) doesn't import from the server module. */
+const GENRE_OPTIONS: { slug: string; label: string }[] = [
+  { slug: 'fantasy',      label: 'Fantasy' },
+  { slug: 'dnd-5e',       label: 'D&D 5e' },
+  { slug: 'sci-fi',       label: 'Sci-fi' },
+  { slug: 'cyberpunk',    label: 'Cyberpunk' },
+  { slug: 'horror',       label: 'Horror' },
+  { slug: 'modern',       label: 'Modern' },
+  { slug: 'historical',   label: 'Historical' },
+  { slug: 'souls-anime',  label: 'Souls & anime fan art' },
+  { slug: 'western',      label: 'Western' },
 ]
 
 function slugify(value: string): string {
@@ -113,6 +129,8 @@ export default function BlogForm({
     fd.set('read_time_minutes', values.read_time_minutes)
     fd.set('seo_title', values.seo_title)
     fd.set('seo_description', values.seo_description)
+    fd.set('pillar_genre', values.pillar_genre)
+    if (values.is_pillar && values.pillar_genre) fd.set('is_pillar', 'on')
     const publishValue = publishOverride ?? values.is_published
     if (publishValue) fd.set('is_published', 'on')
 
@@ -333,6 +351,46 @@ export default function BlogForm({
                   View on site
                 </a>
               )}
+            </div>
+          </section>
+
+          {/* Pillar / genre — make this post the SEO authority page
+              for one genre. Only one pillar per genre is enforced at
+              the DB level. */}
+          <section className="bg-parchment-100 border border-border-light rounded-xl p-6 lg:px-[26px] lg:py-6">
+            <div className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-500 mb-2">Pillar</div>
+
+            <div className="flex flex-col">
+              <PublishRow label="Is pillar?">
+                <ToggleSwitch
+                  value={values.is_pillar}
+                  onChange={(v) => update('is_pillar', v)}
+                  onLabel="Yes"
+                  offLabel="No"
+                />
+              </PublishRow>
+
+              <div className="flex flex-col gap-1.5 py-2.5">
+                <span className="text-[0.6875rem] font-semibold uppercase tracking-[0.15em] text-ink-700">
+                  Pillar genre
+                </span>
+                <select
+                  value={values.pillar_genre}
+                  onChange={(e) => update('pillar_genre', e.target.value)}
+                  disabled={!values.is_pillar}
+                  className="w-full bg-parchment-50 border-[1.5px] border-border-light rounded-md px-2.5 py-2 text-xs text-ink-900 focus:outline-none focus:border-burgundy-500 focus:shadow-[0_0_0_3px_var(--color-burgundy-100)] transition-all disabled:bg-parchment-200 disabled:text-ink-400 disabled:cursor-not-allowed"
+                >
+                  <option value="">— select a genre —</option>
+                  {GENRE_OPTIONS.map((g) => (
+                    <option key={g.slug} value={g.slug}>{g.label}</option>
+                  ))}
+                </select>
+                <p className="text-[0.6875rem] text-ink-500 leading-snug mt-1">
+                  When on, this post becomes the authority page at{' '}
+                  <strong className="text-ink-700">/pillars/{values.pillar_genre || '<genre>'}</strong>.
+                  Tag every spoke post in this genre with the same slug.
+                </p>
+              </div>
             </div>
           </section>
 

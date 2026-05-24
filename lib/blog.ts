@@ -51,9 +51,67 @@ export interface BlogPost {
   /** Tailwind gradient classes (e.g. 'from-violet-900 via-...') used
    *  as the card placeholder when no featured_image is set. */
   gradient?: string
+  /** Free-form tags. For genre-tagging the spokes of a pillar, include
+   *  the genre slug (e.g. 'dnd-5e') so /pillars/[genre] can find them. */
   tags?: string[]
+  /** This post is the SEO pillar / authority page for its genre. Only
+   *  one pillar per genre (enforced via partial unique index on the DB). */
+  isPillar?: boolean
+  /** When isPillar=true, the genre slug this post is the pillar of. */
+  pillarGenre?: string
   seoTitle?: string
   seoDescription?: string
+}
+
+/* --------------------------------------------------------------------
+   Genres — the 9 the studio paints in. Each can have one pillar
+   blog post + many spoke posts that link back to it. Drives the
+   /pillars/[genre] route and the admin genre selector.
+   -------------------------------------------------------------------- */
+export interface Genre {
+  slug: string
+  label: string
+  tagline: string
+}
+
+export const GENRES: readonly Genre[] = [
+  { slug: 'fantasy',      label: 'Fantasy',                tagline: 'the broad church' },
+  { slug: 'dnd-5e',       label: 'D&D 5e',                 tagline: 'the table favourite' },
+  { slug: 'sci-fi',       label: 'Sci-fi',                 tagline: 'far futures, starships' },
+  { slug: 'cyberpunk',    label: 'Cyberpunk',              tagline: 'neon, chrome, rain' },
+  { slug: 'horror',       label: 'Horror',                 tagline: 'gothic, eldritch, body' },
+  { slug: 'modern',       label: 'Modern',                 tagline: 'urban + contemporary' },
+  { slug: 'historical',   label: 'Historical',             tagline: 'period-accurate work' },
+  { slug: 'souls-anime',  label: 'Souls & anime fan art',  tagline: 'tribute portraits' },
+  { slug: 'western',      label: 'Western',                tagline: 'frontier + weird west' },
+]
+
+export function genreBySlug(slug: string): Genre | undefined {
+  return GENRES.find((g) => g.slug === slug)
+}
+
+/* --------------------------------------------------------------------
+   Pillar / spoke accessors over the snapshot.
+   -------------------------------------------------------------------- */
+
+/** All pillar posts (one per genre, at most). */
+export function getAllPillars(): BlogPost[] {
+  return POSTS.filter((p) => p.isPillar && p.pillarGenre)
+}
+
+/** Pillar post for a specific genre, if one exists. */
+export function getPillarByGenre(genreSlug: string): BlogPost | undefined {
+  return POSTS.find((p) => p.isPillar && p.pillarGenre === genreSlug)
+}
+
+/** All spoke posts for a genre — any post whose `tags` array contains
+ *  the genre slug. Excludes the pillar itself; sorted newest-first. */
+export function getPostsByGenre(genreSlug: string, opts?: { excludePillar?: boolean }): BlogPost[] {
+  const excludePillar = opts?.excludePillar ?? true
+  return POSTS
+    .filter((p) => (p.tags ?? []).includes(genreSlug))
+    .filter((p) => (excludePillar ? !(p.isPillar && p.pillarGenre === genreSlug) : true))
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 }
 
 /** Shared studio author byline. Future enhancement: per-author records. */

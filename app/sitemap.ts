@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next'
 import { fetchAllSlugs as fetchPortfolioSlugs } from '@/lib/portfolio-pieces-server'
-import { fetchAllSlugs as fetchBlogSlugs } from '@/lib/blog-server'
+import { fetchAllSlugs as fetchBlogSlugs, fetchActivePillarGenres } from '@/lib/blog-server'
 import { BUCKETS } from '@/lib/services-server'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://designvortex.co'
@@ -33,6 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/availability`,     lastModified, changeFrequency: 'weekly',  priority: 0.8 },
     { url: `${SITE_URL}/about`,            lastModified, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${SITE_URL}/blog`,             lastModified, changeFrequency: 'weekly',  priority: 0.8 },
+    { url: `${SITE_URL}/pillars`,          lastModified, changeFrequency: 'weekly',  priority: 0.9 },
     { url: `${SITE_URL}/reviews`,          lastModified, changeFrequency: 'weekly',  priority: 0.7 },
     { url: `${SITE_URL}/faq`,              lastModified, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${SITE_URL}/contact`,          lastModified, changeFrequency: 'monthly', priority: 0.6 },
@@ -73,5 +74,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  return [...staticRoutes, ...serviceRoutes, ...portfolioRoutes, ...blogRoutes]
+  // Pillar pages — one per genre that has a published pillar post.
+  // Higher priority than spoke blog posts since pillars are the
+  // authority pages for their genre.
+  const pillarGenres = await fetchActivePillarGenres()
+  const pillarRoutes: MetadataRoute.Sitemap = pillarGenres.map((g) => ({
+    url: `${SITE_URL}/pillars/${g.slug}`,
+    lastModified,
+    changeFrequency: 'monthly',
+    priority: 0.85,
+  }))
+
+  return [
+    ...staticRoutes,
+    ...serviceRoutes,
+    ...portfolioRoutes,
+    ...blogRoutes,
+    ...pillarRoutes,
+  ]
 }

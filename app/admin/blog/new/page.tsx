@@ -25,6 +25,8 @@ export default async function NewBlogPostPage() {
     read_time_minutes: '',
     seo_title: '',
     seo_description: '',
+    is_pillar: false,
+    pillar_genre: '',
   }
 
   return (

@@ -60,6 +60,8 @@ export default async function EditBlogPostPage({
         : '',
     seo_title: post.seo_title ?? '',
     seo_description: post.seo_description ?? '',
+    is_pillar: !!post.is_pillar,
+    pillar_genre: post.pillar_genre ?? '',
   }
 
   const lastEdited = new Date(post.updated_at ?? post.created_at).toLocaleString('en-US', {

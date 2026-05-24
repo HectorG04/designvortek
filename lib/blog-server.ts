@@ -19,6 +19,7 @@ import { createAdminClient } from '@/lib/supabase/server'
 import {
   POSTS,
   STUDIO_AUTHOR,
+  GENRES,
   getAllPosts,
   getFeaturedPost,
   getGridPosts,
@@ -29,8 +30,13 @@ import {
   categoryToSlug,
   slugToCategory,
   formatPostDate,
+  getAllPillars,
+  getPillarByGenre,
+  getPostsByGenre,
+  genreBySlug,
   type BlogPost,
   type BlogAuthor,
+  type Genre,
 } from '@/lib/blog'
 
 type BlogRow = {
@@ -50,10 +56,12 @@ type BlogRow = {
   read_time_minutes: number | null
   seo_title: string | null
   seo_description: string | null
+  is_pillar: boolean | null
+  pillar_genre: string | null
 }
 
 const COLUMNS =
-  'id,created_at,updated_at,title,slug,excerpt,content,featured_image,category,tags,author_name,is_published,published_at,read_time_minutes,seo_title,seo_description'
+  'id,created_at,updated_at,title,slug,excerpt,content,featured_image,category,tags,author_name,is_published,published_at,read_time_minutes,seo_title,seo_description,is_pillar,pillar_genre'
 
 /** Returns true when the row should be visible to the public — published
  *  and either no scheduled publish time, or scheduled time has arrived. */
@@ -95,6 +103,8 @@ function rowToPost(row: BlogRow): BlogPost | null {
     authorName: row.author_name ?? STUDIO_AUTHOR.name,
     featuredImage: row.featured_image ?? undefined,
     tags: row.tags ?? undefined,
+    isPillar: row.is_pillar ?? false,
+    pillarGenre: row.pillar_genre ?? undefined,
     seoTitle: row.seo_title ?? undefined,
     seoDescription: row.seo_description ?? undefined,
   }
@@ -233,13 +243,58 @@ export async function fetchRelatedPosts(slug: string, limit = 3): Promise<BlogPo
   return posts.filter((p) => p.slug !== slug).slice(0, limit)
 }
 
+/* --------------------------------------------------------------------
+   Pillar / genre helpers — same try-Supabase-then-snapshot pattern.
+   -------------------------------------------------------------------- */
+
+/** All pillar posts across every genre, newest first. */
+export async function fetchAllPillars(): Promise<BlogPost[]> {
+  const all = await fetchAllPosts()
+  const live = all.filter((p) => p.isPillar && p.pillarGenre)
+  return live.length > 0 ? live : getAllPillars()
+}
+
+/** Pillar post for one genre, if one exists. */
+export async function fetchPillarByGenre(genreSlug: string): Promise<BlogPost | undefined> {
+  const all = await fetchAllPosts()
+  return (
+    all.find((p) => p.isPillar && p.pillarGenre === genreSlug) ??
+    getPillarByGenre(genreSlug)
+  )
+}
+
+/** Spoke posts for a genre (any post tagged with the genre slug),
+ *  newest first. Excludes the pillar itself by default. */
+export async function fetchPostsByGenre(
+  genreSlug: string,
+  opts?: { excludePillar?: boolean },
+): Promise<BlogPost[]> {
+  const all = await fetchAllPosts()
+  const excludePillar = opts?.excludePillar ?? true
+  const live = all
+    .filter((p) => (p.tags ?? []).includes(genreSlug))
+    .filter((p) => (excludePillar ? !(p.isPillar && p.pillarGenre === genreSlug) : true))
+  return live.length > 0 ? live : getPostsByGenre(genreSlug, opts)
+}
+
+/** Genres that currently have a pillar published. Used by sitemap +
+ *  /pillars index so we don't surface empty genre slots. */
+export async function fetchActivePillarGenres(): Promise<Genre[]> {
+  const pillars = await fetchAllPillars()
+  const slugs = new Set(pillars.map((p) => p.pillarGenre).filter(Boolean) as string[])
+  return GENRES.filter((g) => slugs.has(g.slug))
+}
+
 /* Re-exports for consumer convenience. */
 export {
   POSTS,
   STUDIO_AUTHOR,
+  GENRES,
   categoryToSlug,
   slugToCategory,
   formatPostDate,
+  genreBySlug,
   type BlogPost,
   type BlogAuthor,
+  type Genre,
 }

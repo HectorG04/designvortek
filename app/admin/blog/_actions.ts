@@ -60,6 +60,14 @@ function buildPayload(formData: FormData) {
     publishedAt = new Date().toISOString()
   }
 
+  /* Pillar fields. is_pillar requires a genre slug to be meaningful;
+   * if the checkbox is on but no genre selected, treat as not-pillar
+   * so the partial-unique index on pillar_genre doesn't reject the row. */
+  const isPillarRaw = formData.get('is_pillar') === 'on' || formData.get('is_pillar') === 'true'
+  const pillarGenreRaw = String(formData.get('pillar_genre') ?? '').trim()
+  const pillarGenre = pillarGenreRaw || null
+  const isPillar = isPillarRaw && !!pillarGenre
+
   return {
     payload: {
       title: titleRaw,
@@ -75,6 +83,8 @@ function buildPayload(formData: FormData) {
       read_time_minutes: readTime,
       seo_title: seoTitle,
       seo_description: seoDescription,
+      is_pillar: isPillar,
+      pillar_genre: isPillar ? pillarGenre : null,
     },
   }
 }
