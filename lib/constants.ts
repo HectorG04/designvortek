@@ -1,6 +1,10 @@
 export const SITE_NAME = 'Design Vortex'
 export const SITE_URL = 'https://designvortex.co'
 export const SITE_TAGLINE = 'Premium Art Commissions'
+
+/* Ko-fi tip jar — surfaces in the SiteFooter bottom strip as
+ * "Support the studio ☕". Opens in a new tab. */
+export const KOFI_URL = 'https://ko-fi.com/designvortex'
 export const SITE_DESCRIPTION =
   'Hand-painted TTRPG character portraits, VTT tokens, party illustrations, NPC packs, maps and bespoke art. Commissions from $25. Genre-agnostic, hand-drawn, never AI.'
 

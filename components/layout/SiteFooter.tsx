@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { FOOTER_LINKS, SITE_NAME } from '@/lib/constants'
+import { FOOTER_LINKS, SITE_NAME, KOFI_URL } from '@/lib/constants'
 import Logo from './Logo'
 import NewsletterForm from './NewsletterForm'
 
@@ -154,17 +154,30 @@ export default function SiteFooter() {
         {/* Bottom bar */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border-light pt-6 text-[0.8125rem] text-ink-500">
           <span>© {new Date().getFullYear()} {SITE_NAME} Studio. All rights reserved.</span>
-          <span className="flex gap-6">
-            {BOTTOM_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-ink-500 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] hover:text-burgundy-700"
-              >
-                {BOTTOM_LABEL_MAP[link.label] ?? link.label}
-              </Link>
-            ))}
-          </span>
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            {/* Tip jar — Ko-fi link, agency-feel pill. */}
+            <a
+              href={KOFI_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Support the studio on Ko-fi"
+              className="group inline-flex items-center gap-1.5 rounded-full border border-gold-500/60 bg-parchment-50/70 px-3.5 py-1.5 text-[0.75rem] font-semibold uppercase tracking-[0.1em] text-ink-700 transition-all duration-150 hover:-translate-y-px hover:border-gold-500 hover:bg-gold-100 hover:text-burgundy-700 hover:shadow-[0_6px_18px_rgba(201,160,74,0.20)]"
+            >
+              <span aria-hidden="true" className="text-base leading-none transition-transform duration-150 group-hover:scale-110">☕</span>
+              Support the studio
+            </a>
+            <span className="flex flex-wrap gap-6">
+              {BOTTOM_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="text-ink-500 transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] hover:text-burgundy-700"
+                >
+                  {BOTTOM_LABEL_MAP[link.label] ?? link.label}
+                </Link>
+              ))}
+            </span>
+          </div>
         </div>
 
       </div>
