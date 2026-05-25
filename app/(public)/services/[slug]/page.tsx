@@ -73,13 +73,36 @@ export async function generateStaticParams() {
   return ALLOWED_BUCKETS.map((slug) => ({ slug }))
 }
 
+const BUCKET_META: Record<AllowedBucket, { title: string; description: string }> = {
+  'character-work': {
+    title: 'D&D Character Art Commissions | Bust, Half & Full Body',
+    description:
+      'Commission hand-painted D&D & RPG character portraits — bust, half-body, or full-body. Artist-painted, never AI. See portfolio and order yours today.',
+  },
+  'party-work': {
+    title: 'D&D Party Portrait Commissions | Group Character Art',
+    description:
+      'Commission a hand-painted group portrait for your D&D or TTRPG party. Individual character portraits combined into one epic scene. Built for adventurers.',
+  },
+  'gm-world-building': {
+    title: 'D&D NPC Packs & World-Building Art | DM Bundles',
+    description:
+      'Need NPCs for your campaign? Commission custom hand-painted NPC portrait packs. Bundles for DMs running D&D, Pathfinder, or any TTRPG. Order a pack today.',
+  },
+  'tokens': {
+    title: 'Custom VTT Token Commissions | Roll20 & Foundry Ready',
+    description:
+      'Hand-painted custom VTT tokens for Roll20, Foundry VTT & Owlbear. PNG-ready character art made to match your D&D portrait. Order now.',
+  },
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
   if (!isAllowedBucket(slug)) return { title: 'Service not found · Design Vortex' }
-  const label = bucketLabel(slug)
+  const meta = BUCKET_META[slug]
   return {
-    title: `${label} · every tier of finish · Design Vortex`,
-    description: `${label} commissions: hand-painted, fixed-rate pricing, two revisions on every tier. Browse every product in the ${label.toLowerCase()} bucket with USD pricing and turnaround ranges.`,
+    title: meta.title,
+    description: meta.description,
     alternates: { canonical: `/services/${slug}` },
   }
 }

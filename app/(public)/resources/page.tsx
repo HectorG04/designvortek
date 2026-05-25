@@ -32,9 +32,9 @@ import {
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Resources · Design Vortex',
+  title: 'D&D & Fantasy Art Commission Guides | Design Vortex',
   description:
-    'One long-form authority page per genre we paint, plus regular studio notes — guides, walkthroughs, and process pieces. Field notes and deep dives in one place.',
+    'Guides, tips & resources for commissioning D&D, RPG & fantasy character art. From pricing to reference sheets — everything a first-time client needs.',
   alternates: { canonical: '/resources' },
 }
 

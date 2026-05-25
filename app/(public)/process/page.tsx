@@ -23,9 +23,10 @@ import { getTurnaroundSummary } from '@/lib/services'
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'Process · Design Vortex',
+  title: 'How It Works | Character Art Commission Process',
   description:
-    "How we work, end to end. Discuss, quote, create, deliver — four steps. Predictable, communicative, no surprises.",
+    'See exactly how commissioning works at Design Vortex — 4 clear steps from reference to final painting. Know what to expect before you order.',
+  alternates: { canonical: '/process' },
 }
 
 interface Step {

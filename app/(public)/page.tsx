@@ -20,14 +20,14 @@ import { fetchFeaturedPieces } from '@/lib/portfolio-pieces-server'
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Design Vortex — Hand-Painted D&D & TTRPG Character Art Commissions | No AI',
+  title: 'Hand-Painted Character Art Commissions | Design Vortex',
   description:
-    'Hand-painted D&D and TTRPG character art commissions by Hector G. — portraits, VTT tokens, party illustrations and NPC packs. Never AI, never traced. From $25.',
+    'Custom hand-painted D&D, RPG & fantasy character portraits. No AI. No tracing. Every piece painted by artist Hector G. Start your commission today.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Design Vortex — Hand-Painted D&D & TTRPG Character Art Commissions | No AI',
+    title: 'Hand-Painted Character Art Commissions | Design Vortex',
     description:
-      'Hand-painted D&D and TTRPG character art commissions — portraits, VTT tokens, party illustrations and NPC packs. Never AI, never traced. From $25.',
+      'Custom hand-painted D&D, RPG & fantasy character portraits. No AI. No tracing. Every piece painted by artist Hector G. Start your commission today.',
     url: SITE_URL,
     type: 'website',
   },

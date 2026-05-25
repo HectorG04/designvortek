@@ -24,9 +24,9 @@ import OrderForm from './_OrderForm'
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'Start a commission · Design Vortex',
+  title: 'Start Your Commission | Custom Character Art | Design Vortex',
   description:
-    "Tell us about your character, party, or NPC pack. We'll send a fixed quote within 48 hours — no commitment until you're ready.",
+    "Ready to bring your character to life? Fill out our brief and Hector G will paint your D&D, RPG, or fantasy character by hand. No AI, ever.",
   alternates: { canonical: '/order' },
 }
 

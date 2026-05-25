@@ -39,9 +39,9 @@ import {
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Pricing · Design Vortex',
+  title: 'Art Commission Prices | Character Portraits & Packages',
   description:
-    'Transparent flat-rate pricing across every service. Character portraits from $60, full-body from $120, reference sheets $250–$450, NPC packs from $220, monthly subscriptions from $75 (6 months minimum). No surprises.',
+    'Flat-rate character art commission prices — bust from $60, full-body from $120, VTT tokens, party portraits & NPC packs. Hand-painted, never AI. No hidden fees.',
   alternates: { canonical: '/pricing' },
 }
 

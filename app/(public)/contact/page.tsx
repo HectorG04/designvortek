@@ -25,9 +25,9 @@ import ContactFormCard from './_ContactFormCard'
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'Contact · Design Vortex',
+  title: 'Contact Design Vortex | Commission Inquiry & Support',
   description:
-    'Ask a question, send a note, or start a conversation. We reply within 48 hours, every weekday.',
+    'Have a question about a commission? Contact Design Vortex — we reply within 48 hours on weekdays. Start a character art commission today.',
   alternates: { canonical: '/contact' },
 }
 

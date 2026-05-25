@@ -13,9 +13,9 @@ import PortfolioMasonryClient from './_PortfolioMasonryClient'
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'Portfolio · Design Vortex',
+  title: 'Character Art Portfolio | Hand-Painted Fantasy & RPG',
   description:
-    'Every commission since 2024. Character portraits, VTT tokens, NPC packs, party portraits, and custom illustration work — all hand-painted.',
+    'Browse hand-painted D&D, Pathfinder, 40K, sci-fi & fantasy character commissions. Every piece painted by Hector G — no AI, no tracing. See the work.',
   alternates: { canonical: '/portfolio' },
 }
 

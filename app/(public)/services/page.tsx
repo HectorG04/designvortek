@@ -27,9 +27,9 @@ import PaperTexture from '@/components/decor/PaperTexture'
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Services · Design Vortex',
+  title: 'RPG & Fantasy Art Commission Services | Design Vortex',
   description:
-    'Five signature services — character art, VTT tokens, party portraits, NPC packs, and custom projects. Painterly craft, predictable timelines, transparent pricing.',
+    'Explore hand-painted commission services: character portraits, VTT tokens, party portraits, NPC packs & custom projects. D&D, Pathfinder, 40K and more.',
   alternates: { canonical: '/services' },
 }
 
