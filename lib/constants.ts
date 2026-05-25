@@ -18,8 +18,7 @@ export const NAV_LINKS = [
   { label: 'Process',   href: '/process' },
   { label: 'Pricing',   href: '/pricing' },
   { label: 'About',     href: '/about' },
-  { label: 'Pillars',   href: '/pillars' },
-  { label: 'Blog',      href: '/blog' },
+  { label: 'Resources', href: '/resources' },
   { label: 'Contact',   href: '/contact' },
 ]
 
@@ -45,8 +44,7 @@ export const FOOTER_LINKS = {
   ],
   Services: SERVICES_NAV,
   Resources: [
-    { label: 'Pillars',        href: '/pillars' },
-    { label: 'Blog',           href: '/blog' },
+    { label: 'Resources hub',  href: '/resources' },
     { label: 'FAQ',            href: '/faq' },
     { label: 'Reviews',        href: '/reviews' },
     { label: 'Subscription',   href: '/subscription' },
