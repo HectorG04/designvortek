@@ -26,6 +26,7 @@ import {
   getAllPieces,
   getAllSlugs,
   getPieceBySlug,
+  getRelatedPieces,
   type PortfolioPiece,
 } from '@/lib/portfolio-pieces'
 
@@ -198,6 +199,23 @@ export async function fetchPieceBySlug(slug: string): Promise<PortfolioPiece | u
   } catch {
     return getPieceBySlug(slug)
   }
+}
+
+/** Related pieces — same category first (excluding current slug), then
+ *  padded with other-category pieces if there aren't enough. Mirrors the
+ *  fetchRelatedPosts pattern in lib/blog-server.ts so the portfolio detail
+ *  page's "Related" section uses real pieces instead of hardcoded data. */
+export async function fetchRelatedPieces(
+  slug: string,
+  category: PortfolioPiece['category'],
+  limit = 3,
+): Promise<PortfolioPiece[]> {
+  const pieces = await fetchAllPieces()
+  if (pieces.length === 0) return getRelatedPieces(slug, category, limit)
+  const sameCategory = pieces.filter((p) => p.slug !== slug && p.category === category)
+  if (sameCategory.length >= limit) return sameCategory.slice(0, limit)
+  const others = pieces.filter((p) => p.slug !== slug && p.category !== category)
+  return [...sameCategory, ...others].slice(0, limit)
 }
 
 /** Live category counts. */

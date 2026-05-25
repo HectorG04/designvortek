@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import ProtectedImage from '@/components/ui/ProtectedImage'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -12,30 +12,26 @@ import Markdown from '@/components/ui/Markdown'
 import { cn } from '@/lib/utils'
 
 /* =====================================================================
-   PORTFOLIO DETAIL — literal port of Portfolio Detail.html.
+   PORTFOLIO DETAIL — Supabase-backed via fetchPieceBySlug.
    Server component for generateMetadata + generateStaticParams +
-   CreativeWork JSON-LD. Three demo slugs hardcoded.
+   CreativeWork JSON-LD. The "Related" rail pulls real pieces from
+   the same category via fetchRelatedPieces, falling back to other
+   recent work when there aren't enough siblings.
    ===================================================================== */
 
 /* PortfolioPiece type + the 24-piece PIECES record both live in
  * lib/portfolio-pieces.ts so the masonry index and the homepage
- * strip can read from the same source. Keep ../[slug]/page.tsx
- * as a thin server entry: generateStaticParams + generateMetadata
- * + JSON-LD + the detail render. When the Supabase CMS lands, the
- * library file gets replaced with a Supabase query and this file
- * needs no changes. */
-import { fetchAllSlugs, fetchPieceBySlug } from '@/lib/portfolio-pieces-server'
+ * strip can read from the same source. */
+import {
+  fetchAllSlugs,
+  fetchPieceBySlug,
+  fetchRelatedPieces,
+} from '@/lib/portfolio-pieces-server'
+import type { PortfolioPiece } from '@/lib/portfolio-pieces'
 
 /* ISR — rebuild this page at most every 60s. Admin edits in the
  * portfolio_pieces table become visible within a minute without a deploy. */
 export const revalidate = 60
-
-/* Related-pieces lookup (kept lean — three siblings per piece) */
-const RELATED: Array<{ slug: string; title: string; category: string; gradient: string; meta: string }> = [
-  { slug: 'aldric-half-elf-paladin',   title: 'Aldric · half-elf paladin',     category: 'Character Art', gradient: 'from-amber-900 via-yellow-700 to-orange-600', meta: 'Painterly · Mar 2026' },
-  { slug: 'drowned-captain-veska',     title: 'Drowned Captain Veska',          category: 'Character Art', gradient: 'from-slate-800 via-teal-700 to-emerald-600',  meta: 'Painterly · Feb 2026' },
-  { slug: 'brennen-bardic-dropout',    title: 'Brennen · bardic dropout',       category: 'Character Art', gradient: 'from-amber-800 via-rose-700 to-pink-600',     meta: 'Painterly · Jan 2026' },
-]
 
 /* =====================================================================
    STATIC PARAMS + METADATA
@@ -88,6 +84,12 @@ export default async function PortfolioDetailPage({
   if (!piece) {
     notFound()
   }
+
+  /* Dynamic related rail — same-category first, padded with others if
+   * there aren't enough. Mirrors the resources/[slug] fetchRelatedPosts
+   * pattern. `hasSameCategory` controls the heading copy below. */
+  const related = await fetchRelatedPieces(piece.slug, piece.category, 3)
+  const hasSameCategory = related.some((r) => r.category === piece.category)
 
   // JSON-LD: CreativeWork
   const ld = {
@@ -312,41 +314,44 @@ export default async function PortfolioDetailPage({
           </Container>
         </section>
 
-        {/* More from this collection */}
-        <section className="bg-parchment-100 py-24">
-          <Container>
-            <div className="text-center max-w-[640px] mx-auto mb-12">
-              <div className="mb-4 flex justify-center">
-                <SectionLabel>More from this collection</SectionLabel>
+        {/* Related rail — same-category pieces from Supabase, falls back
+            to other recent work when the category has fewer than 3 siblings.
+            Heading + section label flip based on whether at least one of
+            the results shares the current piece's category. */}
+        {related.length > 0 && (
+          <section className="bg-parchment-100 py-24">
+            <Container>
+              <div className="text-center max-w-[640px] mx-auto mb-12">
+                <div className="mb-4 flex justify-center">
+                  <SectionLabel>
+                    {hasSameCategory ? 'More from this collection' : 'More from the studio'}
+                  </SectionLabel>
+                </div>
+                <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink-900 leading-tight tracking-tight">
+                  {hasSameCategory ? (
+                    <>
+                      Related{' '}
+                      <em className="font-display italic font-medium text-burgundy-700">
+                        {piece.category.toLowerCase()}
+                      </em>
+                    </>
+                  ) : (
+                    <>
+                      Other recent{' '}
+                      <em className="font-display italic font-medium text-burgundy-700">work</em>
+                    </>
+                  )}
+                </h2>
               </div>
-              <h2 className="font-display text-3xl md:text-4xl font-semibold text-ink-900 leading-tight tracking-tight">
-                Related <em className="font-display italic font-medium text-burgundy-700">{piece.category.toLowerCase()}</em>
-              </h2>
-            </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {RELATED.map((r) => (
-                <Link
-                  key={r.slug}
-                  href={`/portfolio/${r.slug}`}
-                  className="group block bg-parchment-50 border border-border-light rounded-2xl overflow-hidden hover:border-border-medium hover:shadow-[0_12px_32px_rgba(30,20,8,0.10)] transition-shadow"
-                >
-                  <div className={cn('relative aspect-[4/5] bg-gradient-to-br overflow-hidden', r.gradient)}>
-                    <div className="absolute top-3 left-3 inline-flex items-center px-3 py-1 rounded-full text-[0.625rem] font-bold uppercase tracking-[0.15em] bg-tome-950/70 backdrop-blur-sm text-gold-glow">
-                      {r.category}
-                    </div>
-                  </div>
-                  <div className="p-5">
-                    <h3 className="font-display text-lg font-semibold text-ink-900 leading-tight group-hover:text-burgundy-700 transition-colors">
-                      {r.title}
-                    </h3>
-                    <div className="text-xs text-ink-500 mt-1">{r.meta}</div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </Container>
-        </section>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {related.map((r) => (
+                  <RelatedCard key={r.slug} piece={r} />
+                ))}
+              </div>
+            </Container>
+          </section>
+        )}
 
         {/* CTA strip */}
         <section className="relative bg-tome-950 text-cream-50 py-24 overflow-hidden">
@@ -375,5 +380,40 @@ export default async function PortfolioDetailPage({
       </main>
       <SiteFooter />
     </>
+  )
+}
+
+/* =====================================================================
+   RelatedCard — real-piece card that mirrors the masonry style:
+   gradient backdrop, ProtectedImage for the artwork (so the full-image
+   watermark layers on top), category chip, title and delivered date.
+   ===================================================================== */
+function RelatedCard({ piece }: { piece: PortfolioPiece }) {
+  return (
+    <Link
+      href={`/portfolio/${piece.slug}`}
+      className="group block bg-parchment-50 border border-border-light rounded-2xl overflow-hidden hover:border-border-medium hover:shadow-[0_12px_32px_rgba(30,20,8,0.10)] transition-shadow"
+    >
+      <div className={cn('relative aspect-[4/5] bg-gradient-to-br overflow-hidden', piece.gradient)}>
+        {piece.heroImage && (
+          <ProtectedImage
+            src={piece.heroImage}
+            alt={piece.title}
+            fill
+            sizes="(min-width: 1024px) 320px, (min-width: 768px) 33vw, 100vw"
+            className="object-cover"
+          />
+        )}
+        <div className="absolute top-3 left-3 z-[3] inline-flex items-center px-3 py-1 rounded-full text-[0.625rem] font-bold uppercase tracking-[0.15em] bg-tome-950/70 backdrop-blur-sm text-gold-glow">
+          {piece.category}
+        </div>
+      </div>
+      <div className="p-5">
+        <h3 className="font-display text-lg font-semibold text-ink-900 leading-tight group-hover:text-burgundy-700 transition-colors">
+          {piece.title}
+        </h3>
+        <div className="text-xs text-ink-500 mt-1">{piece.delivered}</div>
+      </div>
+    </Link>
   )
 }

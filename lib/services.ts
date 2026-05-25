@@ -249,7 +249,7 @@ export const SERVICES: readonly ServiceProduct[] = [
       { title: 'Veska · drowned captain',   meta: 'Standard · Feb 2026', gradient: 'from-emerald-900 via-teal-700 to-cyan-600' },
     ],
     faq: [
-      { q: 'What references work best?',    a: 'A Hero Forge screenshot or rough sketch, plus 2 or 3 mood images for palette and lighting. See our [briefing guide](/blog/how-to-write-commission-brief).' },
+      { q: 'What references work best?',    a: 'A Hero Forge screenshot or rough sketch, plus 2 or 3 mood images for palette and lighting. See our [briefing guide](/resources/how-to-write-commission-brief).' },
       { q: 'How long for the Premium tier?', a: 'Usually toward the high end of the 7 to 14 day range, plus a day or two for revisions.' },
       { q: 'Do you do non-D&D characters?',  a: 'Yes. Pathfinder, World of Darkness, original settings, homebrew species, sci-fi PCs. Send the brief.' },
     ],
@@ -481,7 +481,7 @@ export const SERVICES: readonly ServiceProduct[] = [
     ],
     faq: [
       { q: 'Can I extend a 5-pack to 10 later?', a: 'Yes. We hold your style notes for 12 months, and the extra NPCs ship at the same per-piece rate.' },
-      { q: 'Do you do published-module casts?', a: 'Often. Curse of Strahd, Saltmarsh, Storm King\'s Thunder, Waterdeep, plus homebrew. See our [Strahd pack walkthrough](/blog/strahd-npc-pack-six-weeks).' },
+      { q: 'Do you do published-module casts?', a: 'Often. Curse of Strahd, Saltmarsh, Storm King\'s Thunder, Waterdeep, plus homebrew. See our [Strahd pack walkthrough](/resources/strahd-npc-pack-six-weeks).' },
       { q: 'Are tokens really included?',       a: 'Yes. Every NPC in a pack gets a matching token at no extra cost.' },
     ],
     bundleWithSlugs: [],

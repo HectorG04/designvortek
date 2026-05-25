@@ -102,7 +102,7 @@ export async function createBlogPost(formData: FormData) {
   }
 
   revalidatePath('/admin/blog')
-  revalidatePath('/blog')
+  revalidatePath('/resources')
   redirect('/admin/blog')
 }
 
@@ -132,8 +132,6 @@ export async function updateBlogPost(formData: FormData) {
   revalidatePath(`/admin/blog/${id}/edit`)
   revalidatePath('/resources')
   revalidatePath(`/resources/${result.payload.slug}`)
-  // also bust the legacy redirect path so the 308 stays fresh
-  revalidatePath(`/blog/${result.payload.slug}`)
   redirect('/admin/blog')
 }
 
@@ -151,6 +149,6 @@ export async function deleteBlogPost(formData: FormData) {
   }
 
   revalidatePath('/admin/blog')
-  revalidatePath('/blog')
+  revalidatePath('/resources')
   redirect('/admin/blog')
 }

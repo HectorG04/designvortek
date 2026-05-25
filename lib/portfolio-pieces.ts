@@ -906,6 +906,21 @@ export function getPieceBySlug(slug: string): PortfolioPiece | undefined {
   return PORTFOLIO_PIECES[slug]
 }
 
+/** Related pieces — same category first (excluding the current slug),
+ *  padded with other-category pieces if there aren't enough. Sorted
+ *  newest-first within each group via getAllPieces. */
+export function getRelatedPieces(
+  slug: string,
+  category: PortfolioPiece['category'],
+  limit = 3,
+): PortfolioPiece[] {
+  const all = getAllPieces()
+  const sameCategory = all.filter((p) => p.slug !== slug && p.category === category)
+  if (sameCategory.length >= limit) return sameCategory.slice(0, limit)
+  const others = all.filter((p) => p.slug !== slug && p.category !== category)
+  return [...sameCategory, ...others].slice(0, limit)
+}
+
 /* =====================================================================
 }
 

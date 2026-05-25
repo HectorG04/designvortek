@@ -36,7 +36,7 @@ export default function BlogPreview() {
               variants={fadeUp}
               className="group bg-parchment-50 border border-border-light rounded-xl overflow-hidden transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-border-medium hover:shadow-md hover:-translate-y-1 cursor-pointer"
             >
-              <Link href={`/blog/${post.slug}`} className="block">
+              <Link href={`/resources/${post.slug}`} className="block">
                 {/* Image area with gradient */}
                 <div
                   className={`relative aspect-[16/9] p-[14px] flex items-start bg-gradient-to-br ${post.gradient}`}
@@ -74,7 +74,7 @@ export default function BlogPreview() {
 
         {/* Footer link */}
         <div className="text-center mt-12">
-          <LinkButton href="/blog" variant="outline" size="md">
+          <LinkButton href="/resources" variant="outline" size="md">
             Read all articles
             <ArrowRight size={14} strokeWidth={1.8} />
           </LinkButton>

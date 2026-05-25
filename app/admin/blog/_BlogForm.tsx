@@ -202,7 +202,7 @@ export default function BlogForm({
               label="Slug"
               labelExtra={
                 <span className="text-ink-500 font-normal normal-case tracking-normal text-xs">
-                  /blog/
+                  /resources/
                   <strong className="text-burgundy-700 font-mono">{values.slug || '—'}</strong>
                 </span>
               }

@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next'
 import { fetchAllSlugs as fetchPortfolioSlugs } from '@/lib/portfolio-pieces-server'
-import { fetchAllSlugs as fetchBlogSlugs, fetchActivePillarGenres } from '@/lib/blog-server'
+import { fetchAllSlugs as fetchResourceSlugs, fetchActivePillarGenres } from '@/lib/blog-server'
 import { BUCKETS } from '@/lib/services-server'
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://designvortex.co'
@@ -14,7 +14,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://designvortex.co'
  *   - /subscription            new Phase 4 landing
  *   - /commercial              new Phase 4 landing
  *   - /services/maps           new Phase 4 quote-only product
- *   - /blog/[slug]             from blog_posts
+ *   - /resources/[slug]        from blog_posts
  *
  * /admin/* and /v2/preview remain excluded.
  */
@@ -64,10 +64,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  // Blog post pages — slugs come from Supabase.
-  const blogSlugs = await fetchBlogSlugs()
-  const blogRoutes: MetadataRoute.Sitemap = blogSlugs.map((slug) => ({
-    url: `${SITE_URL}/blog/${slug}`,
+  // Resource article pages — slugs come from Supabase.
+  const resourceSlugs = await fetchResourceSlugs()
+  const resourceRoutes: MetadataRoute.Sitemap = resourceSlugs.map((slug) => ({
+    url: `${SITE_URL}/resources/${slug}`,
     lastModified,
     changeFrequency: 'monthly',
     priority: 0.7,
@@ -88,7 +88,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...staticRoutes,
     ...serviceRoutes,
     ...portfolioRoutes,
-    ...blogRoutes,
+    ...resourceRoutes,
     ...pillarRoutes,
   ]
 }

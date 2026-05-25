@@ -11,7 +11,6 @@ import {
   fetchCategoryCounts,
   fetchAllPillars,
   fetchActivePillarGenres,
-  categoryToSlug,
   GENRES,
   type BlogPost,
 } from '@/lib/blog-server'
@@ -175,12 +174,12 @@ export default async function ResourcesPage() {
             {/* Featured */}
             {featured && <FeaturedCard post={featured} />}
 
-            {/* Category chips — link to existing /blog/category/[slug]
-                routes so deep-linked URLs keep working. */}
+            {/* Category chips — all currently link back to /resources
+                since the dedicated category archives were removed. */}
             <div className="flex flex-wrap gap-2 justify-center mb-10">
               {categories.map((cat) => {
                 const isAll = cat.label === 'All'
-                const href = isAll ? '/resources' : `/blog/category/${categoryToSlug(cat.label)}`
+                const href = '/resources'
                 return (
                   <Link
                     key={cat.label}

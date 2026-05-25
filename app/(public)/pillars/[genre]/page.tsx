@@ -223,7 +223,7 @@ export default async function PillarPage({ params }: PageProps) {
 
                 <div className="text-center mt-10">
                   <Link
-                    href="/blog"
+                    href="/resources"
                     className="inline-flex items-center gap-2 text-[0.75rem] font-semibold uppercase tracking-[0.15em] text-burgundy-700 hover:gap-3 transition-all"
                   >
                     Every studio note <ArrowRight size={14} strokeWidth={1.8} />
