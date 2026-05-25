@@ -1,8 +1,8 @@
-# Design Vortex — Blog Post Plan · Wave 3
+﻿# Design Vortex — Blog Post Plan · Wave 3
 
 > Keyword-driven content plan built from full-site keyword research (May 2026).
 > Priority order is based on: search volume × buyer intent × competition gap.
-> All posts live at `/blog/[slug]` and appear in the `/resources` hub.
+> All posts live at `/resources/[slug]` and appear in the `/resources` hub.
 
 ---
 
@@ -26,7 +26,7 @@
 | **Secondary keywords** | how much does dnd character art cost, dnd art commission prices, character art commission cost, fantasy character portrait commission pricing |
 | **Search intent** | Commercial Investigation |
 | **Word count** | 1,800–2,200 words |
-| **Slug** | `/blog/dnd-character-art-commission-prices-2026` |
+| **Slug** | `/resources/dnd-character-art-commission-prices-2026` |
 | **Why this wins** | FramedFantasy ranks #1 with an affiliate article. This post is written by the actual studio doing the work — real prices, real samples, real turnaround times. E-E-A-T advantage is massive. |
 
 **Outline:**
@@ -56,7 +56,7 @@
 | **Secondary keywords** | dnd character art commission as a gift, gift for dungeon master, custom character portrait gift, birthday gift for dnd player |
 | **Search intent** | Informational → Transactional |
 | **Word count** | 1,500–1,800 words |
-| **Slug** | `/blog/best-gifts-for-dnd-players-2026` |
+| **Slug** | `/resources/best-gifts-for-dnd-players-2026` |
 | **Why this wins** | High gift-buyer traffic around holidays and birthdays. FramedFantasy ranks with a gift guide — but their #1 recommendation is a commission from a real artist. We ARE the real artist. Convert the click directly. |
 
 **Outline:**
@@ -85,7 +85,7 @@
 | **Secondary keywords** | how to commission character art, how does an art commission work, where to commission dnd character art, commission character art online |
 | **Search intent** | Informational (pre-purchase) |
 | **Word count** | 1,500–2,000 words |
-| **Slug** | `/blog/how-to-commission-dnd-character-art` |
+| **Slug** | `/resources/how-to-commission-dnd-character-art` |
 | **Why this wins** | FramedFantasy ranks for this query but gives generic advice. We write from direct experience as the studio, giving insider tips that build trust and naturally lead to our own order form. |
 
 **Outline:**
@@ -112,7 +112,7 @@
 | **Secondary keywords** | dnd party portrait commission prices, group character art commission, D&D party illustration commission, adventuring party portrait painting |
 | **Search intent** | Commercial Investigation → Transactional |
 | **Word count** | 1,400–1,800 words |
-| **Slug** | `/blog/dnd-party-portrait-commission-guide` |
+| **Slug** | `/resources/dnd-party-portrait-commission-guide` |
 | **Why this wins** | FramedFantasy has a party portrait article. Etsy listings rank. No real studio has a dedicated guide. This post captures DMs and players looking for group commissions — typically higher-value orders. |
 
 **Outline:**
@@ -142,7 +142,7 @@
 | **Secondary keywords** | warhammer 40k custom character art, 40k character illustration commission, space marine character portrait commission |
 | **Search intent** | Commercial Investigation |
 | **Word count** | 1,200–1,500 words |
-| **Slug** | `/blog/warhammer-40k-character-art-commission` |
+| **Slug** | `/resources/warhammer-40k-character-art-commission` |
 | **Why this wins** | Only DeviantArt and Etsy listings rank for this. A real studio guide with example work and a commission flow wins immediately. |
 
 **Outline:**
@@ -164,7 +164,7 @@
 | **Secondary keywords** | cyberpunk character portrait commission, sci-fi character art commission, cyberpunk RPG character portrait |
 | **Search intent** | Commercial Investigation |
 | **Word count** | 1,000–1,400 words |
-| **Slug** | `/blog/cyberpunk-character-art-commission` |
+| **Slug** | `/resources/cyberpunk-character-art-commission` |
 | **Why this wins** | Etsy and Pinterest only. Clear buyer-intent query with zero real studio pages. |
 
 **Outline:**
@@ -185,7 +185,7 @@
 | **Secondary keywords** | dnd character token for Roll20, VTT token vs character portrait, Roll20 custom token art |
 | **Search intent** | Commercial Investigation / Informational |
 | **Word count** | 900–1,200 words |
-| **Slug** | `/blog/vtt-token-vs-character-portrait` |
+| **Slug** | `/resources/vtt-token-vs-character-portrait` |
 | **Why this wins** | Differentiates two products cleanly. Captures "custom VTT token commission" which has only tool pages ranking. |
 
 **Outline:**
@@ -207,7 +207,7 @@
 | **Secondary keywords** | what reference images to send for art commission, character art commission brief tips, what to include in commission brief |
 | **Search intent** | Informational |
 | **Word count** | 1,200–1,500 words |
-| **Slug** | `/blog/how-to-describe-dnd-character-to-artist` |
+| **Slug** | `/resources/how-to-describe-dnd-character-to-artist` |
 | **Why this wins** | Every first-time commissioner asks this. Answering it builds trust and drives people to our order form. High conversion bridge content. |
 
 **Outline:**
@@ -236,7 +236,7 @@
 | **Secondary keywords** | dnd character art commission no AI, why not use AI for character art, hand painted fantasy art difference |
 | **Search intent** | Informational |
 | **Word count** | 1,000–1,400 words |
-| **Slug** | `/blog/hand-painted-character-art-vs-ai` |
+| **Slug** | `/resources/hand-painted-character-art-vs-ai` |
 | **Why this wins** | Captures "dnd character art commission no AI" searches + builds E-E-A-T. Strongly differentiates the studio from AI tools. This is a trust-building / pre-purchase education post. |
 
 **Outline:**
@@ -259,7 +259,7 @@
 | **Secondary keywords** | pathfinder 2e character art commission, pathfinder character portrait commission artist, custom pathfinder character art |
 | **Search intent** | Commercial Investigation |
 | **Word count** | 1,000–1,200 words |
-| **Slug** | `/blog/pathfinder-character-art-commission` |
+| **Slug** | `/resources/pathfinder-character-art-commission` |
 | **Why this wins** | Only Pinterest + DeviantArt rank. Pathfinder 2e has a large and dedicated player base. Almost no competition from a real studio. |
 
 **Outline:**
@@ -283,7 +283,7 @@
 | **Secondary keywords** | chibi couple commission wedding gift, custom chibi art for wedding, anime chibi couple commission |
 | **Search intent** | Commercial Investigation → Transactional |
 | **Word count** | 900–1,200 words |
-| **Slug** | `/blog/wedding-chibi-commission-couples` |
+| **Slug** | `/resources/wedding-chibi-commission-couples` |
 
 **Quick outline:** What chibi style is, why it works for weddings/anniversaries, how to brief (outfit details, setting, skin/hair), turnaround for event deadlines, price, examples, CTA.
 
@@ -297,7 +297,7 @@
 | **Secondary keywords** | no AI character art studio, hand painted dnd commission no trace, human artist character art |
 | **Search intent** | Commercial Investigation |
 | **Word count** | 800–1,000 words |
-| **Slug** | `/blog/dnd-character-art-commission-no-ai` |
+| **Slug** | `/resources/dnd-character-art-commission-no-ai` |
 
 **Quick outline:** Why the "no AI" question is being asked, what AI tools are in the commission market now, how to verify a commission is human-made, our guarantee, CTA.
 
@@ -311,7 +311,7 @@
 | **Secondary keywords** | custom character art for indie game, RPG game character portrait commission, character concept art commission |
 | **Search intent** | Commercial Investigation |
 | **Word count** | 1,000–1,400 words |
-| **Slug** | `/blog/indie-game-character-art-commission` |
+| **Slug** | `/resources/indie-game-character-art-commission` |
 
 **Quick outline:** When to commission art vs hire an in-house artist, what indie devs need (multiple formats, commercial rights, consistent style), pricing for game devs, our commercial licensing tier, CTA → `/commercial`.
 
@@ -325,9 +325,83 @@
 | **Secondary keywords** | souls-like character portrait commission, grimdark character art commission, dark souls inspired character art |
 | **Search intent** | Commercial Investigation |
 | **Word count** | 900–1,200 words |
-| **Slug** | `/blog/dark-fantasy-character-art-commission` |
+| **Slug** | `/resources/dark-fantasy-character-art-commission` |
 
 **Quick outline:** What dark fantasy looks like in character art (high contrast, muted palette, gothic armour, worn equipment), examples, style references to provide, brief tips, CTA.
+
+---
+
+## 🆕 Post 15: D&D Character Art — AI vs Commissioned vs Hand-Painted (NEW — added May 2026)
+
+| | |
+|---|---|
+| **Target keyword** | dnd character art (1.7K vol, easy KD) + dnd art (2.3K vol) |
+| **Secondary keywords** | ai dnd art, ai dnd character art generator, hand painted dnd art, commission dnd character art, dnd art style comparison |
+| **Search intent** | Informational → Commercial Investigation (the funnel play) |
+| **Word count** | 2,500–3,200 words |
+| **Slug** | `/resources/dnd-character-art-ai-vs-commissioned-vs-handpainted` |
+| **Why this wins** | This is the **one pillar** worth targeting the high-volume "browse" keywords. Framed Fantasy ranks #2/#6 for "dnd art"/"dnd character art" but only earns $76/mo because the SERP is split with Pinterest/Reddit/AI tools. Our advantage: we have actual hand-painted work to show, AND we can directly compare against AI-generated and commissioned alternatives. The article itself is the conversion mechanism — readers come for inspiration, leave understanding the value of commissioning a human. |
+
+**Strategic notes:**
+
+- This is **the only Wave 3 post that targets high-volume "browse intent" keywords directly**. All other posts target lower-volume commercial keywords with better conversion. This pillar is the top-of-funnel capture.
+- E-E-A-T angle: side-by-side gallery of the SAME character rendered in 3 ways — AI-generated (Midjourney sample), AI-traced commission (illustrative example), and a real hand-painted commission from our portfolio. This is content nobody else can credibly produce.
+- Don't link directly to AI tools as "competitors" — frame them as the alternative the reader is comparing.
+
+**Outline:**
+
+1. **Intro (200w)** — "If you've been looking at D&D character art lately, you've probably noticed three things: AI generators are everywhere, real artists are pushing back, and the line between them is getting harder to spot. Here's what actually changes when you commission a hand-painted portrait — and how to tell the difference."
+
+2. **The three categories of D&D character art today (300w)**
+   - AI-generated (Midjourney, Stable Diffusion, Niji): instant, free or cheap, no human involvement
+   - AI-traced / AI-assisted commissions: a human "finishes" an AI generation — common on Fiverr, increasingly on Etsy
+   - Fully hand-painted commissions: a human paints from scratch using your reference
+
+3. **Side-by-side: the same paladin, three ways (400w)**
+   - Image 1: Midjourney generation of "D&D paladin, female, full plate armour, oil painting style"
+   - Image 2: A "paint-over" example — AI base, hand-finished
+   - Image 3: A fully hand-painted commission from our portfolio
+   - Analysis: what you see in each (anatomical inconsistencies, hand counts, armour logic, eye expression, painted brushwork)
+
+4. **What hand-painted gives you that AI doesn't (500w)**
+   - Specific likeness — your character, not a remix of others
+   - Pose direction, expression direction, narrative moment
+   - Visible brushwork that prints and frames well
+   - The artist's hand decisions — small details that read as "made by someone who cares"
+   - Commercial usage rights — AI outputs have unclear/contested ownership
+
+5. **What AI is actually good for in your D&D campaign (250w)**
+   - Mood-board reference for your character
+   - Visual exploration before commissioning
+   - Quick NPC fillers if you're a DM at the table
+   - This honest section builds trust — we're not anti-AI as a tool, we're against AI replacing artists
+
+6. **How to tell if a "commission" is actually AI-assisted (400w)**
+   - Red flags in portfolios (12 commissions in one week, hands rendered too perfectly, weirdly inconsistent details)
+   - Questions to ask an artist before commissioning
+   - The "no AI guarantee" — what it should mean
+   - Process transparency — sketches, WIPs, layered files
+
+7. **The actual cost difference (300w)**
+   - AI: $0 to ~$30/month
+   - AI-traced "commission": $20–80
+   - Hand-painted commission: $60–$900+ depending on tier
+   - What you're paying for at each tier — explicit table
+
+8. **When each option makes sense (250w)** — a small decision-matrix
+   - "I just want to see my character for fun" → AI generator
+   - "I want a polished portrait for my character sheet on a budget" → reputable AI-traced (with disclosure)
+   - "This character means something to me / it's a gift / I want it framed" → hand-painted commission
+
+9. **Closing thesis (200w)** — Why the choice matters beyond the picture itself: supporting working artists, owning your character's likeness, having a piece that means something to the player.
+
+10. **CTA** — "If you want to commission a hand-painted D&D character portrait, here's where to start: `/order` — see our portfolio at `/portfolio`, our pricing at `/pricing`."
+
+**Internal links:** `/portfolio` (gallery proof), `/services/character-work` (the offer), `/pricing` (cost transparency), `/order` (conversion), `/process` (the human workflow), `/about` (the human behind the work)
+
+**External authority links (use sparingly):** A single neutral link to a recent article on AI art copyright issues (e.g., recent US Copyright Office ruling or industry op-ed) — this builds credibility without sending traffic away to AI tools.
+
+**Why this slots into Wave 3b, not 3a:** It depends on having strong commission-flow pages already live to land readers on. Should publish AFTER the pricing + gift + how-to posts are indexed (~30 days).
 
 ---
 
@@ -360,6 +434,7 @@ Wave 3b (after 3a is live):
   4. dnd-party-portrait-commission-guide
   5. how-to-describe-dnd-character-to-artist
   6. hand-painted-character-art-vs-ai
+  ★ 15. dnd-character-art-ai-vs-commissioned-vs-handpainted  ← NEW pillar, captures "dnd art" + "dnd character art" volume
 
 Wave 3c (genre expansion):
   7. warhammer-40k-character-art-commission

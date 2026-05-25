@@ -1,0 +1,207 @@
+# Image Prompts — 10 Older Posts Without Cover Images
+
+> Follows `content-plan/IMAGE-STYLE-GUIDE.md` (The Cartographer's Hand).
+> 16:9 cover image (1920×1080). Feed directly into Midjourney / Imagen / Flux / Stable Diffusion.
+> After generating, save the file to `/public/images/blog/<slug>-cover.webp` and set the `featured_image` column on the Supabase row.
+
+---
+
+## 1. `best-gifts-for-dnd-players-2026`
+
+**Title:** Best Gifts for D&D Players in 2026 — From Someone Who Makes Them
+
+```
+Subject:        A gift-wrapped portrait commission seen from a low three-quarter angle, the brown kraft paper half-torn back to reveal the painted face of a hooded ranger looking out at the viewer. A red waxed-thread tie is half-undone, falling across the lower edge of the frame. The portrait is in a thin black wooden frame, simple and gallery-style — no ornate scrollwork. Behind it, a small stack of D&D paraphernalia in soft focus: a single dice set in a brown leather pouch, a closed campaign journal with a fountain pen on top, and a hand-thrown ceramic mug, still warm.
+Typography:     The single word GIFTS in Cinzel weight 700, letter-spacing -0.015em, set in Gold #D4A24C with an Ink #16110D inner shadow. Word occupies roughly 42% of the canvas width, weighted upper-left. The torn kraft paper peeks out from behind the right side of the word.
+Kicker line:    "FOR THE PLAYER WHO HAS EVERYTHING" set in Inter uppercase 600, 0.15em letter-spacing, Crimson #B23A2A, sitting directly above the bold word.
+Background:     A warm wooden desk surface at evening, soft warm lamp glow from upper-right out of frame. The wall behind is in deep cool shadow, suggesting a study at night just after the gift was set down.
+Palette:        Parchment #F4ECD8 (kraft paper interior, mug ceramic glaze highlight), Ink #16110D (deep wall shadow, frame), Gold #D4A24C (typography, lamp pool on the painted face, the kraft paper warm tones), Crimson #B23A2A (kicker text, the red waxed-thread tie).
+Composition:    Asymmetric. The framed portrait occupies the right half of the canvas at a slight angle. GIFTS word weighted left. A 60×3px Gold #D4A24C accent rule under the kicker. The torn paper creates a triangular reveal that draws the eye to the painted face inside.
+Lighting:       Single warm lamp from upper-right. Deep falloff on the left side. The painted face inside the gift catches the most light — implying the gift itself is the brightest thing in the room.
+Mood:           The moment after someone unwraps a commission and is quiet about it because they're not sure what to say yet.
+Style:          Oil painting, visible brushwork, Penguin Classics editorial register. Caravaggio interior lighting.
+Negative:       no Christmas decorations, no bows, no glitter, no sparkles, no holiday clichés, no neon, no AI-cliché purple-orange dual rim, no lens flares, no second person visible, no skull or fantasy iconography, no d20 dice prominently displayed.
+```
+
+---
+
+## 2. `choosing-a-commission-style`
+
+**Title:** Choosing a commission style: painterly vs anime vs lineart
+
+```
+Subject:        The same character rendered three times across the canvas in three different art styles, arranged as overlapping painted panels — leftmost is a loose oil-painterly portrait with visible brushwork, middle is a clean cel-shaded anime-style version with hard lighting and flat colour fields, rightmost is a tight inked lineart with no colour at all, just ink on cream paper. The character is a hooded woman with a long braid, mid-thirties, neutral expression — chosen because she reads consistently across all three registers. The three panels overlap slightly at their edges, like reference plates a painter is comparing on a studio wall.
+Typography:     The single word STYLE in Cinzel weight 700, letter-spacing -0.015em, set in Gold #D4A24C with an Ink #16110D inner shadow. Word occupies roughly 40% of the canvas width, weighted lower-left.
+Kicker line:    "THREE WAYS TO PAINT THE SAME CHARACTER" set in Inter uppercase 600, 0.15em letter-spacing, Crimson #B23A2A, sitting directly above the bold word.
+Background:     A studio wall in flat warm parchment tone, deliberately neutral so the three panels do all the work. A thin shadow under each panel implies they're pinned to the wall.
+Palette:        Parchment #F4ECD8 (wall, lineart paper), Ink #16110D (the lineart ink, deep shadows in the oil-painterly version, deep panel borders), Gold #D4A24C (typography, warm rim light on the painterly version's face), Crimson #B23A2A (kicker text, a single red accent in the anime version's hair tie — the genre signal).
+Composition:    Strong horizontal — three panels stretching left-to-right across the lower two-thirds. STYLE word weighted lower-left, kicker above. A 60×3px Gold #D4A24C accent rule under the kicker. The panel sizes are equal but their slight overlap creates depth.
+Lighting:       Each panel is lit according to its own style — the painterly one has Rembrandt warm key; the anime one has hard cel-shading from upper-left; the lineart has no rendered light at all, just line weight implying form.
+Mood:           A studio decision being made out loud. The painter laying out options.
+Style:          The cover itself is oil-painterly in execution, with the three panels rendered in their respective styles inside the larger composition.
+Negative:       no actual style labels or text on the panels, no comparison chart UI, no arrows pointing between panels, no purple-orange lighting, no sparkles, no AI cliché fantasy effects, no second character, no studio person visible.
+```
+
+---
+
+## 3. `dnd-character-art-commission-prices-2026`
+
+**Title:** D&D Character Art Commission Prices 2026 — Real Studio Guide
+
+```
+Subject:        A small painted bust portrait of a paladin sitting on the corner of a wooden studio desk, propped against a ceramic mug. Beside the portrait, a folded paper invoice with a single price line visible — the typography on the invoice is small and not legible, but the format reads as a real commission invoice. A fountain pen sits across the invoice, ink barely dry on a check-mark in the margin. The portrait shows just enough of the paladin's face that you know it's a finished piece, not a sketch.
+Typography:     The single word PRICES in Cinzel weight 700, letter-spacing -0.015em, set in Gold #D4A24C with an Ink #16110D inner shadow. Word occupies roughly 44% of the canvas width, weighted upper-middle.
+Kicker line:    "WHAT A REAL STUDIO ACTUALLY CHARGES" set in Inter uppercase 600, 0.15em letter-spacing, Crimson #B23A2A, sitting directly above the bold word.
+Background:     The desk continues into deep wooden shadow, a single warm desk lamp from upper-right throwing a pool of light on the invoice and the corner of the painting. The studio behind is in cool shadow.
+Palette:        Parchment #F4ECD8 (the invoice paper, the mug glaze highlight), Ink #16110D (deep wooden desk shadow), Gold #D4A24C (typography, lamp pool on invoice and portrait edge, the fountain pen's brass band), Crimson #B23A2A (kicker text, a single red check-mark in the margin of the invoice).
+Composition:    Asymmetric. PRICES word in the upper-left third. The painted portrait and invoice fill the lower-right, creating a diagonal flow. A 60×3px Gold #D4A24C accent rule under the kicker. The pen points toward the bold word — the painting tells you to look at the price.
+Lighting:       Single warm desk lamp upper-right. Strong falloff. The invoice paper is the brightest plane; the portrait is the second-brightest.
+Mood:           The quiet moment after sending an invoice and before the client replies.
+Style:          Oil painting, editorial-still-life register. The painting is about transparency, not glamour.
+Negative:       no money symbols, no dollar signs on the invoice that are legible, no cash imagery, no shopping cart icons, no UI elements, no purple-orange lighting, no sparkles, no AI cliché lighting, no second figure.
+```
+
+---
+
+## 4. `first-art-fair-booth`
+
+**Title:** What I packed for my first art-fair booth (and what I'd cut)
+
+```
+Subject:        A flat-lay arrangement seen from directly above of art-fair booth essentials laid out on a parchment-toned canvas drop cloth — a small stack of business cards rubber-banded together, a roll of low-tack masking tape, a hand-painted print held flat by a small brass weight, a sketchbook open to a thumbnail drawing of a booth layout, a thermos slightly off-centre, a small wooden frame, and a folded canvas tote. The composition is editorial and intentional, like the opening spread of a craft magazine.
+Typography:     The single word BOOTH in Cinzel weight 700, letter-spacing -0.015em, set in Gold #D4A24C with an Ink #16110D inner shadow. Word occupies roughly 38% of the canvas width, weighted upper-right.
+Kicker line:    "EVERYTHING I PACKED · WHAT I WISH I HADN'T" set in Inter uppercase 600, 0.15em letter-spacing, Crimson #B23A2A, sitting directly above the bold word.
+Background:     The canvas drop cloth fills the frame edge-to-edge — no wider room context. The whole image reads as a top-down editorial flat lay.
+Palette:        Parchment #F4ECD8 (canvas drop cloth), Ink #16110D (deep shadow under each object, business card stack), Gold #D4A24C (typography, brass weight specular, thermos cap), Crimson #B23A2A (kicker text, the rubber band around the business cards).
+Composition:    Strict editorial flat-lay grid. Objects spaced with breathing room. BOOTH word in upper-right negative space. A 60×3px Gold #D4A24C accent rule under the kicker. The painted print is the visual anchor in the lower-third; the thumbnail sketchbook draws the eye through the layout.
+Lighting:       Even soft top-down studio light, no harsh shadows — typical of magazine flat-lay photography but rendered painterly.
+Mood:           The day before the fair, when you lay everything out to check what's missing.
+Style:          Oil painting in flat-lay editorial register — Kinfolk magazine cover photography rendered in paint.
+Negative:       no actual art-fair tent visible, no person, no crowd, no booth signs with text, no sparkles, no purple-orange lighting, no AI clichés, no neon, no other booths, no city background.
+```
+
+---
+
+## 5. `hero-forge-to-handpainted`
+
+**Title:** Hero Forge to hand-painted: a starter guide for D&D players
+
+```
+Subject:        A split composition — left half shows a 3D-rendered Hero Forge mini in three-quarter pose, deliberately stiff and digital-looking, against a flat grey backdrop. Right half shows the same character rendered as a finished oil painting — same pose, same gear, but now with warm rim light, atmospheric shadow, painted skin texture, and a sense of weight. The transformation is the point. A thin gold vertical line runs down the centre dividing the two halves.
+Typography:     The single word FORGE in Cinzel weight 700, letter-spacing -0.015em, set in Gold #D4A24C with an Ink #16110D inner shadow. Word occupies roughly 36% of the canvas width, sitting upper-centre and bridging the two halves.
+Kicker line:    "FROM HERO FORGE MINI TO FINISHED PORTRAIT" set in Inter uppercase 600, 0.15em letter-spacing, Crimson #B23A2A, sitting directly above the bold word.
+Background:     Left half: flat grey #4A4A4A digital backdrop. Right half: a warm tavern-interior shadow, deep wooden wall and a candle flame just out of frame upper-right.
+Palette:        Parchment #F4ECD8 (the painted half's skin highlights), Ink #16110D (right half's deep shadow side), Gold #D4A24C (typography, the candle warm rim on the painted character, the dividing line), Crimson #B23A2A (kicker text, one small detail — the painted character's belt sash, picking up warm light).
+Composition:    Symmetrical 50/50 split with the FORGE word bridging both halves above. The dividing line is the spine. The character pose is identical on both sides — what changes is light, warmth, and brushwork. A 60×3px Gold #D4A24C accent rule under the kicker.
+Lighting:       Left half: flat soft studio render light, no drama. Right half: single warm candle from upper-right with strong falloff and rim light.
+Mood:           The before-and-after of what a hand-painted portrait does to a digital reference.
+Style:          The right half is full oil painting with visible brushwork. The left half is rendered in a flatter, deliberately digital style — the cover itself is the argument.
+Negative:       no Hero Forge logo or any brand text, no UI elements on the left half, no software interface, no purple-orange lighting on the right half, no sparkles, no second character, no dramatic pose change between halves.
+```
+
+---
+
+## 6. `how-to-commission-dnd-character-art`
+
+**Title:** How to Commission D&D Character Art — A Step by Step Guide
+
+```
+Subject:        A painter's hand visible at lower-right, holding a fine brush over a half-finished portrait of a half-elf rogue on the easel. The portrait is at the colour-block stage — the face roughed in but not yet detailed, the cloak's folds blocked in warm grey-green tones. On the desk beside the easel, a small stack of reference materials: a character sheet with handwriting, two printed reference photos for face and pose, and a small swatch card of colour samples. Everything is laid out as if mid-commission.
+Typography:     The single word COMMISSION in Cinzel weight 700, letter-spacing -0.015em, set in Gold #D4A24C with an Ink #16110D inner shadow. Word occupies roughly 46% of the canvas width, weighted upper-middle.
+Kicker line:    "A STEP-BY-STEP GUIDE FROM A REAL STUDIO" set in Inter uppercase 600, 0.15em letter-spacing, Crimson #B23A2A, sitting directly above the bold word.
+Background:     A studio interior, midday cool light from an unseen north window upper-left. Deep umber bookshelves in far background, slightly out of focus.
+Palette:        Parchment #F4ECD8 (character sheet paper, easel canvas raw edges), Ink #16110D (deep shadow side of easel and bookshelves), Gold #D4A24C (typography, warm specular on the brush handle and the painter's silver ring), Crimson #B23A2A (kicker text, a single red sticky-note clipped to the character sheet).
+Composition:    Asymmetric. The half-finished portrait occupies the upper-right third on the easel. The painter's hand at lower-right anchors the composition. COMMISSION word in the upper-left third, kicker above. A 60×3px Gold #D4A24C accent rule under the kicker. The reference materials at lower-left create a diagonal flow to the easel.
+Lighting:       Cool north-window fill as dominant ambient; a small warm lamp from lower-right as accent on the desk reference. The half-finished portrait catches both.
+Mood:           Day three of a seven-day commission. The big shapes are right; the details are still coming.
+Style:          Oil painting, editorial register. Focus on the act of working, not the finished piece.
+Negative:       no glowing canvas, no magical paint, no sparkles, no purple-orange lighting, no AI cliché studio shots, no second person, no commission paperwork visible, no lens flares.
+```
+
+---
+
+## 7. `how-to-write-commission-brief`
+
+**Title:** How to write a commission brief that gets the art you actually want
+
+```
+Subject:        A handwritten commission brief seen from a near-overhead three-quarter angle, the page filled with neat fountain-pen handwriting in the margins of a printed character sheet. Annotations and arrows point to specific reference photos clipped to the corner of the page — a face reference, a pose reference, a colour swatch. A small inset shows a hand mid-writing with a slim brass fountain pen, the ink still wet on the most recent line. The composition reads as someone in the middle of thinking carefully about what they want.
+Typography:     The single word BRIEF in Cinzel weight 700, letter-spacing -0.015em, set in Gold #D4A24C with an Ink #16110D inner shadow. Word occupies roughly 38% of the canvas width, weighted upper-right.
+Kicker line:    "WRITING A COMMISSION BRIEF THAT ACTUALLY WORKS" set in Inter uppercase 600, 0.15em letter-spacing, Crimson #B23A2A, sitting directly above the bold word.
+Background:     A wooden desk surface filling the lower two-thirds, slight grain visible. Single warm desk lamp from upper-right throwing a pool of warm light onto the brief paper.
+Palette:        Parchment #F4ECD8 (the brief paper, the printed character sheet), Ink #16110D (fountain pen ink, deep desk shadow lower-left), Gold #D4A24C (typography, the brass fountain pen, the lamp's warm pool), Crimson #B23A2A (kicker text, a single red arrow drawn in the margin pointing at a specific note).
+Composition:    Asymmetric overhead three-quarter view. The brief paper fills the centre, slightly rotated. BRIEF word in the upper-right negative space. A 60×3px Gold #D4A24C accent rule under the kicker. The reference photo clip in the lower-left creates the second visual anchor.
+Lighting:       Single warm desk lamp upper-right. Sharp falloff on the left edge. The brief paper is the brightest plane in the composition.
+Mood:           The careful work of telling an artist what you actually want — the part most people skip.
+Style:          Oil painting in editorial still-life register. Focus on the act of writing carefully.
+Negative:       no laptop or screen visible, no AI prompt interface, no chat bubbles, no UI elements, no purple-orange lighting, no sparkles, no second person, no lens flares.
+```
+
+---
+
+## 8. `strahd-npc-pack-six-weeks`
+
+**Title:** The Curse of Strahd NPC pack, painted over six weeks
+
+```
+Subject:        Six small painted NPC portrait cards arranged in a loose grid on a dark wooden desk — each card the size of a playing card, each showing a different Curse of Strahd-aligned character (a haunted Vistani woman, a pale tavern keeper, a wolf-haired scout, a cleric in dark grey wool, a noble in faded red velvet, and a hooded figure deliberately rendered in deeper shadow so the face is implied rather than shown). The cards are arranged in two rows of three. A single candle stands at the upper-left edge of the desk, its flame providing the only key light. Beside the cards, a closed leather-bound campaign module with a thin red ribbon marker.
+Typography:     The single word STRAHD in Cinzel weight 700, letter-spacing -0.015em, set in Gold #D4A24C with an Ink #16110D inner shadow. Word occupies roughly 40% of the canvas width, weighted upper-right.
+Kicker line:    "SIX WEEKS · SIX NPCs · ONE CAMPAIGN" set in Inter uppercase 600, 0.15em letter-spacing, Crimson #B23A2A, sitting directly above the bold word.
+Background:     A dark interior at night. Deep wooden desk surface dominates the lower two-thirds. The background wall is in deep cool gothic shadow, suggesting the gothic horror register without overplaying it. The candle is the only light source.
+Palette:        Ink #16110D (dominant — wall shadow, desk shadow side, card backgrounds), Gold #D4A24C (typography, candle warm pool on the cards' upper edges), Crimson #B23A2A (kicker text, the ribbon marker on the module, the noble's faded red velvet — small but specific), Parchment #F4ECD8 (the cards' margin highlights catching candle light).
+Composition:    Asymmetric. The six cards in a tight grid occupy the lower-right. STRAHD word weighted upper-right above them. The candle anchors the upper-left. A 60×3px Gold #D4A24C accent rule under the kicker. The hooded card is positioned deliberately at the centre of the grid — the eye returns to it.
+Lighting:       Single candle from upper-left. Strong directional warm key with deep falloff. The Vistani's face catches the most light; the hooded figure catches the least.
+Mood:           A DM's desk at 1am, six weeks of work spread out and inspected for the last time before delivery.
+Style:          Oil painting in gothic editorial register. Caravaggio candlelit chiaroscuro applied to a tabletop arrangement.
+Negative:       no Strahd himself visible (no vampire iconography on the cover), no bats, no castle exterior, no blood spatter, no cliché gothic-horror dripping fonts, no purple-orange dual rim, no sparkles, no second person.
+```
+
+---
+
+## 9. `three-weeks-with-lyra`
+
+**Title:** Three weeks with Lyra: from a player's note to a final painting
+
+```
+Subject:        A single finished portrait of Lyra — a half-elf druid with copper hair, freckles across the bridge of the nose, and warm hazel eyes — sitting propped on a studio easel as the centre of the composition. To the left, a stack of three earlier stages of the same painting visible only in part: a pencil sketch on torn paper at the back, a rough colour-block stage in the middle, and a near-final stage at the front, slightly visible above the stack. The progression from sketch to final reads as a quiet timeline. A small handwritten note clipped to the easel reads in indistinct fountain-pen lines.
+Typography:     The single word LYRA in Cinzel weight 700, letter-spacing -0.015em, set in Gold #D4A24C with an Ink #16110D inner shadow. Word occupies roughly 32% of the canvas width, weighted upper-left.
+Kicker line:    "FROM A PLAYER'S NOTE TO A FINAL PAINTING" set in Inter uppercase 600, 0.15em letter-spacing, Crimson #B23A2A, sitting directly above the bold word.
+Background:     A studio interior, soft warm afternoon light from an unseen window upper-right. Bookshelves slightly out of focus in the far background. The wall behind the easel is in cool shadow.
+Palette:        Parchment #F4ECD8 (the sketch paper, the player's note), Ink #16110D (deep shadow side of easel, wall shadow), Gold #D4A24C (typography, the warm afternoon light on Lyra's copper hair and the easel's edge), Crimson #B23A2A (kicker text, a single red dot on the handwritten note — likely a marginal annotation).
+Composition:    Asymmetric. Lyra's finished portrait dominates the right half on the easel. LYRA word weighted upper-left. A 60×3px Gold #D4A24C accent rule under the kicker. The stack of earlier stages at lower-left creates the timeline reading.
+Lighting:       Warm afternoon light from upper-right. The finished portrait's face catches the warmest key. The earlier stages catch less light, fading toward the back.
+Mood:           Three weeks of quiet work, just before delivery. The painter knows it's done.
+Style:          Oil painting, editorial register. Soft, warm, restrained.
+Negative:       no glowing portrait, no magical effects, no sparkles, no purple-orange lighting, no second person, no client visible, no studio shot of the painter, no dramatic lighting.
+```
+
+---
+
+## 10. `vtt-token-deserves-more`
+
+**Title:** Why your VTT token deserves more than a clipped headshot
+
+```
+Subject:        Two side-by-side circular tokens at the centre of the composition, each 512px diameter implied — left token is a clumsily cropped headshot of a character, the crop obviously taken from a wider portrait with awkward shoulder cutoff and a flat hexagonal frame. Right token is a purpose-painted circular token of the same character: tight composition, the face fills the circle properly, a subtle painted vignette draws the eye to the eyes, hand-painted brushwork visible at the token's edge. The difference is the entire point. A thin gold ring borders the right-side purpose-painted token only.
+Typography:     The single word TOKEN in Cinzel weight 700, letter-spacing -0.015em, set in Gold #D4A24C with an Ink #16110D inner shadow. Word occupies roughly 38% of the canvas width, weighted upper-middle bridging both tokens.
+Kicker line:    "WHY YOUR VTT TOKEN DESERVES THE FULL TREATMENT" set in Inter uppercase 600, 0.15em letter-spacing, Crimson #B23A2A, sitting directly above the bold word.
+Background:     A flat dark wood-grain surface implying a tabletop or a VTT play area. The wood is deep umber and reads as a real desk, not a digital backdrop.
+Palette:        Parchment #F4ECD8 (token highlights on the right-side painted version), Ink #16110D (deep wood-grain shadow, the awkward left-side token's flat dead spaces), Gold #D4A24C (typography, the gold ring on the right-side token, warm specular on the painted face), Crimson #B23A2A (kicker text, a single red highlight in the painted token's iris — the genre signal).
+Composition:    Symmetrical horizontal — two tokens centred, with a small visual gap between them. TOKEN word floats above. A 60×3px Gold #D4A24C accent rule under the kicker. The left token is deliberately rendered with less care and lighting than the right one — the cover IS the argument.
+Lighting:       The left token is lit flat and uninteresting, like a screenshot. The right token has full directional key with rim light and atmospheric depth.
+Mood:           The difference between a placeholder and a portrait.
+Style:          Oil painting on the right token; deliberately flatter render on the left. The cover demonstrates the article's thesis in one frame.
+Negative:       no VTT software UI visible, no Roll20 or Foundry logo, no character sheet overlay, no D&D dice, no purple-orange lighting, no sparkles, no AI cliché lighting, no second character.
+```
+
+---
+
+## How to use these
+
+1. **Pick a model** — Midjourney v6+, Imagen 3, Flux Pro, or SDXL all handle these prompts.
+2. **Copy the whole block** (everything inside the code fence) and paste as the prompt.
+3. **Generate at 16:9 aspect ratio** (1920×1080 or higher).
+4. **Save as `<slug>-cover.webp`** to `public/images/blog/`.
+5. **Update Supabase** — set `featured_image = '/images/blog/<slug>-cover.webp'` on the matching row.
+
+The `convert-to-webp.mjs` script can handle the format conversion if you generate as PNG/JPG first.

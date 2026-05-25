@@ -442,3 +442,50 @@ These keywords currently rank ONLY Etsy listings or Pinterest boards — a real 
 - `/resources` → Answers the informational version: *how commissions work across the industry in general*
 
 Use different H1 phrasing to differentiate. Do not use identical title tags.
+
+---
+
+## Secondary Keyword Layering (added May 2026)
+
+### Why these keywords, but only as secondary
+
+After reviewing Ahrefs free data + Framed Fantasy's actual organic performance, three high-volume "browse intent" keywords were identified:
+
+| Keyword | Volume | KD | Intent | Verdict |
+|---|---|---|---|---|
+| `dnd art` | 2,300 | Easy | Inspiration/browse (Pinterest/Reddit) | **Secondary** — sprinkle, don't build pages around it |
+| `dnd character art` | 1,700 | Easy | Mixed — some commission intent | **Secondary** — use on existing pages |
+| `dnd character artist` | <100 | Easy | Commercial — closer to commission intent | **Targeted** — About page + author bio |
+
+**The trap:** Framed Fantasy ranks #2 for "dnd art" (2.3K vol) and #6 for "dnd character art" (1.7K vol) and only nets $76/mo organic traffic value. Volume ≠ revenue. Most of the SERP is Pinterest, Reddit, ArtStation, AI generators — wrong intent for a commission studio. Building dedicated pages around these would inherit that bad conversion ratio.
+
+**The play:** Use them as supporting H2s, image alt text, and natural body copy on pages already optimized for higher-intent commercial keywords. Free topical-relevance signal, zero risk of intent dilution.
+
+### Layering map — where the secondary keywords go
+
+| Page | Primary (existing) | Secondary to layer in |
+|---|---|---|
+| `/` Homepage | hand painted character art commission | `dnd character art`, `dnd art commissions` (in hero copy + alt text) |
+| `/portfolio` | fantasy character art portfolio | `dnd character art`, `dnd art`, `dnd character art examples` (gallery alt text + category labels) |
+| `/services/character-work` | dnd character art commission | `dnd character art`, `commission dnd character art`, `hire a dnd character artist` |
+| `/about` | hand painted fantasy character artist | `dnd character artist`, `dnd artist`, `famous dnd artist` (author bio + H1) |
+| `/resources` | dnd character art guide | `dnd character art`, `dnd art tutorial`, `dnd art reference` |
+
+### BOFU keywords worth their own content (low volume, high conversion)
+
+These showed up in Framed's ranking data with tiny volume but **excellent commercial intent**:
+
+| Keyword | Volume | Action |
+|---|---|---|
+| `bust vs half body` | 50 | Write dedicated spoke article (informational → links to /pricing) |
+| `character art commissions` | 50 | Already covered by /services/character-work + Wave 3 posts |
+| `dnd art commission` | <100 | Already covered by /services/character-work + pricing post |
+| `dnd character art commission` | <100 | Already covered by /pricing + how-to post |
+| `dnd character artist commission` | <100 | Add to /about page |
+
+These don't need new pillar pages — they need to be **strategically mentioned** in already-ranking pages.
+
+### The one new pillar article worth writing
+
+**Slug:** `/resources/dnd-character-art-ai-vs-commissioned-vs-handpainted`
+**Why:** Captures the browse traffic from "dnd art generator" / "ai dnd art" (high volume, currently going to AI tool sites) and funnels it into the commission funnel. The article's thesis is itself the conversion mechanism. See Wave 3 plan for full outline.
