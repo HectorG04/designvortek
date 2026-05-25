@@ -1,8 +1,19 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
+
+const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ''
+
+declare global {
+  interface Window {
+    grecaptcha: {
+      ready: (cb: () => void) => void
+      execute: (siteKey: string, opts: { action: string }) => Promise<string>
+    }
+  }
+}
 
 /* ---------- Form card — literal port of .ct-form-card from Contact.html ----------
    - parchment-100 bg, border-light, rounded-2xl, padding 40px
@@ -43,20 +54,41 @@ export default function ContactFormCard() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  // Load reCAPTCHA v3 script once
+  useEffect(() => {
+    if (!SITE_KEY || document.querySelector('#recaptcha-script')) return
+    const script = document.createElement('script')
+    script.id = 'recaptcha-script'
+    script.src = `https://www.google.com/recaptcha/api.js?render=${SITE_KEY}`
+    script.async = true
+    document.head.appendChild(script)
+  }, [])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!form.name || !form.email || !form.message) return
     setLoading(true)
     setError(null)
     try {
+      // Get reCAPTCHA token (silent, invisible to user)
+      let recaptcha_token = ''
+      if (SITE_KEY && window.grecaptcha) {
+        try {
+          await new Promise<void>((resolve) => window.grecaptcha.ready(resolve))
+          recaptcha_token = await window.grecaptcha.execute(SITE_KEY, { action: 'contact' })
+        } catch {
+          // Fail open — submit without token, server will bypass check
+        }
+      }
+
       const res = await fetch('/api/inquiry', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: form.name,
           email: form.email,
-          // Prepend topic to the message so it's preserved end-to-end.
           message: `[${form.topic}]\n\n${form.message}`,
+          recaptcha_token,
         }),
       })
       const data = await res.json().catch(() => ({}))

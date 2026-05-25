@@ -1,12 +1,27 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
 import { sendAdminWaitlistEmail } from '@/lib/email'
+import { verifyRecaptcha } from '@/lib/recaptcha'
+import { rateLimit, getIp } from '@/lib/rate-limit'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export async function POST(request: NextRequest) {
   try {
+    /* ---- Rate limiting: 5 per IP per minute ---- */
+    const ip = getIp(request)
+    if (!rateLimit(ip, { limit: 5, windowMs: 60_000 })) {
+      return NextResponse.json({ error: 'Too many requests.' }, { status: 429 })
+    }
+
     const body = await request.json()
+
+    /* ---- reCAPTCHA v3 ---- */
+    const captchaResult = await verifyRecaptcha(body.recaptcha_token)
+    if (!captchaResult.ok) {
+      return NextResponse.json({ error: 'Bot detected. Please try again.' }, { status: 400 })
+    }
+
     const { email, name, phone, source, interested_in } = body
 
     if (!email || typeof email !== 'string') {

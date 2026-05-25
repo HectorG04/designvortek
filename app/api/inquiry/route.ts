@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
 import { sendInquiryAckEmail, sendAdminInquiryEmail } from '@/lib/email'
+import { verifyRecaptcha } from '@/lib/recaptcha'
+import { rateLimit, getIp } from '@/lib/rate-limit'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -29,6 +31,15 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
  */
 export async function POST(request: NextRequest) {
   try {
+    /* ---- Rate limiting: 5 submissions per IP per minute ---- */
+    const ip = getIp(request)
+    if (!rateLimit(ip, { limit: 5, windowMs: 60_000 })) {
+      const isJsonCheck = (request.headers.get('content-type') ?? '').includes('application/json')
+      return isJsonCheck
+        ? NextResponse.json({ error: 'Too many requests. Please wait a moment.' }, { status: 429 })
+        : redirectBack(request, 'error', 'Too many requests.')
+    }
+
     const contentType = request.headers.get('content-type') ?? ''
     const isJson = contentType.includes('application/json')
 
@@ -53,6 +64,12 @@ export async function POST(request: NextRequest) {
       } catch {
         return NextResponse.json({ error: 'Invalid form data.' }, { status: 400 })
       }
+    }
+
+    /* ---- reCAPTCHA v3 verification ---- */
+    const captchaResult = await verifyRecaptcha(body.recaptcha_token)
+    if (!captchaResult.ok) {
+      return badRequest(request, isJson, 'Bot detected. Please try again.')
     }
 
     const { name, email, message, topic, description } = body

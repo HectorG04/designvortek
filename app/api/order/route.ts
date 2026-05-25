@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
 import { sendBriefReceiptEmail, sendAdminBriefEmail } from '@/lib/email'
+import { verifyRecaptcha } from '@/lib/recaptcha'
+import { rateLimit, getIp } from '@/lib/rate-limit'
 import { fetchProductBySlug } from '@/lib/services-server'
 import { formatTurnaround } from '@/lib/services'
 
@@ -20,7 +22,20 @@ const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
  */
 export async function POST(request: NextRequest) {
   try {
+    /* ---- Rate limiting: 3 briefs per IP per minute ---- */
+    const ip = getIp(request)
+    if (!rateLimit(ip, { limit: 3, windowMs: 60_000 })) {
+      return NextResponse.json({ error: 'Too many requests. Please wait a moment.' }, { status: 429 })
+    }
+
     const body = await request.json()
+
+    /* ---- reCAPTCHA v3 verification ---- */
+    const captchaResult = await verifyRecaptcha(body.recaptcha_token)
+    if (!captchaResult.ok) {
+      return NextResponse.json({ error: 'Bot detected. Please try again.' }, { status: 400 })
+    }
+
     const {
       customer_name,
       customer_email,
