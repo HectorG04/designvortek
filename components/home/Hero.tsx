@@ -134,8 +134,9 @@ export default function Hero() {
               variants={fadeUp}
               className="mb-9 max-w-[52ch] text-[1.125rem] leading-[1.65] text-cream-200"
             >
-              Painterly TTRPG portraits, VTT tokens, and party illustrations. Crafted by hand,
-              by humans &mdash; not generated, never traced.
+              Hand-painted D&amp;D and TTRPG character art commissions &mdash; portraits,
+              VTT tokens, party illustrations, and NPC packs. Crafted by hand, by humans.
+              Never AI.
             </motion.p>
 
             {/* CTAs (.hp-hero-ctas — flex gap 14, mb 40) */}

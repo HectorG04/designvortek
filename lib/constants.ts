@@ -6,7 +6,7 @@ export const SITE_TAGLINE = 'Premium Art Commissions'
  * "Support the studio ☕". Opens in a new tab. */
 export const KOFI_URL = 'https://ko-fi.com/designvortex'
 export const SITE_DESCRIPTION =
-  'Hand-painted TTRPG character portraits, VTT tokens, party illustrations, NPC packs, maps and bespoke art. Commissions from $25. Genre-agnostic, hand-drawn, never AI.'
+  'Hand-painted D&D and TTRPG character art commissions by Hector G. — portraits, VTT tokens, party illustrations, NPC packs, and maps. Never AI. From $25.'
 
 /* Primary nav order — Home first (universal convention), then content
  * sections in the design order (Portfolio → Blog), Contact last so the
@@ -255,21 +255,21 @@ export const TESTIMONIALS = [
     quote: "Lyra came back better than I could have pictured. Every revision sharpened the piece. This isn't a transaction — it's a collaboration.",
     name: 'Aria Mendel',
     initials: 'AM',
-    role: 'D&D player · character commission',
+    role: 'D&D player · character commission · 2025',
     rating: 5,
   },
   {
     quote: 'Eight NPCs for Curse of Strahd, all in matching style, delivered on a schedule I could plan sessions around. Worth every dollar.',
     name: 'Marcus K.',
     initials: 'MK',
-    role: 'Dungeon Master · NPC pack',
+    role: 'Dungeon Master · NPC pack · 2025',
     rating: 5,
   },
   {
     quote: 'A wedding party portrait for my brother and his fiancée. They cried. I cried. The piece hangs above their mantel now.',
     name: 'Priya R.',
     initials: 'PR',
-    role: 'Gift commission · party portrait',
+    role: 'Gift commission · party portrait · 2024',
     rating: 5,
   },
 ] as const
@@ -362,5 +362,17 @@ If you want to see the process, we share work-in-progress sketches and color blo
     a: `Two revisions are baked into every commission and we usually nail it well within that. If the piece is genuinely not what you wanted at the end, we refund the balance beyond the **30% deposit** (which covers our sketch work).
 
 In two years and 200+ commissions, this has happened twice. Full [refund policy](/refunds).`,
+  },
+  {
+    q: 'Can I request a specific art style?',
+    a: `Yes — style requests are welcome and common. Our default is a **painterly fantasy style** (rich colour, dramatic lighting, textured brushwork), but we regularly work in semi-realistic, anime-influenced, graphic novel, and period-accurate historical styles.
+
+Just describe the style in your brief, or drop a reference image. We'll flag anything that falls outside what we can deliver before quoting.`,
+  },
+  {
+    q: 'Do you offer rush commissions?',
+    a: `We don't advertise rush slots on the booking form, but we keep **1–2 emergency slots** each month for tight deadlines. If your deadline is within 5 days, send a note via the [contact form](/contact) before submitting a brief — we'll tell you within a few hours whether a rush slot is open.
+
+A rush fee applies (typically +30% of the base price).`,
   },
 ] as const

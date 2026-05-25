@@ -6,9 +6,9 @@ import { LinkButton } from '@/components/ui/Button'
 import PaperTexture from '@/components/decor/PaperTexture'
 
 const TRUST = [
-  'No commitment',
-  '100% satisfaction focus',
-  'Secure payments',
+  'Hand-painted, no AI',
+  'No commitment until you approve the quote',
+  'Secure payments via Stripe',
 ]
 
 export default function CTACloser() {
