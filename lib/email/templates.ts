@@ -367,7 +367,7 @@ export function buildAdminInquiryEmail(p: AdminInquiryProps): EmailPayload {
   return {
     to: ADMIN_EMAIL,
     replyTo: p.customerEmail,
-    subject: `Inquiry — ${p.topic} — ${p.customerName}`,
+    subject: `[Contact] Inquiry — ${p.topic} — ${p.customerName}`,
     html,
     text,
   }
@@ -426,7 +426,7 @@ export function buildAdminBriefEmail(p: AdminBriefProps): EmailPayload {
   return {
     to: ADMIN_EMAIL,
     replyTo: p.customerEmail,
-    subject: `New brief — ${p.orderNumber} — ${p.customerName}`,
+    subject: `[Commission] New brief — ${p.orderNumber} — ${p.customerName}`,
     html,
     text,
   }
@@ -461,7 +461,7 @@ export function buildAdminWaitlistEmail(p: AdminWaitlistProps): EmailPayload {
   return {
     to: ADMIN_EMAIL,
     replyTo: p.email,
-    subject: `Waitlist — ${p.name ?? p.email}`,
+    subject: `[Waitlist] ${p.name ?? p.email} joined`,
     html,
     text,
   }
@@ -503,7 +503,7 @@ export function buildAdminPaymentFailedEmail(p: AdminPaymentFailedProps): EmailP
   const { html, text } = renderEmail(section)
   return {
     to: ADMIN_EMAIL,
-    subject: `[Action needed] Payment failed — ${ref}`,
+    subject: `[Billing] Payment failed — ${ref}`,
     html,
     text,
   }
