@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { useState, useMemo, useRef, useEffect } from 'react'
 import Link from 'next/link'
@@ -275,7 +275,7 @@ export default function PortfolioMasonryClient({
                             : 'bg-parchment-100 text-ink-700 border-border-light hover:bg-parchment-200 hover:border-border-medium',
                         )}
                       >
-                        {f.label} · {f.count}
+                        {f.label} &middot; {f.count}
                       </button>
                     )
                   })}

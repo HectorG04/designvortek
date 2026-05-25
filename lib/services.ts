@@ -1,4 +1,4 @@
-/* =====================================================================
+﻿/* =====================================================================
    SERVICES — client-safe types + helpers + (empty) in-memory snapshot.
 
    This module is the type backbone for the new services / pricing

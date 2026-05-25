@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+﻿import { NextRequest, NextResponse } from 'next/server'
 import { createAdminClient } from '@/lib/supabase/server'
 import { sendBriefReceiptEmail, sendAdminBriefEmail } from '@/lib/email'
 import { verifyRecaptcha } from '@/lib/recaptcha'

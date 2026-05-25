@@ -1,4 +1,4 @@
-export const SITE_NAME = 'Design Vortex'
+﻿export const SITE_NAME = 'Design Vortex'
 export const SITE_URL = 'https://designvortex.co'
 export const SITE_TAGLINE = 'Premium Art Commissions'
 

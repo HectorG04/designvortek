@@ -1,4 +1,4 @@
-/* =====================================================================
+﻿/* =====================================================================
    Shared email layout — on-brand wrapper for every Resend template.
 
    Visual language: warm parchment background, burgundy CTAs, gold

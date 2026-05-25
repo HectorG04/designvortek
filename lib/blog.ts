@@ -1,4 +1,4 @@
-/* =====================================================================
+﻿/* =====================================================================
    BLOG — client-safe types + in-memory snapshot fallback.
 
    Mirrors the pattern used by lib/portfolio-pieces.ts and lib/reviews.ts:

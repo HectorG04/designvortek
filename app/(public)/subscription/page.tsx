@@ -1,4 +1,4 @@
-/* =====================================================================
+﻿/* =====================================================================
    /subscription — Campaign Companion landing.
 
    Literal port of `Claude Design Final/Claude designs New Screens and

@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { motion } from 'framer-motion'
 import Button from '@/components/ui/Button'
@@ -115,7 +115,7 @@ export default function Hero() {
             >
               <span aria-hidden="true" className="h-px w-6 bg-gold-glow" />
               <span className="font-body text-[0.75rem] font-semibold uppercase tracking-[0.15em]">
-                Premium Art Commissions · Since 2024
+                Premium Art Commissions &middot; Since 2024
               </span>
             </motion.div>
 
@@ -208,7 +208,7 @@ export default function Hero() {
                 <span className="mr-1 font-display text-[1rem] font-semibold text-gold-glow">
                   2
                 </span>
-                slots open · May 2026
+                slots open &middot; May 2026
               </span>
             </motion.div>
 

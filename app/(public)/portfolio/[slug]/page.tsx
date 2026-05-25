@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 import ProtectedImage from '@/components/ui/ProtectedImage'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'

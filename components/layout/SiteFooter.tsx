@@ -1,4 +1,4 @@
-import Link from 'next/link'
+﻿import Link from 'next/link'
 import { FOOTER_LINKS, SITE_NAME, KOFI_URL } from '@/lib/constants'
 import Logo from './Logo'
 import NewsletterForm from './NewsletterForm'

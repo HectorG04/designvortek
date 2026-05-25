@@ -1,4 +1,4 @@
-'use client'
+﻿'use client'
 
 import { motion } from 'framer-motion'
 import Container from '@/components/ui/Container'
@@ -79,11 +79,11 @@ function ProcessTurnaroundStat() {
         <span className="inline-flex items-baseline gap-2">
           Tokens <strong className="font-display text-base font-semibold text-ink-900">{t.tokens}</strong>
         </span>
-        <span className="hidden sm:inline text-ink-300">·</span>
+        <span className="hidden sm:inline text-ink-300">&middot;</span>
         <span className="inline-flex items-baseline gap-2">
           Portraits <strong className="font-display text-base font-semibold text-ink-900">{t.portraits}</strong>
         </span>
-        <span className="hidden sm:inline text-ink-300">·</span>
+        <span className="hidden sm:inline text-ink-300">&middot;</span>
         <span className="inline-flex items-baseline gap-2">
           Party &amp; NPC packs <strong className="font-display text-base font-semibold text-ink-900">{t.partyAndPacks}</strong>
         </span>

@@ -1,4 +1,4 @@
-/* =====================================================================
+﻿/* =====================================================================
    COMMERCIAL — literal port of `Commercial.html` from
    `Claude Design Final/Claude designs New Screens and flow V2/`.
 

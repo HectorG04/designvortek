@@ -1,4 +1,4 @@
-/* =====================================================================
+﻿/* =====================================================================
    Email templates — the 13 canonical messages per HANDOFF v2 §10.
 
    Each builder takes a strongly-typed prop bag and returns the full

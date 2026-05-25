@@ -1,4 +1,4 @@
-import { ImageResponse } from 'next/og'
+﻿import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
 export const alt = 'Design Vortex — Premium TTRPG & Character Art Commissions'
@@ -95,7 +95,7 @@ export default async function OGImage() {
           }}
         >
           <div style={{ width: 36, height: 1, background: '#D4A24C' }} />
-          Premium Art Commissions · Since 2024
+          {`Premium Art Commissions · Since 2024`}
         </div>
 
         {/* Headline */}
