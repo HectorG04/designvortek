@@ -349,7 +349,7 @@ function FeaturedCard({ post }: { post: BlogPost }) {
   const hue = hueForSlug(post.slug)
   return (
     <Link
-      href={`/blog/${post.slug}`}
+      href={`/resources/${post.slug}`}
       className="group block bg-parchment-50 border border-border-light rounded-2xl overflow-hidden mb-14 transition-shadow hover:shadow-[0_16px_40px_-8px_rgba(30,20,8,0.18)] hover:border-border-medium"
     >
       <div className="grid md:grid-cols-[1.1fr_1fr] gap-0">
@@ -402,7 +402,7 @@ function GridCard({ post }: { post: BlogPost }) {
   const hue = hueForSlug(post.slug)
   return (
     <Link
-      href={`/blog/${post.slug}`}
+      href={`/resources/${post.slug}`}
       className="group block bg-parchment-50 border border-border-light rounded-xl overflow-hidden transition-all hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(30,20,8,0.10)] hover:border-border-medium"
     >
       <div

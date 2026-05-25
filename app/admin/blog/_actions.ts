@@ -130,7 +130,9 @@ export async function updateBlogPost(formData: FormData) {
 
   revalidatePath('/admin/blog')
   revalidatePath(`/admin/blog/${id}/edit`)
-  revalidatePath('/blog')
+  revalidatePath('/resources')
+  revalidatePath(`/resources/${result.payload.slug}`)
+  // also bust the legacy redirect path so the 308 stays fresh
   revalidatePath(`/blog/${result.payload.slug}`)
   redirect('/admin/blog')
 }

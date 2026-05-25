@@ -342,7 +342,7 @@ export default function BlogForm({
               </button>
               {mode === 'edit' && values.slug && (
                 <a
-                  href={`/blog/${values.slug}`}
+                  href={`/resources/${values.slug}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-1.5 text-[0.6875rem] font-semibold uppercase tracking-[0.12em] text-burgundy-700 hover:text-burgundy-500 mt-1"
