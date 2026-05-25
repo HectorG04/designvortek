@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const genre = genreBySlug(genreSlug)
   const pillar = await fetchPillarByGenre(genreSlug)
   if (!genre || !pillar) {
-    return { title: 'Pillar not found · Design Vortex' }
+    return { title: 'Guide not found · Design Vortex' }
   }
   const title = pillar.seoTitle ?? `${pillar.title} · Design Vortex`
   const description = pillar.seoDescription ?? pillar.excerpt
@@ -109,7 +109,7 @@ export default async function PillarPage({ params }: PageProps) {
             <nav aria-label="Breadcrumb" className="flex flex-wrap items-center gap-2 text-xs text-ink-500">
               <Link href="/" className="hover:text-burgundy-700 transition-colors">Home</Link>
               <ChevronRight size={12} strokeWidth={1.5} className="text-ink-400" />
-              <Link href="/pillars" className="hover:text-burgundy-700 transition-colors">Pillars</Link>
+              <Link href="/resources" className="hover:text-burgundy-700 transition-colors">Guides</Link>
               <ChevronRight size={12} strokeWidth={1.5} className="text-ink-400" />
               <span aria-current="page" className="text-ink-700 truncate max-w-[280px] md:max-w-none">
                 {genre.label}
@@ -124,7 +124,7 @@ export default async function PillarPage({ params }: PageProps) {
             <Container>
               <div className="max-w-[760px] mx-auto text-center">
                 <span className="inline-block bg-burgundy-100 text-burgundy-700 text-[0.75rem] tracking-[0.15em] uppercase font-semibold px-3 py-1 rounded-full mb-3">
-                  {genre.label} · Pillar
+                  {genre.label} · Genre Guide
                 </span>
                 <div className="font-accent text-[1.375rem] text-burgundy-700 mb-3">
                   {genre.tagline}

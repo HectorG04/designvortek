@@ -113,7 +113,7 @@ export default async function ResourcesPage() {
               <em className="font-display italic font-medium text-burgundy-700">deep dives</em>
             </>
           }
-          description="One long-form authority page per genre we paint, plus the studio notes — guides, walkthroughs, and process pieces. Start with a pillar, follow the spokes."
+          description="One long-form genre guide per genre we paint, plus the studio notes — guides, walkthroughs, and process pieces. Start with a genre guide, explore the deep dives."
         />
 
         {/* 02 — Genre pillars */}
@@ -121,7 +121,7 @@ export default async function ResourcesPage() {
           <Container>
             <div className="mb-10 max-w-[640px]">
               <div className="text-[0.6875rem] uppercase tracking-[0.18em] font-semibold text-gold-700 mb-2">
-                Pillars
+                Genre Guides
               </div>
               <h2
                 className="font-display font-semibold text-ink-900 leading-[1.1] tracking-tight mb-3 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700"
@@ -311,7 +311,7 @@ function PillarCard({
             {pillar.excerpt}
           </p>
           <div className="mt-3 inline-flex items-center gap-1.5 font-body text-[0.75rem] font-semibold uppercase tracking-[0.15em] text-burgundy-700 group-hover:gap-2.5 transition-all">
-            Read the pillar <ArrowRightSm />
+            Read the guide <ArrowRightSm />
           </div>
         </div>
       </Link>
@@ -334,7 +334,7 @@ function PillarCard({
       <div className="px-6 py-5">
         <div className="font-accent text-[1.0625rem] text-ink-500 -mb-0.5">{tagline}</div>
         <h3 className="font-display text-[1.375rem] font-semibold text-ink-700 leading-snug mt-1 mb-1">
-          Pillar in progress
+          Guide coming soon
         </h3>
         <p className="text-[0.875rem] text-ink-500 leading-[1.55]">
           We&rsquo;re writing the long-form on this one. In the meantime, see other commissioned work in our{' '}
