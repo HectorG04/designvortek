@@ -1468,7 +1468,7 @@ export default function ServiceForm({
                   type="text"
                   value={values.seo_title}
                   onChange={(e) => update('seo_title', e.target.value)}
-                  placeholder="Character Portrait commissions · DesignVortek"
+                  placeholder="Character Portrait commissions | Design Vortex"
                   className={inputClass}
                 />
               </Field>
