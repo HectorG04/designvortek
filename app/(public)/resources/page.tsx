@@ -186,8 +186,11 @@ export default async function ResourcesPage({ searchParams }: ResourcesPageProps
         </section>
 
         {/* 03 — Studio notes (blog feed) — on parchment-100 so the
-            section break reads as a clean visual divider. */}
-        <section className="bg-parchment-100 py-16 md:py-20">
+            section break reads as a clean visual divider.
+            id="field-notes" + scroll-mt-24 = pagination links append #field-notes
+            so clicking a page number scrolls the user right back to this section
+            (offset for the sticky SiteHeader) instead of dumping them at top. */}
+        <section id="field-notes" className="bg-parchment-100 py-16 md:py-20 scroll-mt-24">
           <Container>
             <div className="mb-10 max-w-[640px]">
               <div className="text-[0.6875rem] uppercase tracking-[0.18em] font-semibold text-gold-700 mb-2">
@@ -454,7 +457,11 @@ function Pagination({
   currentPage: number
   totalPages: number
 }) {
-  const pageUrl = (p: number) => (p === 1 ? '/resources' : `/resources?page=${p}`)
+  /* Always append #field-notes so the browser scrolls to the studio-notes
+   * section after navigation. scroll-mt-24 on that section offsets for
+   * the sticky header. Page 1 still resolves to /resources (canonical),
+   * the hash is just a navigation aid. */
+  const pageUrl = (p: number) => (p === 1 ? '/resources#field-notes' : `/resources?page=${p}#field-notes`)
 
   // Build the list of page numbers to render (with ellipses for big ranges).
   function buildPageList(): (number | 'ellipsis')[] {
