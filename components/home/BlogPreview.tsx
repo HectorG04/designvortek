@@ -1,19 +1,38 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Clock, ArrowRight } from 'lucide-react'
 import Container from '@/components/ui/Container'
 import SectionHead from '@/components/ui/SectionHead'
 import { LinkButton } from '@/components/ui/Button'
-import { BLOG_PREVIEW } from '@/lib/constants'
+import type { BlogPost } from '@/lib/blog'
 
 const fadeUp = {
   hidden:  { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
 }
 
-export default function BlogPreview() {
+/* =============================================================================
+   BlogPreview — homepage "From the studio" strip. Renders the 3 latest published
+   posts pulled from Supabase by the parent server component, with real cover
+   images (next/image) instead of the old gradient placeholders.
+
+   Parent: app/(public)/page.tsx fetches posts via fetchAllPosts() and passes
+   the first 3 here. Falls back to a graceful gradient if any post has no
+   featured_image.
+   ============================================================================= */
+
+interface BlogPreviewProps {
+  posts: BlogPost[]
+}
+
+const GRADIENT_FALLBACK = 'from-violet-900 via-burgundy-700 to-amber-800'
+
+export default function BlogPreview({ posts }: BlogPreviewProps) {
+  if (posts.length === 0) return null
+
   return (
     <section className="bg-parchment-100 py-16 md:py-32">
       <Container>
@@ -30,18 +49,31 @@ export default function BlogPreview() {
           variants={{ visible: { transition: { staggerChildren: 0.12 } } }}
           className="grid grid-cols-1 lg:grid-cols-3 gap-5"
         >
-          {BLOG_PREVIEW.map((post) => (
+          {posts.map((post) => (
             <motion.article
               key={post.slug}
               variants={fadeUp}
               className="group bg-parchment-50 border border-border-light rounded-xl overflow-hidden transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] hover:border-border-medium hover:shadow-md hover:-translate-y-1 cursor-pointer"
             >
               <Link href={`/resources/${post.slug}`} className="block">
-                {/* Image area with gradient */}
+                {/* Cover image area — uses real featuredImage via next/image when
+                    available, with a gradient fallback for posts that haven't
+                    been illustrated yet. Category chip floats on top either way. */}
                 <div
-                  className={`relative aspect-[16/9] p-[14px] flex items-start bg-gradient-to-br ${post.gradient}`}
+                  className={`relative aspect-[16/9] p-[14px] flex items-start overflow-hidden ${
+                    post.featuredImage ? '' : `bg-gradient-to-br ${GRADIENT_FALLBACK}`
+                  }`}
                 >
-                  <span className="font-body text-[0.625rem] font-bold uppercase tracking-[0.15em] text-ink-900 bg-parchment-50/[0.92] backdrop-blur-sm border border-gold-300 px-2.5 py-[5px] rounded-full">
+                  {post.featuredImage && (
+                    <Image
+                      src={post.featuredImage}
+                      alt={post.title}
+                      fill
+                      sizes="(min-width: 1024px) 33vw, 100vw"
+                      className="object-cover"
+                    />
+                  )}
+                  <span className="relative z-10 font-body text-[0.625rem] font-bold uppercase tracking-[0.15em] text-ink-900 bg-parchment-50/[0.92] backdrop-blur-sm border border-gold-300 px-2.5 py-[5px] rounded-full">
                     {post.category}
                   </span>
                 </div>
@@ -54,16 +86,16 @@ export default function BlogPreview() {
 
                   <div className="flex items-center gap-2.5 mb-[14px]">
                     <span className="font-body text-[0.6875rem] font-bold uppercase tracking-[0.15em] text-gold-700">
-                      {post.date}
+                      {post.dateLabel}
                     </span>
                     <span className="w-1 h-1 rounded-full bg-gold-500 flex-shrink-0" />
                     <span className="inline-flex items-center gap-[5px] text-[0.8125rem] text-ink-500 tabular-nums">
                       <Clock size={12} strokeWidth={1.6} className="text-ink-400" />
-                      {post.readTime}
+                      {post.readMin} min read
                     </span>
                   </div>
 
-                  <p className="text-[0.9375rem] text-ink-700 leading-[1.55]">
+                  <p className="text-[0.9375rem] text-ink-700 leading-[1.55] line-clamp-3">
                     {post.excerpt}
                   </p>
                 </div>

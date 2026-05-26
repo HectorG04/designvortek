@@ -14,6 +14,7 @@ import CTACloser from '@/components/home/CTACloser'
 import CompassDivider from '@/components/decor/CompassDivider'
 import { SITE_NAME, SITE_URL, SITE_DESCRIPTION } from '@/lib/constants'
 import { fetchFeaturedPieces } from '@/lib/portfolio-pieces-server'
+import { fetchAllPosts } from '@/lib/blog-server'
 
 /* ISR — homepage rebuilds at most every 60 seconds so admin portfolio
  * edits show up in the strip without a redeploy. */
@@ -49,9 +50,17 @@ export const metadata: Metadata = {
  *  10. CTA closer      (dark tome bookend)
  */
 export default async function HomePage() {
-  /* Featured pieces for the portfolio strip — fetched server-side so the
-   * strip stays a static SSG snapshot that updates with ISR. */
-  const featuredPieces = await fetchFeaturedPieces(8)
+  /* Server-fetch everything the homepage needs in parallel.
+   * - Featured portfolio pieces for the portfolio strip
+   * - Latest 3 published posts (with real cover images) for the "From the studio" strip
+   * ISR keeps both fresh without redeploys. */
+  const [featuredPieces, allPosts] = await Promise.all([
+    fetchFeaturedPieces(8),
+    fetchAllPosts(),
+  ])
+  // Prefer posts that have a featured image so the homepage strip never shows
+  // gradient placeholders. Take the 3 most recent (already sorted newest-first).
+  const latestPosts = allPosts.filter((p) => !!p.featuredImage).slice(0, 3)
   // Organization JSON-LD — Google understands this as the canonical brand entity
   const orgSchema = {
     '@context': 'https://schema.org',
@@ -110,7 +119,7 @@ export default async function HomePage() {
         <PortfolioStrip pieces={featuredPieces} />
         <ProcessSteps />
         <Testimonials />
-        <BlogPreview />
+        <BlogPreview posts={latestPosts} />
         <AvailabilityWidget />
         <FAQ />
         <CTACloser />
