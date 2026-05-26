@@ -335,7 +335,7 @@ export default async function ServiceBucketDetailPage({ params }: PageProps) {
       name: `${label} commission options`,
       itemListElement: products.slice(0, 8).map((p) => ({
         '@type': 'Offer',
-        itemOffered: { '@type': 'Service', name: p.title },
+        itemOffered: { '@type': 'Service', name: p.name },
       })),
     },
   }
