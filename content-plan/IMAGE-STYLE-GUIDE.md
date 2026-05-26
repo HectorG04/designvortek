@@ -1,5 +1,7 @@
 # Design Vortex — Article Image Prompt Style Guide
 
+> ⚠️ **POSITIONING — READ FIRST:** Design Vortex is a **digital character art studio**. The artist (Hector G.) makes digital paintings on a tablet using Procreate, Photoshop, Clip Studio Paint, Krita, and Affinity Photo. The studio's differentiator is "human-painted, not AI-generated" — NOT "physical media vs digital." Image prompts can use painterly aesthetic vocabulary (visible brushwork, painterly light, editorial illustration) because that aesthetic is achievable in digital painting. AVOID explicit physical-medium imagery: oil paint tubes, brush jars, easels, sable brushes, gesso, linseed oil. If a prompt needs to show "the studio," show a digital workstation (tablet + stylus + monitor), NOT an oil-painter's bench.
+
 Use this as the master reference when generating cover images and inline images for every blog/guide. Every image prompt in `pillars/<slug>/image-prompts.md` and `evergreen/<slug>.md` follows the conventions below. Feed these prompts into Midjourney, Imagen, Flux, or Stable Diffusion — they're designed to be model-agnostic.
 
 ---
@@ -7,6 +9,8 @@ Use this as the master reference when generating cover images and inline images 
 ## The North Star
 
 Brand aesthetic: **"The Cartographer's Hand"** — scholarly-fantasy, illuminated medieval manuscripts, candlelit study. NOT goth, NOT grimdark, NOT generic D&D kitsch. Editorial gravitas. The painted artwork can breathe. Penguin Classics fantasy line + a candlelit study.
+
+**Important:** the aesthetic is "painterly digital illustration." Visible brushwork is fine in a prompt (it describes a *look*, not a medium). What's NOT fine is depicting traditional-medium imagery as if it were the studio's actual workspace.
 
 Reader behaviour goal: **stop the scroll, generate curiosity.** Cover images should make a reader ask one question that the article answers. Think long-form editorial covers (Atlantic, NYT Magazine), not stock blog headers.
 
@@ -122,8 +126,8 @@ Palette:        Parchment #F4ECD8, Ink #16110D, Gold #D4A24C, Crimson #B23A2A
 Composition:    [where the text sits, where the painted element sits, how they interact]
 Lighting:       [single source, warm/cool, where it falls]
 Mood:           [one line — e.g. "candlelit study at 2am, the painter has been working for hours"]
-Style:          oil painting, visible brushwork, soft edges, Frazetta + Klimt + medieval illumination
-Negative:       no skulls, no wax seals, no blackletter, no AI-cliché purple-orange lighting, no dragons unless specified, no lens flares, no sparkles, no stock fantasy poses
+Style:          painterly digital illustration with visible brushwork, soft edges, Frazetta + Klimt + medieval illumination
+Negative:       no oil paint tubes, no brush jars, no easels (the studio is digital), no skulls, no wax seals, no blackletter, no AI-cliché purple-orange lighting, no dragons unless specified, no lens flares, no sparkles, no stock fantasy poses
 ```
 
 ---

@@ -2,6 +2,16 @@
 
 > Generated: May 2026 | Source: seo-cluster agent research + SERP analysis
 > Update this file whenever new pages are added or keyword strategy changes.
+>
+> ## ⚠️ POSITIONING NOTE — READ FIRST
+>
+> Design Vortex is a **digital character art studio**. The artist (Hector G.) makes digital paintings on a tablet using Procreate, Photoshop, Clip Studio Paint, Krita, and Affinity Photo. The studio's differentiator vs competitors is **"made by a real human, not AI-generated"** — NOT "physical media vs digital."
+>
+> The phrase **"hand-painted"** appears in many target keywords below. This is intentional: it's a real search term used by buyers looking for human-made art (vs AI). In the digital art world, "hand-painted" means "drawn stroke-by-stroke by a human" (vs vector or AI). Pages targeting these keywords should clarify in body copy that the work is **digitally hand-painted** — never imply physical media (no oil paint, easels, sable brushes, linseed, gesso, canvas in the physical sense).
+>
+> **Differentiator language to use:** "painted by a human, not AI", "digitally hand-painted", "painted in Procreate / Photoshop / CSP", "no AI in our workflow", "every piece by a real artist."
+>
+> **Language to avoid:** "oil painting", "oil paint", "linseed oil", "sable brushes", "easel", "wet paint", "varnish", "gesso", named pigments ("cadmium red", "alizarin crimson", "lead white", "titanium white", "burnt umber", "raw umber"), "physical canvas".
 
 ---
 
