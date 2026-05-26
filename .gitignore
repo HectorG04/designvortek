@@ -46,3 +46,6 @@ next-env.d.ts
 # webp versions live in public/images/ and DO get committed)
 /public/artwork-upload/
 *.tmp
+
+# Cover-batch orchestrator state (transient)
+.cover-batch-state.json

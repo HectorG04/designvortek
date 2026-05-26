@@ -327,22 +327,28 @@ function PillarCard({
         href={`/pillars/${genreSlug}`}
         className="group block bg-parchment-50 border border-border-light rounded-2xl overflow-hidden transition-all duration-[250ms] hover:-translate-y-1 hover:shadow-md hover:border-border-medium"
       >
+        {/* Image area: gradient ALWAYS as the backdrop, image layered on top
+            using object-contain so the whole cover fits without cropping
+            (user feedback: covers were getting cut off — STARFIELD truncated etc).
+            Empty letterbox shows the genre gradient through, which looks intentional. */}
         <div
-          className="relative aspect-[4/3] flex items-end p-5"
-          style={{ background: pillar.featuredImage ? undefined : gradient }}
+          className="relative aspect-[4/3] flex items-end p-5 overflow-hidden"
+          style={{ background: gradient }}
         >
           {pillar.featuredImage && (
             <div
               className="absolute inset-0"
               style={{
                 backgroundImage: `url(${pillar.featuredImage})`,
-                backgroundSize: 'cover',
+                backgroundSize: 'contain',
                 backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
               }}
               aria-hidden="true"
             />
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-tome-950/[0.55] via-tome-950/[0.15] to-transparent" aria-hidden="true" />
+          {/* Soft bottom-vignette so the genre chip stays legible over any image bottom edge */}
+          <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-tome-950/[0.55] to-transparent" aria-hidden="true" />
           <div className="relative z-10">
             <span className="inline-block bg-parchment-50/[0.92] backdrop-blur-md border border-gold-300 text-ink-900 text-[0.625rem] tracking-[0.15em] uppercase font-bold px-2.5 py-[5px] rounded-full mb-2">
               {genreLabel}
