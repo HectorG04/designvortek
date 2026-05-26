@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# pre-push — runs a fast TypeScript check before letting you push to remote.
+# Catches the exact category of errors that fail Vercel builds (missing
+# props, wrong field names, type mismatches). Takes ~10-25 seconds for
+# this project size.
+#
+# Installed by: node scripts/install-git-hooks.mjs
+# Skip once: git push --no-verify
+# Disable permanently: git config --unset core.hooksPath
+#
+
+set -e
+
+echo ""
+echo "🔍 pre-push: running typecheck (npm run typecheck)..."
+echo ""
+
+# Run the typecheck. If it fails, the push is blocked.
+if ! npm run --silent typecheck; then
+  echo ""
+  echo "❌ Typecheck failed. Push blocked."
+  echo "   Fix the errors above, then push again."
+  echo "   To bypass (NOT recommended): git push --no-verify"
+  echo ""
+  exit 1
+fi
+
+echo ""
+echo "✅ Typecheck clean. Pushing..."
+echo ""
+exit 0

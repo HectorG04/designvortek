@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "node scripts/clean-next-types.mjs && tsc --noEmit",
+    "prepush": "npm run typecheck"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.3",

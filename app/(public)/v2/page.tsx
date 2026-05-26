@@ -13,6 +13,7 @@ import AvailabilityWidget from '@/components/home/AvailabilityWidget'
 import FAQ from '@/components/home/FAQ'
 import CTACloser from '@/components/home/CTACloser'
 import CompassDivider from '@/components/decor/CompassDivider'
+import { fetchAllPosts } from '@/lib/blog-server'
 
 export const metadata: Metadata = {
   title: 'Design Vortex — Preview',
@@ -39,7 +40,11 @@ export const metadata: Metadata = {
  * Compass dividers separate major thematic blocks.
  */
 export default async function HomePreviewPage() {
-  const featuredPieces = await fetchFeaturedPieces(8)
+  const [featuredPieces, allPosts] = await Promise.all([
+    fetchFeaturedPieces(8),
+    fetchAllPosts(),
+  ])
+  const latestPosts = allPosts.filter((p) => !!p.featuredImage).slice(0, 3)
   return (
     <>
       <SiteHeader transparent />
@@ -55,7 +60,7 @@ export default async function HomePreviewPage() {
         <PortfolioStrip pieces={featuredPieces} />
         <ProcessSteps />
         <Testimonials />
-        <BlogPreview />
+        <BlogPreview posts={latestPosts} />
         <AvailabilityWidget />
         <FAQ />
         <CTACloser />
