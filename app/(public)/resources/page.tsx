@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from 'next'
 import Link from 'next/link'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 import PageHero from '@/components/layout/PageHero'
@@ -14,6 +15,7 @@ import {
   GENRES,
   type BlogPost,
 } from '@/lib/blog-server'
+import { cn } from '@/lib/utils'
 
 /* =====================================================================
    /resources — single hub for Pillars + Studio Notes.
@@ -21,20 +23,40 @@ import {
    Two sections inside one page:
      01  Hero
      02  Genre pillars         — 9 cards, live pillar OR "in progress"
-     03  Studio notes (blog)   — featured + category chips + grid
+     03  Studio notes (blog)   — featured + category chips + paginated grid
      04  Newsletter
 
-   The old /pillars and /blog index URLs permanent-redirect here. Detail
-   URLs (/pillars/[genre], /blog/[slug], /blog/category/[c]) keep working.
+   Pagination: URL-based (?page=N) so each page is crawlable, bookmarkable,
+   and self-canonical. 12 posts per page = 4 rows of 3 on desktop, a fast
+   server-rendered slice instead of dumping all ~94 posts on page 1.
    ===================================================================== */
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'D&D & Fantasy Art Commission Guides | Design Vortex',
-  description:
-    'Guides, tips & resources for commissioning D&D, RPG & fantasy character art. From pricing to reference sheets — everything a first-time client needs.',
-  alternates: { canonical: '/resources' },
+const POSTS_PER_PAGE = 12
+
+interface ResourcesPageProps {
+  searchParams: Promise<{ page?: string }>
+}
+
+function parsePage(raw: string | undefined): number {
+  const n = Number(raw)
+  return Number.isFinite(n) && n >= 1 ? Math.floor(n) : 1
+}
+
+export async function generateMetadata({ searchParams }: ResourcesPageProps): Promise<Metadata> {
+  const { page: pageParam } = await searchParams
+  const page = parsePage(pageParam)
+  const isPaged = page > 1
+
+  return {
+    title: isPaged
+      ? `D&D & Fantasy Art Commission Guides — Page ${page} | Design Vortex`
+      : 'D&D & Fantasy Art Commission Guides | Design Vortex',
+    description:
+      'Guides, tips & resources for commissioning D&D, RPG & fantasy character art. From pricing to reference sheets — everything a first-time client needs.',
+    alternates: { canonical: isPaged ? `/resources?page=${page}` : '/resources' },
+  }
 }
 
 /* Per-genre placeholder gradient — kept inline so /resources stays
@@ -86,14 +108,25 @@ const ArrowRightSm = () => (
 /* =====================================================================
    Page
    ===================================================================== */
-export default async function ResourcesPage() {
-  const [featured, gridPosts, categories, pillars, activeGenres] = await Promise.all([
+export default async function ResourcesPage({ searchParams }: ResourcesPageProps) {
+  const { page: pageParam } = await searchParams
+  const requestedPage = parsePage(pageParam)
+
+  const [featured, allGridPosts, categories, pillars, activeGenres] = await Promise.all([
     fetchFeaturedPost(),
     fetchGridPosts(),
     fetchCategoryCounts(),
     fetchAllPillars(),
     fetchActivePillarGenres(),
   ])
+
+  /* Pagination math — clamp requested page to the valid range so weird URLs
+   * (?page=999 or ?page=0) silently land on a real page instead of 404'ing. */
+  const totalPages = Math.max(1, Math.ceil(allGridPosts.length / POSTS_PER_PAGE))
+  const currentPage = Math.min(Math.max(1, requestedPage), totalPages)
+  const startIdx = (currentPage - 1) * POSTS_PER_PAGE
+  const gridPosts = allGridPosts.slice(startIdx, startIdx + POSTS_PER_PAGE)
+  const isFirstPage = currentPage === 1
 
   const activeSlugs = new Set(activeGenres.map((g) => g.slug))
   const pillarBySlug = new Map(pillars.map((p) => [p.pillarGenre!, p]))
@@ -171,8 +204,8 @@ export default async function ResourcesPage() {
               </p>
             </div>
 
-            {/* Featured */}
-            {featured && <FeaturedCard post={featured} />}
+            {/* Featured — only on page 1 (avoids duplication across paginated pages) */}
+            {isFirstPage && featured && <FeaturedCard post={featured} />}
 
             {/* Category chips — all currently link back to /resources
                 since the dedicated category archives were removed. */}
@@ -196,7 +229,7 @@ export default async function ResourcesPage() {
               })}
             </div>
 
-            {/* Grid */}
+            {/* Grid — current page slice (POSTS_PER_PAGE items max) */}
             {gridPosts.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                 {gridPosts.map((post) => (
@@ -206,6 +239,18 @@ export default async function ResourcesPage() {
             ) : (
               <p className="text-center text-ink-500 text-sm py-12">
                 More articles on the way.
+              </p>
+            )}
+
+            {/* Pagination — only render when there's more than one page */}
+            {totalPages > 1 && (
+              <Pagination currentPage={currentPage} totalPages={totalPages} />
+            )}
+
+            {/* Showing X of Y indicator */}
+            {allGridPosts.length > 0 && (
+              <p className="text-center text-[0.8125rem] text-ink-500 mt-6">
+                Showing {startIdx + 1}–{startIdx + gridPosts.length} of {allGridPosts.length} articles
               </p>
             )}
           </Container>
@@ -394,6 +439,116 @@ function FeaturedCard({ post }: { post: BlogPost }) {
         </div>
       </div>
     </Link>
+  )
+}
+
+/* =====================================================================
+   Pagination — server-rendered URL-based numbered pagination.
+   Shows Previous / 1 / 2 / ... / current ± 2 / ... / N / Next.
+   For small page counts (≤ 7) shows every number (no ellipses).
+   ===================================================================== */
+function Pagination({
+  currentPage,
+  totalPages,
+}: {
+  currentPage: number
+  totalPages: number
+}) {
+  const pageUrl = (p: number) => (p === 1 ? '/resources' : `/resources?page=${p}`)
+
+  // Build the list of page numbers to render (with ellipses for big ranges).
+  function buildPageList(): (number | 'ellipsis')[] {
+    if (totalPages <= 7) {
+      return Array.from({ length: totalPages }, (_, i) => i + 1)
+    }
+    const pages: (number | 'ellipsis')[] = [1]
+    const start = Math.max(2, currentPage - 1)
+    const end = Math.min(totalPages - 1, currentPage + 1)
+    if (start > 2) pages.push('ellipsis')
+    for (let p = start; p <= end; p++) pages.push(p)
+    if (end < totalPages - 1) pages.push('ellipsis')
+    pages.push(totalPages)
+    return pages
+  }
+  const pageList = buildPageList()
+
+  const linkBase =
+    'inline-flex items-center justify-center min-w-[40px] h-10 px-3 rounded-md font-body text-[0.875rem] font-medium border transition-colors'
+  const linkInactive =
+    'bg-parchment-50 border-border-light text-ink-700 hover:bg-parchment-200 hover:border-border-medium'
+  const linkActive =
+    'bg-burgundy-700 border-burgundy-700 text-cream-50 pointer-events-none'
+
+  return (
+    <nav
+      aria-label="Resource articles pagination"
+      className="mt-12 flex flex-wrap items-center justify-center gap-2"
+    >
+      {/* Previous */}
+      {currentPage > 1 ? (
+        <Link
+          href={pageUrl(currentPage - 1)}
+          rel="prev"
+          aria-label="Previous page"
+          className={cn(linkBase, linkInactive, 'gap-1.5')}
+        >
+          <ChevronLeft size={14} strokeWidth={2} />
+          <span className="hidden sm:inline">Previous</span>
+        </Link>
+      ) : (
+        <span
+          aria-hidden="true"
+          className={cn(linkBase, 'opacity-40 cursor-not-allowed gap-1.5 border-border-light bg-parchment-50 text-ink-400')}
+        >
+          <ChevronLeft size={14} strokeWidth={2} />
+          <span className="hidden sm:inline">Previous</span>
+        </span>
+      )}
+
+      {/* Page numbers */}
+      {pageList.map((p, i) =>
+        p === 'ellipsis' ? (
+          <span
+            key={`ellipsis-${i}`}
+            aria-hidden="true"
+            className="inline-flex items-center justify-center min-w-[20px] text-ink-400"
+          >
+            …
+          </span>
+        ) : (
+          <Link
+            key={p}
+            href={pageUrl(p)}
+            aria-label={`Page ${p}`}
+            aria-current={p === currentPage ? 'page' : undefined}
+            className={cn(linkBase, p === currentPage ? linkActive : linkInactive)}
+          >
+            {p}
+          </Link>
+        ),
+      )}
+
+      {/* Next */}
+      {currentPage < totalPages ? (
+        <Link
+          href={pageUrl(currentPage + 1)}
+          rel="next"
+          aria-label="Next page"
+          className={cn(linkBase, linkInactive, 'gap-1.5')}
+        >
+          <span className="hidden sm:inline">Next</span>
+          <ChevronRight size={14} strokeWidth={2} />
+        </Link>
+      ) : (
+        <span
+          aria-hidden="true"
+          className={cn(linkBase, 'opacity-40 cursor-not-allowed gap-1.5 border-border-light bg-parchment-50 text-ink-400')}
+        >
+          <span className="hidden sm:inline">Next</span>
+          <ChevronRight size={14} strokeWidth={2} />
+        </span>
+      )}
+    </nav>
   )
 }
 
