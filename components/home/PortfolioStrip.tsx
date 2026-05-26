@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import Link from 'next/link'
 import ProtectedImage from '@/components/ui/ProtectedImage'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -31,8 +31,23 @@ export interface PortfolioStripProps {
 export default function PortfolioStrip({ pieces }: PortfolioStripProps) {
   const [active, setActive] = useState<string>('All')
 
+  /* Only show filter chips for categories that actually have at least one
+   * piece in the current `pieces` set. Preserves the canonical PORTFOLIO_CATEGORIES
+   * order so chip layout stays predictable. 'All' is always shown when there's
+   * any piece at all. Avoids the empty-state UX where clicking a chip silently
+   * removes every card from the grid. */
+  const availableCategories = useMemo(() => {
+    if (pieces.length === 0) return []
+    const populated = new Set(pieces.map((p) => p.category as string))
+    return PORTFOLIO_CATEGORIES.filter((c) => c === 'All' || populated.has(c))
+  }, [pieces])
+
+  /* If the active chip is no longer in the available list (e.g. pieces changed),
+   * fall back to 'All' so we never show an empty grid. */
+  const effectiveActive = availableCategories.includes(active) ? active : 'All'
+
   const filtered =
-    active === 'All' ? pieces : pieces.filter((p) => p.category === active)
+    effectiveActive === 'All' ? pieces : pieces.filter((p) => p.category === effectiveActive)
 
   return (
     <section className="bg-parchment-100 py-16 md:py-32">
@@ -51,8 +66,11 @@ export default function PortfolioStrip({ pieces }: PortfolioStripProps) {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="flex justify-center flex-wrap gap-2 mb-12"
         >
-          {PORTFOLIO_CATEGORIES.map((cat) => {
-            const isActive = active === cat
+          {availableCategories.map((cat) => {
+            const isActive = effectiveActive === cat
+            // Show count next to each non-All chip for at-a-glance density.
+            const count =
+              cat === 'All' ? pieces.length : pieces.filter((p) => p.category === cat).length
             return (
               <button
                 key={cat}
@@ -64,7 +82,7 @@ export default function PortfolioStrip({ pieces }: PortfolioStripProps) {
                     : 'bg-parchment-100 border-border-light text-ink-700 hover:bg-parchment-200 hover:border-border-medium'
                 )}
               >
-                {cat}
+                {cat} <span className="opacity-60 ml-0.5">{count}</span>
               </button>
             )
           })}
