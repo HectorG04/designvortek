@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 100" role="img" aria-label="Design Vortex">
+  <title>Design Vortex</title>
+  <!-- Full wordmark — monogram (brand colors) + 'Design Vortex' text. The text uses currentColor so the parent controls tone (ink on light, cream on dark). -->
+
+  <!-- Monogram, sized to 80×80 inside the 100×100 viewBox slot, left aligned -->
+  <g transform="translate(0,0)">
+    <path
+      d="M16 13 H50 C70 13, 82 30, 82 50 C82 70, 70 87, 50 87 H16 V13 Z M29 24 V76 H50 C62 76, 70 64, 70 50 C70 36, 62 24, 50 24 H29 Z"
+      fill="#6B1F2A"
+      fill-rule="evenodd"
+    />
+    <path
+      d="M12 13 H22 V18 H16 V20 H12 Z M12 87 H22 V82 H16 V80 H12 Z"
+      fill="#6B1F2A"
+    />
+    <path
+      d="M36 35 L48 67 L60 35 L55 35 L48 56 L41 35 Z"
+      fill="#D4A24C"
+    />
+    <circle cx="48" cy="29" r="2" fill="#D4A24C" />
+  </g>
+
+  <!-- Wordmark text. Cormorant Garamond is loaded by the site (next/font), with Georgia + serif as fallbacks for environments where it's not. -->
+  <text
+    x="105"
+    y="62"
+    font-family="'Cormorant Garamond', Georgia, 'Times New Roman', serif"
+    font-size="34"
+    font-weight="600"
+    letter-spacing="0.5"
+    fill="currentColor"
+  >Design Vortex</text>
+</svg>

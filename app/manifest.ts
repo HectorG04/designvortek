@@ -2,9 +2,9 @@ import type { MetadataRoute } from 'next'
 
 /* =====================================================================
    PWA manifest — gives the site a proper theme colour in mobile browser
-   chrome, an installable name, and a starting URL when someone "Add to
-   Home Screen"s the site. Falls back gracefully to favicon.ico on
-   platforms without dedicated PWA icons (we'll add those later).
+   chrome, an installable name + icons, and a starting URL when someone
+   "Add to Home Screen"s the site. All icons render the DV monogram with
+   brand-parchment background for legibility on any OS tile colour.
    ===================================================================== */
 
 export default function manifest(): MetadataRoute.Manifest {
@@ -12,7 +12,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: 'Design Vortex — Premium Character Art Commissions',
     short_name: 'Design Vortex',
     description:
-      'Custom hand-painted digital character art for D&D, TTRPG, and fantasy — painted by a human artist, never AI.',
+      'Custom digital character art for D&D, TTRPG, and fantasy — hand-painted by a human artist, never AI.',
     start_url: '/',
     display: 'standalone',
     background_color: '#F5EBD3', // parchment-100
@@ -20,12 +20,32 @@ export default function manifest(): MetadataRoute.Manifest {
     orientation: 'portrait',
     categories: ['art', 'design', 'entertainment'],
     icons: [
+      // Modern SVG favicon (any size, scales perfectly)
+      {
+        src: '/icon.svg',
+        sizes: 'any',
+        type: 'image/svg+xml',
+        purpose: 'any',
+      },
+      // Raster fallbacks for PWA installation
+      {
+        src: '/android-chrome-192x192.png',
+        sizes: '192x192',
+        type: 'image/png',
+        purpose: 'any maskable',
+      },
+      {
+        src: '/android-chrome-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'any maskable',
+      },
+      // Legacy ICO fallback
       {
         src: '/favicon.ico',
-        sizes: 'any',
+        sizes: '32x32',
         type: 'image/x-icon',
       },
-      // Future: add 192x192 + 512x512 PNGs in /public when we generate them.
     ],
   }
 }

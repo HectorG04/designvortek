@@ -49,30 +49,30 @@ export default async function OGImage() {
           }}
         />
 
-        {/* Brand mark */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+        {/* Brand mark — DV monogram (cream + gold reverse palette for the dark
+            OG background) + wordmark. Inline SVG so it renders in the
+            edge ImageResponse without a font dependency. */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
+          <svg width="78" height="78" viewBox="0 0 100 100" style={{ display: 'block' }}>
+            {/* D in cream for contrast against the dark OG background */}
+            <path
+              d="M16 13 H50 C70 13, 82 30, 82 50 C82 70, 70 87, 50 87 H16 V13 Z M29 24 V76 H50 C62 76, 70 64, 70 50 C70 36, 62 24, 50 24 H29 Z"
+              fill="#F4EAD3"
+              fillRule="evenodd"
+            />
+            <path
+              d="M12 13 H22 V18 H16 V20 H12 Z M12 87 H22 V82 H16 V80 H12 Z"
+              fill="#F4EAD3"
+            />
+            {/* V + illuminated dot stay gold */}
+            <path d="M36 35 L48 67 L60 35 L55 35 L48 56 L41 35 Z" fill="#D4A24C" />
+            <circle cx="48" cy="29" r="2" fill="#D4A24C" />
+          </svg>
           <div
             style={{
-              width: 64,
-              height: 64,
-              borderRadius: '50%',
-              border: '2px solid #D4A24C',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#D4A24C',
-              fontSize: 24,
-              fontWeight: 700,
-            }}
-          >
-            DV
-          </div>
-          <div
-            style={{
-              fontSize: 24,
+              fontSize: 28,
               fontWeight: 600,
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
+              letterSpacing: '0.04em',
               color: '#F4EAD3',
             }}
           >

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Design Vortex monogram">
+  <title>Design Vortex</title>
+  <!--
+    DV monogram — designed May 2026.
+    Burgundy serif D with gold V nested in its bowl + illuminated dot.
+    Coordinate system: 100×100 viewBox, 10-unit margin all sides → 80×80 mark.
+  -->
+
+  <!-- Serif D outer + inner bowl. Solid burgundy with evenodd fill cuts the bowl as negative space so the gold V sits cleanly inside. -->
+  <path
+    d="M16 13 H50 C70 13, 82 30, 82 50 C82 70, 70 87, 50 87 H16 V13 Z M29 24 V76 H50 C62 76, 70 64, 70 50 C70 36, 62 24, 50 24 H29 Z"
+    fill="#6B1F2A"
+    fill-rule="evenodd"
+  />
+
+  <!-- Soft Cormorant-style serifs on the D's stem (top-left + bottom-left brackets). -->
+  <path
+    d="M12 13 H22 V18 H16 V20 H12 Z M12 87 H22 V82 H16 V80 H12 Z"
+    fill="#6B1F2A"
+  />
+
+  <!-- Gold V nested inside the D's bowl. Tapered serif construction: outer V slightly wider than the inner cut so it reads as a confident wedge, not a line. -->
+  <path
+    d="M36 35 L48 67 L60 35 L55 35 L48 56 L41 35 Z"
+    fill="#D4A24C"
+  />
+
+  <!-- Illuminated dot — the scholarly-fantasy touch. Sits above the V's apex like a manuscript marginal mark. -->
+  <circle cx="48" cy="29" r="2" fill="#D4A24C" />
+</svg>
