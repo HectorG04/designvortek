@@ -1,6 +1,14 @@
 import type { Metadata } from 'next'
 import { Cormorant_Garamond, Inter, Caveat } from 'next/font/google'
+import Script from 'next/script'
 import './globals.css'
+
+/* Google Analytics 4 — measurement ID. Hardcoded fallback so production
+   works without env config; override via NEXT_PUBLIC_GA_MEASUREMENT_ID
+   (useful for staging/preview deploys that should NOT pollute the prod
+   analytics property). Empty string disables GA entirely. */
+const GA_MEASUREMENT_ID =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? 'G-B3KJN28KEM'
 
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
@@ -127,7 +135,30 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+
+        {/* Google Analytics 4 — loads after page becomes interactive so it
+           never blocks LCP/INP. Two scripts: the gtag library, then the
+           init that registers our measurement ID. Only renders when an ID
+           is configured (the fallback above keeps prod working out of box). */}
+        {GA_MEASUREMENT_ID ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_MEASUREMENT_ID}');
+              `}
+            </Script>
+          </>
+        ) : null}
+      </body>
     </html>
   )
 }
