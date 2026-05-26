@@ -14,10 +14,10 @@ export const SITE_DESCRIPTION =
 export const NAV_LINKS = [
   { label: 'Home',      href: '/' },
   { label: 'Portfolio', href: '/portfolio' },
-  { label: 'Resources', href: '/resources' },
   { label: 'Services',  href: '/services', hasDropdown: true },
   { label: 'Process',   href: '/process' },
   { label: 'Pricing',   href: '/pricing' },
+  { label: 'Resources', href: '/resources' },
   { label: 'About',     href: '/about' },
   { label: 'Contact',   href: '/contact' },
 ]
