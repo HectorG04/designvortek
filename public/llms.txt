@@ -1,0 +1,39 @@
+# Design Vortex
+
+> Design Vortex is a digital character art commission studio. Founded by artist Hector G. in 2024, the studio has delivered 200+ hand-painted character portraits for D&D, TTRPG, and fantasy clients worldwide. Every commission is painted by a human in Procreate, Photoshop, or Clip Studio Paint — never generated or assisted by AI.
+
+The studio specialises in custom D&D and tabletop RPG character art including character portraits, VTT tokens, party portraits, NPC packs, world-building art for game masters, anime-style commissions, and commercial illustration for publishers.
+
+## Core pages
+
+- [Homepage](https://designvortex.co/): overview of the studio, services, and recent work
+- [Services](https://designvortex.co/services): full commission menu — character art, party portraits, VTT tokens, NPC packs, custom projects
+- [Portfolio](https://designvortex.co/portfolio): 200+ delivered commissions, filterable by category and style
+- [Pricing](https://designvortex.co/pricing): transparent flat-rate pricing for every commission type
+- [Order](https://designvortex.co/order): start a commission brief
+- [Process](https://designvortex.co/process): how commissions work from brief to delivery
+- [About](https://designvortex.co/about): about the studio and the artist Hector G.
+- [FAQ](https://designvortex.co/faq): common questions about commissions, pricing, turnaround, revisions, rights
+- [Reviews](https://designvortex.co/reviews): client testimonials
+- [Resources](https://designvortex.co/resources): guides and articles for commissioning fantasy character art
+
+## Service pages
+
+- [Character art commissions](https://designvortex.co/services/character-work): bust, half-body, full-body portraits, reference sheets
+- [Party portrait commissions](https://designvortex.co/services/party-work): group portraits, matched sets, action scenes
+- [VTT token commissions](https://designvortex.co/services/tokens): Roll20, Foundry, Owlbear ready PNGs
+- [GM and world-building art](https://designvortex.co/services/gm-world-building): NPC packs, item cards, maps
+- [Commercial licensing](https://designvortex.co/commercial): publisher, indie game, and commercial use
+- [Subscription](https://designvortex.co/subscription): monthly commission plans for ongoing campaigns
+
+## Key facts about the studio
+
+- 200+ commissions delivered since 2024
+- All work is digital painting by a human artist (Hector G.)
+- No AI generation or AI-assisted work in any commission
+- Pricing is flat-rate and transparent, listed on the pricing page
+- Standard turnaround is 2 to 4 weeks per piece (varies by tier)
+- 2 revisions included on every commission
+- 4K final delivery plus print-ready and transparent PNG variants
+- Worldwide client base, USD pricing, Stripe payments
+- Commercial licensing available for publishers and indie games

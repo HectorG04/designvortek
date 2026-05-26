@@ -313,9 +313,40 @@ export default async function ServiceBucketDetailPage({ params }: PageProps) {
   // (mirrors the design exactly). Track which index that is.
   const firstTieredIdx = products.findIndex((p) => p.pricing.mode === 'tiered')
 
+  /* Service JSON-LD — surfaces this bucket as a structured Service offering
+     for rich results + AI-search citations. The hasOfferCatalog enumerates
+     the bucket's products so each pricing tier is machine-readable. */
+  const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://designvortex.co'
+  const serviceSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: BUCKET_META[slug].title.split('|')[0].trim(),
+    description: BUCKET_META[slug].description,
+    serviceType: label,
+    provider: {
+      '@type': 'Organization',
+      name: 'Design Vortex',
+      url: SITE_URL,
+    },
+    areaServed: { '@type': 'Place', name: 'Worldwide' },
+    url: `${SITE_URL}/services/${slug}`,
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: `${label} commission options`,
+      itemListElement: products.slice(0, 8).map((p) => ({
+        '@type': 'Offer',
+        itemOffered: { '@type': 'Service', name: p.title },
+      })),
+    },
+  }
+
   return (
     <>
       <SiteHeader />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
       <main className="bg-parchment-50">
 
         {/* ============ BREADCRUMBS ============ */}

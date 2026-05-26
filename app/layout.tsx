@@ -57,13 +57,14 @@ export const metadata: Metadata = {
     title: 'Design Vortex — Premium Art Commissions',
     description:
       'Premium D&D, TTRPG, and custom character art commissions — crafted with care.',
-    images: [{ url: '/og-default.png', width: 1200, height: 630, alt: 'Design Vortex' }],
+    /* NOTE: no manual `images` here — Next.js auto-uses app/opengraph-image.tsx
+       as the site-wide fallback. Per-route opengraph-image.tsx files override per page. */
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Design Vortex — Premium Art Commissions',
     description: 'Premium D&D, TTRPG, and custom character art commissions.',
-    images: ['/og-default.png'],
+    /* Same: no manual `images` — Next.js auto-pulls from opengraph-image.tsx. */
   },
   robots: {
     index: true,
@@ -75,12 +76,57 @@ export const metadata: Metadata = {
   },
 }
 
+/* Site-wide Organization JSON-LD — rendered in every page's <head>. Powers
+   rich results, knowledge-panel signals, AI-search citations, and disambiguation
+   of the studio brand. */
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Design Vortex',
+  alternateName: 'Design Vortex Studio',
+  url: SITE_URL,
+  logo: `${SITE_URL}/opengraph-image`,
+  description:
+    'Design Vortex is a digital character art commission studio. Custom D&D, TTRPG, and fantasy portraits painted by a human artist — never AI.',
+  founder: {
+    '@type': 'Person',
+    name: 'Hector G.',
+    jobTitle: 'Founder & Lead Artist',
+  },
+  foundingDate: '2024',
+  knowsAbout: [
+    'D&D character art',
+    'TTRPG portrait commissions',
+    'VTT tokens',
+    'Party portraits',
+    'NPC packs',
+    'Pathfinder character art',
+    'Cyberpunk character art',
+    'Anime style commissions',
+  ],
+  makesOffer: {
+    '@type': 'Offer',
+    itemOffered: {
+      '@type': 'Service',
+      name: 'Custom character art commission',
+      serviceType: 'Digital illustration',
+      areaServed: 'Worldwide',
+    },
+  },
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en"
       className={`${cormorant.variable} ${inter.variable} ${caveat.variable}`}
     >
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   )
