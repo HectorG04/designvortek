@@ -29,7 +29,7 @@ export const revalidate = 60
 export const metadata: Metadata = {
   title: 'RPG & Fantasy Art Commission Services | Design Vortex',
   description:
-    'Explore hand-painted commission services: character portraits, VTT tokens, party portraits, NPC packs & custom projects. D&D, Pathfinder, 40K and more.',
+    'D&D & RPG art commission services from $25 (VTT token) to $900+ (action scene). Character portraits, party scenes, NPC packs, custom maps. Hand-painted, no AI.',
   alternates: { canonical: '/services' },
 }
 

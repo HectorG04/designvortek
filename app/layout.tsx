@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     template: '%s | Design Vortex',
   },
   description:
-    'Premium custom art commissions — D&D character art, VTT tokens, party portraits, anime portraits, and bespoke illustrations crafted with care.',
+    'Custom D&D character art commissions from $60. Hand-painted by a real artist, never AI. VTT tokens, party portraits, NPC packs, fantasy illustration. 200+ delivered.',
   keywords: [
     'd&d character art',
     'commission art',

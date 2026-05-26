@@ -3,7 +3,7 @@ import { createClient, createAdminClient } from '@/lib/supabase/server'
 import AdminShell from '@/components/admin/AdminShell'
 import { Bell, Mail, Download } from 'lucide-react'
 
-export const metadata: Metadata = { title: 'Waitlist · Admin' }
+export const metadata: Metadata = { title: 'Waitlist | Admin' }
 
 interface WaitlistRow {
   id: number

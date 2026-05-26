@@ -4,7 +4,7 @@ import SiteHeader from '@/components/layout/SiteHeader'
 import SiteFooter from '@/components/layout/SiteFooter'
 
 export const metadata: Metadata = {
-  title: 'Subscription started · Design Vortex',
+  title: 'Subscription started | Design Vortex',
   description: 'Your subscription is active. Welcome to the campaign companion.',
   robots: { index: false, follow: false },
 }

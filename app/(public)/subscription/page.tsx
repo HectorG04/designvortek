@@ -27,7 +27,7 @@ import PaperTexture from '@/components/decor/PaperTexture'
 import SubscribeButton from './_SubscribeButton'
 
 export const metadata: Metadata = {
-  title: 'Campaign Companion subscription · Design Vortek',
+  title: 'Campaign Companion subscription | Design Vortex',
   description:
     "Monthly tokens, NPCs, and maps for active D&D campaigns. Hand-painted by the studio, delivered the 15th of every month. Pause or cancel any time.",
   alternates: { canonical: '/subscription' },

@@ -7,7 +7,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import ApproveQuoteForm from './_ApproveQuoteForm'
 
 export const metadata: Metadata = {
-  title: 'Approve quote · Design Vortex',
+  title: 'Approve quote | Design Vortex',
   description: 'Review your quote and pay the 30% deposit to start your commission.',
   robots: { index: false, follow: false },
 }

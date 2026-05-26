@@ -22,12 +22,12 @@ export const revalidate = 60
 export const metadata: Metadata = {
   title: 'Hand-Painted Character Art Commissions | Design Vortex',
   description:
-    'Custom hand-painted D&D, RPG & fantasy character portraits. No AI. No tracing. Every piece painted by artist Hector G. Start your commission today.',
+    'Custom D&D character art from $60 — hand-painted by a human artist, never AI. Bust, half-body, full-body portraits, VTT tokens, party scenes. 200+ commissions delivered.',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'Hand-Painted Character Art Commissions | Design Vortex',
     description:
-      'Custom hand-painted D&D, RPG & fantasy character portraits. No AI. No tracing. Every piece painted by artist Hector G. Start your commission today.',
+      'Custom D&D character art from $60 — hand-painted by a human artist, never AI. Bust, half-body, full-body, VTT tokens, party portraits. 200+ delivered.',
     url: SITE_URL,
     type: 'website',
   },

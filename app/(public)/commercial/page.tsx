@@ -28,7 +28,7 @@ import USDDisclaimer from '@/components/ui/USDDisclaimer'
 import PaperTexture from '@/components/decor/PaperTexture'
 
 export const metadata: Metadata = {
-  title: 'Commercial & publisher commissions · Design Vortek',
+  title: 'Commercial & publisher commissions | Design Vortex',
   description:
     'Hand-painted illustration for tabletop publishers, indie games, Kickstarter campaigns, and merch. Commercial licensing handled transparently at +40% of the job price.',
   alternates: { canonical: '/commercial' },

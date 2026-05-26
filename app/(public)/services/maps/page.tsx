@@ -31,7 +31,7 @@ import Button from '@/components/ui/Button'
 import PaperTexture from '@/components/decor/PaperTexture'
 
 export const metadata: Metadata = {
-  title: 'Battle maps & world maps · Design Vortek',
+  title: 'Battle maps & world maps | Design Vortex',
   description:
     "Hand-drawn battle maps and region/world maps for D&D and other tabletop games. Gridded, VTT-ready, quote-based pricing. Send a brief and the studio will send a quote.",
   alternates: { canonical: '/services/maps' },

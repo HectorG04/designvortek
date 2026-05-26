@@ -53,7 +53,7 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
   const post = await fetchPostBySlug(slug)
-  if (!post) return { title: 'Article not found · Design Vortex' }
+  if (!post) return { title: 'Article not found | Design Vortex' }
 
   const title = post.seoTitle ?? `${post.title} · Design Vortex`
   const description = post.seoDescription ?? post.excerpt

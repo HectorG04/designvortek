@@ -53,16 +53,16 @@ export async function generateMetadata(
   const { slug } = await params
   const piece = await fetchPieceBySlug(slug)
   if (!piece) {
-    return { title: 'Portfolio piece not found · Design Vortex' }
+    return { title: 'Portfolio piece not found | Design Vortex' }
   }
   const first = stripMarkdown(piece.description[0])
   const desc = first.length > 160 ? first.slice(0, 157) + '...' : first
   return {
-    title: `${piece.title} · ${piece.category} · Design Vortex`,
+    title: `${piece.title} | ${piece.category} | Design Vortex`,
     description: desc,
     alternates: { canonical: `/portfolio/${piece.slug}` },
     openGraph: {
-      title: `${piece.title} · ${piece.category}`,
+      title: `${piece.title} | ${piece.category}`,
       description: desc,
       type: 'article',
     },

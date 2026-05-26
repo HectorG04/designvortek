@@ -24,7 +24,7 @@ import SiteHeader from '@/components/layout/SiteHeader'
    ===================================================================== */
 
 export const metadata = {
-  title: 'Not found · Design Vortex',
+  title: 'Not found | Design Vortex',
   robots: { index: false, follow: false },
 }
 

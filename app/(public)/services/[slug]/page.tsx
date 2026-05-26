@@ -75,30 +75,30 @@ export async function generateStaticParams() {
 
 const BUCKET_META: Record<AllowedBucket, { title: string; description: string }> = {
   'character-work': {
-    title: 'D&D Character Art Commissions | Bust, Half & Full Body',
+    title: 'D&D Character Art Commissions from $60 | Bust, Half & Full Body',
     description:
-      'Commission hand-painted D&D & RPG character portraits — bust, half-body, or full-body. Artist-painted, never AI. See portfolio and order yours today.',
+      'D&D character art commissions from $60 (bust), $120 (half-body), $180 (full-body). Hand-painted by a human, never AI. 2-week turnaround. 200+ portraits delivered.',
   },
   'party-work': {
-    title: 'D&D Party Portrait Commissions | Group Character Art',
+    title: 'D&D Party Portrait Commissions from $240 | Group Character Art',
     description:
-      'Commission a hand-painted group portrait for your D&D or TTRPG party. Individual character portraits combined into one epic scene. Built for adventurers.',
+      'D&D party portrait commissions from $240 for 4 characters. One epic scene or matched individual portraits. Hand-painted by a human, no AI. Worldwide delivery.',
   },
   'gm-world-building': {
-    title: 'D&D NPC Packs & World-Building Art | DM Bundles',
+    title: 'D&D NPC Packs from $220 | World-Building Art for DMs',
     description:
-      'Need NPCs for your campaign? Commission custom hand-painted NPC portrait packs. Bundles for DMs running D&D, Pathfinder, or any TTRPG. Order a pack today.',
+      'Custom D&D NPC portrait packs from $220 for 5 NPCs, $400 for 10. Painted to a shared style guide so your whole campaign feels consistent. No AI.',
   },
   'tokens': {
-    title: 'Custom VTT Token Commissions | Roll20 & Foundry Ready',
+    title: 'Custom VTT Token Commissions from $40 | Roll20 & Foundry Ready',
     description:
-      'Hand-painted custom VTT tokens for Roll20, Foundry VTT & Owlbear. PNG-ready character art made to match your D&D portrait. Order now.',
+      'Custom VTT tokens from $40 single or $180 for a 5-pack. Roll20, Foundry VTT, Owlbear ready. Hand-painted at 512px and 1024px transparent PNG.',
   },
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  if (!isAllowedBucket(slug)) return { title: 'Service not found · Design Vortex' }
+  if (!isAllowedBucket(slug)) return { title: 'Service not found | Design Vortex' }
   const meta = BUCKET_META[slug]
   return {
     title: meta.title,

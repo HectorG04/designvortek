@@ -7,7 +7,7 @@ import SiteFooter from '@/components/layout/SiteFooter'
 import PayBalanceForm from './_PayBalanceForm'
 
 export const metadata: Metadata = {
-  title: 'Pay balance · Design Vortex',
+  title: 'Pay balance | Design Vortex',
   description: 'Pay the remaining 70% balance to unlock your finished files.',
   robots: { index: false, follow: false },
 }

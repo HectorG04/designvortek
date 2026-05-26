@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const genre = genreBySlug(genreSlug)
   const pillar = await fetchPillarByGenre(genreSlug)
   if (!genre || !pillar) {
-    return { title: 'Guide not found · Design Vortex' }
+    return { title: 'Guide not found | Design Vortex' }
   }
   const title = pillar.seoTitle ?? `${pillar.title} · Design Vortex`
   const description = pillar.seoDescription ?? pillar.excerpt
