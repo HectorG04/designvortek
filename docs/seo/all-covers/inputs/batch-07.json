@@ -1,0 +1,178 @@
+[
+  {
+    "slug": "sci-fi-character-art-commission-guide",
+    "title": "Sci-fi Character Art: From Starfinder to Original Settings",
+    "category": "Guides",
+    "tags": [
+      "sci-fi",
+      "starfinder",
+      "mothership",
+      "lancer",
+      "character art"
+    ],
+    "excerpt": "What two years of painting sci-fi characters taught me about hardsuits, alien species, body mods, Starfinder, Mothership, and original-IP worldbuilding briefs.",
+    "is_pillar": true,
+    "pillar_genre": "sci-fi"
+  },
+  {
+    "slug": "souls-style-character-art-commission",
+    "title": "Souls-style character art: Dark Souls, Elden Ring, Bloodborne palette and linework",
+    "category": "Guides",
+    "tags": [
+      "souls-anime",
+      "souls style",
+      "elden ring",
+      "bloodborne",
+      "fan art"
+    ],
+    "excerpt": "What 'Souls style' actually means in commission terms: palette discipline, FromSoftware linework conventions, the three lighting modes, and the tragedy-in-armour register.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "starfinder-character-art-guide",
+    "title": "Starfinder character art: a TTRPG-specific brief guide",
+    "category": "Guides",
+    "tags": [
+      "sci-fi",
+      "starfinder",
+      "ttrpg",
+      "character art",
+      "party portrait"
+    ],
+    "excerpt": "How to brief Starfinder character art class by class and species by species — Soldier, Operative, Mystic, Solarian, and the kasatha-vesk-lashunta-ysoki roster.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "starfinder-solarian-painted-bright-soldiers",
+    "title": "The Starfinder Solarian Painted: solar weapons, photon flares, gravity wells",
+    "category": "Guides",
+    "tags": [
+      "sci-fi",
+      "starfinder",
+      "solarian",
+      "classes",
+      "character art"
+    ],
+    "excerpt": "How I paint a Starfinder solarian: solar weapon shape, photon vs gravity attunement, common builds, and how kasathan, vesk, and lashunta species read at portrait scale.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "storm-kings-thunder-npc-portrait-guide",
+    "title": "Storm King's Thunder NPC Portrait Roadmap (6 commissions worth making)",
+    "category": "D&D",
+    "tags": [
+      "dnd-5e",
+      "storm kings thunder",
+      "npc pack",
+      "campaign module",
+      "character art"
+    ],
+    "excerpt": "The six NPCs that earn their portrait slot, the giant-scale problem, and a suggested commission order for a Storm King's Thunder pack.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "strahd-npc-pack-six-weeks",
+    "title": "The Curse of Strahd NPC pack, painted over six weeks",
+    "category": "D&D",
+    "tags": [
+      "npc pack",
+      "curse of strahd",
+      "process"
+    ],
+    "excerpt": "Strahd, Ireena, Madam Eva, and the other six. How we kept style consistent across eight portraits.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "strahd-von-zarovich-most-painted-vampire",
+    "title": "Strahd von Zarovich: the world's most-painted vampire",
+    "category": "D&D",
+    "tags": [
+      "horror",
+      "strahd",
+      "curse of strahd",
+      "vampire",
+      "character art"
+    ],
+    "excerpt": "What makes a Strahd portrait actually look like Strahd: the widow's peak, the gray eyes, the Renaissance coat, and the Tatyana question.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "street-samurai-vs-netrunner-archetypes",
+    "title": "Street samurai vs netrunner vs corpo: archetype visual cues for cyberpunk portraits",
+    "category": "Guides",
+    "tags": [
+      "cyberpunk",
+      "cyberpunk archetypes",
+      "character art",
+      "party portraits",
+      "briefs"
+    ],
+    "excerpt": "Five cyberpunk archetypes, five silhouettes. How street samurai, netrunner, corpo, fixer, and nomad each paint differently — and how to brief them.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "tarnished-oc-painting-your-own-elden-ring-character",
+    "title": "The Tarnished OC: painting your own Elden Ring character",
+    "category": "Guides",
+    "tags": [
+      "souls-anime",
+      "elden ring",
+      "tarnished",
+      "OC",
+      "character art"
+    ],
+    "excerpt": "Your Tarnished is two hundred hours of choices, not a class screen. How we paint Elden Ring OCs without sliding into Generic Souls Knight.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "the-elf-spectrum-high-wood-drow-sea-eladrin",
+    "title": "The Elf Spectrum in Paint: high, wood, drow, sea, eladrin",
+    "category": "Guides",
+    "tags": [
+      "fantasy",
+      "elves",
+      "species",
+      "character art",
+      "drow"
+    ],
+    "excerpt": "Sixty elves later, here is how we tell high from wood from drow from sea from eladrin in paint — and how to specify which kind you want in your brief.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "three-weeks-with-lyra",
+    "title": "Three weeks with Lyra: from a player's note to a final painting",
+    "category": "Behind the scenes",
+    "tags": [
+      "process",
+      "walkthrough",
+      "character art"
+    ],
+    "excerpt": "Sketches, color blocks, and the revision where everything clicked. A full process walkthrough.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "urban-fantasy-character-art-dresden-rivers-of-london",
+    "title": "Urban fantasy character art: Dresden Files, Rivers of London, and the modern-magic vibe",
+    "category": "Guides",
+    "tags": [
+      "modern",
+      "urban fantasy",
+      "dresden files",
+      "rivers of london",
+      "character art"
+    ],
+    "excerpt": "How urban fantasy commissions differ from straight modern — the wizard-in-a-t-shirt principle, city-specific settings, and the one supernatural channel that lands.",
+    "is_pillar": false,
+    "pillar_genre": null
+  }
+]

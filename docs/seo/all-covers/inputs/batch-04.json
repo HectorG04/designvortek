@@ -1,0 +1,178 @@
+[
+  {
+    "slug": "fantasy-character-art-commission-guide",
+    "title": "Commissioning Fantasy Character Art: A Complete Guide for Players, GMs, and Writers",
+    "category": "Guides",
+    "tags": [
+      "fantasy",
+      "character art",
+      "commissioning",
+      "elves",
+      "fantasy art"
+    ],
+    "excerpt": "Species cues, faction-warm palettes, magical effects without the sparkles, weapons that aren't generic, and what actually goes in the brief.",
+    "is_pillar": true,
+    "pillar_genre": "fantasy"
+  },
+  {
+    "slug": "fantasy-color-palette-faction-warmth",
+    "title": "Building a fantasy color palette: faction warmth, tonal hierarchy, and the 7-color rule",
+    "category": "Guides",
+    "tags": [
+      "fantasy",
+      "color palette",
+      "character art",
+      "painting theory",
+      "references"
+    ],
+    "excerpt": "The seven-color rule, warm vs cool faction logic, Frazetta-Klimt-illuminated palette references, and the colors we ban from briefs.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "fantasy-weapon-design-references",
+    "title": "Fantasy weapon design references: swords, staves, and bows that don't look generic",
+    "category": "Guides",
+    "tags": [
+      "fantasy",
+      "weapon design",
+      "sword references",
+      "staves",
+      "bows"
+    ],
+    "excerpt": "How to specify swords, staves, and bows in a fantasy commission brief — silhouette families, signature details, and the anti-MMO-generic rule.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "first-art-fair-booth",
+    "title": "What I packed for my first art-fair booth (and what I'd cut)",
+    "category": "Behind the scenes",
+    "tags": [
+      "studio",
+      "conventions",
+      "lessons"
+    ],
+    "excerpt": "Prints, palette samples, and the one thing I should have left at home.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "genshin-honkai-fan-art-commissions",
+    "title": "Genshin Impact and Honkai fan art commissions: the brief checklist",
+    "category": "Guides",
+    "tags": [
+      "souls-anime",
+      "fan art",
+      "genshin impact",
+      "honkai star rail",
+      "hoyoverse"
+    ],
+    "excerpt": "The HoYoverse splash-art register in plain terms, the canonical reference set, OC versus canon character briefs, and the IP conversation in one paragraph.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "geralt-of-rivia-witcher-portrait-references",
+    "title": "Geralt of Rivia in paint: references for the Witcher commission",
+    "category": "Guides",
+    "tags": [
+      "souls-anime",
+      "witcher",
+      "geralt",
+      "fan art",
+      "character art"
+    ],
+    "excerpt": "Three Geralts (book, game, Netflix), cat eyes, the medallion, the scars, and the tonal register a Witcher portrait actually needs.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "hand-painted-character-art-vs-ai",
+    "title": "Hand-Painted Character Art vs AI: Why Our Digital Studio Won't Use AI Generators",
+    "category": "Studio Notes",
+    "tags": [
+      "no ai",
+      "hand painted",
+      "studio values",
+      "ai art",
+      "manifesto"
+    ],
+    "excerpt": "A working painter's manifesto on why every commission at our digital studio is painted by hand on a tablet, with zero AI in the pipeline.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "hero-forge-to-handpainted",
+    "title": "Hero Forge to hand-painted: a starter guide for D&D players",
+    "category": "Guides",
+    "tags": [
+      "hero forge",
+      "references",
+      "briefs"
+    ],
+    "excerpt": "What translates from Hero Forge to a painted portrait, and what we sketch around.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "historical-character-art-commission-guide",
+    "title": "Historical Character Art Commissions: Getting the Period Right",
+    "category": "Guides",
+    "tags": [
+      "historical",
+      "medieval",
+      "viking",
+      "samurai",
+      "character art"
+    ],
+    "excerpt": "Medieval, Viking, samurai, Edwardian. How I narrow a year range with the client, check references, and avoid the costume-drama mistakes that ruin a period portrait.",
+    "is_pillar": true,
+    "pillar_genre": "historical"
+  },
+  {
+    "slug": "historical-reference-checking-period-accuracy",
+    "title": "Reference-checking: how we verify historical period accuracy",
+    "category": "Behind the scenes",
+    "tags": [
+      "historical",
+      "reference workflow",
+      "commission brief",
+      "period accuracy",
+      "character art"
+    ],
+    "excerpt": "The studio's internal reference-checking process for historical commissions — sources, double-checking, common brief errors caught before painting, and the homework that helps.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "horror-character-art-commission-guide",
+    "title": "Horror Character Art: Painting What Should Not Be",
+    "category": "Guides",
+    "tags": [
+      "horror",
+      "call of cthulhu",
+      "strahd",
+      "gothic",
+      "character art"
+    ],
+    "excerpt": "A studio guide to commissioning horror character art — dread over shock, gothic vs cosmic vs body horror, 1920s investigators, and what to leave to the painter.",
+    "is_pillar": true,
+    "pillar_genre": "horror"
+  },
+  {
+    "slug": "how-to-brief-fantasy-character-commission",
+    "title": "How to brief a fantasy character commission (species + palette + pose)",
+    "category": "Guides",
+    "tags": [
+      "fantasy",
+      "commission brief",
+      "character art",
+      "process",
+      "references"
+    ],
+    "excerpt": "A seven-section checklist for fantasy briefs: species and build, skin and hair, outfit, mood and light, pose, references, and the mistakes that re-paint a portrait.",
+    "is_pillar": false,
+    "pillar_genre": null
+  }
+]

@@ -1,0 +1,183 @@
+[
+  {
+    "slug": "commercial-licensing-for-commissioned-art",
+    "title": "Commercial licensing for commissioned art: when you need it, what it costs, how it works",
+    "category": "Guides",
+    "tags": [
+      "commercial",
+      "licensing",
+      "rights",
+      "book covers",
+      "merch"
+    ],
+    "excerpt": "When a commission stops being personal use and starts needing a commercial license. Book covers, merch, Patreon tiers, the fan-art line, and the surcharge math.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "cowboy-fashion-across-the-eras",
+    "title": "Cowboy fashion across the eras: 1840s mountain man to 1900s gunslinger",
+    "category": "Guides",
+    "tags": [
+      "western",
+      "western character clothing",
+      "period accuracy",
+      "fashion",
+      "commission brief"
+    ],
+    "excerpt": "How western character clothing actually evolved across sixty years — mountain man buckskin, post-war transition, peak cowboy, railroad town, end-of-frontier — plus a hat cheat sheet.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "crt-scanlines-when-they-work",
+    "title": "When CRT scanlines work in cyberpunk art (and when they kill the piece)",
+    "category": "Guides",
+    "tags": [
+      "cyberpunk",
+      "cyberpunk scanlines art",
+      "surface treatment",
+      "retro cyberpunk",
+      "art direction"
+    ],
+    "excerpt": "CRT scanlines, chromatic aberration, VHS grain — when the retro filter earns its place in cyberpunk art and when it flattens an otherwise solid portrait.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "curse-of-strahd-npc-portrait-roadmap",
+    "title": "The Curse of Strahd NPC Roadmap: 8 commissions worth making",
+    "category": "D&D",
+    "tags": [
+      "horror",
+      "curse of strahd",
+      "npc pack",
+      "campaign module",
+      "dnd-5e"
+    ],
+    "excerpt": "Which eight NPCs in Curse of Strahd actually earn a portrait, the order they enter the story, and the essentials-only vs full-pack budget tiers.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "cyberpunk-character-art-commission-guide",
+    "title": "Cyberpunk Character Art Commissions: The Neon-Lit Aesthetic Guide",
+    "category": "Guides",
+    "tags": [
+      "cyberpunk",
+      "cyberpunk red",
+      "shadowrun",
+      "character art",
+      "neon"
+    ],
+    "excerpt": "A studio guide to commissioning cyberpunk character art — palette, chrome, archetype cues, lighting rigs, and what RED, Shadowrun, and 2077 each demand.",
+    "is_pillar": true,
+    "pillar_genre": "cyberpunk"
+  },
+  {
+    "slug": "cyberpunk-red-at-a-glance-roles-archetypes",
+    "title": "Cyberpunk RED at a Glance: roles, archetypes, and the brief",
+    "category": "Guides",
+    "tags": [
+      "cyberpunk",
+      "cyberpunk red",
+      "roles",
+      "TTRPG",
+      "character art"
+    ],
+    "excerpt": "The ten RED roles and what each implies visually, plus the 2020 vs RED vs Edgerunners era question your brief needs to answer first.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "cyberpunk-red-character-art-tips",
+    "title": "Cyberpunk RED character art: a TTRPG-specific brief guide",
+    "category": "Guides",
+    "tags": [
+      "cyberpunk",
+      "cyberpunk red",
+      "ttrpg",
+      "briefs",
+      "character art"
+    ],
+    "excerpt": "Briefing a Cyberpunk RED portrait isn't the same as briefing a 2077 piece. A painter's checklist for role, lifepath, cyberware, gang, and RED-era fashion.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "cyberware-vs-bioware-visual-language",
+    "title": "Cyberware vs bioware: telling the body-mod story visually",
+    "category": "Guides",
+    "tags": [
+      "sci-fi",
+      "cyberware",
+      "bioware",
+      "character art",
+      "cyberpunk"
+    ],
+    "excerpt": "Two families of body modification in sci-fi character art — metal and chrome versus organic and gene-edited. When to show, when to hide, where the body-horror line sits.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "deadlands-at-a-glance-huckster-mad-scientist-gunslinger",
+    "title": "Deadlands at a Glance: huckster, mad scientist, gunslinger, brave",
+    "category": "Guides",
+    "tags": [
+      "western",
+      "deadlands",
+      "weird west",
+      "huckster",
+      "character art"
+    ],
+    "excerpt": "A studio-eye view of Deadlands character art: huckster, mad scientist, gunslinger, brave, Ranger, Harrowed. Palette, props, and what the Reckoning changes.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "deadlands-character-art-guide",
+    "title": "Deadlands character art: a TTRPG-specific brief guide",
+    "category": "Guides",
+    "tags": [
+      "western",
+      "deadlands",
+      "weird west",
+      "commission brief",
+      "character art"
+    ],
+    "excerpt": "The Deadlands archetype matrix, Reckoner influence cues, weird-west palette logic, and what to put in a brief so the painter doesn't have to guess.",
+    "is_pillar": false,
+    "pillar_genre": null
+  },
+  {
+    "slug": "dnd-5e-character-art-commission-guide",
+    "title": "The D&D 5e Player's Guide to Commissioning Character Art",
+    "category": "D&D",
+    "tags": [
+      "dnd-5e",
+      "character art",
+      "commissioning",
+      "5e",
+      "dungeons and dragons"
+    ],
+    "excerpt": "What a D&D 5e character art commission actually delivers, what to put in the brief, and how class and lineage shape the painting. From a studio that has painted hundreds.",
+    "is_pillar": true,
+    "pillar_genre": "dnd-5e"
+  },
+  {
+    "slug": "dnd-character-art-ai-vs-commissioned-vs-handpainted",
+    "title": "D&D Character Art: AI vs Commissioned vs Hand-Painted — An Honest Three-Way Guide",
+    "category": "Guides",
+    "tags": [
+      "dnd character art",
+      "dnd art",
+      "ai vs handpainted",
+      "commission guide",
+      "pillar",
+      "comparison"
+    ],
+    "excerpt": "AI, AI-assisted, and hand-painted D&D character art compared honestly by a working studio — what each costs and how to tell them apart.",
+    "is_pillar": false,
+    "pillar_genre": null
+  }
+]

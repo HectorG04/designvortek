@@ -34,7 +34,9 @@ const lines = blocks.map((b) =>
   b
     .split('\n')
     .map((l) => l.trim())
-    .filter((l) => l.length > 0)
+    // Strip agent-internal comment lines like `# Approach: B — Single iconic object`
+    // and any HTML-style `<!-- ... -->` blocks. These are metadata, not prompt content.
+    .filter((l) => l.length > 0 && !l.startsWith('# ') && !l.startsWith('// '))
     .join(' ')
     .replace(/\s{2,}/g, ' ')
     .trim(),
