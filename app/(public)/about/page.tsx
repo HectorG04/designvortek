@@ -21,7 +21,7 @@ import ProtectedImage from '@/components/ui/ProtectedImage'
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'About Hector G | Hand-Painted Fantasy Character Artist',
+  title: 'About Hector G — D&D Character Artist Behind Design Vortex',
   description:
     'Meet Hector G — the hand-painted character artist behind Design Vortex. Every commission is painted by a real human. No AI, no tracing, ever. Learn more.',
   alternates: { canonical: '/about' },

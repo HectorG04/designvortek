@@ -22,7 +22,7 @@ import { formatReviewDate } from '@/lib/reviews'
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'Client Reviews | Hand-Painted Character Art Commissions',
+  title: 'Client Reviews — D&D & RPG Character Art Commissions | Design Vortex',
   description:
     'See what D&D players, DMs & tabletop gamers say about commissioning with Design Vortex. Real reviews, real painted portraits, real results.',
   alternates: { canonical: '/reviews' },

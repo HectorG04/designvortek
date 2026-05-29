@@ -13,7 +13,7 @@ import PortfolioMasonryClient from './_PortfolioMasonryClient'
    ===================================================================== */
 
 export const metadata: Metadata = {
-  title: 'Character Art Portfolio | Hand-Painted Fantasy & RPG',
+  title: 'Character Art Portfolio — D&D, RPG, Sci-Fi & Fantasy Commissions',
   description:
     'Browse hand-painted D&D, Pathfinder, 40K, sci-fi & fantasy character commissions. Every piece painted by Hector G — no AI, no tracing. See the work.',
   alternates: { canonical: '/portfolio' },

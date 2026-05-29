@@ -8,7 +8,7 @@ import SectionLabel from '@/components/ui/SectionLabel'
 import Markdown from '@/components/ui/Markdown'
 
 export const metadata: Metadata = {
-  title: 'Brief received',
+  title: 'Commission brief received | Design Vortex',
   description: 'Your commission brief has been received. We will reply within 48 hours with a quote.',
   robots: { index: false, follow: true },
   alternates: { canonical: '/order/success' },
