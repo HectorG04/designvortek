@@ -78,7 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // authority pages for their genre.
   const pillarGenres = await fetchActivePillarGenres()
   const pillarRoutes: MetadataRoute.Sitemap = pillarGenres.map((g) => ({
-    url: `${SITE_URL}/pillars/${g.slug}`,
+    url: `${SITE_URL}/guides/${g.slug}`,
     lastModified,
     changeFrequency: 'monthly',
     priority: 0.85,

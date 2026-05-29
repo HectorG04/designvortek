@@ -49,3 +49,8 @@ next-env.d.ts
 
 # Cover-batch orchestrator state (transient)
 .cover-batch-state.json
+
+# Cover-batch orchestrator transient logs
+.cover-batch.log
+.cover-batch.log.err
+

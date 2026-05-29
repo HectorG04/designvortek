@@ -324,7 +324,7 @@ function PillarCard({
   if (hasPillar && pillar) {
     return (
       <Link
-        href={`/pillars/${genreSlug}`}
+        href={`/guides/${genreSlug}`}
         className="group block bg-parchment-50 border border-border-light rounded-2xl overflow-hidden transition-all duration-[250ms] hover:-translate-y-1 hover:shadow-md hover:border-border-medium"
       >
         {/* Image area: gradient ALWAYS as the backdrop, image layered on top

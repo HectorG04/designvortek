@@ -387,7 +387,7 @@ export default function BlogForm({
                 </select>
                 <p className="text-[0.6875rem] text-ink-500 leading-snug mt-1">
                   When on, this post becomes the authority page at{' '}
-                  <strong className="text-ink-700">/pillars/{values.pillar_genre || '<genre>'}</strong>.
+                  <strong className="text-ink-700">/guides/{values.pillar_genre || '<genre>'}</strong>.
                   Tag every spoke post in this genre with the same slug.
                 </p>
               </div>
