@@ -21,12 +21,12 @@ import { fetchAllPosts } from '@/lib/blog-server'
 export const revalidate = 60
 
 export const metadata: Metadata = {
-  title: 'Hand-Painted Character Art Commissions | Design Vortex',
+  title: 'Custom D&D & RPG Character Art Commissions | Design Vortex',
   description:
     'Custom D&D character art from $60 — hand-painted by a human artist, never AI. Bust, half-body, full-body portraits, VTT tokens, party scenes. 200+ commissions delivered.',
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Hand-Painted Character Art Commissions | Design Vortex',
+    title: 'Custom D&D & RPG Character Art Commissions | Design Vortex',
     description:
       'Custom D&D character art from $60 — hand-painted by a human artist, never AI. Bust, half-body, full-body, VTT tokens, party portraits. 200+ delivered.',
     url: SITE_URL,
