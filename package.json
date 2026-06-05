@@ -11,11 +11,13 @@
     "prepush": "npm run typecheck"
   },
   "dependencies": {
+    "@google-analytics/data": "^6.1.0",
     "@supabase/ssr": "^0.10.3",
     "@supabase/supabase-js": "^2.106.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.39.0",
+    "googleapis": "^173.0.0",
     "lucide-react": "^1.16.0",
     "next": "16.2.6",
     "react": "19.2.4",
