@@ -23,12 +23,12 @@ export const revalidate = 60
 export const metadata: Metadata = {
   title: 'Custom D&D & RPG Character Art Commissions | Design Vortex',
   description:
-    'Custom D&D character art from $60 — hand-painted by a human artist, never AI. Bust, half-body, full-body portraits, VTT tokens, party scenes. 200+ commissions delivered.',
+    'Custom D&D character art from $60. Bust, half-body, full-body portraits, VTT tokens, party scenes. Painted by a real artist, never AI. 200+ commissions delivered.',
   alternates: { canonical: '/' },
   openGraph: {
     title: 'Custom D&D & RPG Character Art Commissions | Design Vortex',
     description:
-      'Custom D&D character art from $60 — hand-painted by a human artist, never AI. Bust, half-body, full-body, VTT tokens, party portraits. 200+ delivered.',
+      'Custom D&D character art from $60. Bust, half-body, full-body, VTT tokens, party portraits. Painted by a real artist, never AI. 200+ delivered.',
     url: SITE_URL,
     type: 'website',
   },

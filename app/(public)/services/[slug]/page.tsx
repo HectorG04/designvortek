@@ -92,7 +92,7 @@ const BUCKET_META: Record<AllowedBucket, { title: string; description: string }>
   'tokens': {
     title: 'Custom VTT Token Commissions from $40 | Roll20 & Foundry Ready',
     description:
-      'Custom VTT tokens from $40 single or $180 for a 5-pack. Roll20, Foundry VTT, Owlbear ready. Hand-painted at 512px and 1024px transparent PNG.',
+      'Custom VTT tokens from $40 single or $180 for a 5-pack. Painted at 512 and 1024px transparent PNG. Roll20, Foundry, Owlbear ready in 2-3 days.',
   },
 }
 
