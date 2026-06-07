@@ -1504,9 +1504,9 @@ export default function OrderForm() {
               <div className="font-body text-[0.6875rem] font-semibold tracking-[0.18em] uppercase text-gold-700 mb-2">
                 What happens next
               </div>
-              <div className="font-display text-[1.25rem] font-semibold text-ink-900 leading-[1.2] mb-5">
-                A clear, honest process, no chasing.
-              </div>
+              <h2 className="font-display text-[1.25rem] font-semibold text-ink-900 leading-[1.2] mb-5">
+                Ready to hire a character artist? Here&rsquo;s the process.
+              </h2>
               <ol className="flex flex-col gap-4 mb-6">
                 {[
                   { strong: 'Within 48 hours', body: 'We review and send a fixed quote with timeline.' },

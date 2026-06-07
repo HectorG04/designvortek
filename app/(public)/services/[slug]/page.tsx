@@ -75,9 +75,9 @@ export async function generateStaticParams() {
 
 const BUCKET_META: Record<AllowedBucket, { title: string; description: string }> = {
   'character-work': {
-    title: 'D&D Character Art Commissions from $60 | Bust, Half & Full Body',
+    title: 'Hire a Character Artist — Human-Painted, From $60 | Design Vortex',
     description:
-      'D&D character art commissions from $60 (bust), $120 (half-body), $180 (full-body). Hand-painted by a human, never AI. 2-week turnaround. 200+ portraits delivered.',
+      'Hire a character artist for D&D, RPG, OCs, book covers, and fan art. From $60 (bust) to $180 (full-body). Human-painted, never AI. 200+ commissions delivered worldwide.',
   },
   'party-work': {
     title: 'D&D Party Portrait Commissions from $240 | Group Character Art',
@@ -117,7 +117,7 @@ const BUCKET_COPY: Record<AllowedBucket, {
 }> = {
   'character-work': {
     heroEmphasis: 'tier of finish',
-    lede: 'Four ways to commission a character. A bust for the character sheet, a full-body for the wall, a reference sheet for the long campaign, or the bundle that includes a matching VTT token. Same hand-painted craft on every option.',
+    lede: 'Hire a character artist for D&D, RPGs, OCs, book covers, and fan art. Four ways to commission: a bust for the character sheet, a full-body for the wall, a reference sheet for the long campaign, or the bundle that ships with a matching VTT token. Same human-painted craft on every option.',
     truths: [
       { label: 'Revisions',  value: '2 included on every tier' },
       { label: 'Turnaround', value: '2 to 4 weeks per piece'    },
@@ -378,7 +378,11 @@ export default async function ServiceBucketDetailPage({ params }: PageProps) {
               className="font-display font-semibold text-ink-900 leading-[1.05] tracking-tight mb-4 [&_em]:not-italic [&_em]:font-display [&_em]:italic [&_em]:font-medium [&_em]:text-burgundy-700"
               style={{ fontSize: 'clamp(2.5rem, 5.5vw, 4.5rem)' }}
             >
-              {label}, every <em>{copy.heroEmphasis}</em>.
+              {slug === 'character-work' ? (
+                <>Hire a character artist &mdash; <em>human-painted</em>, never AI.</>
+              ) : (
+                <>{label}, every <em>{copy.heroEmphasis}</em>.</>
+              )}
             </h1>
             <p className="text-lg text-ink-500 leading-[1.65] mx-auto max-w-[60ch]">
               {copy.lede}

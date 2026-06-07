@@ -112,7 +112,7 @@ const SERVICE_CARDS: ServiceCard[] = [
     title: 'Character Art',
     sub: 'your hero, painted',
     desc:
-      "Single-character portraits at portfolio quality. Detailed rendering, expressive poses, dramatic lighting. Perfect for D&D players who want their PC immortalised.",
+      "Hire a character artist for single-character portraits at portfolio quality. D&D PCs, OCs, book covers, fan art. Detailed rendering, expressive poses, dramatic lighting. Human-painted, never AI.",
     priceLabel: 'From',
     priceValue: '$60',
     href: '/services/character-work',
